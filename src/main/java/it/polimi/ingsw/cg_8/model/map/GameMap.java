@@ -1,6 +1,7 @@
 package it.polimi.ingsw.cg_8.model.map;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import it.polimi.ingsw.cg_8.model.sectors.*;
@@ -10,12 +11,12 @@ import it.polimi.ingsw.cg_8.model.sectors.special.escapehatch.EscapeHatchSector;
 import it.polimi.ingsw.cg_8.model.sectors.special.spawn.AlienSector;
 import it.polimi.ingsw.cg_8.model.sectors.special.spawn.HumanSector;
 
-public abstract class Map implements ReachableCoordinatesInterface {
+public abstract class GameMap implements ReachableCoordinatesInterface {
 
-	private HashMap<Coordinate, Sector> sectors;
+	private Map<Coordinate, Sector> sectors;
 	private MapProxy mapProxy;
 
-	public Map() {
+	public GameMap() {
 		sectors = new HashMap<Coordinate, Sector>();
 		mapProxy = new MapProxy(this);
 	}

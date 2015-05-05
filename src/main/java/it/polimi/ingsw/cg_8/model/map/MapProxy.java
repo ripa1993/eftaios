@@ -5,16 +5,17 @@ import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 public class MapProxy implements ReachableCoordinatesInterface {
 
-	private final Map map;
-	private final HashMap<Coordinate, HashMap<Integer, Set<Coordinate>>> reachableCoordinates;
+	private final GameMap map;
+	private final Map<Coordinate, Map<Integer, Set<Coordinate>>> reachableCoordinates;
 
 	// HashMap < StartingCoords, HashMap <Depth, Set<ReachableCoords>>>
-	public MapProxy(Map map) {
-		reachableCoordinates = new HashMap<Coordinate, HashMap<Integer, Set<Coordinate>>>();
+	public MapProxy(GameMap map) {
+		reachableCoordinates = new HashMap<Coordinate, Map<Integer, Set<Coordinate>>>();
 		this.map = map;
 	}
 
@@ -56,7 +57,7 @@ public class MapProxy implements ReachableCoordinatesInterface {
 	private void calculateReachableCoordinates(Coordinate c) {
 		
 		// Breadth First Search implementation for coordinates
-		HashMap<Integer, Set<Coordinate>> thisCoordinateHashMap = new HashMap<Integer, Set<Coordinate>>();
+		Map<Integer, Set<Coordinate>> thisCoordinateHashMap = new HashMap<Integer, Set<Coordinate>>();
 		Set<Coordinate> firstRun = new HashSet<Coordinate>();
 		Set<Coordinate> secondRun = new HashSet<Coordinate>();
 		Set<Coordinate> thirdRun = new HashSet<Coordinate>();
