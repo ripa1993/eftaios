@@ -17,7 +17,7 @@ public abstract class Map implements ReachableCoordinatesInterface {
 
 	public Map() {
 		sectors = new HashMap<Coordinate, Sector>();
-		mapProxy = new MapProxy();
+		mapProxy = new MapProxy(this);
 	}
 
 	// adds a generic sector s to coordinate c in the sectors map
@@ -56,6 +56,17 @@ public abstract class Map implements ReachableCoordinatesInterface {
 	@Override
 	public Set<Coordinate> getReachableCoordinates(Coordinate c, Integer depth) {
 		return mapProxy.getReachableCoordinates(c, depth);
+	}
+	
+	public Sector getSectorByCoordinates(Coordinate c){
+		return sectors.get(c);
+	}
+	
+	public boolean verifySectorExisistance(Coordinate c){
+		if(getSectorByCoordinates(c)==null){
+			return false;
+		}
+		return true;
 	}
 
 }

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.cg_8.model.sectors;
 
-public abstract class Coordinate {
+public class Coordinate {
 	final int x;
 	final int y;
 	
