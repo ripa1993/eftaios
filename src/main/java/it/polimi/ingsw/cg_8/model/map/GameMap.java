@@ -13,8 +13,16 @@ import it.polimi.ingsw.cg_8.model.sectors.special.spawn.HumanSector;
 
 public abstract class GameMap implements ReachableCoordinatesInterface {
 
-	private Map<Coordinate, Sector> sectors;
-	private MapProxy mapProxy;
+	private final Map<Coordinate, Sector> sectors;
+	public Map<Coordinate, Sector> getSectors() {
+		return sectors;
+	}
+
+	public MapProxy getMapProxy() {
+		return mapProxy;
+	}
+
+	private final MapProxy mapProxy;
 
 	public GameMap() {
 		sectors = new HashMap<Coordinate, Sector>();

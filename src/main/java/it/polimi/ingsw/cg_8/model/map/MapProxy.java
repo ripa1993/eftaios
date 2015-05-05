@@ -87,4 +87,8 @@ public class MapProxy implements ReachableCoordinatesInterface {
 		//adds the hashmap to the reachableCoordinates hashmap
 		reachableCoordinates.put(c, thisCoordinateHashMap);
 	}
+
+	public GameMap getMap() {
+		return map;
+	}
 }
