@@ -5,4 +5,9 @@ public class UsedEHBehaviour implements EscapeHatchBehaviour {
 	public UsedEHBehaviour() {
 	}
 
+	@Override
+	public boolean allowEscape() {
+		return false;
+	}
+
 }
