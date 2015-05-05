@@ -9,19 +9,17 @@ import java.util.Set;
 
 public class MapProxy implements ReachableCoordinatesInterface {
 
-	Map map;
-	HashMap<Coordinate, HashMap<Integer, Set<Coordinate>>> reachableCoordinates;
+	private final Map map;
+	private final HashMap<Coordinate, HashMap<Integer, Set<Coordinate>>> reachableCoordinates;
 
-	// HashMap < StartingCoords, HashMap <Depth, ReachableCoords>>
-
+	// HashMap < StartingCoords, HashMap <Depth, Set<ReachableCoords>>>
 	public MapProxy(Map map) {
 		reachableCoordinates = new HashMap<Coordinate, HashMap<Integer, Set<Coordinate>>>();
 		this.map = map;
 	}
 
 	// gives the reachable coordinates from a starting coordinate
-
-	Set<Coordinate> getConnectedCoordinates(Coordinate c) {
+	private Set<Coordinate> getConnectedCoordinates(Coordinate c) {
 		Set<Coordinate> connectedCoordinates = new HashSet<Coordinate>();
 		int currentX = c.getX();
 		int currentY = c.getY();
@@ -46,7 +44,6 @@ public class MapProxy implements ReachableCoordinatesInterface {
 	}
 
 	// returns the reachable coordinates given the coordinate and the depth
-
 	@Override
 	public Set<Coordinate> getReachableCoordinates(Coordinate c, Integer depth) {
 		if(reachableCoordinates.get(c).get(depth)==null){
@@ -55,7 +52,6 @@ public class MapProxy implements ReachableCoordinatesInterface {
 		return reachableCoordinates.get(c).get(depth);
 	}
 
-	
 	// calculates reachable coordinates for depth=1,2,3
 	private void calculateReachableCoordinates(Coordinate c) {
 		

@@ -53,17 +53,22 @@ public abstract class Map implements ReachableCoordinatesInterface {
 		this.addSector(c, currentSector);
 	}
 
+	// using a proxy, calls its mapProxy in order to not recalculate reachable
+	// coordinates if they have already been calculated
 	@Override
 	public Set<Coordinate> getReachableCoordinates(Coordinate c, Integer depth) {
 		return mapProxy.getReachableCoordinates(c, depth);
 	}
-	
-	public Sector getSectorByCoordinates(Coordinate c){
+
+	// returns the sector relative to a coordinate, currently returns null if no
+	// sector (?)
+	public Sector getSectorByCoordinates(Coordinate c) {
 		return sectors.get(c);
 	}
-	
-	public boolean verifySectorExisistance(Coordinate c){
-		if(getSectorByCoordinates(c)==null){
+
+	// returns false if the coordinate isn't associated to a sector, else true
+	public boolean verifySectorExisistance(Coordinate c) {
+		if (getSectorByCoordinates(c) == null) {
 			return false;
 		}
 		return true;
