@@ -1,4 +1,4 @@
-package it.polimi.ingsw.cg_8.model;
+package it.polimi.ingsw.cg_8.model.sectors;
 
 public abstract class Coordinate {
 	final int x;
