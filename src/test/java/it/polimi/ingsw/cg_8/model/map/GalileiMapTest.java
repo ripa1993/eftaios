@@ -74,7 +74,7 @@ public class GalileiMapTest {
 		reachableCoordinatesReal.add(new Coordinate(1,5));
 		reachableCoordinatesReal.add(new Coordinate(2,5));
 		reachableCoordinatesReal.add(new Coordinate(2,7));
-		assertTrue(reachableCoordinatesFound.containsAll(reachableCoordinatesReal));
+		assertTrue(reachableCoordinatesFound.equals(reachableCoordinatesReal));
 	}
 	
 	//trying to get an unreachable coordinate for (10,1) with depth=3
