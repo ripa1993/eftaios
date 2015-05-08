@@ -73,7 +73,7 @@ public abstract class GameMap implements ReachableCoordinatesInterface {
 	}
 
 	// returns false if the coordinate isn't associated to a sector, else true
-	public boolean verifySectorExisistance(Coordinate c) {
+	public boolean verifySectorExistance(Coordinate c) {
 		if (getSectorByCoordinates(c) == null) {
 			return false;
 		}
