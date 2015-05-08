@@ -47,6 +47,10 @@ public class MapProxy implements ReachableCoordinatesInterface {
 	private final GameMap map;
 	private final Map<Coordinate, Map<Integer, Set<Coordinate>>> reachableCoordinates;
 
+	public Map<Coordinate, Map<Integer, Set<Coordinate>>> getReachableCoordinates() {
+		return reachableCoordinates;
+	}
+
 	// HashMap < StartingCoords, HashMap <Depth, Set<ReachableCoords>>>
 	public MapProxy(GameMap map) {
 		reachableCoordinates = new HashMap<Coordinate, Map<Integer, Set<Coordinate>>>();
