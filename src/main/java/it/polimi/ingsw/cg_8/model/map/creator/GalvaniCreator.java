@@ -118,13 +118,52 @@ public class GalvaniCreator extends MapCreator {
 
 	}
 	private void addSS(){
-		
+		Set<Coordinate> secureCoordinate = new HashSet<Coordinate>();
+		secureCoordinate.add(new Coordinate(0,7));
+		secureCoordinate.add(new Coordinate(1,3));
+		secureCoordinate.add(new Coordinate(1,10));
+		secureCoordinate.add(new Coordinate(3,6));
+		secureCoordinate.add(new Coordinate(6,1));
+		secureCoordinate.add(new Coordinate(6,9));
+		secureCoordinate.add(new Coordinate(7,4));
+		secureCoordinate.add(new Coordinate(7,6));
+		secureCoordinate.add(new Coordinate(7,11));
+		secureCoordinate.add(new Coordinate(10,2));
+		secureCoordinate.add(new Coordinate(10,8));
+		secureCoordinate.add(new Coordinate(10,9));
+		secureCoordinate.add(new Coordinate(10,13));
+		secureCoordinate.add(new Coordinate(11,2));
+		secureCoordinate.add(new Coordinate(11,11));
+		secureCoordinate.add(new Coordinate(12,4));
+		secureCoordinate.add(new Coordinate(12,8));
+		secureCoordinate.add(new Coordinate(12,13));
+		secureCoordinate.add(new Coordinate(13,1));
+		secureCoordinate.add(new Coordinate(13,10));
+		secureCoordinate.add(new Coordinate(14,2));
+		secureCoordinate.add(new Coordinate(14,4));
+		secureCoordinate.add(new Coordinate(14,8));
+		secureCoordinate.add(new Coordinate(14,13));
+		secureCoordinate.add(new Coordinate(16,1));
+		secureCoordinate.add(new Coordinate(16,13));
+		secureCoordinate.add(new Coordinate(17,4));
+		secureCoordinate.add(new Coordinate(19,8));
+		secureCoordinate.add(new Coordinate(20,7));
+		secureCoordinate.add(new Coordinate(21,0));
+		secureCoordinate.add(new Coordinate(21,6));
+		Iterator<Coordinate> it = secureCoordinate.iterator();
+		while(it.hasNext()){
+			addSecureSector(it.next());
+		}
 	}
 	private void addEH(){
-		
+		addEscapeHatchSector(new Coordinate(5,0), 1);
+		addEscapeHatchSector(new Coordinate(15,0), 2);
+		addEscapeHatchSector(new Coordinate(1,9), 3);
+		addEscapeHatchSector(new Coordinate(21,10), 4);
 	}
 	private void addSpawn(){
-		
+		addHumanSector(new Coordinate(11,7));
+		addAlienSector(new Coordinate(11,5));
 	}
 	@Override
 	public GameMap createMap() {

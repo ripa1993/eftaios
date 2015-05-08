@@ -50,7 +50,7 @@ public abstract class MapCreator {
 		addDangerousSector(new Coordinate(x, y));
 	}
 
-	private void addSecureSector(Coordinate c) {
+	protected void addSecureSector(Coordinate c) {
 		Sector currentSector = new SecureSector(c.getX(), c.getY());
 		this.addSector(c, currentSector);
 	}
@@ -60,7 +60,7 @@ public abstract class MapCreator {
 	}
 
 
-	private void addEscapeHatchSector(Coordinate c, int number) {
+	protected void addEscapeHatchSector(Coordinate c, int number) {
 		Sector currentSector = new EscapeHatchSector(c.getX(), c.getY(), number);
 		this.addSector(c, currentSector);
 	}
@@ -69,7 +69,7 @@ public abstract class MapCreator {
 	}
 
 
-	private void addHumanSector(Coordinate c) {
+	protected void addHumanSector(Coordinate c) {
 		Sector currentSector = new HumanSector(c.getX(), c.getY());
 		this.addSector(c, currentSector);
 	}
@@ -78,7 +78,7 @@ public abstract class MapCreator {
 		addHumanSector(new Coordinate(x,y));
 	}
 
-	private void addAlienSector(Coordinate c) {
+	protected void addAlienSector(Coordinate c) {
 		Sector currentSector = new AlienSector(c.getX(), c.getY());
 		this.addSector(c, currentSector);
 	}
