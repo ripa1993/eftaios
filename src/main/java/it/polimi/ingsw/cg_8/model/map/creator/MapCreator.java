@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import it.polimi.ingsw.cg_8.model.map.GalvaniMap;
 import it.polimi.ingsw.cg_8.model.map.GameMap;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 import it.polimi.ingsw.cg_8.model.sectors.Sector;
@@ -46,7 +45,7 @@ public abstract class MapCreator {
 		this.addSector(c, currentSector);
 	}
 	
-	private void addDangerousSector(int x, int y){
+	protected void addDangerousSector(int x, int y){
 		addDangerousSector(new Coordinate(x, y));
 	}
 
@@ -55,7 +54,7 @@ public abstract class MapCreator {
 		this.addSector(c, currentSector);
 	}
 	
-	private void addSecureSector(int x, int y){
+	protected void addSecureSector(int x, int y){
 		addSecureSector(new Coordinate(x, y));
 	}
 
@@ -64,7 +63,7 @@ public abstract class MapCreator {
 		Sector currentSector = new EscapeHatchSector(c.getX(), c.getY(), number);
 		this.addSector(c, currentSector);
 	}
-	private void addEscapeHatchSector(int x, int y, int num){
+	protected void addEscapeHatchSector(int x, int y, int num){
 		addEscapeHatchSector(new Coordinate(x, y), num);
 	}
 
@@ -74,7 +73,7 @@ public abstract class MapCreator {
 		this.addSector(c, currentSector);
 	}
 	
-	private void addHumanSector(int x, int y){
+	protected void addHumanSector(int x, int y){
 		addHumanSector(new Coordinate(x,y));
 	}
 
@@ -82,7 +81,7 @@ public abstract class MapCreator {
 		Sector currentSector = new AlienSector(c.getX(), c.getY());
 		this.addSector(c, currentSector);
 	}
-	private void addAlienSector(int x, int y){
+	protected void addAlienSector(int x, int y){
 		addAlienSector(new Coordinate(x,y));
 	}
 
