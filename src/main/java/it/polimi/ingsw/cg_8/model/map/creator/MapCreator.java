@@ -123,7 +123,7 @@ public abstract class MapCreator {
 		Set<Coordinate> currentSet = new HashSet<Coordinate>();
 		// add a column of coordinates to currentSet
 		for (int i = startingRow; i <= endingRow; i++) {
-			currentSet.add(new Coordinate(i, column));
+			currentSet.add(new Coordinate(column, i));
 		}
 		Iterator<Coordinate> it = currentSet.iterator();
 		switch (st) {
@@ -151,7 +151,7 @@ public abstract class MapCreator {
 		Set<Coordinate> currentSet = new HashSet<Coordinate>();
 		// add a column of coordinates to currentSet
 		for (int i = startingColumn; i <= endingColumn; i++) {
-			currentSet.add(new Coordinate(row, i));
+			currentSet.add(new Coordinate(i, row));
 		}
 		Iterator<Coordinate> it = currentSet.iterator();
 		switch (st) {
