@@ -41,29 +41,49 @@ public abstract class MapCreator {
 
 	// addXSector adds a sector of X type to the sectors map in the c coordinate
 
-	private void addDangerousSector(Coordinate c) {
+	protected void addDangerousSector(Coordinate c) {
 		Sector currentSector = new DangerousSector(c.getX(), c.getY());
 		this.addSector(c, currentSector);
+	}
+	
+	private void addDangerousSector(int x, int y){
+		addDangerousSector(new Coordinate(x, y));
 	}
 
 	private void addSecureSector(Coordinate c) {
 		Sector currentSector = new SecureSector(c.getX(), c.getY());
 		this.addSector(c, currentSector);
 	}
+	
+	private void addSecureSector(int x, int y){
+		addSecureSector(new Coordinate(x, y));
+	}
+
 
 	private void addEscapeHatchSector(Coordinate c, int number) {
 		Sector currentSector = new EscapeHatchSector(c.getX(), c.getY(), number);
 		this.addSector(c, currentSector);
 	}
+	private void addEscapeHatchSector(int x, int y, int num){
+		addEscapeHatchSector(new Coordinate(x, y), num);
+	}
+
 
 	private void addHumanSector(Coordinate c) {
 		Sector currentSector = new HumanSector(c.getX(), c.getY());
 		this.addSector(c, currentSector);
 	}
+	
+	private void addHumanSector(int x, int y){
+		addHumanSector(new Coordinate(x,y));
+	}
 
 	private void addAlienSector(Coordinate c) {
 		Sector currentSector = new AlienSector(c.getX(), c.getY());
 		this.addSector(c, currentSector);
+	}
+	private void addAlienSector(int x, int y){
+		addAlienSector(new Coordinate(x,y));
 	}
 
 	// can be used only with secure and dangerous sectors, otherwise it will do
