@@ -5,15 +5,50 @@ import java.util.Map;
 import java.util.Set;
 
 import it.polimi.ingsw.cg_8.model.sectors.*;
-import it.polimi.ingsw.cg_8.model.sectors.normal.DangerousSector;
-import it.polimi.ingsw.cg_8.model.sectors.normal.SecureSector;
-import it.polimi.ingsw.cg_8.model.sectors.special.escapehatch.EscapeHatchSector;
-import it.polimi.ingsw.cg_8.model.sectors.special.spawn.AlienSector;
-import it.polimi.ingsw.cg_8.model.sectors.special.spawn.HumanSector;
 
 public abstract class GameMap implements ReachableCoordinatesInterface {
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((mapProxy == null) ? 0 : mapProxy.hashCode());
+		result = prime * result + ((sectors == null) ? 0 : sectors.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		GameMap other = (GameMap) obj;
+		if (mapProxy == null) {
+			if (other.mapProxy != null)
+				return false;
+		} else if (!mapProxy.equals(other.mapProxy))
+			return false;
+		if (sectors == null) {
+			if (other.sectors != null)
+				return false;
+		} else if (!sectors.equals(other.sectors))
+			return false;
+		return true;
+	}
+
 	private final Map<Coordinate, Sector> sectors;
+	private final MapProxy mapProxy;
+	
+	
+	public GameMap() {
+		sectors = new HashMap<Coordinate, Sector>();
+		mapProxy = new MapProxy(this);
+	}
+	
 	public Map<Coordinate, Sector> getSectors() {
 		return sectors;
 	}
@@ -22,46 +57,8 @@ public abstract class GameMap implements ReachableCoordinatesInterface {
 		return mapProxy;
 	}
 
-	private final MapProxy mapProxy;
-
-	public GameMap() {
-		sectors = new HashMap<Coordinate, Sector>();
-		mapProxy = new MapProxy(this);
-	}
-
-	// adds a generic sector s to coordinate c in the sectors map
-
-	public void addSector(Coordinate c, Sector s) {
-		sectors.put(c, s);
-	}
-
-	// addXSector adds a sector of X type to the sectors map in the c coordinate
-
-	public void addDangerousSector(Coordinate c) {
-		Sector currentSector = new DangerousSector(c.getX(), c.getY());
-		this.addSector(c, currentSector);
-	}
-
-	public void addSecureSector(Coordinate c) {
-		Sector currentSector = new SecureSector(c.getX(), c.getY());
-		this.addSector(c, currentSector);
-	}
-
-	public void addEscapeHatchSector(Coordinate c) {
-		Sector currentSector = new EscapeHatchSector(c.getX(), c.getY());
-		this.addSector(c, currentSector);
-	}
-
-	public void addHumanSector(Coordinate c) {
-		Sector currentSector = new HumanSector(c.getX(), c.getY());
-		this.addSector(c, currentSector);
-	}
-
-	public void addAlienSector(Coordinate c) {
-		Sector currentSector = new AlienSector(c.getX(), c.getY());
-		this.addSector(c, currentSector);
-	}
-
+	
+	
 	// using a proxy, calls its mapProxy in order to not recalculate reachable
 	// coordinates if they have already been calculated
 	@Override

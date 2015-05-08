@@ -10,6 +10,40 @@ import java.util.Set;
 
 public class MapProxy implements ReachableCoordinatesInterface {
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((map == null) ? 0 : map.hashCode());
+		result = prime
+				* result
+				+ ((reachableCoordinates == null) ? 0 : reachableCoordinates
+						.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MapProxy other = (MapProxy) obj;
+		if (map == null) {
+			if (other.map != null)
+				return false;
+		} else if (!map.equals(other.map))
+			return false;
+		if (reachableCoordinates == null) {
+			if (other.reachableCoordinates != null)
+				return false;
+		} else if (!reachableCoordinates.equals(other.reachableCoordinates))
+			return false;
+		return true;
+	}
+
 	private final GameMap map;
 	private final Map<Coordinate, Map<Integer, Set<Coordinate>>> reachableCoordinates;
 
