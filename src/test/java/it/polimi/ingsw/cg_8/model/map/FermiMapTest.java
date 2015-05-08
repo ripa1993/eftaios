@@ -10,11 +10,9 @@ import it.polimi.ingsw.cg_8.model.map.creator.MapCreator;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 import it.polimi.ingsw.cg_8.model.sectors.Sector;
 import it.polimi.ingsw.cg_8.model.sectors.SectorType;
-import it.polimi.ingsw.cg_8.model.sectors.normal.DangerousSector;
-import it.polimi.ingsw.cg_8.model.sectors.normal.SecureSector;
-import it.polimi.ingsw.cg_8.model.sectors.special.escapehatch.EscapeHatchSector;
 
-import org.hamcrest.Matcher;
+
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -92,6 +90,15 @@ public class FermiMapTest {
 	public void getReachableCoordinates2(){
 		Set<Coordinate> reachableCoordinatesFound = testMap.getReachableCoordinates(new Coordinate(10,1), 3);
 		assertFalse(reachableCoordinatesFound.contains(new Coordinate(15,1)));
+	}
+	
+	//trying to get already calculated reaachable coordinates
+	@Test
+	public void getReachableCoordinates3(){
+		Set<Coordinate> reachableCoordinatesDummy = testMap.getReachableCoordinates(new Coordinate(10,1), 3);
+		Set<Coordinate> reachableCoordinatesFound = testMap.getReachableCoordinates(new Coordinate(10,1), 3);
+		
+		assertTrue(reachableCoordinatesFound.equals(reachableCoordinatesDummy));
 	}
 	
 }
