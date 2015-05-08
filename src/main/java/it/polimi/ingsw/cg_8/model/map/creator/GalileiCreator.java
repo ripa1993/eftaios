@@ -11,7 +11,33 @@ import it.polimi.ingsw.cg_8.model.sectors.SectorType;
 
 public class GalileiCreator extends MapCreator {
 
-	GameMap galileiMap;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result
+				+ ((galileiMap == null) ? 0 : galileiMap.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		GalileiCreator other = (GalileiCreator) obj;
+		if (galileiMap == null) {
+			if (other.galileiMap != null)
+				return false;
+		} else if (!galileiMap.equals(other.galileiMap))
+			return false;
+		return true;
+	}
+
+	private final GameMap galileiMap;
 
 	public GalileiCreator() {
 		super(new GalileiMap());

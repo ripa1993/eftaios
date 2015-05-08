@@ -11,7 +11,32 @@ import it.polimi.ingsw.cg_8.model.sectors.SectorType;
 
 public class FermiCreator extends MapCreator {
 
-	GameMap fermiMap;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result
+				+ ((fermiMap == null) ? 0 : fermiMap.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		FermiCreator other = (FermiCreator) obj;
+		if (fermiMap == null) {
+			if (other.fermiMap != null)
+				return false;
+		} else if (!fermiMap.equals(other.fermiMap))
+			return false;
+		return true;
+	}
+	private final GameMap fermiMap;
 
 	public FermiCreator() {
 		super(new FermiMap());

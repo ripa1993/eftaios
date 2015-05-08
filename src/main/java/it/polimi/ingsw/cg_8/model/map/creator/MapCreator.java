@@ -20,8 +20,39 @@ public abstract class MapCreator {
 	// x is horizontal, 0 = "A"
 	// y is vertical, 0 = "01"
 
-	GameMap gm;
-	Map<Coordinate, Sector> sectors;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((gm == null) ? 0 : gm.hashCode());
+		result = prime * result + ((sectors == null) ? 0 : sectors.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MapCreator other = (MapCreator) obj;
+		if (gm == null) {
+			if (other.gm != null)
+				return false;
+		} else if (!gm.equals(other.gm))
+			return false;
+		if (sectors == null) {
+			if (other.sectors != null)
+				return false;
+		} else if (!sectors.equals(other.sectors))
+			return false;
+		return true;
+	}
+
+	private final GameMap gm;
+	private final Map<Coordinate, Sector> sectors;
 	
 	public MapCreator(GameMap gm) {
 		this.gm=gm;

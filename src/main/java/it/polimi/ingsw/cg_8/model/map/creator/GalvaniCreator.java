@@ -11,7 +11,33 @@ import it.polimi.ingsw.cg_8.model.sectors.SectorType;
 
 public class GalvaniCreator extends MapCreator {
 
-	GameMap galvaniMap;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result
+				+ ((galvaniMap == null) ? 0 : galvaniMap.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		GalvaniCreator other = (GalvaniCreator) obj;
+		if (galvaniMap == null) {
+			if (other.galvaniMap != null)
+				return false;
+		} else if (!galvaniMap.equals(other.galvaniMap))
+			return false;
+		return true;
+	}
+
+	private final GameMap galvaniMap;
 
 	public GalvaniCreator() {
 		super(new GalvaniMap());
