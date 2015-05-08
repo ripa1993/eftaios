@@ -116,7 +116,7 @@ public abstract class MapCreator {
 
 	// can be used only with secure and dangerous sectors, otherwise it will do
 	// nothing
-	private void addRow(SectorType st, int row, int startingColumn,
+	protected void addRow(SectorType st, int row, int startingColumn,
 			int endingColumn) {
 		Set<Coordinate> currentSet = new HashSet<Coordinate>();
 		// add a column of coordinates to currentSet
