@@ -1,4 +1,4 @@
-package it.polimi.ingsw.cg_8.model.player.character;
+package it.polimi.ingsw.cg_8.model.player.character.alien;
 
 public class FedBehaviour implements AlienBehaviour {
 
