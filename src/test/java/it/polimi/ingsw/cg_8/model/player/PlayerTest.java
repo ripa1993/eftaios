@@ -21,14 +21,14 @@ public class PlayerTest {
 	
 	@Test
 	public void testGetPosition() {
-		assertEquals(new Coordinate(0,0), player.getPosition());
+		assertEquals(new Coordinate(0,0), player.getLastPosition());
 		
 	}
 
 	@Test
 	public void testSetPosition() {
 		player.setPosition(new Coordinate(1,1));
-		assertEquals(new Coordinate(1,1), player.getPosition());
+		assertEquals(new Coordinate(1,1), player.getLastPosition());
 	}
 
 	@Test
@@ -69,5 +69,14 @@ public class PlayerTest {
 		player.cycleState();
 		assertEquals(PlayerState.ALIVE_WAITING, player.getState());
 	}
+	@Test
+	public void tesGetRoundNumber(){
+		assertEquals(0, player.getRoundNumber());
+	}
 
+	@Test
+	public void testEditLastPosition(){
+		player.editLastPosition(new Coordinate(2,2));
+		assertEquals(player.getLastPosition(), new Coordinate(2,2));
+	}
 }
