@@ -130,11 +130,13 @@ public abstract class MapCreator {
 		case DANGEROUS_SECTOR: {
 			while (it.hasNext()) {
 				addDangerousSector(it.next());
+				break;
 			}
 		}
 		case SECURE_SECTOR: {
 			while (it.hasNext()) {
 				addSecureSector(it.next());
+				break;
 			}
 
 		}
@@ -158,11 +160,13 @@ public abstract class MapCreator {
 		case DANGEROUS_SECTOR: {
 			while (it.hasNext()) {
 				addDangerousSector(it.next());
+				break;
 			}
 		}
 		case SECURE_SECTOR: {
 			while (it.hasNext()) {
 				addSecureSector(it.next());
+				break;
 			}
 
 		}
