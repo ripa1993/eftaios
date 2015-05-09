@@ -69,5 +69,9 @@ public class PlayerTest {
 		player.cycleState();
 		assertEquals(PlayerState.ALIVE_WAITING, player.getState());
 	}
+	@Test
+	public void getRoundNumber(){
+		assertEquals(0, player.getRoundNumber());
+	}
 
 }
