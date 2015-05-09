@@ -28,8 +28,10 @@ public abstract class CharacterCard extends Card {
 
 	@Override
 	public String toString() {
-		return "CharacterCard [name=" + name + ", nickname=" + nickname
-				+ ", rank=" + rank + "]";
+		if (this.nickname != null) {
+			return "Character: " + name + ", " + "\"" + nickname + "\"" + ", as " + rank + "\n";
+		}
+		else return "Character: " + name + ", as " + rank + "\n";
 	}
 	
 }
