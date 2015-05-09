@@ -7,5 +7,4 @@ public abstract class Sector extends Coordinate {
 		super(x, y);
 	}
 	
-	public abstract SectorType getSectorType();
 }

@@ -1,6 +1,5 @@
 package it.polimi.ingsw.cg_8.model.sectors.special.escapehatch;
 
-import it.polimi.ingsw.cg_8.model.sectors.SectorType;
 import it.polimi.ingsw.cg_8.model.sectors.special.SpecialSector;
 
 public class EscapeHatchSector extends SpecialSector {
@@ -35,9 +34,6 @@ public class EscapeHatchSector extends SpecialSector {
 		return allowedUse;
 	}
 
-	@Override
-	public SectorType getSectorType() {
-		return SectorType.EH_SECTOR;
-	}
+	
 
 }
