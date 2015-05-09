@@ -1,10 +1,14 @@
 package it.polimi.ingsw.cg_8.model.player.character.human;
 
+import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.player.character.InGameCharacter;
 
 public class Human extends InGameCharacter {
-	
 	private HumanBehaviour currentBehaviour;
+	public Human(Player player) {
+		super(player);
+		this.currentBehaviour=new NormalHuman();
+	}
 
 	@Override
 	public boolean isAttackAllowed() {
