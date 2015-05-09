@@ -3,13 +3,11 @@ package it.polimi.ingsw.cg_8.model.cards.dangerousSectorCards;
 import it.polimi.ingsw.cg_8.model.Coordinate;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.ItemCard;
 
-public abstract class NoiseCard extends DangerousSectorCard {
+public interface NoiseCard {
 	
-	public Coordinate makeNoise(){
-		
-	}
-	public ItemCard drawItem(){
-		
-	}
+	public Coordinate makeNoise(Coordinate c);	
 	
+	public ItemCard drawItem();
+	
+	public String getDescription();
 }
