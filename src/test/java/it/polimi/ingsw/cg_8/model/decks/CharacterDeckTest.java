@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import it.polimi.ingsw.cg_8.model.cards.characterCards.CharacterCard;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 
@@ -14,6 +15,8 @@ import org.junit.Test;
 public class CharacterDeckTest {
 	
 	private CharacterDeck charDeck;
+	private CharacterDeck charDeck2;
+	private CharacterDeck charDeck3;
 	private CharacterDeckCreator charCreator;
 	
 	
@@ -21,23 +24,29 @@ public class CharacterDeckTest {
 	public void init() {
 		charCreator = new CharacterDeckCreator();
 		charDeck = charCreator.createDeck();
+		charDeck2 = charCreator.createDeck();
+		charDeck3 = charCreator.createDeck();
 	}
 	
 	
 	@Test 
 	public void charDeckTest1() {
 		boolean check;
-		System.out.println(charDeck.toString());
 		if (charDeck.drawCard() instanceof CharacterCard) {
 			check = true;
 		}
 		else check = false;
-		assertEquals(check, true);
+		assertTrue(check);
 	}
 	
 	@Test 
 	public void equalsTest() {
-		assertEquals(charDeck, charDeck);
+		assertTrue(charDeck3.equals(charDeck2));
+	}
+	
+	@Test
+	public void hashFunctionTest() {
+		assertEquals(charDeck.hashCode(), charDeck2.hashCode());
 	}
 	
 	@Test 
@@ -50,7 +59,7 @@ public class CharacterDeckTest {
 			}
 			else check = false;
 		}
-		assertEquals(check, true);
+		assertTrue(check);
 	}
 	
 	@Test
@@ -62,7 +71,7 @@ public class CharacterDeckTest {
 		if (charDeck.isDeckEmpty() == true) {
 			check = true; 
 			}
-		assertEquals(check, true);
+		assertTrue(check);
 		
 	}
 	

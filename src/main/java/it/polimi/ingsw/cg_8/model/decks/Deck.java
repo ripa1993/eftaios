@@ -85,8 +85,8 @@ public abstract class Deck {
 		if (cardList == null) {
 			if (other.cardList != null)
 				return false;
-		} else if (!cardList.equals(other.cardList))
-			return false;
+		} else if (!cardList.equals(other.cardList)) {
+			return false; }
 		if (usedCards == null) {
 			if (other.usedCards != null)
 				return false;
