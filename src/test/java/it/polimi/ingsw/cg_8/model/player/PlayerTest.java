@@ -21,14 +21,14 @@ public class PlayerTest {
 	
 	@Test
 	public void testGetPosition() {
-		assertEquals(new Coordinate(0,0), player.getPosition());
+		assertEquals(new Coordinate(0,0), player.getLastPosition());
 		
 	}
 
 	@Test
 	public void testSetPosition() {
 		player.setPosition(new Coordinate(1,1));
-		assertEquals(new Coordinate(1,1), player.getPosition());
+		assertEquals(new Coordinate(1,1), player.getLastPosition());
 	}
 
 	@Test
