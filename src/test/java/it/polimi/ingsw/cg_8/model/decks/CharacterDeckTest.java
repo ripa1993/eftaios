@@ -1,6 +1,7 @@
 package it.polimi.ingsw.cg_8.model.decks;
 
 import static org.junit.Assert.*;
+import it.polimi.ingsw.cg_8.model.cards.Card;
 import it.polimi.ingsw.cg_8.model.cards.characterCards.CharacterCard;
 
 import org.junit.Before;
@@ -43,6 +44,11 @@ public class CharacterDeckTest {
 	public void equalsTest() {
 		assertTrue(charDeck3.equals(charDeck2));
 	}
+	@Test
+	public void equalsTest2() {
+		charDeck.drawCard();
+		assertFalse(charDeck.equals(charDeck2));		
+	}
 	
 	@Test
 	public void hashFunctionTest() {
@@ -73,6 +79,12 @@ public class CharacterDeckTest {
 			}
 		assertTrue(check);
 		
+	}
+	@Test 
+	public void addUsedCardTest() {
+		Card c1 = charDeck.drawCard();
+		charDeck.addUsedCard(c1);
+		assertFalse(charDeck.getUsedCards().isEmpty());
 	}
 	
 }
