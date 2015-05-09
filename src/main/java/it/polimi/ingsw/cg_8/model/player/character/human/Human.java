@@ -2,12 +2,41 @@ package it.polimi.ingsw.cg_8.model.player.character.human;
 
 import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.player.character.InGameCharacter;
+import it.polimi.ingsw.cg_8.model.player.character.human.decorations.EnableAdrenaline;
+import it.polimi.ingsw.cg_8.model.player.character.human.decorations.EnableAttack;
+import it.polimi.ingsw.cg_8.model.player.character.human.decorations.EnableDefense;
+import it.polimi.ingsw.cg_8.model.player.character.human.decorations.EnableSedatives;
 
 public class Human extends InGameCharacter {
 	private HumanBehaviour currentBehaviour;
+
 	public Human(Player player) {
 		super(player);
-		this.currentBehaviour=new NormalHuman();
+		this.currentBehaviour = new NormalHuman();
+	}
+
+	public void enableAttack() {
+		HumanBehaviour tempBehaviour = new EnableAttack(currentBehaviour);
+		setBehaviour(tempBehaviour);
+	}
+
+	public void enableDefend() {
+		HumanBehaviour tempBehaviour = new EnableDefense(currentBehaviour);
+		setBehaviour(tempBehaviour);
+	}
+
+	public void enableSedatives() {
+		HumanBehaviour tempBehaviour = new EnableSedatives(currentBehaviour);
+		setBehaviour(tempBehaviour);
+	}
+
+	public void enableAdrenaline() {
+		HumanBehaviour tempBehaviour = new EnableAdrenaline(currentBehaviour);
+		setBehaviour(tempBehaviour);
+	}
+
+	private void setBehaviour(HumanBehaviour hb) {
+		this.currentBehaviour = hb;
 	}
 
 	@Override
