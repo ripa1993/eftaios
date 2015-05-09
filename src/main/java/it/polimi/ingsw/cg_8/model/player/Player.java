@@ -39,6 +39,13 @@ public class Player {
 	public void setPosition(Coordinate position) {
 		rounds.add(new Round(getRoundNumber()+1,position));
 	}
+	
+	// may be used when the player wants to be teleported after having moved, not sure if legal
+	public void editLastPosition(Coordinate newCoordinate){
+		int lastRoundNumber = getRoundNumber();
+		rounds.remove(lastRoundNumber);
+		setPosition(newCoordinate);
+	}
 
 	public PlayerState getState() {
 		return state;
