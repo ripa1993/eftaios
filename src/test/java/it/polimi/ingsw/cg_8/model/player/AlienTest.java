@@ -4,16 +4,17 @@ import static org.junit.Assert.*;
 import it.polimi.ingsw.cg_8.model.player.character.alien.Alien;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class AlienTest {
-	Alien normalAlien;
-	Alien fedAlien;
-	Player player1;
-	Player player2;
+	static Alien normalAlien;
+	static Alien fedAlien;
+	static Player player1;
+	static Player player2;
 	
-	@Before
-	public void init(){
+	@BeforeClass
+	public static void init(){
 		player1 = new Player("player1");
 		player2 = new Player("player2");
 		normalAlien = new Alien(player1);
