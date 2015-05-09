@@ -14,6 +14,6 @@ public class NoiseWithItem extends NoiseDecorator {
 	}
 	
 	public String getDescription() {
-        return super.getDescription() + "Draw an item card";
+        return super.getDescription() + " Draw an item card";
     }
 }

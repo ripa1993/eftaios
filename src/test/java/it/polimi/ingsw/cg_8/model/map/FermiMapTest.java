@@ -41,7 +41,7 @@ public class FermiMapTest {
 
 	}
 	
-	// trying to get a eh sector
+	// trying to get an escape hatch sector
 	@Test
 	public void testGetSectorByC3(){
 		Sector mSector = testMap.getSectorByCoordinates(new Coordinate(9,4));
@@ -92,7 +92,7 @@ public class FermiMapTest {
 		assertFalse(reachableCoordinatesFound.contains(new Coordinate(15,1)));
 	}
 	
-	//trying to get already calculated reaachable coordinates
+	//trying to get already calculated reachable coordinates
 	@Test
 	public void getReachableCoordinates3(){
 		Set<Coordinate> reachableCoordinatesDummy = testMap.getReachableCoordinates(new Coordinate(10,1), 3);
