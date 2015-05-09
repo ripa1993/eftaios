@@ -1,6 +1,6 @@
-package it.polimi.ingsw.cg_8.model;
+package it.polimi.ingsw.cg_8.model.sectors;
 
-public abstract class Coordinate {
+public class Coordinate {
 	final int x;
 	final int y;
 	
@@ -15,6 +15,15 @@ public abstract class Coordinate {
 	public Coordinate (int x, int y){
 		this.x=x;
 		this.y=y;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + x;
+		result = prime * result + y;
+		return result;
 	}
 
 	@Override
