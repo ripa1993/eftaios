@@ -70,8 +70,13 @@ public class PlayerTest {
 		assertEquals(PlayerState.ALIVE_WAITING, player.getState());
 	}
 	@Test
-	public void getRoundNumber(){
+	public void tesGetRoundNumber(){
 		assertEquals(0, player.getRoundNumber());
 	}
 
+	@Test
+	public void testEditLastPosition(){
+		player.editLastPosition(new Coordinate(2,2));
+		assertEquals(player.getLastPosition(), new Coordinate(2,2));
+	}
 }
