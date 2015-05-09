@@ -27,6 +27,11 @@ public class Alien extends InGameCharacter {
 		return false;
 	}
 
+	@Override
+	public boolean hasToDrawSectorCard() {
+		return true;
+	}
+
 	
 	
 }
