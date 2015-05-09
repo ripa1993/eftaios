@@ -5,7 +5,9 @@ import it.polimi.ingsw.cg_8.model.map.creator.GalileiCreator;
 import it.polimi.ingsw.cg_8.model.map.creator.MapCreator;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 import it.polimi.ingsw.cg_8.model.sectors.Sector;
-import it.polimi.ingsw.cg_8.model.sectors.SectorType;
+import it.polimi.ingsw.cg_8.model.sectors.normal.DangerousSector;
+import it.polimi.ingsw.cg_8.model.sectors.normal.SecureSector;
+import it.polimi.ingsw.cg_8.model.sectors.special.escapehatch.EscapeHatchSector;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -34,23 +36,33 @@ public class GalileiMapTest {
 	@Test
 	public void testGetSectorByC2() {
 		Sector mSector = testMap.getSectorByCoordinates(new Coordinate(0,1));
-		assertEquals(SectorType.DANGEROUS_SECTOR, mSector.getSectorType());
-
+		boolean result = false;
+		if (mSector instanceof DangerousSector){
+			result=true;
+		}
+		assertTrue(result);
 	}
 	
 	// trying to get a eh sector
 	@Test
 	public void testGetSectorByC3(){
 		Sector mSector = testMap.getSectorByCoordinates(new Coordinate(1,1));
-		assertEquals(SectorType.EH_SECTOR, mSector.getSectorType());
-				
+		boolean result = false;
+		if (mSector instanceof EscapeHatchSector){
+			result=true;
+		}
+		assertTrue(result);				
 	}
 	
 	// trying to get a secure sector
 	@Test
 	public void testGetSectorByC4(){
 		Sector mSector = testMap.getSectorByCoordinates(new Coordinate(2,0));
-		assertEquals(SectorType.SECURE_SECTOR, mSector.getSectorType());
+		boolean result = false;
+		if (mSector instanceof SecureSector){
+			result=true;
+		}
+		assertTrue(result);
 	}
 	
 	// trying to get a null sector
