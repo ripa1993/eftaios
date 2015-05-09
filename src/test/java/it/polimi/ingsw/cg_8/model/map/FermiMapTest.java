@@ -69,6 +69,7 @@ public class FermiMapTest {
 			result=true;
 		}
 		assertTrue(result);
+		
 	}
 	
 	// trying to get a null sector
