@@ -3,7 +3,6 @@ package it.polimi.ingsw.cg_8.model.player;
 import static org.junit.Assert.*;
 import it.polimi.ingsw.cg_8.model.player.character.alien.Alien;
 
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
