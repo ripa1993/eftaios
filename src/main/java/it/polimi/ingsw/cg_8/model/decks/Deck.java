@@ -23,11 +23,25 @@ public abstract class Deck {
 		Collections.shuffle(this.cardList);
 	}
 	
+	/* Puts every used card into the main Deck. Used by "Item" and "Dangerous Sector" Decks
+	 * It should be able to handle the exception of having an empty Used Card List, and return it to a higher level
+	 */
+	public void reshuffle() {
+		if (this.isDeckEmpty() == true) {
+			if (this.isUsedCardsEmpty() == true) {
+				for(Card i : this.usedCards) {
+					this.addCard(i);
+				}
+				this.emptyUsedCardList();
+			}
+		}
+	}
 	
-	//TODO: RESHUFFLE
+	private void emptyUsedCardList() {
+		this.usedCards.clear();
+	}
 	
-	
-	// Add/Remove cards from the lists
+	// Add and Remove cards from the lists
 	public void addCard(Card card) {
 		this.cardList.add(card);
 	}
@@ -36,15 +50,23 @@ public abstract class Deck {
 		this.usedCards.add(card);
 	}
 	
+	
+	// Overriden by "Item" and "Dangerous Sector" Decks
 	public Card drawCard() {
 		if (isDeckEmpty() == false) {
 			return cardList.remove(0);
 		} else
-			return null; // TODO: how to manage empty decks (reshuffle, see above)
+			return null; 
 	}
 
 	protected boolean isDeckEmpty() {
-		if (cardList.isEmpty()) {
+		if (this.cardList.isEmpty()) {
+			return true;
+		} else
+			return false;
+	}
+	protected boolean isUsedCardsEmpty() {
+		if (this.usedCards.isEmpty()) {
 			return true;
 		} else
 			return false;
