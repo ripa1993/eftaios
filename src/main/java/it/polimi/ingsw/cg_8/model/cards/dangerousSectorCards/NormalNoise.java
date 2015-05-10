@@ -3,7 +3,7 @@ package it.polimi.ingsw.cg_8.model.cards.dangerousSectorCards;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.ItemCard;
 
-public class NormalNoise implements NoiseCard {
+public class NormalNoise extends DangerousSectorCard implements NoiseCard {
 
 	@Override
 	public Coordinate makeNoise(Coordinate c) {	// The input coordinate is the player's current position
@@ -15,7 +15,7 @@ public class NormalNoise implements NoiseCard {
 		return null;
 	}
 	@Override
-	public String getDescription() {
+	public String toString() {
 		return "Noise in the player's position";
 	}
 }

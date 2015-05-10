@@ -5,4 +5,8 @@ public class SilenceCard extends DangerousSectorCard {
 	public SilenceCard() {
 		super();
 	}
+	
+	public String toString() {
+		return "Silence...";
+	}
 }

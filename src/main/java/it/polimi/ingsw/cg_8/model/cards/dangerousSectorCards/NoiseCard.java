@@ -10,5 +10,5 @@ public interface NoiseCard {
 	
 	public ItemCard drawItem();
 	
-	public String getDescription();
+	public String toString();
 }

@@ -13,7 +13,7 @@ public class NoiseWithItem extends NoiseDecorator {
 		return null;		// It should return an item card, from the item card deck, function not implemented yet
 	}
 	
-	public String getDescription() {
-        return super.getDescription() + " Draw an item card";
+	public String toString() {
+        return super.toString() + " Draw an item card";
     }
 }

@@ -14,7 +14,7 @@ public class FakeNoise extends NoiseDecorator {
 	}
 	
 	@Override 
-	public String getDescription() {
+	public String toString() {
         return "Emitting fake noise";
     }
 }

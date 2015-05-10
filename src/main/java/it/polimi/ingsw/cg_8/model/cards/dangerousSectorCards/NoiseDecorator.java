@@ -3,7 +3,7 @@ package it.polimi.ingsw.cg_8.model.cards.dangerousSectorCards;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.ItemCard;
 
-public abstract class NoiseDecorator implements NoiseCard {
+public abstract class NoiseDecorator extends DangerousSectorCard implements NoiseCard {
 	
 	protected final NoiseCard decoratedNoise;
 	
@@ -20,7 +20,7 @@ public abstract class NoiseDecorator implements NoiseCard {
 		return decoratedNoise.drawItem(); // Delegation
 	}
 	
-	public String getDescription() {
-        return decoratedNoise.getDescription(); //Delegation
+	public String toString() {
+        return decoratedNoise.toString(); //Delegation
     }
 }

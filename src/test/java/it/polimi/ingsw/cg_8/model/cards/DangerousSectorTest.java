@@ -20,22 +20,22 @@ public class DangerousSectorTest {
 	
 	@Test
 	public void testGetDescription1() {	
-		assertEquals(c1.getDescription(), "Noise in the player's position");
+		assertEquals(c1.toString(), "Noise in the player's position");
 	}
 
 	@Test
 	public void testGetDescription2() {
-		assertEquals(c2.getDescription(), "Emitting fake noise");
+		assertEquals(c2.toString(), "Emitting fake noise");
 	}
 
 	@Test
 	public void testGetDescription3() {
-		assertEquals(c3.getDescription(), "Noise in the player's position Draw an item card");
+		assertEquals(c3.toString(), "Noise in the player's position Draw an item card");
 	}
 
 	@Test
 	public void testGetDescription4() {
-		assertEquals(c4.getDescription(), "Emitting fake noise Draw an item card");
+		assertEquals(c4.toString(), "Emitting fake noise Draw an item card");
 	}
 
 }
