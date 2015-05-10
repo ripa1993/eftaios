@@ -3,6 +3,7 @@ package it.polimi.ingsw.cg_8.model.decks;
 import static org.junit.Assert.*;
 import it.polimi.ingsw.cg_8.model.cards.Card;
 import it.polimi.ingsw.cg_8.model.cards.characterCards.CharacterCard;
+import it.polimi.ingsw.cg_8.model.decks.deckCreators.CharacterDeckCreator;
 
 import org.junit.Before;
 import org.junit.BeforeClass;

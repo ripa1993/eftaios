@@ -1,8 +1,9 @@
-package it.polimi.ingsw.cg_8.model.decks;
+package it.polimi.ingsw.cg_8.model.decks.deckCreators;
 
 import it.polimi.ingsw.cg_8.model.cards.Card;
 import it.polimi.ingsw.cg_8.model.cards.escapeHatchCards.GreenEhCard;
 import it.polimi.ingsw.cg_8.model.cards.escapeHatchCards.RedEhCard;
+import it.polimi.ingsw.cg_8.model.decks.EscapeHatchDeck;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,5 +28,4 @@ public class EscapeHatchDeckCreator extends DeckCreator {
 	protected List<Card> createCardList() {
 		return new ArrayList<Card>();
 	}
-
 }
