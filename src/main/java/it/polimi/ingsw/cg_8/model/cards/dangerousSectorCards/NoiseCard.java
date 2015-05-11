@@ -1,14 +1,8 @@
 package it.polimi.ingsw.cg_8.model.cards.dangerousSectorCards;
 
-
-import it.polimi.ingsw.cg_8.model.cards.itemCards.ItemCard;
-import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
-
 public interface NoiseCard {
 	
-	public Coordinate makeNoise(Coordinate c);	
+	public abstract boolean hasToMakeFakeNoise();	
 	
-	public ItemCard drawItem();
-	
-	public String toString();
+	public abstract boolean hasToDrawItem();
 }

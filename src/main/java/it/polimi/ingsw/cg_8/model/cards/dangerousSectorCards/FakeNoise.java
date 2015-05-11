@@ -1,7 +1,5 @@
 package it.polimi.ingsw.cg_8.model.cards.dangerousSectorCards;
 
-import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
-
 public class FakeNoise extends NoiseDecorator {
 	
 	public FakeNoise(NoiseCard  decoratedNoise) {
@@ -9,12 +7,7 @@ public class FakeNoise extends NoiseDecorator {
 	}
 	
 	@Override
-	public Coordinate makeNoise(Coordinate coor) {	// Input coordinate given by the player
-		return coor;
+	public boolean hasToMakeFakeNoise() {
+		return true;
 	}
-	
-	@Override 
-	public String toString() {
-        return "Emitting fake noise";
-    }
 }

@@ -58,4 +58,8 @@ public class CharacterCardTest {
 	 public void hashCodeTest() {
 		 assertEquals(c1.hashCode(), c2.hashCode());
 	 }
+	 @Test
+	 public void toStringTest() {
+		 assertEquals(c1.toString(), "Character: name, \"nick\", as rank\n");
+	 }
 }
