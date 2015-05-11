@@ -16,26 +16,38 @@ public class DangerousSectorTest {
 	NoiseCard c1 = new NormalNoise();
 	NoiseCard c2 = new FakeNoise(new NormalNoise());
 	NoiseCard c3 = new NoiseWithItem(new NormalNoise());
-	NoiseCard c4 = new NoiseWithItem(new FakeNoise(new NormalNoise())); // The other way round doesn't seem to work
+	NoiseCard c4 = new NoiseWithItem(new FakeNoise(new NormalNoise()));
 	
 	@Test
-	public void testGetDescription1() {	
-		assertEquals(c1.toString(), "Noise in the player's position");
+	public void hasToDrawItemTest1() {
+		assertFalse(c1.hasToDrawItem());
 	}
-
 	@Test
-	public void testGetDescription2() {
-		assertEquals(c2.toString(), "Emitting fake noise");
+	public void hasToDrawItemTest2() {
+		assertFalse(c2.hasToDrawItem());
 	}
-
 	@Test
-	public void testGetDescription3() {
-		assertEquals(c3.toString(), "Noise in the player's position Draw an item card");
+	public void hasToDrawItemTest3() {
+		assertTrue(c3.hasToDrawItem());
 	}
-
 	@Test
-	public void testGetDescription4() {
-		assertEquals(c4.toString(), "Emitting fake noise Draw an item card");
+	public void hasToDrawItemTest4() {
+		assertTrue(c4.hasToDrawItem());
 	}
-
+	@Test
+	public void hasToMakeFakeNoiseTest1() {
+		assertFalse(c1.hasToMakeFakeNoise());
+	}
+	@Test
+	public void hasToMakeFakeNoiseTest2() {
+		assertTrue(c2.hasToMakeFakeNoise());
+	}
+	@Test
+	public void hasToMakeFakeNoiseTest3() {
+		assertFalse(c3.hasToMakeFakeNoise());
+	}
+	@Test
+	public void hasToMakeFakeNoiseTest4() {
+		assertTrue(c4.hasToMakeFakeNoise());
+	}
 }

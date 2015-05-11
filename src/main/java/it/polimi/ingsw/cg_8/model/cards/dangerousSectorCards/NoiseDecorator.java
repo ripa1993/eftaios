@@ -1,8 +1,5 @@
 package it.polimi.ingsw.cg_8.model.cards.dangerousSectorCards;
 
-import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
-import it.polimi.ingsw.cg_8.model.cards.itemCards.ItemCard;
-
 public abstract class NoiseDecorator extends DangerousSectorCard implements NoiseCard {
 	
 	protected final NoiseCard decoratedNoise;
@@ -12,15 +9,11 @@ public abstract class NoiseDecorator extends DangerousSectorCard implements Nois
 	}
 	
 	@Override
-	public Coordinate makeNoise(Coordinate c) {
-		return decoratedNoise.makeNoise(c); // Delegation
+	public boolean hasToMakeFakeNoise() {
+		return decoratedNoise.hasToMakeFakeNoise(); // Delegation
 	}
 	@Override
-	public ItemCard drawItem() {
-		return decoratedNoise.drawItem(); // Delegation
+	public boolean hasToDrawItem() {
+		return decoratedNoise.hasToDrawItem(); // Delegation
 	}
-	
-	public String toString() {
-        return decoratedNoise.toString(); //Delegation
-    }
 }
