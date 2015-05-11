@@ -53,9 +53,9 @@ public abstract class MapCreator {
 
 	private final GameMap gm;
 	private final Map<Coordinate, Sector> sectors;
-	
+
 	public MapCreator(GameMap gm) {
-		this.gm=gm;
+		this.gm = gm;
 		sectors = gm.getSectors();
 	}
 
@@ -75,8 +75,8 @@ public abstract class MapCreator {
 		Sector currentSector = new DangerousSector(c.getX(), c.getY());
 		this.addSector(c, currentSector);
 	}
-	
-	protected void addDangerousSector(int x, int y){
+
+	protected void addDangerousSector(int x, int y) {
 		addDangerousSector(new Coordinate(x, y));
 	}
 
@@ -84,36 +84,36 @@ public abstract class MapCreator {
 		Sector currentSector = new SecureSector(c.getX(), c.getY());
 		this.addSector(c, currentSector);
 	}
-	
-	protected void addSecureSector(int x, int y){
+
+	protected void addSecureSector(int x, int y) {
 		addSecureSector(new Coordinate(x, y));
 	}
-
 
 	protected void addEscapeHatchSector(Coordinate c, int number) {
 		Sector currentSector = new EscapeHatchSector(c.getX(), c.getY(), number);
 		this.addSector(c, currentSector);
 	}
-	protected void addEscapeHatchSector(int x, int y, int num){
+
+	protected void addEscapeHatchSector(int x, int y, int num) {
 		addEscapeHatchSector(new Coordinate(x, y), num);
 	}
-
 
 	protected void addHumanSector(Coordinate c) {
 		Sector currentSector = new HumanSector(c.getX(), c.getY());
 		this.addSector(c, currentSector);
 	}
-	
-	protected void addHumanSector(int x, int y){
-		addHumanSector(new Coordinate(x,y));
+
+	protected void addHumanSector(int x, int y) {
+		addHumanSector(new Coordinate(x, y));
 	}
 
 	protected void addAlienSector(Coordinate c) {
 		Sector currentSector = new AlienSector(c.getX(), c.getY());
 		this.addSector(c, currentSector);
 	}
-	protected void addAlienSector(int x, int y){
-		addAlienSector(new Coordinate(x,y));
+
+	protected void addAlienSector(int x, int y) {
+		addAlienSector(new Coordinate(x, y));
 	}
 
 	// can be used only with secure and dangerous sectors, otherwise it will do
@@ -131,11 +131,14 @@ public abstract class MapCreator {
 			while (it.hasNext()) {
 				addDangerousSector(it.next());
 			}
+			break;
+
 		}
 		case SECURE_SECTOR: {
 			while (it.hasNext()) {
 				addSecureSector(it.next());
 			}
+			break;
 
 		}
 		default: {
@@ -159,11 +162,14 @@ public abstract class MapCreator {
 			while (it.hasNext()) {
 				addDangerousSector(it.next());
 			}
+			break;
+
 		}
 		case SECURE_SECTOR: {
 			while (it.hasNext()) {
 				addSecureSector(it.next());
 			}
+			break;
 
 		}
 		default: {
