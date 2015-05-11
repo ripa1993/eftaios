@@ -10,7 +10,7 @@ import java.util.List;
 
 public class EscapeHatchDeckCreator extends DeckCreator {
 	
-	private final int num_card = 3;
+	private static final int num_card = 3;
 	@Override
 	public EscapeHatchDeck createDeck() {
 		EscapeHatchDeck ehDeck = new EscapeHatchDeck();

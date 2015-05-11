@@ -15,11 +15,11 @@ import java.util.List;
 public class ItemDeckCreator extends DeckCreator {
 
 	
-	private final int attCardNum = 2;
-	private final int telCardNum = 2;
-	private final int adrCardNum = 2;
-	private final int sedCardNum = 3;
-	private final int lightCardNum = 2;
+	private static final int attCardNum = 2;
+	private static final int telCardNum = 2;
+	private static final int adrCardNum = 2;
+	private static final int sedCardNum = 3;
+	private static final int lightCardNum = 2;
 	
 	@Override
 	public ItemDeck createDeck() {

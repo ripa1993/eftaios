@@ -12,11 +12,11 @@ import java.util.List;
 
 public class DangerousSectorDeckCreator extends DeckCreator {
 
-	private final int silenceNum = 5;
-	private final int noiseItemNum = 4;
-	private final int noiseNoItemNum = 6;
-	private final int fakeNoiseItemNum = 4;
-	private final int fakeNoiseNoItemNum = 6;
+	private static final int silenceNum = 5;
+	private static final int noiseItemNum = 4;
+	private static final int noiseNoItemNum = 6;
+	private static final int fakeNoiseItemNum = 4;
+	private static final int fakeNoiseNoItemNum = 6;
 	@Override
 	public DangerousSectorDeck createDeck() {
 
