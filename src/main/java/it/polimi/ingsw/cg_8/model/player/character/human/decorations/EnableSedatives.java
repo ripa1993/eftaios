@@ -8,20 +8,6 @@ public class EnableSedatives extends HumanDecorator {
 		
 	}
 	@Override
-	public boolean isAttackAllowed() {
-		return humanBehaviourToBeDecorated.isAttackAllowed();
-	}
-
-	@Override
-	public boolean isDefendAllowed() {
-		return humanBehaviourToBeDecorated.isDefendAllowed();
-	}
-
-	@Override
-	public int getMaxAllowedMovement() {
-		return humanBehaviourToBeDecorated.getMaxAllowedMovement();
-	}
-	@Override
 	public boolean hasToDrawSectorCard(){
 		return false;
 	}

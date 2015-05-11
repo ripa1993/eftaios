@@ -8,23 +8,11 @@ public class EnableAdrenaline extends HumanDecorator {
 		super(humanBehaviourToBeDecorated);
 	}
 	
-	@Override
-	public boolean isAttackAllowed() {
-		return humanBehaviourToBeDecorated.isAttackAllowed();
-	}
-
-	@Override
-	public boolean isDefendAllowed() {
-		return humanBehaviourToBeDecorated.isDefendAllowed();
-	}
 
 	@Override
 	public int getMaxAllowedMovement() {
 		return 2;
 	}
-	@Override
-	public boolean hasToDrawSectorCard(){
-		return humanBehaviourToBeDecorated.hasToDrawSectorCard();
-	}
+
 
 }
