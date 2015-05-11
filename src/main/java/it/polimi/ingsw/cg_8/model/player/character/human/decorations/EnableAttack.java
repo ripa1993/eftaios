@@ -11,17 +11,5 @@ public class EnableAttack extends HumanDecorator {
 	public boolean isAttackAllowed() {
 		return true;
 	}
-	@Override
-	public boolean isDefendAllowed() {
-		return humanBehaviourToBeDecorated.isDefendAllowed();
-	}
 
-	@Override
-	public int getMaxAllowedMovement() {
-		return humanBehaviourToBeDecorated.getMaxAllowedMovement();
-	}
-	@Override
-	public boolean hasToDrawSectorCard(){
-		return humanBehaviourToBeDecorated.hasToDrawSectorCard();
-	}
 }
