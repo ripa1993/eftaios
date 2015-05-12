@@ -1,12 +1,8 @@
 package it.polimi.ingsw.cg_8.model.decks.deckCreators;
 
-import it.polimi.ingsw.cg_8.model.cards.Card;
 import it.polimi.ingsw.cg_8.model.cards.characterCards.AlienCard;
 import it.polimi.ingsw.cg_8.model.cards.characterCards.HumanCard;
 import it.polimi.ingsw.cg_8.model.decks.CharacterDeck;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class CharacterDeckCreator extends DeckCreator {
 
@@ -27,8 +23,5 @@ public class CharacterDeckCreator extends DeckCreator {
 	}
 
 
-	@Override
-	protected List<Card> createCardList() {
-		return new ArrayList<Card>();
-	}
+	
 }

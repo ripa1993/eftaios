@@ -1,6 +1,5 @@
 package it.polimi.ingsw.cg_8.model.decks.deckCreators;
 
-import it.polimi.ingsw.cg_8.model.cards.Card;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.AdrenalineCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.AttackCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.DefenseCard;
@@ -8,9 +7,6 @@ import it.polimi.ingsw.cg_8.model.cards.itemCards.SedativesCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.SpotlightCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.TeleportCard;
 import it.polimi.ingsw.cg_8.model.decks.ItemDeck;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ItemDeckCreator extends DeckCreator {
 
@@ -45,8 +41,5 @@ public class ItemDeckCreator extends DeckCreator {
 		return itemDeck;
 	}
 	
-	@Override
-	protected List<Card> createCardList() {
-		return new ArrayList<Card>();
-	}
+	
 }

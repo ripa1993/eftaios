@@ -1,14 +1,10 @@
 package it.polimi.ingsw.cg_8.model.decks.deckCreators;
 
-import it.polimi.ingsw.cg_8.model.cards.Card;
 import it.polimi.ingsw.cg_8.model.cards.dangerousSectorCards.FakeNoise;
 import it.polimi.ingsw.cg_8.model.cards.dangerousSectorCards.NoiseWithItem;
 import it.polimi.ingsw.cg_8.model.cards.dangerousSectorCards.NormalNoise;
 import it.polimi.ingsw.cg_8.model.cards.dangerousSectorCards.SilenceCard;
 import it.polimi.ingsw.cg_8.model.decks.DangerousSectorDeck;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class DangerousSectorDeckCreator extends DeckCreator {
 
@@ -43,8 +39,6 @@ public class DangerousSectorDeckCreator extends DeckCreator {
 	
 	
 	
-	@Override
-	protected List<Card> createCardList() {
-		return new ArrayList<Card>();
-	}
+
+
 }
