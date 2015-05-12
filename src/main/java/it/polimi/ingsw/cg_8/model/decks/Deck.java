@@ -28,7 +28,7 @@ public abstract class Deck {
 	 */
 	public void reshuffle() {
 		if (this.isDeckEmpty() == true) {
-			if (this.isUsedCardsEmpty() == true) {
+			if (this.isUsedCardsEmpty() == false) {
 				for(Card i : this.usedCards) {
 					this.addCard(i);
 				}
