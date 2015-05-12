@@ -1,6 +1,8 @@
 package it.polimi.ingsw.cg_8.model.player;
 
 import static org.junit.Assert.*;
+import it.polimi.ingsw.cg_8.model.cards.characterCards.CharacterCard;
+import it.polimi.ingsw.cg_8.model.cards.characterCards.HumanCard;
 import it.polimi.ingsw.cg_8.model.player.character.human.Human;
 
 import org.junit.Before;
@@ -8,27 +10,23 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class HumanTest {
-	Player player;
+	CharacterCard cc;
+	static CharacterCard cc2;
 	Human human;
-	static Player player2;
 	static Human human2;
 	
 	
 	@Before
 	public void init() {
-		player = new Player("player");
-		human = new Human(player);
-		player2 = new Player("player2");
-		human2 = new Human(player2);
-		human2.enableAdrenaline();
-		human2.enableSedatives();
-		human2.enableDefend();
-		human2.enableAttack();
+		cc = new HumanCard("Pippo", "pluto", "paperino");
+		
+		human = new Human(cc);
+
 	}
 	@BeforeClass
 	public static void init2(){
-		player2 = new Player("player2");
-		human2 = new Human(player2);
+		cc2 = new HumanCard ("Ingegneria", "del", "software");
+		human2 = new Human(cc2);
 		human2.enableAdrenaline();
 		human2.enableSedatives();
 		human2.enableDefend();
