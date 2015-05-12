@@ -83,4 +83,9 @@ public class PlayerTest {
 		player.editLastPosition(new Coordinate(2,2));
 		assertEquals(player.getLastPosition(), new Coordinate(2,2));
 	}
+	
+	@Test
+	public void testGetHand(){
+		assertTrue(player.getHand() instanceof Hand);
+	}
 }
