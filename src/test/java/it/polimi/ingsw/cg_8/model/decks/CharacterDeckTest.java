@@ -28,9 +28,9 @@ public class CharacterDeckTest {
 	@Before
 	public void init() {
 		charCreator = new CharacterDeckCreator();
-		charDeck = charCreator.createDeck();
-		charDeck2 = charCreator.createDeck();
-		charDeck3 = charCreator.createDeck();
+		charDeck = charCreator.createDeck(8);
+		charDeck2 = charCreator.createDeck(8);
+		charDeck3 = charCreator.createDeck(8);
 	}
 
 	@Test
