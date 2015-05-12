@@ -1,6 +1,8 @@
 package it.polimi.ingsw.cg_8.model.player;
 
 import static org.junit.Assert.*;
+import it.polimi.ingsw.cg_8.model.cards.characterCards.AlienCard;
+import it.polimi.ingsw.cg_8.model.cards.characterCards.CharacterCard;
 import it.polimi.ingsw.cg_8.model.player.character.alien.Alien;
 
 import org.junit.BeforeClass;
@@ -9,15 +11,16 @@ import org.junit.Test;
 public class AlienTest {
 	static Alien normalAlien;
 	static Alien fedAlien;
-	static Player player1;
-	static Player player2;
+	static CharacterCard cc1;
+	static CharacterCard cc2;
 	
 	@BeforeClass
 	public static void init(){
-		player1 = new Player("player1");
-		player2 = new Player("player2");
-		normalAlien = new Alien(player1);
-		fedAlien = new Alien(player2);
+		cc1 = new AlienCard("a", "b", "c");
+		cc2 = new AlienCard("d", "e", "f");
+
+		normalAlien = new Alien(cc1);
+		fedAlien = new Alien(cc2);
 		fedAlien.feedAlien();
 	}
 	

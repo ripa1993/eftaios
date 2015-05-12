@@ -1,15 +1,16 @@
 package it.polimi.ingsw.cg_8.model.player.character;
 
-import it.polimi.ingsw.cg_8.model.player.Player;
+import it.polimi.ingsw.cg_8.model.cards.characterCards.CharacterCard;
 
 public abstract class InGameCharacter {
-	private final Player player;
+	private final CharacterCard characterCard;
 	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((player == null) ? 0 : player.hashCode());
+		result = prime * result
+				+ ((characterCard == null) ? 0 : characterCard.hashCode());
 		return result;
 	}
 
@@ -22,21 +23,19 @@ public abstract class InGameCharacter {
 		if (getClass() != obj.getClass())
 			return false;
 		InGameCharacter other = (InGameCharacter) obj;
-		if (player == null) {
-			if (other.player != null)
+		if (characterCard == null) {
+			if (other.characterCard != null)
 				return false;
-		} else if (!player.equals(other.player))
+		} else if (!characterCard.equals(other.characterCard))
 			return false;
 		return true;
 	}
 
-	public InGameCharacter(Player player){
-		this.player=player;
+	public InGameCharacter(CharacterCard characterCard){
+		
+		this.characterCard = characterCard;
 	}
 	
-	public Player getPlayer() {
-		return player;
-	}
 
 	public abstract boolean isAttackAllowed();
 	public abstract boolean isDefendAllowed();

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.cg_8.model.player.character.human;
 
-import it.polimi.ingsw.cg_8.model.player.Player;
+import it.polimi.ingsw.cg_8.model.cards.characterCards.CharacterCard;
 import it.polimi.ingsw.cg_8.model.player.character.InGameCharacter;
 import it.polimi.ingsw.cg_8.model.player.character.human.decorations.EnableAdrenaline;
 import it.polimi.ingsw.cg_8.model.player.character.human.decorations.EnableAttack;
@@ -10,8 +10,8 @@ import it.polimi.ingsw.cg_8.model.player.character.human.decorations.EnableSedat
 public class Human extends InGameCharacter {
 	private HumanBehaviour currentBehaviour;
 
-	public Human(Player player) {
-		super(player);
+	public Human(CharacterCard characterCard) {
+		super( characterCard);
 		this.currentBehaviour = new NormalHuman();
 	}
 

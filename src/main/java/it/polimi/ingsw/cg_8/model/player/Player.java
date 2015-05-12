@@ -11,7 +11,8 @@ public class Player {
 	private PlayerState state;
 	private final String name;
 	private InGameCharacter character;
-	private List<Round> rounds;
+	private final List<Round> rounds;
+	private final Hand hand;
 
 	// a player is created when he joins the game (match still not running)
 	public Player(String name) {
@@ -19,6 +20,7 @@ public class Player {
 		this.name = name;
 		character = null;
 		rounds = new ArrayList<Round>();
+		hand = new Hand();
 	}
 
 	// a player is initialized when the match actually starts
@@ -117,6 +119,10 @@ public class Player {
 		if (state != other.state)
 			return false;
 		return true;
+	}
+
+	public Hand getHand() {
+		return hand;
 	}
 
 	

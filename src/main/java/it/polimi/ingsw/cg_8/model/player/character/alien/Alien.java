@@ -1,13 +1,13 @@
 package it.polimi.ingsw.cg_8.model.player.character.alien;
 
-import it.polimi.ingsw.cg_8.model.player.Player;
+import it.polimi.ingsw.cg_8.model.cards.characterCards.CharacterCard;
 import it.polimi.ingsw.cg_8.model.player.character.InGameCharacter;
 
 public class Alien extends InGameCharacter {
 	private AlienBehaviour currentBehaviour;
 	
-	public Alien (Player player) {
-		super(player);
+	public Alien ( CharacterCard characterCard) {
+		super( characterCard);
 		this.currentBehaviour = new NormalBehaviour();
 	}
 	
