@@ -4,8 +4,16 @@ import it.polimi.ingsw.cg_8.model.sectors.special.SpecialSector;
 
 public class EscapeHatchSector extends SpecialSector {
 
-	EscapeHatchBehaviour status;
-	int number;
+	private EscapeHatchBehaviour status;
+	final int number;
+
+	public EscapeHatchBehaviour getStatus() {
+		return status;
+	}
+
+	public int getNumber() {
+		return number;
+	}
 
 	public EscapeHatchSector(int x, int y, int number) {
 		super(x, y);
