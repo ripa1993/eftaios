@@ -6,7 +6,6 @@ import it.polimi.ingsw.cg_8.model.cards.characterCards.CharacterCard;
 import it.polimi.ingsw.cg_8.model.decks.deckCreators.CharacterDeckCreator;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 
