@@ -7,7 +7,7 @@ package it.polimi.ingsw.cg_8.controller;
  * @author Alberto Parravicini
  * 
  */
-public final class Controller {
+public class Controller {
 
 	public void startup() {
 		/* Initialization of a new game. */

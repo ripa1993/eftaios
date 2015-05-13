@@ -13,7 +13,7 @@ import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
  */
 public class Rules {
 	/* Checks whether a move is allowed or not. */
-	public boolean checkValidMovement(Player player, Coordinate coordinate) {
+	public boolean checkValidMovement(Player player, Coordinate destination) {
 		return false;
 	}
 
