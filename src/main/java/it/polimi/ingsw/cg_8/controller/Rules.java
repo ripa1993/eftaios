@@ -29,14 +29,19 @@ public class Rules {
 	public Player removePlayerFromGame(Player player) {
 		return null;
 	}
-	
+
 	public boolean validateAttack(Player player) {
+		/*
+		 * Check if the action is permitted, instantiate the Attack class, get
+		 * the position of the attacker, getPlayersInSector, check if they have
+		 * a shield card, if they do remove their card and notify everyone of
+		 * their position (Instantiate Shield Card), if not kill them.
+		 */
 		return false;
 	}
-	
+
 	public void useItemCard(Player player, ItemCard itemCard) {
-		
+
 	}
-	
-	
+
 }
