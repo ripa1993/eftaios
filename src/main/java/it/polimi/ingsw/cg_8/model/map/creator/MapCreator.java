@@ -101,6 +101,7 @@ public abstract class MapCreator {
 	protected void addHumanSector(Coordinate c) {
 		Sector currentSector = new HumanSector(c.getX(), c.getY());
 		this.addSector(c, currentSector);
+		gm.setHumanSpawn(c);
 	}
 
 	protected void addHumanSector(int x, int y) {
@@ -110,6 +111,7 @@ public abstract class MapCreator {
 	protected void addAlienSector(Coordinate c) {
 		Sector currentSector = new AlienSector(c.getX(), c.getY());
 		this.addSector(c, currentSector);
+		gm.setAlienSpawn(c);
 	}
 
 	protected void addAlienSector(int x, int y) {
