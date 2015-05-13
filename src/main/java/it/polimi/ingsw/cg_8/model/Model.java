@@ -73,6 +73,7 @@ public class Model {
 	 * Item card deck
 	 */
 	private Deck itemDeck;
+
 	/**
 	 * Current map
 	 */
@@ -184,8 +185,8 @@ public class Model {
 	}
 
 	/**
-	 * Changes current player to next player in list.
-	 * Increases roundNumber if a complete cycle has been done.
+	 * Changes current player to next player in list. Increases roundNumber if a
+	 * complete cycle has been done.
 	 */
 	public void nextPlayer() {
 		int tempNextPlayer = currentPlayer + 1;
@@ -202,6 +203,45 @@ public class Model {
 		} else {
 			nextPlayer();
 		}
+	}
+	public List<Player> getPlayers() {
+		return players;
+	}
+
+	public int getRoundNumber() {
+		return roundNumber;
+	}
+
+	public int getCurrentPlayer() {
+		return currentPlayer;
+	}
+
+	public int getStartingPlayer() {
+		return startingPlayer;
+	}
+
+	public TurnPhase getTurnPhase() {
+		return turnPhase;
+	}
+
+	public Deck getCharacterDeck() {
+		return characterDeck;
+	}
+
+	public Deck getDangerousSectorDeck() {
+		return dangerousSectorDeck;
+	}
+
+	public Deck getEscapeHatchDeck() {
+		return escapeHatchDeck;
+	}
+
+	public Deck getItemDeck() {
+		return itemDeck;
+	}
+
+	public GameMap getMap() {
+		return map;
 	}
 
 }
