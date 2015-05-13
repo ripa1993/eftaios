@@ -1,11 +1,11 @@
 package it.polimi.ingsw.cg_8.controller;
 
 /**
+ * Main controller class: it handles the initialization of a new game, the main
+ * game loop, and communicates with both the view and the model.
  * 
- * @author Alberto Parravicini 
- * 		Main controller class: it handles the
- *         initialization of a new game, the main game loop, and communicates
- *         with both the view and the model.
+ * @author Alberto Parravicini
+ * 
  */
 public final class Controller {
 
@@ -27,12 +27,15 @@ public final class Controller {
 	public void loop() {
 		/* Main game loop */
 		startup();
-		while (true) {	/* The cycle should be ended when a certain condition is verified. */
+		/*
+		 * The cycle should be ended when a certain condition is verified.
+		 */
+		while (true) {
 			processInput();
 			updateModel();
 			updateView();
 		}
-		//cleanup();
+		// cleanup();
 	}
 
 	public void cleanup() {
@@ -45,8 +48,8 @@ public final class Controller {
 	private void processInput() {
 		/*
 		 * Input handler: analyze inputs given by the player and gives the
-		 * appropriate response (e.g: calls an action).
-		 * Used by the main game loop.
+		 * appropriate response (e.g: calls an action). Used by the main game
+		 * loop.
 		 */
 	}
 }
