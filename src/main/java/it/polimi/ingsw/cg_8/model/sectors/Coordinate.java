@@ -17,6 +17,11 @@ public class Coordinate {
 		this.y=y;
 	}
 
+	public Coordinate() {
+		x=-1;
+		y=-1;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
