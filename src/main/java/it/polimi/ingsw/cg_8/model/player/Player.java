@@ -31,7 +31,7 @@ public class Player {
 	}	
 
 	public int getRoundNumber(){
-		return (rounds.size()-1);
+		return rounds.size()-1;
 	}
 	
 	public Coordinate getLastPosition() {
