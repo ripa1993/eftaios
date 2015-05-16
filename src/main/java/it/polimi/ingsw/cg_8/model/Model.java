@@ -48,11 +48,11 @@ public class Model {
 	/**
 	 * Position in the array players of current player
 	 */
-	private int currentPlayer;
+	private int currentPlayerIndex;
 	/**
 	 * Position in the array players of first player to play
 	 */
-	private int startingPlayer;
+	private int startingPlayerIndex;
 	/**
 	 * Current game phase
 	 */
@@ -82,7 +82,7 @@ public class Model {
 	public Model(GameMapName mapName) {
 		players = new ArrayList<Player>();
 		roundNumber = 0;
-		currentPlayer = 0;
+		currentPlayerIndex = 0;
 		turnPhase = TurnPhase.GAME_SETUP;
 		characterDeck = new CharacterDeck();
 		dangerousSectorDeck = new DangerousSectorDeck();
@@ -168,9 +168,9 @@ public class Model {
 
 		// random picks first player
 		Random random = new Random();
-		currentPlayer = random.nextInt(players.size());
+		currentPlayerIndex = random.nextInt(players.size());
 		nextPlayer();
-		startingPlayer = currentPlayer;
+		startingPlayerIndex = currentPlayerIndex;
 		// sets turn phase and round number
 		roundNumber = 1;
 		turnPhase = TurnPhase.TURN_BEGIN;
@@ -182,17 +182,17 @@ public class Model {
 	 * complete cycle has been done.
 	 */
 	public void nextPlayer() {
-		int tempNextPlayer = currentPlayer + 1;
+		int tempNextPlayer = currentPlayerIndex + 1;
 		if (tempNextPlayer == players.size()) {
 			tempNextPlayer = 0;
 		}
 
-		if (tempNextPlayer == startingPlayer) {
+		if (tempNextPlayer == startingPlayerIndex) {
 			roundNumber++;
 		}
 
 		if (players.get(tempNextPlayer).getState() == PlayerState.ALIVE_WAITING) {
-			currentPlayer = tempNextPlayer;
+			currentPlayerIndex = tempNextPlayer;
 		} else {
 			nextPlayer();
 		}
@@ -207,11 +207,11 @@ public class Model {
 	}
 
 	public int getCurrentPlayer() {
-		return currentPlayer;
+		return currentPlayerIndex;
 	}
 
 	public int getStartingPlayer() {
-		return startingPlayer;
+		return startingPlayerIndex;
 	}
 
 	public TurnPhase getTurnPhase() {

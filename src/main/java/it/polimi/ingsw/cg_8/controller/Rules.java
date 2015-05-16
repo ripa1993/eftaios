@@ -1,6 +1,7 @@
 package it.polimi.ingsw.cg_8.controller;
 
 import it.polimi.ingsw.cg_8.controller.playerActions.Attack;
+import it.polimi.ingsw.cg_8.model.Model;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.DefenseCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.ItemCard;
 import it.polimi.ingsw.cg_8.model.player.Player;
@@ -18,6 +19,11 @@ import java.util.Set;
  *
  */
 public class Rules {
+	private Model model;
+	
+	public Rules(Model model) {
+		this.model = model;
+	}
 	/* Checks whether a move is allowed or not. */
 	public boolean checkValidMovement(Player player, Coordinate destination) {
 		return false;
@@ -36,7 +42,7 @@ public class Rules {
 		return null;
 	}
 
-	public boolean validateAttack(Player player) {
+	public boolean validateAttack() {
 		/*
 		 * Instantiate the Attack class, check if the action is permitted (if
 		 * the player is Human he needs to have an AttackCard), make Noise,  get the
@@ -44,13 +50,13 @@ public class Rules {
 		 * shield card, if they do remove their card and notify everyone of
 		 * their position (Instantiate Shield Card), if not kill them.
 		 */
-		
+		Player player = model.getPlayers().get(model.getCurrentPlayer());
 		Attack attackClass = new Attack(player);
 		boolean validAttack = attackClass.validAttack();
 		
 		if (validAttack == true) {
 			/* TODO: Make Noise! */
-			Set<Player> attackedPlayers = attackClass.getPlayersInSector();
+			Set<Player> attackedPlayers = attackClass.getPlayersInSector(model);
 			
 			for (Player p : attackedPlayers) {
 				List<ItemCard> heldCards = p.getHand().getHeldCards();

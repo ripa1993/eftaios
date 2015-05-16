@@ -1,8 +1,10 @@
 package it.polimi.ingsw.cg_8.controller.playerActions;
 
+import it.polimi.ingsw.cg_8.model.Model;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.AttackCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.ItemCard;
 import it.polimi.ingsw.cg_8.model.player.Player;
+import it.polimi.ingsw.cg_8.model.player.PlayerState;
 import it.polimi.ingsw.cg_8.model.player.character.alien.Alien;
 import it.polimi.ingsw.cg_8.model.player.character.human.Human;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
@@ -57,17 +59,24 @@ public class Attack extends PlayerAction {
 
 	/* Checks if a player has a defense card: if so, this function is called. */
 	public void savePlayerWithDefense() {
-
+		
+		
 	}
 
 	public void killPlayer(Player victim) {
-		/* Change the player's status */
+		victim.setDead();
 		victims.add(victim);
 	}
 
-	public Set<Player> getPlayersInSector() {
+	public Set<Player> getPlayersInSector(Model model) {
 		Coordinate destination = attacker.getLastPosition();
 		/* Get players in "destination"*/
+		List<Player> playerList = model.getPlayers();
+		for(Player p: playerList) {
+			if (p.getLastPosition().equals(destination) && p.getState().equals(PlayerState.ALIVE_WAITING)) {
+				playersInSector.add(p);
+			}
+		}
 		return playersInSector;
 	}
 
