@@ -89,26 +89,19 @@ public class Model {
 		escapeHatchDeck = new EscapeHatchDeck();
 		itemDeck = new ItemDeck();
 		// initialize map
-		switch (mapName) {
-		case FERMI: {
+		if (mapName == GameMapName.FERMI) {
 			MapCreator mc = new FermiCreator();
 			map = mc.createMap();
-			break;
-		}
-		case GALILEI: {
+		} else if (mapName == GameMapName.GALILEI) {
 			MapCreator mc = new GalileiCreator();
 			map = mc.createMap();
-			break;
-		}
-		case GALVANI: {
+		} else if (mapName == GameMapName.GALVANI) {
 			MapCreator mc = new GalvaniCreator();
 			map = mc.createMap();
-			break;
-		}
-		default: {
+		} else {
 			// TODO: throw NotAValidMapException
 		}
-		}
+
 	}
 
 	/**
@@ -169,7 +162,7 @@ public class Model {
 				InGameCharacter currentCharacter = new Human(tempCard);
 				tempPlayer.init(currentCharacter, map.getHumanSpawn());
 			} else {
-				// TODO: throw NotACharacterCardException;
+				// TODO: throw NotACharacterCardException
 			}
 		}
 
@@ -204,6 +197,7 @@ public class Model {
 			nextPlayer();
 		}
 	}
+
 	public List<Player> getPlayers() {
 		return players;
 	}

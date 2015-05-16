@@ -70,8 +70,7 @@ public class MapProxy implements ReachableCoordinatesInterface {
 
 		}
 		if ((currentX & 1) == 1) {
-			if (map.verifySectorExistance(new Coordinate(currentX + 1,
-					currentY))) {
+			if (map.verifySectorExistance(new Coordinate(currentX + 1, currentY))) {
 				connectedCoordinates
 						.add(new Coordinate(currentX + 1, currentY));
 
@@ -81,8 +80,7 @@ public class MapProxy implements ReachableCoordinatesInterface {
 				connectedCoordinates.add(new Coordinate(currentX + 1,
 						currentY + 1));
 			}
-			if (map.verifySectorExistance(new Coordinate(currentX - 1,
-					currentY))) {
+			if (map.verifySectorExistance(new Coordinate(currentX - 1, currentY))) {
 				connectedCoordinates
 						.add(new Coordinate(currentX - 1, currentY));
 			}
@@ -91,9 +89,8 @@ public class MapProxy implements ReachableCoordinatesInterface {
 				connectedCoordinates.add(new Coordinate(currentX - 1,
 						currentY + 1));
 			}
-		} else if ((currentX & 1)==0){
-			if (map.verifySectorExistance(new Coordinate(currentX + 1,
-					currentY))) {
+		} else if ((currentX & 1) == 0) {
+			if (map.verifySectorExistance(new Coordinate(currentX + 1, currentY))) {
 				connectedCoordinates
 						.add(new Coordinate(currentX + 1, currentY));
 
@@ -103,8 +100,7 @@ public class MapProxy implements ReachableCoordinatesInterface {
 				connectedCoordinates.add(new Coordinate(currentX + 1,
 						currentY - 1));
 			}
-			if (map.verifySectorExistance(new Coordinate(currentX - 1,
-					currentY))) {
+			if (map.verifySectorExistance(new Coordinate(currentX - 1, currentY))) {
 				connectedCoordinates
 						.add(new Coordinate(currentX - 1, currentY));
 			}
@@ -124,9 +120,8 @@ public class MapProxy implements ReachableCoordinatesInterface {
 		if (reachableCoordinates.get(c) == null) {
 			calculateReachableCoordinates(c);
 		}
-//		return reachableCoordinates.get(c).get(depth);
 		Set<Coordinate> toBeReturned = new HashSet<Coordinate>();
-		for(int i=1; i<=depth; i++){
+		for (int i = 1; i <= depth; i++) {
 			toBeReturned.addAll(reachableCoordinates.get(c).get(i));
 		}
 		return toBeReturned;
@@ -166,10 +161,7 @@ public class MapProxy implements ReachableCoordinatesInterface {
 
 		// save the 3 depth in a hashmap
 		thisCoordinateHashMap.put(1, new HashSet<Coordinate>(firstRun));
-//		thisCoordinateHashMap.put(2, new HashSet<Coordinate>(firstRun));
-//		thisCoordinateHashMap.put(3, new HashSet<Coordinate>(firstRun));
 		thisCoordinateHashMap.put(2, new HashSet<Coordinate>(secondRun));
-//		thisCoordinateHashMap.put(3, new HashSet<Coordinate>(secondRun));
 		thisCoordinateHashMap.put(3, new HashSet<Coordinate>(thirdRun));
 
 		// adds the hashmap to the reachableCoordinates hashmap
