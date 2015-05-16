@@ -132,25 +132,17 @@ public abstract class MapCreator {
 	}
 	
 	private void sectorsIteration(Iterator<Coordinate> it, SectorType st){
-		switch (st) {
-		case DANGEROUS_SECTOR: {
+		if(st == SectorType.DANGEROUS_SECTOR) {
 			while (it.hasNext()) {
 				addDangerousSector(it.next());
 			}
-			break;
+		} else if(st == SectorType.SECURE_SECTOR){
 
-		}
-		case SECURE_SECTOR: {
 			while (it.hasNext()) {
 				addSecureSector(it.next());
 			}
-			break;
 
-		}
-		default: {
-			return;
-		}
-		}
+		} else return;
 		
 	}
 
