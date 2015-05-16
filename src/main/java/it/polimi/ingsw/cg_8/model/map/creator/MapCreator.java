@@ -128,6 +128,10 @@ public abstract class MapCreator {
 			currentSet.add(new Coordinate(column, i));
 		}
 		Iterator<Coordinate> it = currentSet.iterator();
+		sectorsIteration(it,st);
+	}
+	
+	private void sectorsIteration(Iterator<Coordinate> it, SectorType st){
 		switch (st) {
 		case DANGEROUS_SECTOR: {
 			while (it.hasNext()) {
@@ -147,6 +151,7 @@ public abstract class MapCreator {
 			return;
 		}
 		}
+		
 	}
 
 	// can be used only with secure and dangerous sectors, otherwise it will do
@@ -159,25 +164,7 @@ public abstract class MapCreator {
 			currentSet.add(new Coordinate(i, row));
 		}
 		Iterator<Coordinate> it = currentSet.iterator();
-		switch (st) {
-		case DANGEROUS_SECTOR: {
-			while (it.hasNext()) {
-				addDangerousSector(it.next());
-			}
-			break;
-
-		}
-		case SECURE_SECTOR: {
-			while (it.hasNext()) {
-				addSecureSector(it.next());
-			}
-			break;
-
-		}
-		default: {
-			return;
-		}
-		}
+		sectorsIteration(it,st);
 	}
 
 	abstract public GameMap createMap();
