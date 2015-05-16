@@ -12,6 +12,8 @@ import it.polimi.ingsw.cg_8.model.decks.deckCreators.CharacterDeckCreator;
 import it.polimi.ingsw.cg_8.model.decks.deckCreators.DangerousSectorDeckCreator;
 import it.polimi.ingsw.cg_8.model.decks.deckCreators.EscapeHatchDeckCreator;
 import it.polimi.ingsw.cg_8.model.decks.deckCreators.ItemDeckCreator;
+import it.polimi.ingsw.cg_8.model.exceptions.GameAlreadyRunningException;
+import it.polimi.ingsw.cg_8.model.exceptions.NotAValidMapException;
 import it.polimi.ingsw.cg_8.model.map.GameMap;
 import it.polimi.ingsw.cg_8.model.map.GameMapName;
 import it.polimi.ingsw.cg_8.model.map.creator.FermiCreator;
@@ -79,7 +81,14 @@ public class Model {
 	 */
 	private GameMap map;
 
-	public Model(GameMapName mapName) {
+	/**
+	 * Constructor for model class
+	 * 
+	 * @param mapName
+	 *            name of the map to be created in the model
+	 * @throws NotAValidMapException
+	 */
+	public Model(GameMapName mapName) throws NotAValidMapException {
 		players = new ArrayList<Player>();
 		roundNumber = 0;
 		currentPlayer = 0;
@@ -99,7 +108,7 @@ public class Model {
 			MapCreator mc = new GalvaniCreator();
 			map = mc.createMap();
 		} else {
-			// TODO: throw NotAValidMapException
+			throw new NotAValidMapException(mapName + "is not a valid map");
 		}
 
 	}
@@ -109,30 +118,30 @@ public class Model {
 	 * 
 	 * @param name
 	 *            name of the player
+	 * @throws GameAlreadyRunningException
 	 */
-	public void addPlayer(String name) {
+	public void addPlayer(String name) throws GameAlreadyRunningException {
 		if (turnPhase == TurnPhase.GAME_SETUP) {
 			Player tempPlayer = new Player(name);
 			players.add(tempPlayer);
 		} else {
-			// TODO: throw GameAlreadyRunningException
+			throw new GameAlreadyRunningException(
+					"Game is already running, can't add a new player");
 		}
 	}
 
 	/**
 	 * This method removes a player from a starting game
 	 */
-	public void removePlayer(Player player) {
-		try {
-			if (turnPhase == TurnPhase.GAME_SETUP) {
-				players.remove(player);
-			} else {
-				// TODO: throw GameAlreadyRunningException
-			}
+	public void removePlayer(Player player) throws GameAlreadyRunningException {
 
-		} catch (Exception e) {
-
+		if (turnPhase == TurnPhase.GAME_SETUP) {
+			players.remove(player);
+		} else {
+			throw new GameAlreadyRunningException(
+					"Game is already running, can't remove a player");
 		}
+
 	}
 
 	/**
@@ -161,8 +170,6 @@ public class Model {
 			} else if (tempCard instanceof HumanCard) {
 				InGameCharacter currentCharacter = new Human(tempCard);
 				tempPlayer.init(currentCharacter, map.getHumanSpawn());
-			} else {
-				// TODO: throw NotACharacterCardException
 			}
 		}
 
