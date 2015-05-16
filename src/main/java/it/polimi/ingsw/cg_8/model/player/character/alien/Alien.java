@@ -42,6 +42,7 @@ public class Alien extends InGameCharacter {
 		this.currentBehaviour = new FedBehaviour();
 	}
 	
+	@Override
 	public int getMaxAllowedMovement(){
 		return currentBehaviour.getMaxMovementDistance();
 	}
