@@ -101,6 +101,7 @@ public abstract class MapCreator {
 	protected void addHumanSector(Coordinate c) {
 		Sector currentSector = new HumanSector(c.getX(), c.getY());
 		this.addSector(c, currentSector);
+		gm.setHumanSpawn(c);
 	}
 
 	protected void addHumanSector(int x, int y) {
@@ -110,6 +111,7 @@ public abstract class MapCreator {
 	protected void addAlienSector(Coordinate c) {
 		Sector currentSector = new AlienSector(c.getX(), c.getY());
 		this.addSector(c, currentSector);
+		gm.setAlienSpawn(c);
 	}
 
 	protected void addAlienSector(int x, int y) {
@@ -126,25 +128,22 @@ public abstract class MapCreator {
 			currentSet.add(new Coordinate(column, i));
 		}
 		Iterator<Coordinate> it = currentSet.iterator();
-		switch (st) {
-		case DANGEROUS_SECTOR: {
+		sectorsIteration(it,st);
+	}
+	
+	private void sectorsIteration(Iterator<Coordinate> it, SectorType st){
+		if(st == SectorType.DANGEROUS_SECTOR) {
 			while (it.hasNext()) {
 				addDangerousSector(it.next());
 			}
-			break;
+		} else if(st == SectorType.SECURE_SECTOR){
 
-		}
-		case SECURE_SECTOR: {
 			while (it.hasNext()) {
 				addSecureSector(it.next());
 			}
-			break;
 
-		}
-		default: {
-			return;
-		}
-		}
+		} else return;
+		
 	}
 
 	// can be used only with secure and dangerous sectors, otherwise it will do
@@ -157,25 +156,7 @@ public abstract class MapCreator {
 			currentSet.add(new Coordinate(i, row));
 		}
 		Iterator<Coordinate> it = currentSet.iterator();
-		switch (st) {
-		case DANGEROUS_SECTOR: {
-			while (it.hasNext()) {
-				addDangerousSector(it.next());
-			}
-			break;
-
-		}
-		case SECURE_SECTOR: {
-			while (it.hasNext()) {
-				addSecureSector(it.next());
-			}
-			break;
-
-		}
-		default: {
-			return;
-		}
-		}
+		sectorsIteration(it,st);
 	}
 
 	abstract public GameMap createMap();

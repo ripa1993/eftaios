@@ -42,13 +42,25 @@ public abstract class GameMap implements ReachableCoordinatesInterface {
 
 	private final Map<Coordinate, Sector> sectors;
 	private final MapProxy mapProxy;
+	private Coordinate humanSpawn;
+	private Coordinate alienSpawn;
 	
 	
 	public GameMap() {
 		sectors = new HashMap<Coordinate, Sector>();
 		mapProxy = new MapProxy(this);
+		humanSpawn = new Coordinate();
+		alienSpawn = new Coordinate();
 	}
 	
+	public Coordinate getHumanSpawn() {
+		return humanSpawn;
+	}
+
+	public Coordinate getAlienSpawn() {
+		return alienSpawn;
+	}
+
 	public Map<Coordinate, Sector> getSectors() {
 		return sectors;
 	}
@@ -79,5 +91,15 @@ public abstract class GameMap implements ReachableCoordinatesInterface {
 		}
 		return true;
 	}
+
+	public void setHumanSpawn(Coordinate humanSpawn) {
+		this.humanSpawn = humanSpawn;
+	}
+
+	public void setAlienSpawn(Coordinate alienSpawn) {
+		this.alienSpawn = alienSpawn;
+	}
+	
+	
 
 }

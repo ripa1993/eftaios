@@ -25,11 +25,11 @@ public class CharacterDeckCreator extends DeckCreator {
 		aliens.add(new AlienCard("Maria Galbani",null,"The Third Alien"));
 		aliens.add(new AlienCard("Paolo Landon",null,"The Fourth Alien"));
 		
-		for(int i =0; i< Math.floor(numPlayer/2); i++){
+		for(int i =0; i< Math.floor((double) numPlayer/2); i++){
 			charDeck.addCard(humans.get(i));
 		}
 		
-		for(int i =0; i< Math.ceil(numPlayer/2); i++){
+		for(int i =0; i< Math.ceil((double) numPlayer/2); i++){
 			charDeck.addCard(aliens.get(i));
 		}
 		

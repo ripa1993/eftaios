@@ -8,8 +8,6 @@ import java.util.List;
 
 public abstract class Deck {
 
-	
-
 	private List<Card> cardList;
 	private List<Card> usedCards;
 
@@ -18,63 +16,59 @@ public abstract class Deck {
 		this.usedCards = new ArrayList<Card>();
 	}
 
-	
 	public void shuffle() {
 		Collections.shuffle(this.cardList);
 	}
-	
-	/* Puts every used card into the main Deck. Used by "Item" and "Dangerous Sector" Decks
-	 * It should be able to handle the exception of having an empty Used Card List, and return it to a higher level
+
+	/*
+	 * Puts every used card into the main Deck. Used by "Item" and
+	 * "Dangerous Sector" Decks It should be able to handle the exception of
+	 * having an empty Used Card List, and return it to a higher level
 	 */
 	public void reshuffle() {
-		if (this.isDeckEmpty() == true) {
-			if (this.isUsedCardsEmpty() == false) {
-				for(Card i : this.usedCards) {
-					this.addCard(i);
-				}
-				this.emptyUsedCardList();
+
+		if (this.isDeckEmpty() == true && this.isUsedCardsEmpty() == false) {
+			for (Card i : this.usedCards) {
+				this.addCard(i);
 			}
+			this.emptyUsedCardList();
 		}
+
 	}
-	
+
 	private void emptyUsedCardList() {
 		this.usedCards.clear();
 	}
-	
+
 	// Add and Remove cards from the lists
 	public void addCard(Card card) {
 		this.cardList.add(card);
 	}
-	
+
 	public void addUsedCard(Card card) {
 		this.usedCards.add(card);
 	}
-	
-	
+
 	// Overriden by "Item" and "Dangerous Sector" Decks
 	public Card drawCard() {
 		if (isDeckEmpty() == false) {
 			return cardList.remove(0);
 		} else
-			return null; 
+			return null;
 	}
 
 	protected boolean isDeckEmpty() {
-		if (this.cardList.isEmpty()) {
-			return true;
-		} else
-			return false;
+		return this.cardList.isEmpty();
 	}
+
 	protected boolean isUsedCardsEmpty() {
-		if (this.usedCards.isEmpty()) {
-			return true;
-		} else
-			return false;
+		return this.usedCards.isEmpty();
 	}
 
 	public List<Card> getCards() {
 		return this.cardList;
 	}
+
 	public List<Card> getUsedCards() {
 		return this.usedCards;
 	}
@@ -108,7 +102,8 @@ public abstract class Deck {
 			if (other.cardList != null)
 				return false;
 		} else if (!cardList.equals(other.cardList)) {
-			return false; }
+			return false;
+		}
 		if (usedCards == null) {
 			if (other.usedCards != null)
 				return false;
