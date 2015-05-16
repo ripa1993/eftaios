@@ -91,24 +91,36 @@ public class Model {
 		// initialize map
 		switch (mapName) {
 		case FERMI: {
-			MapCreator mc = new FermiCreator();
-			map = mc.createMap();
+			initFermi();
 			break;
 		}
 		case GALILEI: {
-			MapCreator mc = new GalileiCreator();
-			map = mc.createMap();
+			initGalilei();
 			break;
 		}
 		case GALVANI: {
-			MapCreator mc = new GalvaniCreator();
-			map = mc.createMap();
+			initGalvani();
 			break;
 		}
 		default: {
 			// TODO: throw NotAValidMapException
 		}
 		}
+	}
+
+	private void initFermi() {
+		MapCreator mc = new FermiCreator();
+		map = mc.createMap();
+	}
+
+	private void initGalilei() {
+		MapCreator mc = new GalileiCreator();
+		map = mc.createMap();
+	}
+
+	private void initGalvani() {
+		MapCreator mc = new GalvaniCreator();
+		map = mc.createMap();
 	}
 
 	/**
@@ -204,6 +216,7 @@ public class Model {
 			nextPlayer();
 		}
 	}
+
 	public List<Player> getPlayers() {
 		return players;
 	}
