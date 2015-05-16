@@ -36,8 +36,6 @@ public class Attack extends PlayerAction {
 	
 	/** Checks if the attack is valid: if the player is a human, he has to use an AttackCard);
 	 * 
-	 * @param player
-	 * @return
 	 */
 	public boolean validAttack() {
 		boolean validAttack = false;
