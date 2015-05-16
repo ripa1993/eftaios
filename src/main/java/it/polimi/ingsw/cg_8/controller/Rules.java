@@ -1,13 +1,14 @@
 package it.polimi.ingsw.cg_8.controller;
 
-import it.polimi.ingsw.cg_8.model.cards.itemCards.AttackCard;
+import it.polimi.ingsw.cg_8.controller.playerActions.Attack;
+import it.polimi.ingsw.cg_8.model.cards.itemCards.DefenseCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.ItemCard;
 import it.polimi.ingsw.cg_8.model.player.Player;
-import it.polimi.ingsw.cg_8.model.player.character.alien.Alien;
 import it.polimi.ingsw.cg_8.model.player.character.human.Human;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * This class contains most of the game logic, in terms of rules and actions
@@ -37,29 +38,38 @@ public class Rules {
 
 	public boolean validateAttack(Player player) {
 		/*
-		 * Check if the action is permitted (if the player is Human he needs to
-		 * have an AttackCard), instantiate the Attack class, get the position
-		 * of the attacker, getPlayersInSector, check if they have a shield
-		 * card, if they do remove their card and notify everyone of their
-		 * position (Instantiate Shield Card), if not kill them.
+		 * Instantiate the Attack class, check if the action is permitted (if
+		 * the player is Human he needs to have an AttackCard), make Noise,  get the
+		 * position of the attacker, getPlayersInSector, check if they have a
+		 * shield card, if they do remove their card and notify everyone of
+		 * their position (Instantiate Shield Card), if not kill them.
 		 */
-		boolean validAttack = false;
 		
-		if (player.getCharacter() instanceof Alien) {
-			validAttack = true;
-		}
-		else if (player.getCharacter() instanceof Human) {
-			List<ItemCard> heldCards = player.getHand().getHeldCards();
-			for(ItemCard i :heldCards) {
-				if (i instanceof AttackCard) {
-					heldCards.remove(i);
-				}
+		Attack attackClass = new Attack(player);
+		boolean validAttack = attackClass.validAttack();
+		
+		if (validAttack == true) {
+			/* TODO: Make Noise! */
+			Set<Player> attackedPlayers = attackClass.getPlayersInSector();
 			
+			for (Player p : attackedPlayers) {
+				List<ItemCard> heldCards = p.getHand().getHeldCards();
 				
-				
+				for (ItemCard c : heldCards) {
+					if (c instanceof DefenseCard && p.getCharacter() instanceof Human) {
+						heldCards.remove(c);
+						/* TODO: Instantiate the ShieldAction */
+					}
+					else {
+						attackClass.killPlayer(p);
+					}
+				}
 			}
+			return validAttack;
 		}
-		return false;
+		else {
+			return validAttack;
+		}
 	}
 
 	public void useItemCard(Player player, ItemCard itemCard) {

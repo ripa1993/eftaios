@@ -7,6 +7,7 @@ import it.polimi.ingsw.cg_8.model.player.character.alien.Alien;
 import it.polimi.ingsw.cg_8.model.player.character.human.Human;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -20,24 +21,33 @@ import java.util.Set;
  */
 public class Attack extends PlayerAction {
 
+	private Player attacker;
 	private Set<Player> victims;
 	private Set<Player> playersInSector;
+	
+	
+	public Attack(Player attacker) {
+		this.attacker = attacker;
+		victims = new HashSet<Player>();
+		playersInSector = new HashSet<Player>();	
+	}
 	
 	/** Checks if the attack is valid: if the player is a human, he has to use an AttackCard);
 	 * 
 	 * @param player
 	 * @return
 	 */
-	public boolean validAttack(Player player) {
+	public boolean validAttack() {
 		boolean validAttack = false;
 
-		if (player.getCharacter() instanceof Alien) {
+		if (attacker.getCharacter() instanceof Alien) {
 			validAttack = true;
-		} else if (player.getCharacter() instanceof Human) {
-			List<ItemCard> heldCards = player.getHand().getHeldCards();
-			for (ItemCard i : heldCards) {
-				if (i instanceof AttackCard) {
-					heldCards.remove(i);
+		} else if (attacker.getCharacter() instanceof Human) {
+			List<ItemCard> heldCards = attacker.getHand().getHeldCards();
+			for (ItemCard c : heldCards) {
+				if (c instanceof AttackCard) {
+					heldCards.remove(c);
+					/* TODO: Use Attack Card */
 					validAttack = true;
 				}
 			}
@@ -55,7 +65,9 @@ public class Attack extends PlayerAction {
 		victims.add(victim);
 	}
 
-	public Set<Player> getPlayerInSector(Coordinate destination) {
+	public Set<Player> getPlayersInSector() {
+		Coordinate destination = attacker.getLastPosition();
+		/* Get players in "destination"*/
 		return playersInSector;
 	}
 
