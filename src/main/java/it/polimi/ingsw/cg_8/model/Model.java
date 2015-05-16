@@ -36,7 +36,6 @@ import java.util.Random;
  *
  */
 public class Model {
-
 	/**
 	 * List of players in the current game
 	 */

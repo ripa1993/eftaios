@@ -102,6 +102,4 @@ public class ModelTest {
 		model2.initGame();
 		assertTrue(model2.getMap() instanceof GalileiMap);
 	}
-	
-	
 }
