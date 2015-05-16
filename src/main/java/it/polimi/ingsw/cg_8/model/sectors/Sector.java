@@ -1,13 +1,13 @@
 package it.polimi.ingsw.cg_8.model.sectors;
 /**
- * Abstract sector class, every sector extends this class
+ * Abstract sector class, it is extended by any sector
  * @author Simone
  *
  */
 
 public abstract class Sector extends Coordinate {
 /**
- * Default constructor for sector
+ * Default constructor for {@link Sector}
  * @param x column number, first column is column 0
  * @param y	row number, first row is row 0
  */

@@ -35,7 +35,7 @@ public class Coordinate {
 	}
 
 	/**
-	 * Constructor for coordinate
+	 * Constructor for {@link Coordinate}
 	 * 
 	 * @param x
 	 *            column number
@@ -52,7 +52,7 @@ public class Coordinate {
 	}
 
 	/**
-	 * Default constructor for coordinates, creates a non valid coordinate
+	 * Default constructor for {@link Coordinate}, creates a non valid coordinate
 	 * (negative value)
 	 */
 	public Coordinate() {
