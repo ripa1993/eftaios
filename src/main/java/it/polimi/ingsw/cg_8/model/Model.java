@@ -162,7 +162,7 @@ public class Model {
 				InGameCharacter currentCharacter = new Human(tempCard);
 				tempPlayer.init(currentCharacter, map.getHumanSpawn());
 			} else {
-				// TODO: throw NotACharacterCardException;
+				// TODO: throw NotACharacterCardException
 			}
 		}
 

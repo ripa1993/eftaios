@@ -166,10 +166,7 @@ public class MapProxy implements ReachableCoordinatesInterface {
 
 		// save the 3 depth in a hashmap
 		thisCoordinateHashMap.put(1, new HashSet<Coordinate>(firstRun));
-//		thisCoordinateHashMap.put(2, new HashSet<Coordinate>(firstRun));
-//		thisCoordinateHashMap.put(3, new HashSet<Coordinate>(firstRun));
 		thisCoordinateHashMap.put(2, new HashSet<Coordinate>(secondRun));
-//		thisCoordinateHashMap.put(3, new HashSet<Coordinate>(secondRun));
 		thisCoordinateHashMap.put(3, new HashSet<Coordinate>(thirdRun));
 
 		// adds the hashmap to the reachableCoordinates hashmap
