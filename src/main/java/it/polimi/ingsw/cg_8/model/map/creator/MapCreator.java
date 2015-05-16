@@ -130,30 +130,22 @@ public abstract class MapCreator {
 		Iterator<Coordinate> it = currentSet.iterator();
 		switch (st) {
 		case DANGEROUS_SECTOR: {
-			DSIteration(it);
+			while (it.hasNext()) {
+				addDangerousSector(it.next());
+			}
 			break;
 
 		}
 		case SECURE_SECTOR: {
-			SSIteration(it);
+			while (it.hasNext()) {
+				addSecureSector(it.next());
+			}
 			break;
 
 		}
 		default: {
 			return;
 		}
-		}
-	}
-	
-	private void DSIteration(Iterator<Coordinate> it){
-		while (it.hasNext()) {
-			addDangerousSector(it.next());
-		}
-	}
-	
-	private void SSIteration(Iterator<Coordinate> it){
-		while (it.hasNext()) {
-			addSecureSector(it.next());
 		}
 	}
 
