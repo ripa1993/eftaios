@@ -58,17 +58,11 @@ public abstract class Deck {
 	}
 
 	protected boolean isDeckEmpty() {
-		if (this.cardList.isEmpty()) {
-			return true;
-		} else
-			return false;
+		return this.cardList.isEmpty();
 	}
 
 	protected boolean isUsedCardsEmpty() {
-		if (this.usedCards.isEmpty()) {
-			return true;
-		} else
-			return false;
+		return this.usedCards.isEmpty();
 	}
 
 	public List<Card> getCards() {
