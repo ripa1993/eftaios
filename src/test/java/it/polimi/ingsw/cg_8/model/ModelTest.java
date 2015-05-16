@@ -6,6 +6,8 @@ import it.polimi.ingsw.cg_8.model.decks.DangerousSectorDeck;
 import it.polimi.ingsw.cg_8.model.decks.EscapeHatchDeck;
 import it.polimi.ingsw.cg_8.model.decks.ItemDeck;
 import it.polimi.ingsw.cg_8.model.map.FermiMap;
+import it.polimi.ingsw.cg_8.model.map.GalileiMap;
+import it.polimi.ingsw.cg_8.model.map.GalvaniMap;
 import it.polimi.ingsw.cg_8.model.map.GameMapName;
 
 import org.junit.Before;
@@ -79,7 +81,25 @@ public class ModelTest {
 	}
 	
 	@Test
-	public void getMap(){
+	public void testGetMap(){
 		assertTrue(model.getMap() instanceof FermiMap);
+	}
+	
+	@Test
+	public void testConstructorGalvani(){
+		Model model2 = new Model(GameMapName.GALVANI);
+		model2.addPlayer("prova");
+		model2.addPlayer("test");
+		model2.initGame();
+		assertTrue(model2.getMap() instanceof GalvaniMap);
+	}
+	
+	@Test
+	public void testConstructorGalilei(){
+		Model model2 = new Model(GameMapName.GALILEI);
+		model2.addPlayer("prova");
+		model2.addPlayer("test");
+		model2.initGame();
+		assertTrue(model2.getMap() instanceof GalileiMap);
 	}
 }
