@@ -34,8 +34,8 @@ public class Attack extends PlayerAction {
 		playersInSector = new HashSet<Player>();	
 	}
 	
-	/** Checks if the attack is valid: if the player is a human, he has to use an AttackCard);
-	 * 
+	/**
+	 *  Checks if the attack is valid: if the player is a human, he has to use an AttackCard;
 	 */
 	public boolean validAttack() {
 		boolean validAttack = false;
@@ -56,7 +56,7 @@ public class Attack extends PlayerAction {
 	}
 
 	/* Checks if a player has a defense card: if so, this function is called. */
-	public void savePlayerWithDefense() {
+	public void savePlayerWithDefense(Player player) {
 		
 		
 	}
@@ -68,7 +68,7 @@ public class Attack extends PlayerAction {
 
 	public Set<Player> getPlayersInSector(Model model) {
 		Coordinate destination = attacker.getLastPosition();
-		/* Get players in "destination"*/
+
 		List<Player> playerList = model.getPlayers();
 		for(Player p: playerList) {
 			if (p.getLastPosition().equals(destination) && p.getState().equals(PlayerState.ALIVE_WAITING)) {

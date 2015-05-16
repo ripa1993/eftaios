@@ -64,7 +64,7 @@ public class Rules {
 				for (ItemCard c : heldCards) {
 					if (c instanceof DefenseCard && p.getCharacter() instanceof Human) {
 						heldCards.remove(c);
-						/* TODO: Instantiate the ShieldAction */
+						attackClass.savePlayerWithDefense(p);
 					}
 					else {
 						attackClass.killPlayer(p);
