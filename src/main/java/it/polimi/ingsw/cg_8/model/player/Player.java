@@ -71,7 +71,7 @@ public class Player {
 		state = PlayerState.DEAD;
 	}
 
-	// changes the status from playing to waiting and viceversa
+	// changes the status from playing to waiting and vice-versa
 	public void cycleState() {
 		if (state == PlayerState.ALIVE_WAITING) {
 			state = PlayerState.ALIVE_PLAYING;

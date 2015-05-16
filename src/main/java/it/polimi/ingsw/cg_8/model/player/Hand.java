@@ -19,6 +19,8 @@ public class Hand {
 
 	
 	// gives the card and removes it from the heldCards
+	
+	
 	public ItemCard getCard(int item) {
 		try {
 			return heldCards.remove(item);
@@ -40,6 +42,7 @@ public class Hand {
 		
 	}
 	
+
 
 	
 	

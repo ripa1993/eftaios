@@ -1,8 +1,13 @@
 package it.polimi.ingsw.cg_8.controller;
 
+import it.polimi.ingsw.cg_8.model.cards.itemCards.AttackCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.ItemCard;
 import it.polimi.ingsw.cg_8.model.player.Player;
+import it.polimi.ingsw.cg_8.model.player.character.alien.Alien;
+import it.polimi.ingsw.cg_8.model.player.character.human.Human;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
+
+import java.util.List;
 
 /**
  * This class contains most of the game logic, in terms of rules and actions
@@ -32,11 +37,28 @@ public class Rules {
 
 	public boolean validateAttack(Player player) {
 		/*
-		 * Check if the action is permitted, instantiate the Attack class, get
-		 * the position of the attacker, getPlayersInSector, check if they have
-		 * a shield card, if they do remove their card and notify everyone of
-		 * their position (Instantiate Shield Card), if not kill them.
+		 * Check if the action is permitted (if the player is Human he needs to
+		 * have an AttackCard), instantiate the Attack class, get the position
+		 * of the attacker, getPlayersInSector, check if they have a shield
+		 * card, if they do remove their card and notify everyone of their
+		 * position (Instantiate Shield Card), if not kill them.
 		 */
+		boolean validAttack = false;
+		
+		if (player.getCharacter() instanceof Alien) {
+			validAttack = true;
+		}
+		else if (player.getCharacter() instanceof Human) {
+			List<ItemCard> heldCards = player.getHand().getHeldCards();
+			for(ItemCard i :heldCards) {
+				if (i instanceof AttackCard) {
+					heldCards.remove(i);
+				}
+			
+				
+				
+			}
+		}
 		return false;
 	}
 
