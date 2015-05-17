@@ -1,5 +1,6 @@
 package it.polimi.ingsw.cg_8.controller.playerActions;
 
+import it.polimi.ingsw.cg_8.model.map.GameMap;
 import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 
@@ -19,26 +20,36 @@ public class Movement extends PlayerAction {
 	private final Coordinate startingSector;
 	private final Set<Coordinate> allowedCoordinates;
 	private final Coordinate destination;
-	
-	public Movement(Player player, Coordinate destination) {
-		startingSector = player.getLastPosition(); /* Not sure if this is the right method to call */
+	private final GameMap gameMap;
+	private int range;
+
+	public Movement(Player player, Coordinate destination, GameMap gameMap) {
+		startingSector = player.getLastPosition();
 		allowedCoordinates = new HashSet<Coordinate>();
 		this.destination = destination;
+		this.gameMap = gameMap;
+		this.range = player.getCharacter().getMaxAllowedMovement();
 	}
-	
-	/* Returns the coordinates that can be reached by the player. */
-	public void setAllowedCoordinates() {
 
+	/*
+	 * Add to allowedCoordinates the coordinates that can be reached by the
+	 * player.
+	 */
+	private void setAllowedCoordinates() {
+		allowedCoordinates.addAll(gameMap.getReachableCoordinates(
+				startingSector, range));
 	}
-	
-	public Set<Coordinate> getAllowedCoordinates() {
-		return allowedCoordinates;
-	}
-	
-	public boolean isMoveAllowed() {
-		if (destination != startingSector && allowedCoordinates.contains(destination)) {
+
+	private boolean isMoveAllowed() {
+		if (destination != startingSector
+				&& allowedCoordinates.contains(destination)) {
 			return true;
-		}
-		else return false;
+		} else
+			return false;
+	}
+	
+	public boolean evaluateMove() {
+		this.setAllowedCoordinates();
+		return isMoveAllowed();		
 	}
 }
