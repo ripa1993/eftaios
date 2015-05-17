@@ -2,26 +2,47 @@ package it.polimi.ingsw.cg_8.model.player;
 
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 
+/**
+ * Round class is used in the {@link it.polimi.ingsw.cg_8.model.Model Model} to
+ * keep the history of the player movements.
+ * 
+ * @author Simone
+ *
+ */
 public class Round {
+	/**
+	 * Turn number
+	 */
 	private final int number;
-	private final Coordinate coordinate; // ending position in the turn #number
-	
-	
-	public Round (int number, Coordinate coordinate){
+	/**
+	 * Ending position in the current turn
+	 */
+	private final Coordinate coordinate; 
+
+	/**
+	 * Constructor for round
+	 * @param number round number
+	 * @param coordinate ending position
+	 */
+	public Round(int number, Coordinate coordinate) {
 		this.number = number;
 		this.coordinate = coordinate;
 	}
-
-
+	/**
+	 * Getter for round number
+	 * @return round number
+	 */
 	public int getNumber() {
 		return number;
 	}
 
-
+	/**
+	 * Getter for ending position coordinate
+	 * @return round coordinate
+	 */
 	public Coordinate getCoordinate() {
 		return coordinate;
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -32,7 +53,6 @@ public class Round {
 		result = prime * result + number;
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -52,6 +72,9 @@ public class Round {
 			return false;
 		return true;
 	}
-	
-	
+	@Override
+	public String toString() {
+		return "Round [number=" + number + ", coordinate=" + coordinate + "]";
+	}
+
 }

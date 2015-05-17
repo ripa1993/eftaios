@@ -1,9 +1,15 @@
 package it.polimi.ingsw.cg_8.model.player.character.human;
 
+/**
+ * Default {@link Human} {@link HumanBehaviour Behaviour}
+ * 
+ * @author Simone
+ *
+ */
 public class NormalHuman implements HumanBehaviour {
 
-	// default human behaviour
 	
+
 	@Override
 	public boolean isAttackAllowed() {
 		return false;
@@ -22,6 +28,11 @@ public class NormalHuman implements HumanBehaviour {
 	@Override
 	public boolean hasToDrawSectorCard() {
 		return true;
+	}
+	
+	@Override
+	public String toString() {
+		return "NormalHuman";
 	}
 
 }

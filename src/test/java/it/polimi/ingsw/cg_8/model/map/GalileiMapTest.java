@@ -1,6 +1,7 @@
 package it.polimi.ingsw.cg_8.model.map;
 
 import static org.junit.Assert.*;
+import it.polimi.ingsw.cg_8.model.exceptions.NotAValidCoordinateException;
 import it.polimi.ingsw.cg_8.model.map.creator.GalileiCreator;
 import it.polimi.ingsw.cg_8.model.map.creator.MapCreator;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
@@ -27,14 +28,14 @@ public class GalileiMapTest {
 	}
 	
 	// trying to get a null sector
-	@Test
-	public void testGetSectorByC() {
-		assertEquals(testMap.getSectorByCoordinates(new Coordinate(0,0)) , null);
+	@Test (expected = NotAValidCoordinateException.class)
+	public void testGetSectorByC() throws NotAValidCoordinateException {
+		testMap.getSectorByCoordinates(new Coordinate(0,0));
 	}
 	
 	// trying to get a Dangerous Sector
 	@Test
-	public void testGetSectorByC2() {
+	public void testGetSectorByC2() throws NotAValidCoordinateException {
 		Sector mSector = testMap.getSectorByCoordinates(new Coordinate(0,1));
 		boolean result = false;
 		if (mSector instanceof DangerousSector){
@@ -45,7 +46,7 @@ public class GalileiMapTest {
 	
 	// trying to get a eh sector
 	@Test
-	public void testGetSectorByC3(){
+	public void testGetSectorByC3() throws NotAValidCoordinateException{
 		Sector mSector = testMap.getSectorByCoordinates(new Coordinate(1,1));
 		boolean result = false;
 		if (mSector instanceof EscapeHatchSector){
@@ -56,7 +57,7 @@ public class GalileiMapTest {
 	
 	// trying to get a secure sector
 	@Test
-	public void testGetSectorByC4(){
+	public void testGetSectorByC4() throws NotAValidCoordinateException{
 		Sector mSector = testMap.getSectorByCoordinates(new Coordinate(2,0));
 		boolean result = false;
 		if (mSector instanceof SecureSector){

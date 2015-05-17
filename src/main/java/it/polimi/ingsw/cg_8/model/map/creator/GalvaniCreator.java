@@ -8,42 +8,29 @@ import it.polimi.ingsw.cg_8.model.map.GalvaniMap;
 import it.polimi.ingsw.cg_8.model.map.GameMap;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 import it.polimi.ingsw.cg_8.model.sectors.SectorType;
-
+/**
+ * Implementation of the factory pattern, it creates a GalvaniMap
+ * @author Simone
+ *
+ */
 public class GalvaniCreator extends MapCreator {
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result
-				+ ((galvaniMap == null) ? 0 : galvaniMap.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		GalvaniCreator other = (GalvaniCreator) obj;
-		if (galvaniMap == null) {
-			if (other.galvaniMap != null)
-				return false;
-		} else if (!galvaniMap.equals(other.galvaniMap))
-			return false;
-		return true;
-	}
-
+	
+	/**
+	 * Map that is going to be populated
+	 */
 	private final GameMap galvaniMap;
-
+	
+	/**
+	 * Constructor
+	 */
 	public GalvaniCreator() {
-		super(new GalvaniMap());
+		super(new GalvaniMap(new Coordinate(11,7), new Coordinate(11,5)));
 		galvaniMap = this.getGm();
 	}
-
+	
+	/**
+	 * Adds all Dangerous Sectors
+	 */
 	private void addDS() {
 		addColumn(SectorType.DANGEROUS_SECTOR, 0, 2, 6);
 		addColumn(SectorType.DANGEROUS_SECTOR, 0, 8, 11);
@@ -142,6 +129,9 @@ public class GalvaniCreator extends MapCreator {
 
 	}
 
+	/**
+	 * Adds all Secure Sectors
+	 */
 	private void addSS() {
 		Set<Coordinate> secureCoordinate = new HashSet<Coordinate>();
 		secureCoordinate.add(new Coordinate(0, 7));
@@ -180,14 +170,20 @@ public class GalvaniCreator extends MapCreator {
 			addSecureSector(it.next());
 		}
 	}
-
+	
+	/**
+	 * Adds all Escape Hatch sectors
+	 */
 	private void addEH() {
 		addEscapeHatchSector(new Coordinate(5, 0), 1);
 		addEscapeHatchSector(new Coordinate(15, 0), 2);
 		addEscapeHatchSector(new Coordinate(1, 9), 3);
 		addEscapeHatchSector(new Coordinate(21, 10), 4);
 	}
-
+	
+	/**
+	 * Adds all spawn sectors 
+	 */
 	private void addSpawn() {
 		addHumanSector(new Coordinate(11, 7));
 		addAlienSector(new Coordinate(11, 5));
@@ -203,4 +199,34 @@ public class GalvaniCreator extends MapCreator {
 		return galvaniMap;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result
+				+ ((galvaniMap == null) ? 0 : galvaniMap.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		GalvaniCreator other = (GalvaniCreator) obj;
+		if (galvaniMap == null) {
+			if (other.galvaniMap != null)
+				return false;
+		} else if (!galvaniMap.equals(other.galvaniMap))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "GalvaniCreator [galvaniMap=" + galvaniMap + "]";
+	}
 }
