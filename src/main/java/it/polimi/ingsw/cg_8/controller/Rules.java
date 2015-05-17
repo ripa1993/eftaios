@@ -2,7 +2,9 @@ package it.polimi.ingsw.cg_8.controller;
 
 import it.polimi.ingsw.cg_8.controller.playerActions.Attack;
 import it.polimi.ingsw.cg_8.controller.playerActions.Movement;
+import it.polimi.ingsw.cg_8.controller.playerActions.useItemCard.UseDefenseCard;
 import it.polimi.ingsw.cg_8.model.Model;
+import it.polimi.ingsw.cg_8.model.cards.itemCards.AttackCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.DefenseCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.ItemCard;
 import it.polimi.ingsw.cg_8.model.map.GameMap;
@@ -15,30 +17,45 @@ import java.util.Set;
 
 /**
  * This class contains most of the game logic, in terms of rules and actions
- * allowed to the players
+ * allowed to the players. It is dependent on the model, as certain rules might
+ * change according to the game state.
  * 
  * @author Alberto Parravicini
  *
  */
 public class Rules {
+	/**
+	 * The current state of the game
+	 */
 	private Model model;
 
+	/**
+	 * Import the {@link Model model}, useful to reduce class entanglement.
+	 * 
+	 * @param model
+	 */
 	public Rules(Model model) {
 		this.model = model;
 	}
 
-	/* Checks whether a move is allowed or not. */
+	/**
+	 * Checks whether a move is allowed or not.
+	 * 
+	 * @param destination
+	 * @return validMovement: whether the movement valid or not
+	 */
+
 	public boolean checkValidMovement(Coordinate destination) {
 		boolean validMovement = false;
 		Player player = model.getPlayers().get(model.getCurrentPlayer());
 		GameMap gameMap = model.getMap();
-		/*
+		/**
 		 * Get the sectors reachable by the player, see if the destination is
 		 * among them.
 		 */
 		Movement move = new Movement(player, destination, gameMap);
 		validMovement = move.evaluateMove();
-		
+
 		return validMovement;
 	}
 
@@ -48,21 +65,26 @@ public class Rules {
 	}
 
 	/*
-	 * TODO: Removes the player from the game, if certain conditions are met (the game
-	 * is over, the player is inactive, etc...).
+	 * TODO: Removes the player from the game, if certain conditions are met
+	 * (the game is over, the player is inactive, etc...).
 	 */
 	public Player removePlayerFromGame(Player player) {
 		return null;
 	}
 
+	/**
+	 * Check if a certain Attack action is allowed, and if so handles the
+	 * attack: 
+	 * 		Instantiate the {@link Attack} class, check if the action is permitted
+	 * (if the player is Human he needs to have a {@link AttackCard}), make Noise, get
+	 * the position of the attacker, getPlayersInSector, check if they have a
+	 * shield card, if they do remove their card and notify everyone of their
+	 * position (Instantiate {@link UseDefenseCard}), if not kill them.
+	 *
+	 * @return validAttack: whether the attack is allowed or not
+	 */
 	public boolean validateAttack() {
-		/*
-		 * Instantiate the Attack class, check if the action is permitted (if
-		 * the player is Human he needs to have an AttackCard), make Noise, get
-		 * the position of the attacker, getPlayersInSector, check if they have
-		 * a shield card, if they do remove their card and notify everyone of
-		 * their position (Instantiate Shield Card), if not kill them.
-		 */
+
 		Player player = model.getPlayers().get(model.getCurrentPlayer());
 		Attack attackClass = new Attack(player);
 		boolean validAttack = attackClass.validAttack();
@@ -74,10 +96,10 @@ public class Rules {
 			for (Player p : attackedPlayers) {
 				List<ItemCard> heldCards = p.getHand().getHeldCards();
 
-				for (ItemCard c : heldCards) {
-					if (c instanceof DefenseCard
+				for (ItemCard card : heldCards) {
+					if (card instanceof DefenseCard
 							&& p.getCharacter() instanceof Human) {
-						heldCards.remove(c);
+						heldCards.remove(card);
 						attackClass.savePlayerWithDefense(p);
 					} else {
 						attackClass.killPlayer(p);
@@ -89,6 +111,7 @@ public class Rules {
 			return validAttack;
 		}
 	}
+
 	/* TODO: */
 	public void useItemCard(Player player, ItemCard itemCard) {
 
