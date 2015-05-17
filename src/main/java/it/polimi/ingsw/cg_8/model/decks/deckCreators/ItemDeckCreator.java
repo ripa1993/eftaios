@@ -7,14 +7,32 @@ import it.polimi.ingsw.cg_8.model.cards.itemCards.SedativesCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.SpotlightCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.TeleportCard;
 import it.polimi.ingsw.cg_8.model.decks.ItemDeck;
-
+/**
+ * Creator of character deck
+ * @author Simone
+ *
+ */
 public class ItemDeckCreator extends DeckCreator {
 
-	
+	/**
+	 * Max number of AttackCard
+	 */
 	private static final int ATTACK_NUM = 2;
+	/**
+	 * Max number of TeleportCard
+	 */
 	private static final int TELEPORT_NUM = 2;
+	/**
+	 * Max number of AdrenalineCard
+	 */
 	private static final int ADRENALINE_NUM = 2;
+	/**
+	 * Max number of SedativesCard
+	 */
 	private static final int SEDATIVES_NUM = 3;
+	/**
+	 * Max number of SpotlightCard
+	 */
 	private static final int LIGHTS_NUM = 2;
 	
 	@Override

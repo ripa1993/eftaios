@@ -12,6 +12,7 @@ import it.polimi.ingsw.cg_8.model.decks.deckCreators.CharacterDeckCreator;
 import it.polimi.ingsw.cg_8.model.decks.deckCreators.DangerousSectorDeckCreator;
 import it.polimi.ingsw.cg_8.model.decks.deckCreators.EscapeHatchDeckCreator;
 import it.polimi.ingsw.cg_8.model.decks.deckCreators.ItemDeckCreator;
+import it.polimi.ingsw.cg_8.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.cg_8.model.exceptions.GameAlreadyRunningException;
 import it.polimi.ingsw.cg_8.model.exceptions.NotAValidMapException;
 import it.polimi.ingsw.cg_8.model.map.GameMap;
@@ -157,8 +158,9 @@ public class Model {
 	/**
 	 * Initializes the game. It populates the decks, assign a character to each
 	 * player and changes the turnPhase to TURN_BEGIN
+	 * @throws EmptyDeckException 
 	 */
-	public void initGame() {
+	public void initGame() throws EmptyDeckException {
 		// initialize decks
 		int numPlayers = players.size();
 		CharacterDeckCreator characterDeckCreator = new CharacterDeckCreator();

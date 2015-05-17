@@ -8,9 +8,17 @@ import it.polimi.ingsw.cg_8.model.decks.Deck;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Creator of character deck
+ * @author Simone
+ *
+ */
 public class CharacterDeckCreator extends DeckCreator {
-
+	/**
+	 * Creates a character deck
+	 * @param numPlayer number of players in the game [2..8]
+	 * @return a complete character deck
+	 */
 	public CharacterDeck createDeck(int numPlayer) {
 		CharacterDeck charDeck = new CharacterDeck();
 		List<Card> aliens = new ArrayList<Card>();

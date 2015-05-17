@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import it.polimi.ingsw.cg_8.model.decks.DangerousSectorDeck;
 import it.polimi.ingsw.cg_8.model.decks.EscapeHatchDeck;
 import it.polimi.ingsw.cg_8.model.decks.ItemDeck;
+import it.polimi.ingsw.cg_8.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.cg_8.model.exceptions.GameAlreadyRunningException;
 import it.polimi.ingsw.cg_8.model.exceptions.NotAValidMapException;
 import it.polimi.ingsw.cg_8.model.map.FermiMap;
@@ -43,7 +44,7 @@ public class ModelTest {
 	}
 
 	@Test
-	public void testGetRoundNumber() {
+	public void testGetRoundNumber() throws EmptyDeckException {
 		model.initGame();
 		model.nextPlayer();
 		model.nextPlayer();
@@ -52,7 +53,7 @@ public class ModelTest {
 	}
 
 	@Test
-	public void testGetCurrentPlayer() {
+	public void testGetCurrentPlayer() throws EmptyDeckException {
 		model.initGame();
 		int tempPlayer = model.getCurrentPlayer();
 		model.nextPlayer();
@@ -61,7 +62,7 @@ public class ModelTest {
 	}
 
 	@Test
-	public void testGetStartingPlayer() {
+	public void testGetStartingPlayer() throws EmptyDeckException {
 		model.initGame();
 		model.nextPlayer();
 		model.nextPlayer();
@@ -74,7 +75,7 @@ public class ModelTest {
 	}
 
 	@Test
-	public void testGetCharacterDeck() {
+	public void testGetCharacterDeck() throws EmptyDeckException {
 		model.initGame();
 		assertTrue(model.getCharacterDeck().getCards().isEmpty());
 	}

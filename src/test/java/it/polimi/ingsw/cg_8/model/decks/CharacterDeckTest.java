@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import it.polimi.ingsw.cg_8.model.cards.Card;
 import it.polimi.ingsw.cg_8.model.cards.characterCards.CharacterCard;
 import it.polimi.ingsw.cg_8.model.decks.deckCreators.CharacterDeckCreator;
+import it.polimi.ingsw.cg_8.model.exceptions.EmptyDeckException;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -34,7 +35,7 @@ public class CharacterDeckTest {
 	}
 
 	@Test
-	public void charDeckTest1() {
+	public void charDeckTest1() throws EmptyDeckException {
 		boolean check;
 		if (charDeck.drawCard() instanceof CharacterCard) {
 			check = true;
@@ -49,7 +50,7 @@ public class CharacterDeckTest {
 	}
 
 	@Test
-	public void equalsTest2() {
+	public void equalsTest2() throws EmptyDeckException {
 		charDeck.drawCard();
 		assertFalse(charDeck.equals(charDeck2));
 	}
@@ -60,7 +61,7 @@ public class CharacterDeckTest {
 	}
 
 	@Test
-	public void shuffleTest() {
+	public void shuffleTest() throws EmptyDeckException {
 		boolean check = false;
 		charDeck.shuffle();
 		while (charDeck.getCards().isEmpty() == false) {
@@ -73,7 +74,7 @@ public class CharacterDeckTest {
 	}
 
 	@Test
-	public void isDeckEmptyTest() {
+	public void isDeckEmptyTest() throws EmptyDeckException {
 		boolean check = false;
 		while (charDeck.getCards().isEmpty() == false) {
 			charDeck.drawCard();
@@ -86,14 +87,14 @@ public class CharacterDeckTest {
 	}
 
 	@Test
-	public void addUsedCardTest() {
+	public void addUsedCardTest() throws EmptyDeckException {
 		Card c1 = charDeck.drawCard();
 		charDeck.addUsedCard(c1);
 		assertFalse(charDeck.getUsedCards().isEmpty());
 	}
 
 	@Test
-	public void testReshuffle() {
+	public void testReshuffle() throws EmptyDeckException {
 		List<Card> discardPile = new ArrayList<Card>();
 		discardPile.add(charDeck.drawCard());
 		discardPile.add(charDeck.drawCard());

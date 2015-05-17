@@ -1,7 +1,11 @@
 package it.polimi.ingsw.cg_8.model.decks;
 
 import it.polimi.ingsw.cg_8.model.cards.Card;
-
+/**
+ * Item deck
+ * @author Simone
+ *
+ */
 public class ItemDeck extends Deck {
 
 	@Override
