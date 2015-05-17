@@ -13,18 +13,21 @@ import it.polimi.ingsw.cg_8.model.sectors.Sector;
  *
  */
 public abstract class SpecialSector extends Sector {
-/**
- * Default constructor for {@link SpecialSector}
- * @param x column number
- * @param y row number
- */
+	/**
+	 * Default constructor for {@link SpecialSector}
+	 * 
+	 * @param x
+	 *            column number
+	 * @param y
+	 *            row number
+	 */
 	public SpecialSector(int x, int y) {
 		super(x, y);
 	}
 
-@Override
-public String toString() {
-	return "SpecialSector " + super.toString();
-}
+	@Override
+	public String toString() {
+		return "SpecialSector";
+	}
 
 }

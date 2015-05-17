@@ -23,7 +23,7 @@ public class SecureSector extends NormalSector {
 
 	@Override
 	public String toString() {
-		return "SecureSector "+super.toString();
+		return "SecureSector";
 	}
 
 }

@@ -22,7 +22,7 @@ public class DangerousSector extends NormalSector {
 
 	@Override
 	public String toString() {
-		return "DangerousSector "+super.toString();
+		return "DangerousSector";
 	}
 
 }

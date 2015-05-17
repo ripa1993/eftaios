@@ -24,7 +24,7 @@ public abstract class NormalSector extends Sector {
 
 	@Override
 	public String toString() {
-		return "NormalSector "+super.toString();
+		return "NormalSector";
 	}
 
 }

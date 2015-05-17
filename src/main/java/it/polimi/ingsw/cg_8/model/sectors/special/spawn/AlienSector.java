@@ -9,19 +9,22 @@ package it.polimi.ingsw.cg_8.model.sectors.special.spawn;
  */
 
 public class AlienSector extends SpawnSector {
-	@Override
-	public String toString() {
-		return "AlienSector "+super.toString();
-	}
 
 	/**
 	 * Constructor for {@link AlienSector}
-	 * @param x column number
-	 * @param y row number
+	 * 
+	 * @param x
+	 *            column number
+	 * @param y
+	 *            row number
 	 */
 	public AlienSector(int x, int y) {
 		super(x, y);
-		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public String toString() {
+		return "AlienSector";
 	}
 
 }
