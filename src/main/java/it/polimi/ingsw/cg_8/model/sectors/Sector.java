@@ -17,6 +17,7 @@ public abstract class Sector extends Coordinate {
  * @param y	row number, first row is row 0
  */
 	public Sector(int x, int y) {
+		// TODO: throw exception if x or y is negative?
 		super(x, y);
 	}
 	

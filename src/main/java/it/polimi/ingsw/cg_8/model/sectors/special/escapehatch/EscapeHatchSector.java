@@ -49,6 +49,7 @@ public class EscapeHatchSector extends SpecialSector {
 	 */
 	public EscapeHatchSector(int x, int y, int number) {
 		super(x, y);
+		// TODO: throw exception if number < 1 and number > 4
 		this.number = number;
 		status = new NotUsedEHBehaviour();
 	}
