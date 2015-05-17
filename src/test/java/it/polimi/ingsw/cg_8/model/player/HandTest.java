@@ -31,17 +31,12 @@ public class HandTest {
 		assertTrue((hand.getCard(0) instanceof AdrenalineCard));
 	}
 
-	@Test
-	public void testAddItemCard() {
-		try {
+	@Test(expected = TooManyCardsException.class)
+	public void testAddItemCard() throws TooManyCardsException {
 			hand.addItemCard(new SpotlightCard());
 			hand.addItemCard(new SpotlightCard());
 			hand.addItemCard(new AdrenalineCard());
-		} catch (TooManyCardsException e) {
-			e.printStackTrace();
-		}
 		
-		assertEquals(hand.getHeldCards().size(), 3);
 	}
 
 }
