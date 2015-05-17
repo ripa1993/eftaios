@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.util.HashSet;
 import java.util.Set;
 
+import it.polimi.ingsw.cg_8.model.exceptions.NotAValidCoordinateException;
 import it.polimi.ingsw.cg_8.model.map.creator.FermiCreator;
 import it.polimi.ingsw.cg_8.model.map.creator.MapCreator;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
@@ -31,14 +32,14 @@ public class FermiMapTest {
 	}
 	
 	// trying to get a null sector
-	@Test
-	public void testGetSectorByC() {
-		assertEquals(testMap.getSectorByCoordinates(new Coordinate(0,0)) , null);
+	@Test(expected = NotAValidCoordinateException.class)
+	public void testGetSectorByC() throws NotAValidCoordinateException {
+		testMap.getSectorByCoordinates(new Coordinate(0,0));
 	}
 	
 	// trying to get a Dangerous Sector
 	@Test
-	public void testGetSectorByC2() {
+	public void testGetSectorByC2() throws NotAValidCoordinateException {
 		Sector mSector = testMap.getSectorByCoordinates(new Coordinate(10,3));
 		boolean result = false;
 		if (mSector instanceof DangerousSector){
@@ -50,7 +51,7 @@ public class FermiMapTest {
 	
 	// trying to get an escape hatch sector
 	@Test
-	public void testGetSectorByC3(){
+	public void testGetSectorByC3() throws NotAValidCoordinateException{
 		Sector mSector = testMap.getSectorByCoordinates(new Coordinate(9,4));
 		boolean result = false;
 		if (mSector instanceof EscapeHatchSector){
@@ -62,7 +63,7 @@ public class FermiMapTest {
 	
 	// trying to get a secure sector
 	@Test
-	public void testGetSectorByC4(){
+	public void testGetSectorByC4() throws NotAValidCoordinateException{
 		Sector mSector = testMap.getSectorByCoordinates(new Coordinate(10,1));
 		boolean result = false;
 		if (mSector instanceof SecureSector){

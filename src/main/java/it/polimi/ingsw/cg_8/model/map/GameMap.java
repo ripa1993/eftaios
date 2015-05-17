@@ -4,9 +4,125 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import it.polimi.ingsw.cg_8.model.exceptions.NotAValidCoordinateException;
 import it.polimi.ingsw.cg_8.model.sectors.*;
 
+/**
+ * Abstract class that represents a map
+ * 
+ * @author Simone
+ *
+ */
 public abstract class GameMap implements ReachableCoordinatesInterface {
+	/**
+	 * Map that has a coordinate as key and a sector as value
+	 */
+	private final Map<Coordinate, Sector> sectors;
+	/**
+	 * Reference to the map proxy related to this map
+	 */
+	private final MapProxy mapProxy;
+	/**
+	 * Human starting coordinate
+	 */
+	private Coordinate humanSpawn;
+	/**
+	 * Alien starting coordinate
+	 */
+	private Coordinate alienSpawn;
+
+	/**
+	 * Constructor for GameMap. Creates a new HashMap of sector, a new MapProxy
+	 * and spawn coordinates
+	 * 
+	 * @param humanSpawn coordinate of human spawn
+	 * @param alienSpawn coordinate of alien spawn
+	 */
+
+	public GameMap(Coordinate humanSpawn, Coordinate alienSpawn) {
+		sectors = new HashMap<Coordinate, Sector>();
+		mapProxy = new MapProxy(this);
+		this.humanSpawn = humanSpawn;
+		this.alienSpawn = alienSpawn;
+	}
+
+	/**
+	 * Getter for human spawn
+	 * 
+	 * @return coordinate of human spawn
+	 */
+	public Coordinate getHumanSpawn() {
+		return humanSpawn;
+	}
+
+	/**
+	 * Getter for alien spawn
+	 * 
+	 * @return coordinate of alien spawn
+	 */
+	public Coordinate getAlienSpawn() {
+		return alienSpawn;
+	}
+
+	/**
+	 * Getter for this game map's Map<Coordinate, Sector>
+	 * 
+	 * @return Map<Coordinate, Sector>
+	 */
+	public Map<Coordinate, Sector> getSectors() {
+		return sectors;
+	}
+
+	/**
+	 * Getter for map proxy
+	 * 
+	 * @return this map's proxy
+	 */
+	public MapProxy getMapProxy() {
+		return mapProxy;
+	}
+
+	/**
+	 * Using a proxy, this method calls the mapProxy in order to not recalculate
+	 * reachable coordinates if they have already been calculated
+	 */
+	@Override
+	public Set<Coordinate> getReachableCoordinates(Coordinate c, Integer depth) {
+		return mapProxy.getReachableCoordinates(c, depth);
+	}
+
+	/**
+	 * Returns the sector relative to a coordinate
+	 * 
+	 * @param c
+	 *            coordinate of the sector
+	 * @return sector relative to this coordinate
+	 * @throws NotAValidCoordinateException
+	 */
+	public Sector getSectorByCoordinates(Coordinate c)
+			throws NotAValidCoordinateException {
+		if (!verifySectorExistance(c)) {
+			throw new NotAValidCoordinateException(
+					"This coordinate is not in the map");
+		} else {
+			return sectors.get(c);
+		}
+	}
+
+	/**
+	 * Verifies the existence of a sector in this coordinate
+	 * 
+	 * @param c
+	 *            coordinate of the sector
+	 * @return true, if exists a sector at this coordinate<br>
+	 *         false, if it doesn't exists
+	 */
+	public boolean verifySectorExistance(Coordinate c) {
+		if (sectors.get(c) == null) {
+			return false;
+		}
+		return true;
+	}
 
 	@Override
 	public int hashCode() {
@@ -40,66 +156,11 @@ public abstract class GameMap implements ReachableCoordinatesInterface {
 		return true;
 	}
 
-	private final Map<Coordinate, Sector> sectors;
-	private final MapProxy mapProxy;
-	private Coordinate humanSpawn;
-	private Coordinate alienSpawn;
-	
-	
-	public GameMap() {
-		sectors = new HashMap<Coordinate, Sector>();
-		mapProxy = new MapProxy(this);
-		humanSpawn = new Coordinate();
-		alienSpawn = new Coordinate();
-	}
-	
-	public Coordinate getHumanSpawn() {
-		return humanSpawn;
-	}
-
-	public Coordinate getAlienSpawn() {
-		return alienSpawn;
-	}
-
-	public Map<Coordinate, Sector> getSectors() {
-		return sectors;
-	}
-
-	public MapProxy getMapProxy() {
-		return mapProxy;
-	}
-
-	
-	
-	// using a proxy, calls its mapProxy in order to not recalculate reachable
-	// coordinates if they have already been calculated
 	@Override
-	public Set<Coordinate> getReachableCoordinates(Coordinate c, Integer depth) {
-		return mapProxy.getReachableCoordinates(c, depth);
+	public String toString() {
+		return "GameMap [sectors=" + sectors + ", mapProxy=" + mapProxy
+				+ ", humanSpawn=" + humanSpawn + ", alienSpawn=" + alienSpawn
+				+ "]";
 	}
-
-	// returns the sector relative to a coordinate, currently returns null if no
-	// sector (?)
-	public Sector getSectorByCoordinates(Coordinate c) {
-		return sectors.get(c);
-	}
-
-	// returns false if the coordinate isn't associated to a sector, else true
-	public boolean verifySectorExistance(Coordinate c) {
-		if (getSectorByCoordinates(c) == null) {
-			return false;
-		}
-		return true;
-	}
-
-	public void setHumanSpawn(Coordinate humanSpawn) {
-		this.humanSpawn = humanSpawn;
-	}
-
-	public void setAlienSpawn(Coordinate alienSpawn) {
-		this.alienSpawn = alienSpawn;
-	}
-	
-	
 
 }
