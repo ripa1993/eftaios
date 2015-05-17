@@ -6,6 +6,11 @@ package it.polimi.ingsw.cg_8.model.sectors.special.spawn;
  *
  */
 public class HumanSector extends SpawnSector {
+@Override
+	public String toString() {
+		return "HumanSector " + super.toString();
+	}
+
 /**
  * Constructor for {@link HumanSector}
  * @param x column number

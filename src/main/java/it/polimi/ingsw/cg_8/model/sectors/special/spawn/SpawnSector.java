@@ -7,6 +7,11 @@ import it.polimi.ingsw.cg_8.model.sectors.special.SpecialSector;
  *
  */
 public abstract class SpawnSector extends SpecialSector {
+@Override
+	public String toString() {
+		return "SpawnSector " + super.toString();
+	}
+
 /**
  * Default constructor for {@link SpecialSector}
  * @param x column number

@@ -6,6 +6,11 @@ package it.polimi.ingsw.cg_8.model.sectors;
  */
 
 public abstract class Sector extends Coordinate {
+@Override
+	public String toString() {
+		return "Sector [x=" + x + ", y=" + y + "]";
+	}
+
 /**
  * Default constructor for {@link Sector}
  * @param x column number, first column is column 0

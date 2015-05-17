@@ -38,6 +38,16 @@ import java.util.Random;
  *
  */
 public class Model {
+	@Override
+	public String toString() {
+		return "Model [players=" + players + ", roundNumber=" + roundNumber
+				+ ", currentPlayer=" + currentPlayer + ", startingPlayer="
+				+ startingPlayer + ", turnPhase=" + turnPhase
+				+ ", characterDeck=" + characterDeck + ", dangerousSectorDeck="
+				+ dangerousSectorDeck + ", escapeHatchDeck=" + escapeHatchDeck
+				+ ", itemDeck=" + itemDeck + ", map=" + map + "]";
+	}
+
 	/**
 	 * List of players in the current game
 	 */

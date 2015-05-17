@@ -22,4 +22,9 @@ public abstract class SpecialSector extends Sector {
 		super(x, y);
 	}
 
+@Override
+public String toString() {
+	return "SpecialSector " + super.toString();
+}
+
 }
