@@ -42,13 +42,13 @@ public class Rules {
 		return validMovement;
 	}
 
-	/* Changes the active player in a certain turn. */
+	/* TODO: Changes the active player in a certain turn. */
 	public Player changeCurrentPlayer() {
 		return null;
 	}
 
 	/*
-	 * Removes the player from the game, if certain conditions are met (the game
+	 * TODO: Removes the player from the game, if certain conditions are met (the game
 	 * is over, the player is inactive, etc...).
 	 */
 	public Player removePlayerFromGame(Player player) {
@@ -89,7 +89,7 @@ public class Rules {
 			return validAttack;
 		}
 	}
-
+	/* TODO: */
 	public void useItemCard(Player player, ItemCard itemCard) {
 
 	}
