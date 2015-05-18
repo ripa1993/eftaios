@@ -9,27 +9,37 @@ package it.polimi.ingsw.cg_8.controller;
  */
 public class Controller {
 
+	/**
+	 * Initialization of a new game. Note that the model is initialized with the
+	 * init() function, placed inside model
+	 */
 	public void startup() {
-		/* Initialization of a new game. */
+
 	}
 
+	/**
+	 * Used to update the model after changing the state of the game or
+	 * validating an action.
+	 */
 	private void updateModel() {
-		/*
-		 * Used to update the model after changing the state of the game or
-		 * validating an action.
-		 */
+
 	}
 
+	/** Used to update the view. */
 	public void updateView() {
-		/* Used to update the view. */
+
 	}
 
+	/**
+	 * Main game loop: after the startup the main cycle is started, until
+	 * certain conditions are verified (everyone leaves the game, turn 40 is
+	 * reached, every human player either escapes or is killed. Then the
+	 * cleanup() method in called.
+	 */
 	public void loop() {
-		/* Main game loop */
+
 		startup();
-		/*
-		 * The cycle should be ended when a certain condition is verified.
-		 */
+
 		while (true) {
 			processInput();
 			updateModel();
@@ -38,18 +48,19 @@ public class Controller {
 		// cleanup();
 	}
 
+	/**
+	 * Used at the end of the game to remove resources that are no longer
+	 * needed.
+	 */
 	public void cleanup() {
-		/*
-		 * Used at the end of the game to remove resources that are no longer
-		 * needed.
-		 */
+
 	}
 
+	/**
+	 * Input handler: analyze inputs given by the player and gives the
+	 * appropriate response (e.g: calls an action). Used by the main game loop.
+	 */
 	private void processInput() {
-		/*
-		 * Input handler: analyze inputs given by the player and gives the
-		 * appropriate response (e.g: calls an action). Used by the main game
-		 * loop.
-		 */
+
 	}
 }

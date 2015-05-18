@@ -1,5 +1,7 @@
 package it.polimi.ingsw.cg_8.controller.playerActions;
 
+import it.polimi.ingsw.cg_8.controller.Controller;
+import it.polimi.ingsw.cg_8.controller.Rules;
 import it.polimi.ingsw.cg_8.model.map.GameMap;
 import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
@@ -8,21 +10,43 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * The input handler takes a movement input and calls the validateMovement
- * functions. Then the validateMovement function creates an instance of this
- * class and verifies the validity of the move.
+ * The {@link Controller#processInput()} takes a movement input and calls the
+ * {@link Rules#checkValidMovement()} functions. Then the validateMovement
+ * function creates an instance of this class and verifies the validity of the
+ * move.
  * 
  * @author Alberto Parravicini
  *
  */
 public class Movement extends PlayerAction {
-
+	/**
+	 * The current location of the player
+	 */
 	private final Coordinate startingSector;
+	/**
+	 * The coordinates where the player is allowed to move
+	 */
 	private final Set<Coordinate> allowedCoordinates;
+	/**
+	 * Where the player would like to move
+	 */
 	private final Coordinate destination;
+	/**
+	 * Loading the map is required to calculate the reachable coordinates
+	 */
 	private final GameMap gameMap;
+	/**
+	 * How far the player can move
+	 */
 	private int range;
 
+	/**
+	 * 
+	 * @param player
+	 * @param destination
+	 * @param gameMap
+	 * @return Instance of the Movement class
+	 */
 	public Movement(Player player, Coordinate destination, GameMap gameMap) {
 		startingSector = player.getLastPosition();
 		allowedCoordinates = new HashSet<Coordinate>();
@@ -31,7 +55,7 @@ public class Movement extends PlayerAction {
 		this.range = player.getCharacter().getMaxAllowedMovement();
 	}
 
-	/*
+	/**
 	 * Add to allowedCoordinates the coordinates that can be reached by the
 	 * player.
 	 */
@@ -40,6 +64,10 @@ public class Movement extends PlayerAction {
 				startingSector, range));
 	}
 
+	/**
+	 * Checks if the destination is reachable by the player
+	 * @return Whether the destination is reachable
+	 */
 	private boolean isMoveAllowed() {
 		if (destination != startingSector
 				&& allowedCoordinates.contains(destination)) {
@@ -48,8 +76,11 @@ public class Movement extends PlayerAction {
 			return false;
 	}
 	
+	/** 
+	 * @return Whether the move is allowed or not
+	 */
 	public boolean evaluateMove() {
 		this.setAllowedCoordinates();
-		return isMoveAllowed();		
+		return isMoveAllowed();
 	}
 }
