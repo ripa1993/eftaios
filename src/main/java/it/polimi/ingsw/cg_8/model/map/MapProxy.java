@@ -8,48 +8,25 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Implmementation of the Proxy, used to get reachable coordinates from the
+ * GameMap
+ * 
+ * @author Simone
+ *
+ */
 public class MapProxy implements ReachableCoordinatesInterface {
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((map == null) ? 0 : map.hashCode());
-		result = prime
-				* result
-				+ ((reachableCoordinates == null) ? 0 : reachableCoordinates
-						.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		MapProxy other = (MapProxy) obj;
-		if (map == null) {
-			if (other.map != null)
-				return false;
-		} else if (!map.equals(other.map))
-			return false;
-		if (reachableCoordinates == null) {
-			if (other.reachableCoordinates != null)
-				return false;
-		} else if (!reachableCoordinates.equals(other.reachableCoordinates))
-			return false;
-		return true;
-	}
-
+	/**
+	 * GameMap realated to this proxy
+	 */
 	private final GameMap map;
+	/**
+	 * Nested Map and Set. First key is the coordinate. Second key is the depth.
+	 * The value is a set of Coordinate
+	 * 
+	 */
 	private final Map<Coordinate, Map<Integer, Set<Coordinate>>> reachableCoordinates;
-
-	public Map<Coordinate, Map<Integer, Set<Coordinate>>> getReachableCoordinates() {
-		return reachableCoordinates;
-	}
 
 	// HashMap < StartingCoords, HashMap <Depth, Set<ReachableCoords>>>
 	public MapProxy(GameMap map) {
@@ -57,7 +34,22 @@ public class MapProxy implements ReachableCoordinatesInterface {
 		this.map = map;
 	}
 
-	// gives the reachable coordinates from a starting coordinate
+	/**
+	 * Getter for reachable coordinates data structure
+	 * 
+	 * @return reachable coordinates map
+	 */
+	public Map<Coordinate, Map<Integer, Set<Coordinate>>> getReachableCoordinates() {
+		return reachableCoordinates;
+	}
+
+	/**
+	 * Calculates the connected coordinates to a specified coordinate
+	 * 
+	 * @param c
+	 *            starting coordinate
+	 * @return connected coordinates from c coordinate
+	 */
 	private Set<Coordinate> getConnectedCoordinates(Coordinate c) {
 		Set<Coordinate> connectedCoordinates = new HashSet<Coordinate>();
 		int currentX = c.getX();
@@ -114,7 +106,6 @@ public class MapProxy implements ReachableCoordinatesInterface {
 		return connectedCoordinates;
 	}
 
-	// returns the reachable coordinates given the coordinate and the depth
 	@Override
 	public Set<Coordinate> getReachableCoordinates(Coordinate c, Integer depth) {
 		if (reachableCoordinates.get(c) == null) {
@@ -127,7 +118,13 @@ public class MapProxy implements ReachableCoordinatesInterface {
 		return toBeReturned;
 	}
 
-	// calculates reachable coordinates for depth=1,2,3
+	/**
+	 * Calculates reachable coordinates for depth=1,2,3 using breadth first
+	 * visit and adds them to {@link #reachableCoordinates}
+	 * 
+	 * @param c
+	 *            starting coordinate
+	 */
 	private void calculateReachableCoordinates(Coordinate c) {
 
 		// Breadth First Search implementation for coordinates
@@ -168,7 +165,51 @@ public class MapProxy implements ReachableCoordinatesInterface {
 		reachableCoordinates.put(c, thisCoordinateHashMap);
 	}
 
+	/**
+	 * Getter for GameMap related to this MapProxy
+	 * @return game map
+	 */
 	public GameMap getMap() {
 		return map;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((map == null) ? 0 : map.hashCode());
+		result = prime
+				* result
+				+ ((reachableCoordinates == null) ? 0 : reachableCoordinates
+						.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MapProxy other = (MapProxy) obj;
+		if (map == null) {
+			if (other.map != null)
+				return false;
+		} else if (!map.equals(other.map))
+			return false;
+		if (reachableCoordinates == null) {
+			if (other.reachableCoordinates != null)
+				return false;
+		} else if (!reachableCoordinates.equals(other.reachableCoordinates))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "MapProxy [map=" + map + ", reachableCoordinates="
+				+ reachableCoordinates + "]";
 	}
 }

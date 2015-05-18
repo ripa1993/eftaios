@@ -2,26 +2,66 @@ package it.polimi.ingsw.cg_8.model.cards.characterCards;
 
 import it.polimi.ingsw.cg_8.model.cards.Card;
 
+/**
+ * Abstract character card, it is extended by {@link AlienCard} and
+ * {@link HumanCard}
+ * 
+ * @author Simone
+ *
+ */
 public abstract class CharacterCard extends Card {
-	
+	/**
+	 * Character name
+	 */
 	private final String name;
+	/**
+	 * Character nickname
+	 */
 	private final String nickname;
+	/**
+	 * Character rank
+	 */
 	private final String rank;
-	
+
+	/**
+	 * Constructor
+	 * 
+	 * @param name
+	 *            character name
+	 * @param nickname
+	 *            character nickname
+	 * @param rank
+	 *            character rank
+	 */
 	public CharacterCard(String name, String nickname, String rank) {
 		this.name = name;
 		this.nickname = nickname;
 		this.rank = rank;
 	}
 
+	/**
+	 * Getter
+	 * 
+	 * @return character name
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Getter
+	 * 
+	 * @return character nickname
+	 */
 	public String getNickname() {
 		return nickname;
 	}
 
+	/**
+	 * Getter
+	 * 
+	 * @return character rank
+	 */
 	public String getRank() {
 		return rank;
 	}
@@ -29,9 +69,10 @@ public abstract class CharacterCard extends Card {
 	@Override
 	public String toString() {
 		if (this.nickname != null) {
-			return "Character: " + name + ", " + "\"" + nickname + "\"" + ", as " + rank + "\n";
-		}
-		else return "Character: " + name + ", as " + rank + "\n";
+			return "Character: " + name + ", " + "\"" + nickname + "\""
+					+ ", as " + rank + "\n";
+		} else
+			return "Character: " + name + ", as " + rank + "\n";
 	}
 
 	@Override
@@ -71,5 +112,5 @@ public abstract class CharacterCard extends Card {
 			return false;
 		return true;
 	}
-	
+
 }

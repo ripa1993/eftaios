@@ -3,6 +3,7 @@ package it.polimi.ingsw.cg_8.model.decks;
 import static org.junit.Assert.*;
 import it.polimi.ingsw.cg_8.model.cards.escapeHatchCards.EscapeHatchCard;
 import it.polimi.ingsw.cg_8.model.decks.deckCreators.EscapeHatchDeckCreator;
+import it.polimi.ingsw.cg_8.model.exceptions.EmptyDeckException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +20,7 @@ public class EscapeHatchDeckTest {
 	
 	
 	@Test
-	public void testConstructor() {
+	public void testConstructor() throws EmptyDeckException {
 		assertTrue(cards.drawCard() instanceof EscapeHatchCard);
 	}
 

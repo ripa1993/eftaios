@@ -1,21 +1,40 @@
 package it.polimi.ingsw.cg_8.model.decks;
 
 import it.polimi.ingsw.cg_8.model.cards.Card;
+import it.polimi.ingsw.cg_8.model.exceptions.EmptyDeckException;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Abstract deck, extended by {@link CharacterDeck}, {@link DangerousSectorDeck}
+ * , {@link EscapeHatchDeck} and {@link ItemDeck}
+ * 
+ * @author Simone
+ *
+ */
 public abstract class Deck {
-
+	/**
+	 * List of cards inside the deck
+	 */
 	private List<Card> cardList;
+	/**
+	 * List of cards inside the discard pile
+	 */
 	private List<Card> usedCards;
 
+	/**
+	 * Constructor, initializes the two lists
+	 */
 	public Deck() {
 		this.cardList = new ArrayList<Card>();
 		this.usedCards = new ArrayList<Card>();
 	}
 
+	/**
+	 * Shuffles cardList
+	 */
 	public void shuffle() {
 		Collections.shuffle(this.cardList);
 	}
@@ -24,6 +43,12 @@ public abstract class Deck {
 	 * Puts every used card into the main Deck. Used by "Item" and
 	 * "Dangerous Sector" Decks It should be able to handle the exception of
 	 * having an empty Used Card List, and return it to a higher level
+	 */
+	/**
+	 * If the deck is empty and the discard pile contains at least one card,
+	 * reshuffles the discard pile into the deck
+	 * 
+	 * 
 	 */
 	public void reshuffle() {
 
@@ -36,39 +61,76 @@ public abstract class Deck {
 
 	}
 
+	/**
+	 * Clears the discard pile
+	 * 
+	 */
 	private void emptyUsedCardList() {
 		this.usedCards.clear();
 	}
 
-	// Add and Remove cards from the lists
+	/**
+	 * Adds the card to the deck
+	 * 
+	 * @param card
+	 */
 	public void addCard(Card card) {
 		this.cardList.add(card);
 	}
 
+	/**
+	 * Adds the card to the discard pile
+	 * 
+	 * @param card
+	 */
 	public void addUsedCard(Card card) {
 		this.usedCards.add(card);
 	}
 
-	// Overriden by "Item" and "Dangerous Sector" Decks
-	public Card drawCard() {
+	/**
+	 * Draw a card from the deck. Overridden by {@link ItemDeck} and
+	 * {@link DangerousSectorDeck}
+	 * 
+	 * @return a card from the deck
+	 * @throws EmptyDeckException
+	 */
+	public Card drawCard() throws EmptyDeckException {
 		if (isDeckEmpty() == false) {
 			return cardList.remove(0);
 		} else
-			return null;
+			throw new EmptyDeckException("The deck is empty");
 	}
 
+	/**
+	 * Checks if the deck is empty
+	 * 
+	 * @return true, if the deck is empty<br>
+	 *         false, if the deck is not empty
+	 */
 	protected boolean isDeckEmpty() {
 		return this.cardList.isEmpty();
 	}
 
+	/**
+	 * Checks if the discard pile is empty
+	 * 
+	 * @return true, if the discard pile is empty<br>
+	 *         false, if the discard pile is not empty
+	 */
 	protected boolean isUsedCardsEmpty() {
 		return this.usedCards.isEmpty();
 	}
-
+	/**
+	 * Getter for deck's list of card
+	 * @return list of card
+	 */
 	public List<Card> getCards() {
 		return this.cardList;
 	}
-
+	/**
+	 * Getter for deck's discard pile
+	 * @return discard pile list of card
+	 */
 	public List<Card> getUsedCards() {
 		return this.usedCards;
 	}

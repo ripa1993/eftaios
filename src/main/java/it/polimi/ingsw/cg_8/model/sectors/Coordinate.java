@@ -1,25 +1,63 @@
 package it.polimi.ingsw.cg_8.model.sectors;
 
+/**
+ * Coordinate is used to identify a sector position inside the map
+ * 
+ * @author Simone
+ *
+ */
 public class Coordinate {
+	/**
+	 * Column number
+	 */
 	final int x;
+	/**
+	 * Row number
+	 */
 	final int y;
-	
+
+	/**
+	 * Getter for column
+	 * 
+	 * @return column number
+	 */
 	public int getX() {
 		return x;
 	}
 
+	/**
+	 * Getter for row
+	 * 
+	 * @return row number
+	 */
 	public int getY() {
 		return y;
 	}
 
-	public Coordinate (int x, int y){
-		this.x=x;
-		this.y=y;
+	/**
+	 * Constructor for {@link Coordinate}
+	 * 
+	 * @param x
+	 *            column number
+	 * @param y
+	 *            row number
+	 */
+
+	//@ requires x>=0
+	//@ requires y>=0
+	public Coordinate(int x, int y) {
+		this.x = x;
+		this.y = y;
+		
 	}
 
+	/**
+	 * Default constructor for {@link Coordinate}, creates a non valid coordinate
+	 * (negative value)
+	 */
 	public Coordinate() {
-		x=-1;
-		y=-1;
+		x = -1;
+		y = -1;
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package it.polimi.ingsw.cg_8.model.player;
 import static org.junit.Assert.*;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.AdrenalineCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.SpotlightCard;
+import it.polimi.ingsw.cg_8.model.exceptions.TooManyCardsException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +14,11 @@ public class HandTest {
 	@Before
 	public void init() {
 		hand = new Hand();
-		hand.addItemCard(new AdrenalineCard());
+		try {
+			hand.addItemCard(new AdrenalineCard());
+		} catch (TooManyCardsException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Test
@@ -26,12 +31,12 @@ public class HandTest {
 		assertTrue((hand.getCard(0) instanceof AdrenalineCard));
 	}
 
-	@Test
-	public void testAddItemCard() {
-		hand.addItemCard(new SpotlightCard());
-		hand.addItemCard(new SpotlightCard());
-		hand.addItemCard(new AdrenalineCard());
-		assertEquals(hand.getHeldCards().size(), 3);
+	@Test(expected = TooManyCardsException.class)
+	public void testAddItemCard() throws TooManyCardsException {
+			hand.addItemCard(new SpotlightCard());
+			hand.addItemCard(new SpotlightCard());
+			hand.addItemCard(new AdrenalineCard());
+		
 	}
 
 }
