@@ -7,11 +7,13 @@ public class UseAttackCard extends UseItemCard {
 
 	@Override
 	public void useCard(Card card) {
-		// TODO Auto-generated method stub
+		// rimouve carta attacc dal giocatore
+		// decora il giocatore con player.enableAttack
 		
 	}
 
 	private void enableHumanAttack(Player player) {
 		/* Changes some boolean value */
+		// ottieni il valore di isAttackEnabled
 	}
 }

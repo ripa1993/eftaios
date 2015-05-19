@@ -8,10 +8,13 @@ public class UseAdrenalineCard extends UseItemCard {
 	@Override
 	public void useCard(Card card) {
 		// TODO Auto-generated method stub
+		// rimuovere un'istanza della carta dalla mano del giocatore
+		// invoca enableAdrenaline
 		
 	}
 
 	private void enableAdrenaline(Player player) {
 		/* Changes some boolean value */
+		// decora enableAdreanaline il giocatore con il comando player.enableAdrenaline()
 	}
 }

@@ -50,18 +50,24 @@ public class Attack extends PlayerAction {
 	/**
 	 * Checks if the attack is valid: if the player is a human, he has to use an
 	 * AttackCard or have used it before attacking, in the same turn.
+	 * 
 	 * @return validAttack: whether the attack is allowed or not
 	 */
 	public boolean validAttack() {
+		// TODO: per attaccare un umano deve giocare prima la carta attacco, il
+		// cambiamento di behaviour da standard a attackEnable è fatto dalla
+		// carta attacco.
 		boolean validAttack = false;
 
 		if (attacker.getCharacter().isAttackAllowed() == true) {
 			validAttack = true;
-		} else if (attacker.getCharacter() instanceof Human) {
+		}
+		// TODO: da togliere, poichè ridondante nella classe useAttackCard
+		else if (attacker.getCharacter() instanceof Human) {
 			List<ItemCard> heldCards = attacker.getHand().getHeldCards();
-			
+
 			for (ItemCard card : heldCards) {
-				
+
 				if (card instanceof AttackCard) {
 					heldCards.remove(card);
 					/* TODO: Use Attack Card */
@@ -74,16 +80,20 @@ public class Attack extends PlayerAction {
 	}
 
 	/**
-	 * Checks if a player has a defense card: if so, this function is called. 
+	 * Checks if a player has a defense card: if so, this function is called.
+	 * 
 	 * @param player
 	 */
-	
-	public void savePlayerWithDefense(Player player) {
 
+	public void savePlayerWithDefense(Player player) {
+		// TODO: rimouvere carta difesa dal giocatore e chiamare il metodo
+		// resetBehaviour sull'attaccato per togliere la decorazione
+		// defenseEnable
 	}
 
 	/**
 	 * Kills the player passed as input parameter
+	 * 
 	 * @param victim
 	 */
 	public void killPlayer(Player victim) {
@@ -110,6 +120,7 @@ public class Attack extends PlayerAction {
 
 	/**
 	 * Get the players killed in this turn
+	 * 
 	 * @return victims
 	 */
 	public Set<Player> getVictims() {

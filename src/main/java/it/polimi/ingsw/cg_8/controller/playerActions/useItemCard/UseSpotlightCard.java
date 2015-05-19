@@ -19,14 +19,17 @@ public class UseSpotlightCard extends UseItemCard {
 
 	@Override
 	public void useCard(Card card) {
-		// TODO Auto-generated method stub
+		// TODO rimuove carta
 
 	}
 
 	private void turnOnLights(Coordinate coordinate) {
 		/*
-		 * spotlightTarget = coordinate.neighboursAt1Distance(); set
-		 * foundPlayers.
+		 * TODO:
+		 * - ottieni i 7 settori bersaglio
+		 * - ottieni i giocatori nei 7 settori
+		 * - aggiungi alla lista dei rumori le persone trovate (spotlight noise)
+		 * 
 		 */
 	}
 

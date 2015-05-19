@@ -7,11 +7,12 @@ public class UseSedativesCard extends UseItemCard {
 
 	@Override
 	public void useCard(Card card) {
-		// TODO Auto-generated method stub
-		
+
+		// TODO: rimuovi carta
+		// decora con enableSedateives il playter
 	}
 
 	private void enableAdrenaline(Player player) {
-		/* Changes some boolean value */
+		// 
 	}
 }

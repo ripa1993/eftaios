@@ -59,7 +59,10 @@ public class Rules {
 		return validMovement;
 	}
 
-	/* TODO: Changes the active player in a certain turn. */
+	/* TODO: Changes the active player in a certain turn. 
+	 * Invocare model e chiamare nextPlayer, invocare nextplayer.resetBehaviour;
+	 * 
+	 */
 	public Player changeCurrentPlayer() {
 		return null;
 	}
@@ -74,12 +77,12 @@ public class Rules {
 
 	/**
 	 * Check if a certain Attack action is allowed, and if so handles the
-	 * attack: 
-	 * 		Instantiate the {@link Attack} class, check if the action is permitted
-	 * (if the player is Human he needs to have a {@link AttackCard}), make Noise, get
-	 * the position of the attacker, getPlayersInSector, check if they have a
-	 * shield card, if they do remove their card and notify everyone of their
-	 * position (Instantiate {@link UseDefenseCard}), if not kill them.
+	 * attack: Instantiate the {@link Attack} class, check if the action is
+	 * permitted (if the player is Human he needs to have a {@link AttackCard}),
+	 * make Noise, get the position of the attacker, getPlayersInSector, check
+	 * if they have a shield card, if they do remove their card and notify
+	 * everyone of their position (Instantiate {@link UseDefenseCard}), if not
+	 * kill them.
 	 *
 	 * @return validAttack: whether the attack is allowed or not
 	 */
@@ -94,6 +97,11 @@ public class Rules {
 			Set<Player> attackedPlayers = attackClass.getPlayersInSector(model);
 
 			for (Player p : attackedPlayers) {
+				// TODO: non controllo se ha la carta, ma controllo che è difeso
+				// enable, eseguo la classe UseDefenseCard, che si occupa lei di
+				// rimuovere la carta difesa dal giocatore e di fare il reset
+				// behaviour
+
 				List<ItemCard> heldCards = p.getHand().getHeldCards();
 
 				for (ItemCard card : heldCards) {
@@ -106,6 +114,7 @@ public class Rules {
 					}
 				}
 			}
+			// TODO: fare rumore con la classe Noise, instaziarla e memorizzarla in una lista di Noises ( nel model? )
 			return validAttack;
 		} else {
 			return validAttack;

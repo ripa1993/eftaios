@@ -6,7 +6,9 @@ public class UseTeleportCard extends UseItemCard {
 	
 	@Override
 	public void useCard(Card card) {
-		// TODO Auto-generated method stub
+		// TODO: rimuovi carta
+		// se il player si è gia mosso, usa editLastPosition
+		// se non si è ancora mosso usa setPosition
 		
 	}
 	

@@ -7,6 +7,8 @@ public class UseDefenseCard extends UseItemCard {
 	@Override
 	public void useCard(Card card) {
 		// TODO Auto-generated method stub
+		// rimuove la carta
+		// fai rumore sulla posizione reale!!!
 		
 	}
 	
