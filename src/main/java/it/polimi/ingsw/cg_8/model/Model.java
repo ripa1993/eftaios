@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
-
+// TODO: aggiungere Player getCurrentPlayer()
 /**
  * Contains all the references to game objects: decks, players and map.
  * 
@@ -99,6 +99,9 @@ public class Model {
 	 *            name of the map to be created in the model
 	 * @throws NotAValidMapException
 	 */
+
+	// TODO: aggiungere lista<Rumori> e classe Rumori estesa da RumoreAttacco,
+	// RumoreDifesa, RumoreMovimento, RumoreSpotlight
 	public Model(GameMapName mapName) throws NotAValidMapException {
 		players = new ArrayList<Player>();
 		roundNumber = 0;
@@ -158,10 +161,12 @@ public class Model {
 	/**
 	 * Initializes the game. It populates the decks, assign a character to each
 	 * player and changes the turnPhase to TURN_BEGIN
-	 * @throws EmptyDeckException 
+	 * 
+	 * @throws EmptyDeckException
 	 */
 	public void initGame() throws EmptyDeckException {
 		// initialize decks
+		// TODO: mescolare i mazzi
 		int numPlayers = players.size();
 		CharacterDeckCreator characterDeckCreator = new CharacterDeckCreator();
 		DangerousSectorDeckCreator dangerousSectorDeckCreator = new DangerousSectorDeckCreator();
