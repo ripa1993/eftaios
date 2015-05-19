@@ -9,6 +9,11 @@ public class UseTeleportCard extends UseItemCard {
 		// TODO: rimuovi carta
 		// se il player si è gia mosso, usa editLastPosition
 		// se non si è ancora mosso usa setPosition
+		/*
+		 * if(turnoModel == ultimoTurnoPlayerGiocato)
+		 *  then editLastPosition
+		 *  else setPosition
+		 */
 		
 	}
 	
