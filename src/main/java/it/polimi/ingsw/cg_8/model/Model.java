@@ -105,8 +105,6 @@ public class Model {
 	 * @throws NotAValidMapException
 	 */
 
-	// TODO: aggiungere lista<Rumori> e classe Rumori estesa da RumoreAttacco,
-	// RumoreDifesa, RumoreMovimento, RumoreSpotlight
 	public Model(GameMapName mapName) throws NotAValidMapException {
 		players = new ArrayList<Player>();
 		roundNumber = 0;
@@ -172,7 +170,6 @@ public class Model {
 	 */
 	public void initGame() throws EmptyDeckException {
 		// initialize decks
-		// TODO: mescolare i mazzi
 		int numPlayers = players.size();
 		CharacterDeckCreator characterDeckCreator = new CharacterDeckCreator();
 		DangerousSectorDeckCreator dangerousSectorDeckCreator = new DangerousSectorDeckCreator();
@@ -182,6 +179,11 @@ public class Model {
 		dangerousSectorDeck = dangerousSectorDeckCreator.createDeck();
 		escapeHatchDeck = escapeHatchDeckCreator.createDeck();
 		itemDeck = itemDeckCreator.createDeck();
+		// shuffle decks
+		characterDeck.shuffle();
+		dangerousSectorDeck.shuffle();
+		escapeHatchDeck.shuffle();
+		itemDeck.shuffle();
 		// initialize map
 		Iterator<Player> it = players.iterator();
 		while (it.hasNext()) {
