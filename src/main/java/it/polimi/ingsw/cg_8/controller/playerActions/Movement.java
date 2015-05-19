@@ -20,6 +20,10 @@ import java.util.Set;
  */
 public class Movement extends PlayerAction {
 	/**
+	 * The player who is moving
+	 */
+	private final Player player;
+	/**
 	 * The current location of the player
 	 */
 	private final Coordinate startingSector;
@@ -48,6 +52,7 @@ public class Movement extends PlayerAction {
 	 * @return Instance of the Movement class
 	 */
 	public Movement(Player player, Coordinate destination, GameMap gameMap) {
+		this.player = player;
 		startingSector = player.getLastPosition();
 		allowedCoordinates = new HashSet<Coordinate>();
 		this.destination = destination;
@@ -82,5 +87,12 @@ public class Movement extends PlayerAction {
 	public boolean evaluateMove() {
 		this.setAllowedCoordinates();
 		return isMoveAllowed();
+	}
+	
+	/**
+	 * Changes the position of the player
+	 */
+	public void makeMove() {
+		player.setPosition(destination);	
 	}
 }

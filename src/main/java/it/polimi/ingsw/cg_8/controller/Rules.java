@@ -9,10 +9,8 @@ import it.polimi.ingsw.cg_8.model.cards.itemCards.DefenseCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.ItemCard;
 import it.polimi.ingsw.cg_8.model.map.GameMap;
 import it.polimi.ingsw.cg_8.model.player.Player;
-import it.polimi.ingsw.cg_8.model.player.character.human.Human;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -39,7 +37,7 @@ public class Rules {
 	}
 
 	/**
-	 * Checks whether a move is allowed or not.
+	 * Checks whether a move is allowed or not, an if it is, make it.
 	 * 
 	 * @param destination
 	 * @return validMovement: whether the movement valid or not
@@ -49,13 +47,12 @@ public class Rules {
 		boolean validMovement = false;
 		Player player = model.getPlayers().get(model.getCurrentPlayer());
 		GameMap gameMap = model.getMap();
-		/**
-		 * Get the sectors reachable by the player, see if the destination is
-		 * among them.
-		 */
+		
 		Movement move = new Movement(player, destination, gameMap);
 		validMovement = move.evaluateMove();
-
+		if (validMovement == true) {
+			move.makeMove();
+		}
 		return validMovement;
 	}
 
@@ -63,8 +60,8 @@ public class Rules {
 	 * Invocare model e chiamare nextPlayer, invocare nextplayer.resetBehaviour;
 	 * 
 	 */
-	public Player changeCurrentPlayer() {
-		return null;
+	public void changeCurrentPlayer() {
+		model.nextPlayer();
 	}
 
 	/*
@@ -93,25 +90,15 @@ public class Rules {
 		boolean validAttack = attackClass.validAttack();
 
 		if (validAttack == true) {
-			/* TODO: Make Noise! */
 			Set<Player> attackedPlayers = attackClass.getPlayersInSector(model);
-
+			
 			for (Player p : attackedPlayers) {
-				// TODO: non controllo se ha la carta, ma controllo che è difeso
-				// enable, eseguo la classe UseDefenseCard, che si occupa lei di
-				// rimuovere la carta difesa dal giocatore e di fare il reset
-				// behaviour
-
-				List<ItemCard> heldCards = p.getHand().getHeldCards();
-
-				for (ItemCard card : heldCards) {
-					if (card instanceof DefenseCard
-							&& p.getCharacter() instanceof Human) {
-						heldCards.remove(card);
-						attackClass.savePlayerWithDefense(p);
-					} else {
-						attackClass.killPlayer(p);
-					}
+				if (p.getCharacter().isDefendAllowed()) {
+					UseDefenseCard defense = new UseDefenseCard();
+					defense.useCard(new DefenseCard());
+				}
+				else {
+					attackClass.killPlayer(p);
 				}
 			}
 			// TODO: fare rumore con la classe Noise, instaziarla e memorizzarla in una lista di Noises ( nel model? )

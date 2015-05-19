@@ -2,11 +2,8 @@ package it.polimi.ingsw.cg_8.controller.playerActions;
 
 import it.polimi.ingsw.cg_8.controller.Rules;
 import it.polimi.ingsw.cg_8.model.Model;
-import it.polimi.ingsw.cg_8.model.cards.itemCards.AttackCard;
-import it.polimi.ingsw.cg_8.model.cards.itemCards.ItemCard;
 import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.player.PlayerState;
-import it.polimi.ingsw.cg_8.model.player.character.human.Human;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 
 import java.util.HashSet;
@@ -48,33 +45,17 @@ public class Attack extends PlayerAction {
 	}
 
 	/**
-	 * Checks if the attack is valid: if the player is a human, he has to use an
-	 * AttackCard or have used it before attacking, in the same turn.
+	 * Checks if the attack is valid: if the player is a human, he had to use an
+	 * attack card before attacking, in the same turn.
 	 * 
 	 * @return validAttack: whether the attack is allowed or not
 	 */
 	public boolean validAttack() {
-		// TODO: per attaccare un umano deve giocare prima la carta attacco, il
-		// cambiamento di behaviour da standard a attackEnable è fatto dalla
-		// carta attacco.
+
 		boolean validAttack = false;
 
 		if (attacker.getCharacter().isAttackAllowed() == true) {
 			validAttack = true;
-		}
-		// TODO: da togliere, poichè ridondante nella classe useAttackCard
-		else if (attacker.getCharacter() instanceof Human) {
-			List<ItemCard> heldCards = attacker.getHand().getHeldCards();
-
-			for (ItemCard card : heldCards) {
-
-				if (card instanceof AttackCard) {
-					heldCards.remove(card);
-					/* TODO: Use Attack Card */
-					validAttack = true;
-				}
-			}
-
 		}
 		return validAttack;
 	}
