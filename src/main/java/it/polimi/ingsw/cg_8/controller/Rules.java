@@ -8,6 +8,8 @@ import it.polimi.ingsw.cg_8.model.cards.itemCards.AttackCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.DefenseCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.ItemCard;
 import it.polimi.ingsw.cg_8.model.map.GameMap;
+import it.polimi.ingsw.cg_8.model.noises.AttackNoise;
+import it.polimi.ingsw.cg_8.model.noises.Noise;
 import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 
@@ -26,6 +28,7 @@ public class Rules {
 	 * The current state of the game
 	 */
 	private Model model;
+	private Player player = model.getPlayers().get(model.getCurrentPlayer());
 
 	/**
 	 * Import the {@link Model model}, useful to reduce class entanglement.
@@ -45,9 +48,9 @@ public class Rules {
 
 	public boolean checkValidMovement(Coordinate destination) {
 		boolean validMovement = false;
-		Player player = model.getPlayers().get(model.getCurrentPlayer());
-		GameMap gameMap = model.getMap();
 		
+		GameMap gameMap = model.getMap();
+
 		Movement move = new Movement(player, destination, gameMap);
 		validMovement = move.evaluateMove();
 		if (validMovement == true) {
@@ -56,9 +59,9 @@ public class Rules {
 		return validMovement;
 	}
 
-	/* TODO: Changes the active player in a certain turn. 
-	 * Invocare model e chiamare nextPlayer, invocare nextplayer.resetBehaviour;
-	 * 
+	/*
+	 * TODO: Changes the active player in a certain turn. Invocare model e
+	 * chiamare nextPlayer, invocare nextplayer.resetBehaviour;
 	 */
 	public void changeCurrentPlayer() {
 		model.nextPlayer();
@@ -101,7 +104,8 @@ public class Rules {
 					attackClass.killPlayer(p);
 				}
 			}
-			// TODO: fare rumore con la classe Noise, instaziarla e memorizzarla in una lista di Noises ( nel model? )
+			Noise noise = new AttackNoise(model.getRoundNumber(), player, player.getLastPosition());
+			// TODO: put noise inside NoiseList
 			return validAttack;
 		} else {
 			return validAttack;

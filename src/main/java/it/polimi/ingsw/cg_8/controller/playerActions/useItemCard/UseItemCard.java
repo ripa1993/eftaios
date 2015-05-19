@@ -6,7 +6,9 @@ import it.polimi.ingsw.cg_8.model.cards.Card;
 import java.util.List;
 
 public abstract class UseItemCard extends PlayerAction {
-
+	/**
+	 * The cards held by the player
+	 */
 	private List<Card> cards;
 
 	public List<Card> getCards() {
