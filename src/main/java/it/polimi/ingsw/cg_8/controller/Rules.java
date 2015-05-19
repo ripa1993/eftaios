@@ -104,8 +104,8 @@ public class Rules {
 					attackClass.killPlayer(p);
 				}
 			}
-			Noise noise = new AttackNoise(model.getRoundNumber(), player, player.getLastPosition());
-			// TODO: put noise inside NoiseList
+			Noise attackNoise = new AttackNoise(model.getRoundNumber(), player, player.getLastPosition());
+			model.getNoiseLogger().add(attackNoise);
 			return validAttack;
 		} else {
 			return validAttack;
