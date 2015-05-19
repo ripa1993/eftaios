@@ -21,6 +21,7 @@ import it.polimi.ingsw.cg_8.model.map.creator.FermiCreator;
 import it.polimi.ingsw.cg_8.model.map.creator.GalileiCreator;
 import it.polimi.ingsw.cg_8.model.map.creator.GalvaniCreator;
 import it.polimi.ingsw.cg_8.model.map.creator.MapCreator;
+import it.polimi.ingsw.cg_8.model.noises.Noise;
 import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.player.PlayerState;
 import it.polimi.ingsw.cg_8.model.player.character.InGameCharacter;
@@ -91,6 +92,10 @@ public class Model {
 	 * Current map
 	 */
 	private GameMap map;
+	/**
+	 * List of all noises during a game
+	 */
+	private final List<Noise> noiseLogger;
 
 	/**
 	 * Constructor for model class
@@ -107,6 +112,7 @@ public class Model {
 		roundNumber = 0;
 		currentPlayerIndex = 0;
 		turnPhase = TurnPhase.GAME_SETUP;
+		noiseLogger = new ArrayList<Noise>();
 		characterDeck = new CharacterDeck();
 		dangerousSectorDeck = new DangerousSectorDeck();
 		escapeHatchDeck = new EscapeHatchDeck();
@@ -261,5 +267,8 @@ public class Model {
 	public GameMap getMap() {
 		return map;
 	}
-
+	
+	public List<Noise> getNoiseLogger(){
+		return noiseLogger;
+	}
 }
