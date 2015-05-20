@@ -1,19 +1,34 @@
 package it.polimi.ingsw.cg_8.controller.playerActions.useItemCard;
 
-import it.polimi.ingsw.cg_8.model.cards.Card;
+import it.polimi.ingsw.cg_8.model.Model;
 import it.polimi.ingsw.cg_8.model.player.Player;
+import it.polimi.ingsw.cg_8.model.player.character.human.Human;
 
+/**
+ * Action that uses an attack card. It allows a player to attack even if he is a
+ * human
+ * 
+ * @author Simone
+ *
+ */
 public class UseAttackCard extends UseItemCard {
-
-	@Override
-	public void useCard(Card card) {
-		// rimouve carta attacc dal giocatore
-		// decora il giocatore con player.enableAttack
-		
+	/**
+	 * Constructor
+	 * 
+	 * @param model
+	 *            reference to the game
+	 */
+	public UseAttackCard(Model model) {
+		super(model);
 	}
 
-	private void enableHumanAttack(Player player) {
-		/* Changes some boolean value */
-		// ottieni il valore di isAttackEnabled
+	@Override
+	public void useCard() {
+		// TODO: change method to direct player access
+		Player currentPlayer = model.getPlayers().get(model.getCurrentPlayer());
+		// Assume that the player is a human by ipothesis
+		Human currentPlayerCharacter = (Human) currentPlayer.getCharacter();
+		currentPlayerCharacter.enableAttack();
+
 	}
 }

@@ -97,8 +97,8 @@ public class Rules {
 			
 			for (Player p : attackedPlayers) {
 				if (p.getCharacter().isDefendAllowed()) {
-					UseDefenseCard defense = new UseDefenseCard();
-					defense.useCard(new DefenseCard());
+					UseDefenseCard defense = new UseDefenseCard(model);
+					defense.useCard();
 				}
 				else {
 					attackClass.killPlayer(p);
