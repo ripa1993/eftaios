@@ -7,8 +7,10 @@ import it.polimi.ingsw.cg_8.model.cards.Card;
 import it.polimi.ingsw.cg_8.model.cards.dangerousSectorCards.NoiseCard;
 import it.polimi.ingsw.cg_8.model.cards.escapeHatchCards.GreenEhCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.ItemCard;
+import it.polimi.ingsw.cg_8.model.decks.EscapeHatchDeck;
 import it.polimi.ingsw.cg_8.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.cg_8.model.exceptions.TooManyCardsException;
+import it.polimi.ingsw.cg_8.model.noises.EscapeSectorNoise;
 import it.polimi.ingsw.cg_8.model.noises.MovementNoise;
 import it.polimi.ingsw.cg_8.model.noises.Noise;
 import it.polimi.ingsw.cg_8.model.player.Player;
@@ -63,20 +65,31 @@ public class Movement extends PlayerAction {
 		int lastModelTurn = model.getRoundNumber();
 		int lastPlayerTurn = player.getRoundNumber();
 
+		/**
+		 * If the player used a teleport card, the position is changed using
+		 * editLastPosition(Coordinate);
+		 */
 		if (lastPlayerTurn == lastModelTurn - 1) {
 			player.setPosition(destination);
 		} else if (lastPlayerTurn == lastModelTurn) {
 			player.editLastPosition(destination);
 		}
+
+		/**
+		 * Depending on the type of the reached sector, different actions are
+		 * performed.
+		 */
 		if (destination instanceof SecureSector) {
-			
+
 			// TODO: logger
 		} else if (destination instanceof DangerousSector) {
-			
+
 			drawDangerousSectorCard();
 		} else if (destination instanceof EscapeHatchSector) {
-			
-			// fai noise
+
+			Noise escapeSectorNoise = new EscapeSectorNoise(
+					model.getRoundNumber(), player, player.getLastPosition());
+			model.getNoiseLogger().add(escapeSectorNoise);
 			if (((EscapeHatchSector) destination).getStatus().allowEscape()) {
 				Card escapeCard;
 				try {
@@ -128,7 +141,13 @@ public class Movement extends PlayerAction {
 			e.printStackTrace();
 		}
 	}
-
+	
+	
+	/**
+	 * Draw a card from the {@link EscapeHatchDeck}
+	 * @return an EscapeHatchCard
+	 * @throws EmptyDeckException
+	 */
 	private Card drawEHSectorCard() throws EmptyDeckException {
 		return model.getEscapeHatchDeck().drawCard();
 	}

@@ -60,7 +60,8 @@ public class Attack extends PlayerAction {
 
 	/**
 	 * Attack the players in the attacker' sector, unless they are defended; the
-	 * attacker makes a noise, and so do the attacked players.
+	 * attacker makes a noise, and so do the attacked players. If the attacker
+	 * is an {@link Alien} and a {@link Human} is killed, the alien is upgraded.
 	 * 
 	 * @param model
 	 */
@@ -79,7 +80,8 @@ public class Attack extends PlayerAction {
 			}
 			if (p.getCharacter().isDefendAllowed() == false) {
 				this.killPlayer(p);
-				if (attacker.getCharacter() instanceof Alien && p.getCharacter() instanceof Human) {
+				if (attacker.getCharacter() instanceof Alien
+						&& p.getCharacter() instanceof Human) {
 					((Alien) attacker.getCharacter()).feedAlien();
 				}
 			}
@@ -87,7 +89,6 @@ public class Attack extends PlayerAction {
 		Noise attackNoise = new AttackNoise(model.getRoundNumber(), attacker,
 				attacker.getLastPosition());
 		model.getNoiseLogger().add(attackNoise);
-
 	}
 
 	/**
