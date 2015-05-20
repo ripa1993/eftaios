@@ -45,9 +45,8 @@ public class MovementValidator {
 				return true;
 			} else
 				return false;
-		} else {
-			return false;
 		}
+		else {return false;}
 	}
 
 	private static boolean checkMovement(Player player,
@@ -63,7 +62,6 @@ public class MovementValidator {
 			return false;
 		}
 		return true;
-
 	}
 
 	/**

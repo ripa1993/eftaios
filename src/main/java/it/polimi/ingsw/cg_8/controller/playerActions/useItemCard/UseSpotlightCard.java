@@ -15,19 +15,20 @@ public class UseSpotlightCard extends UseItemCard {
 	private Set<Coordinate> spotlightTarget;
 	private Set<Player> foundPlayers;
 	private Model model;
-	private Player player;
+	private Coordinate target;
 
-	public UseSpotlightCard(Model model) {
+	public UseSpotlightCard(Model model, Coordinate target) {
 		this.spotlightTarget = new HashSet<Coordinate>();
 		this.foundPlayers = new HashSet<Player>();
 		this.model = model;
-		this.player = model.getPlayers().get(model.getCurrentPlayer());
+		this.target = target;
 	}
 
 	@Override
-	public void useCard(Card card) {
-		// TODO rimuove carta
-
+	public void useCard() {
+		// chiama i metodi sotto
+		turnOnLights(target);
+		// altre cose
 		
 	}
 
@@ -47,8 +48,8 @@ public class UseSpotlightCard extends UseItemCard {
 			if (spotlightTarget.contains(p.getLastPosition())) {
 				foundPlayers.add(p);
 				Noise spotlightNoise = new SpotlightNoise(
-						model.getRoundNumber(), player,
-						player.getLastPosition());
+						model.getRoundNumber(), p,
+						p.getLastPosition());
 				model.getNoiseLogger().add(spotlightNoise);
 			}
 		}

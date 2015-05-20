@@ -5,7 +5,7 @@ import it.polimi.ingsw.cg_8.model.cards.Card;
 public class UseTeleportCard extends UseItemCard {	
 	
 	@Override
-	public void useCard(Card card) {
+	public void useCard() {
 		// TODO: rimuovi carta
 		// se il player si è gia mosso, usa editLastPosition
 		// se non si è ancora mosso usa setPosition

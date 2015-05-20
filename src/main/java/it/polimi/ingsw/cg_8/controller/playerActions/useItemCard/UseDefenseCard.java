@@ -5,7 +5,7 @@ import it.polimi.ingsw.cg_8.model.cards.Card;
 public class UseDefenseCard extends UseItemCard {
 
 	@Override
-	public void useCard(Card card) {
+	public void useCard() {
 		// TODO Auto-generated method stub
 		// rimuove la carta
 		// fai rumore sulla posizione reale!!!

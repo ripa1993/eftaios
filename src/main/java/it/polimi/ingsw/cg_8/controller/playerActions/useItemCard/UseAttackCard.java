@@ -6,7 +6,7 @@ import it.polimi.ingsw.cg_8.model.player.Player;
 public class UseAttackCard extends UseItemCard {
 
 	@Override
-	public void useCard(Card card) {
+	public void useCard() {
 		// rimouve carta attacc dal giocatore
 		// decora il giocatore con player.enableAttack
 		

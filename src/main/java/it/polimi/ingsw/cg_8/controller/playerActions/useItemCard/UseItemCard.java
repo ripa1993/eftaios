@@ -20,7 +20,7 @@ public abstract class UseItemCard extends PlayerAction {
 	}
 
 	/** This function is re-implemented by the class children */
-	public abstract void useCard(Card card);
+	public abstract void useCard();
 
 	public void removeCard(Card card) {
 		if (cards.contains(card)) {
