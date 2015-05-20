@@ -1,20 +1,34 @@
 package it.polimi.ingsw.cg_8.controller.playerActions.useItemCard;
 
-import it.polimi.ingsw.cg_8.model.cards.Card;
+import it.polimi.ingsw.cg_8.model.Model;
 import it.polimi.ingsw.cg_8.model.player.Player;
+import it.polimi.ingsw.cg_8.model.player.character.human.Human;
 
+/**
+ * Action that uses an adrenaline card. It allows a human to walk longer
+ * distance
+ * 
+ * @author Simone
+ * 
+ */
 public class UseAdrenalineCard extends UseItemCard {
-
-	@Override
-	public void useCard(Card card) {
-		// TODO Auto-generated method stub
-		// rimuovere un'istanza della carta dalla mano del giocatore
-		// invoca enableAdrenaline
-		
+	/**
+	 * Constructor
+	 * 
+	 * @param model
+	 *            reference to the game
+	 */
+	public UseAdrenalineCard(Model model) {
+		super(model);
 	}
 
-	private void enableAdrenaline(Player player) {
-		/* Changes some boolean value */
-		// decora enableAdreanaline il giocatore con il comando player.enableAdrenaline()
+	@Override
+	public void useCard() {
+		// TODO: change method to getCharacter
+		Player currentPlayer = model.getPlayers().get(model.getCurrentPlayer());
+		// Assume that the player is a human by ipothesis
+		Human currentPlayerCharacter = (Human) currentPlayer.getCharacter();
+		currentPlayerCharacter.enableAdrenaline();
+
 	}
 }
