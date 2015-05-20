@@ -66,9 +66,9 @@ public class Model {
 	/**
 	 * Position in the array players of first player to play
 	 */
-	private int startingPlayerIndex;
+	private int startingPlayerIndex;	
 	/**
-	 * Current game phase
+	 * Reference to the starting player
 	 */
 	private TurnPhase turnPhase;
 	/**
@@ -230,6 +230,14 @@ public class Model {
 		}
 	}
 
+	/**
+	 * 
+	 * @return a reference to the current player
+	 */
+	public Player getCurrentPlayerReference() {
+		return this.getPlayers().get(this.getCurrentPlayer());
+	}
+	
 	public List<Player> getPlayers() {
 		return players;
 	}
