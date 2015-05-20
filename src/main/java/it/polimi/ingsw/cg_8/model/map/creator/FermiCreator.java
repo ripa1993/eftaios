@@ -8,8 +8,10 @@ import it.polimi.ingsw.cg_8.model.map.FermiMap;
 import it.polimi.ingsw.cg_8.model.map.GameMap;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 import it.polimi.ingsw.cg_8.model.sectors.SectorType;
+
 /**
  * Implementation of the factory pattern, it creates a FermiMap
+ * 
  * @author Simone
  *
  */
@@ -19,43 +21,45 @@ public class FermiCreator extends MapCreator {
 	 * Map that is going to be populated
 	 */
 	private final GameMap fermiMap;
+
 	/**
 	 * Constructor
 	 */
 	public FermiCreator() {
-		super(new FermiMap(new Coordinate(11,9), new Coordinate(11,8)));
+		super(new FermiMap(new Coordinate(11, 9), new Coordinate(11, 8)));
 		fermiMap = this.getGm();
 	}
 
 	/**
 	 * Adds all Dangerous Sectors
 	 */
-	private void addDS(){
+	private void addDS() {
 		Set<Coordinate> dangerousCoordinate = new HashSet<Coordinate>();
-		dangerousCoordinate.add(new Coordinate(8,6));
-		dangerousCoordinate.add(new Coordinate(8,8));
-		dangerousCoordinate.add(new Coordinate(8,11));
-		dangerousCoordinate.add(new Coordinate(9,2));
-		dangerousCoordinate.add(new Coordinate(10,3));
-		dangerousCoordinate.add(new Coordinate(10,12));
-		dangerousCoordinate.add(new Coordinate(11,2));
-		dangerousCoordinate.add(new Coordinate(11,3));
-		dangerousCoordinate.add(new Coordinate(12,1));
-		dangerousCoordinate.add(new Coordinate(12,3));
-		dangerousCoordinate.add(new Coordinate(13,2));
-		dangerousCoordinate.add(new Coordinate(13,6));
-		dangerousCoordinate.add(new Coordinate(13,11));
-		dangerousCoordinate.add(new Coordinate(14,9));
-		dangerousCoordinate.add(new Coordinate(15,10));
+		dangerousCoordinate.add(new Coordinate(8, 6));
+		dangerousCoordinate.add(new Coordinate(8, 8));
+		dangerousCoordinate.add(new Coordinate(8, 11));
+		dangerousCoordinate.add(new Coordinate(9, 2));
+		dangerousCoordinate.add(new Coordinate(10, 3));
+		dangerousCoordinate.add(new Coordinate(10, 12));
+		dangerousCoordinate.add(new Coordinate(11, 2));
+		dangerousCoordinate.add(new Coordinate(11, 3));
+		dangerousCoordinate.add(new Coordinate(12, 1));
+		dangerousCoordinate.add(new Coordinate(12, 3));
+		dangerousCoordinate.add(new Coordinate(13, 2));
+		dangerousCoordinate.add(new Coordinate(13, 6));
+		dangerousCoordinate.add(new Coordinate(13, 11));
+		dangerousCoordinate.add(new Coordinate(14, 9));
+		dangerousCoordinate.add(new Coordinate(15, 10));
 		Iterator<Coordinate> it = dangerousCoordinate.iterator();
-		while(it.hasNext()){
+		while (it.hasNext()) {
 			addDangerousSector(it.next());
 		}
 	}
+
 	/**
 	 * Adds all Secure Sectors
 	 */
-	private void addSS(){
+	private void addSS() {
 		addColumn(SectorType.SECURE_SECTOR, 7, 9, 10);
 		addColumn(SectorType.SECURE_SECTOR, 9, 6, 7);
 		addColumn(SectorType.SECURE_SECTOR, 9, 9, 11);
@@ -65,41 +69,44 @@ public class FermiCreator extends MapCreator {
 		addColumn(SectorType.SECURE_SECTOR, 13, 9, 10);
 		addColumn(SectorType.SECURE_SECTOR, 14, 5, 6);
 		Set<Coordinate> secureCoordinate = new HashSet<Coordinate>();
-		secureCoordinate.add(new Coordinate(8,5));
-		secureCoordinate.add(new Coordinate(8,9));
-		secureCoordinate.add(new Coordinate(9,3));
-		secureCoordinate.add(new Coordinate(10,7));
-		secureCoordinate.add(new Coordinate(10,10));
-		secureCoordinate.add(new Coordinate(12,2));
-		secureCoordinate.add(new Coordinate(12,7));
-		secureCoordinate.add(new Coordinate(12,10));
-		secureCoordinate.add(new Coordinate(12,12));
-		secureCoordinate.add(new Coordinate(13,3));
-		secureCoordinate.add(new Coordinate(13,7));
-		secureCoordinate.add(new Coordinate(14,8));
-		secureCoordinate.add(new Coordinate(14,11));
-		secureCoordinate.add(new Coordinate(15,9));
+		secureCoordinate.add(new Coordinate(8, 5));
+		secureCoordinate.add(new Coordinate(8, 9));
+		secureCoordinate.add(new Coordinate(9, 3));
+		secureCoordinate.add(new Coordinate(10, 7));
+		secureCoordinate.add(new Coordinate(10, 10));
+		secureCoordinate.add(new Coordinate(12, 2));
+		secureCoordinate.add(new Coordinate(12, 7));
+		secureCoordinate.add(new Coordinate(12, 10));
+		secureCoordinate.add(new Coordinate(12, 12));
+		secureCoordinate.add(new Coordinate(13, 3));
+		secureCoordinate.add(new Coordinate(13, 7));
+		secureCoordinate.add(new Coordinate(14, 8));
+		secureCoordinate.add(new Coordinate(14, 11));
+		secureCoordinate.add(new Coordinate(15, 9));
 		Iterator<Coordinate> it = secureCoordinate.iterator();
-		while(it.hasNext()){
+		while (it.hasNext()) {
 			addSecureSector(it.next());
 		}
 	}
+
 	/**
 	 * Adds all Escape Hatch sectors
 	 */
-	private void addEH(){
-		addEscapeHatchSector(new Coordinate(9,4), 1);
-		addEscapeHatchSector(new Coordinate(13,4), 2);
-		addEscapeHatchSector(new Coordinate(9,0), 3);
-		addEscapeHatchSector(new Coordinate(13,0), 4);
+	private void addEH() {
+		addEscapeHatchSector(new Coordinate(9, 4), 1);
+		addEscapeHatchSector(new Coordinate(13, 4), 2);
+		addEscapeHatchSector(new Coordinate(9, 0), 3);
+		addEscapeHatchSector(new Coordinate(13, 0), 4);
 	}
+
 	/**
-	 * Adds all spawn sectors 
+	 * Adds all spawn sectors
 	 */
-	private void addSpawn(){
+	private void addSpawn() {
 		addHumanSector(new Coordinate(11, 9));
-		addAlienSector(new Coordinate(11,8));
+		addAlienSector(new Coordinate(11, 8));
 	}
+
 	@Override
 	public GameMap createMap() {
 		addDS();
@@ -108,31 +115,6 @@ public class FermiCreator extends MapCreator {
 		addSpawn();
 
 		return fermiMap;
-	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result
-				+ ((fermiMap == null) ? 0 : fermiMap.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		FermiCreator other = (FermiCreator) obj;
-		if (fermiMap == null) {
-			if (other.fermiMap != null)
-				return false;
-		} else if (!fermiMap.equals(other.fermiMap))
-			return false;
-		return true;
 	}
 
 	@Override

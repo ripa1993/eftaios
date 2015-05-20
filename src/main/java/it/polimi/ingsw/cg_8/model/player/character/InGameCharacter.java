@@ -62,29 +62,5 @@ public abstract class InGameCharacter {
 		return "InGameCharacter [characterCard=" + characterCard + "]";
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((characterCard == null) ? 0 : characterCard.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		InGameCharacter other = (InGameCharacter) obj;
-		if (characterCard == null) {
-			if (other.characterCard != null)
-				return false;
-		} else if (!characterCard.equals(other.characterCard))
-			return false;
-		return true;
-	}
+	
 }

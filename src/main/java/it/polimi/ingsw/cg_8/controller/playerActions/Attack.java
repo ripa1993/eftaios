@@ -3,12 +3,15 @@ package it.polimi.ingsw.cg_8.controller.playerActions;
 import it.polimi.ingsw.cg_8.controller.Rules;
 import it.polimi.ingsw.cg_8.controller.playerActions.useItemCard.UseDefenseCard;
 import it.polimi.ingsw.cg_8.model.Model;
+import it.polimi.ingsw.cg_8.model.cards.Card;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.DefenseCard;
 import it.polimi.ingsw.cg_8.model.noises.AttackNoise;
 import it.polimi.ingsw.cg_8.model.noises.Noise;
+import it.polimi.ingsw.cg_8.model.player.Hand;
 import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.player.PlayerState;
 import it.polimi.ingsw.cg_8.model.player.character.alien.Alien;
+import it.polimi.ingsw.cg_8.model.player.character.human.Human;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 
 import java.util.HashSet;
@@ -23,7 +26,6 @@ import java.util.Set;
  * @author Alberto Parravicini
  *
  */
-
 
 public class Attack extends PlayerAction {
 
@@ -67,13 +69,18 @@ public class Attack extends PlayerAction {
 		Set<Player> attackedPlayers = this.getPlayersInSector();
 
 		for (Player p : attackedPlayers) {
-			if (p.getCharacter().isDefendAllowed()) {
-				UseDefenseCard defense = new UseDefenseCard();
-				defense.useCard(new DefenseCard());
-			} else {
+			Hand heldCards = p.getHand();
+			for (Card c : heldCards.getHeldCards()) {
+				if (c instanceof DefenseCard) {
+					UseDefenseCard defense = new UseDefenseCard(model);
+					defense.useCard();
+					heldCards.getHeldCards().remove(c);
+				}
+			}
+			if (p.getCharacter().isDefendAllowed() == false) {
 				this.killPlayer(p);
-				if (attacker.getCharacter() instanceof Alien) {
-					((Alien)attacker.getCharacter()).feedAlien();
+				if (attacker.getCharacter() instanceof Alien && p.getCharacter() instanceof Human) {
+					((Alien) attacker.getCharacter()).feedAlien();
 				}
 			}
 		}

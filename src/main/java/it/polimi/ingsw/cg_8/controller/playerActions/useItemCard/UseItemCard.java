@@ -1,31 +1,40 @@
 package it.polimi.ingsw.cg_8.controller.playerActions.useItemCard;
 
 import it.polimi.ingsw.cg_8.controller.playerActions.PlayerAction;
-import it.polimi.ingsw.cg_8.model.cards.Card;
+import it.polimi.ingsw.cg_8.model.Model;
 
-import java.util.List;
-
+/**
+ * Action that use an item card. It is extend by specific item card types:
+ * {@link UseAdrenalineCard Adrenaline}, {@link UseAttackCard Attack},
+ * {@link UseDefenseCard Defense}, {@link UseSedativesCard Sedatives},
+ * {@link UseSpotlightCard Spotlight} and {@link UseTeleportCard Teleport}
+ * 
+ * @author Simone
+ *
+ */
 public abstract class UseItemCard extends PlayerAction {
+
 	/**
-	 * The cards held by the player
+	 * Reference to current game
 	 */
-	private List<Card> cards;
+	Model model;
 
-	public List<Card> getCards() {
-		return this.cards;
+	/**
+	 * Constructor
+	 * 
+	 * @param model
+	 *            reference to the game
+	 */
+	public UseItemCard(Model model) {
+		this.model = model;
 	}
 
-	public void setUsableCards() {
-
-	}
-
-	/** This function is re-implemented by the class children */
+	/**
+	 * Applies card effect
+	 * 
+	 * @param model
+	 *            current game
+	 */
 	public abstract void useCard();
-
-	public void removeCard(Card card) {
-		if (cards.contains(card)) {
-			cards.remove(card);
-		}
-	 /* Manage exception: the card might not be in the list */
-	}
 }
+
