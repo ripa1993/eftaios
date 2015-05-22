@@ -1,10 +1,12 @@
 package it.polimi.ingsw.cg_8.model.player;
 
+import it.polimi.ingsw.cg_8.model.player.character.InGameCharacter;
+import it.polimi.ingsw.cg_8.model.player.character.human.Human;
+import it.polimi.ingsw.cg_8.model.player.character.human.NormalHuman;
+import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import it.polimi.ingsw.cg_8.model.player.character.InGameCharacter;
-import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 
 /**
  * Player class. Used in {@link it.polimi.ingsw.cg_8.model.Model Model} to keep
@@ -112,7 +114,6 @@ public class Player {
 		setPosition(newCoordinate);
 	}
 
-
 	/**
 	 * Set the player status to {@link PlayerState#DISCONNECTED DISCONNECTED}
 	 */
@@ -127,7 +128,6 @@ public class Player {
 		state = PlayerState.DEAD;
 	}
 
-
 	/**
 	 * Changes the player status from {@link PlayerState#ALIVE_WAITING
 	 * ALIVE_WAITING} to {@link PlayerState#ALIVE_PLAYING ALIVE_PLAYING} and
@@ -136,8 +136,19 @@ public class Player {
 	public void cycleState() {
 		if (state == PlayerState.ALIVE_WAITING) {
 			state = PlayerState.ALIVE_PLAYING;
+			resetDecorations();
 		} else if (state == PlayerState.ALIVE_PLAYING) {
 			state = PlayerState.ALIVE_WAITING;
+		}
+	}
+
+	/**
+	 * Restores human character to its original state. It is called
+	 * automatically at the begin of a player's turn
+	 */
+	public void resetDecorations() {
+		if (this.character instanceof Human) {
+			((Human) this.character).setBehaviour(new NormalHuman());
 		}
 	}
 

@@ -16,12 +16,16 @@ import it.polimi.ingsw.cg_8.model.player.character.human.decorations.EnableSedat
 public class Human extends InGameCharacter {
 	/**
 	 * Implementation of the strategy pattern, there are two kind of strategy:
-	 * {@link NormalHuman Normal} and {@link decorations.HumanDecorator Decorated} (with special powers)
+	 * {@link NormalHuman Normal} and {@link decorations.HumanDecorator
+	 * Decorated} (with special powers)
 	 */
 	private HumanBehaviour currentBehaviour;
+
 	/**
 	 * Constructor for human. By default the human's strategy is the normal one
-	 * @param characterCard human character card
+	 * 
+	 * @param characterCard
+	 *            human character card
 	 */
 	public Human(CharacterCard characterCard) {
 		super(characterCard);
@@ -35,6 +39,7 @@ public class Human extends InGameCharacter {
 		HumanBehaviour tempBehaviour = new EnableAttack(currentBehaviour);
 		setBehaviour(tempBehaviour);
 	}
+
 	/**
 	 * Decorates the human, allowing the defense
 	 */
@@ -42,13 +47,16 @@ public class Human extends InGameCharacter {
 		HumanBehaviour tempBehaviour = new EnableDefense(currentBehaviour);
 		setBehaviour(tempBehaviour);
 	}
+
 	/**
-	 * Decorates the human, using sedatives, allowing to not draw dangerous sector card
+	 * Decorates the human, using sedatives, allowing to not draw dangerous
+	 * sector card
 	 */
 	public void enableSedatives() {
 		HumanBehaviour tempBehaviour = new EnableSedatives(currentBehaviour);
 		setBehaviour(tempBehaviour);
 	}
+
 	/**
 	 * Decorates the human, using adrenaline, allowing to more further distances
 	 */
@@ -56,16 +64,17 @@ public class Human extends InGameCharacter {
 		HumanBehaviour tempBehaviour = new EnableAdrenaline(currentBehaviour);
 		setBehaviour(tempBehaviour);
 	}
+
 	/**
 	 * Changes the behaviour of the humna
-	 * @param hb new behaviour
+	 * 
+	 * @param hb
+	 *            new behaviour
 	 */
-	private void setBehaviour(HumanBehaviour hb) {
+	public void setBehaviour(HumanBehaviour hb) {
 		this.currentBehaviour = hb;
 	}
 
-	
-	
 	@Override
 	public boolean isAttackAllowed() {
 		return currentBehaviour.isAttackAllowed();
@@ -85,7 +94,6 @@ public class Human extends InGameCharacter {
 	public boolean hasToDrawSectorCard() {
 		return currentBehaviour.hasToDrawSectorCard();
 	}
-	
 
 	@Override
 	public String toString() {
