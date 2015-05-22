@@ -70,13 +70,18 @@ public class Attack extends PlayerAction {
 		Set<Player> attackedPlayers = this.getPlayersInSector();
 
 		for (Player p : attackedPlayers) {
-			Hand heldCards = p.getHand();
-			for (Card c : heldCards.getHeldCards()) {
-				if (c instanceof DefenseCard) {
-					UseDefenseCard defense = new UseDefenseCard(model);
-					defense.useCard();
-					heldCards.getHeldCards().remove(c);
-					p.resetDecorations();
+			/**
+			 * For every attacked player, check, if they are human, if the can
+			 * defend themselves: if so, they use the shield card.
+			 */
+			if (p.getCharacter() instanceof Human) {
+				Hand heldCards = p.getHand();
+				for (Card c : heldCards.getHeldCards()) {
+					if (c instanceof DefenseCard) {
+						UseDefenseCard defense = new UseDefenseCard(model);
+						defense.useCard();
+						heldCards.getHeldCards().remove(c);
+					}
 				}
 			}
 			if (p.getCharacter().isDefendAllowed() == false) {
@@ -85,6 +90,8 @@ public class Attack extends PlayerAction {
 						&& p.getCharacter() instanceof Human) {
 					((Alien) attacker.getCharacter()).feedAlien();
 				}
+			} else {
+				p.resetDecorations();
 			}
 		}
 		Noise attackNoise = new AttackNoise(model.getRoundNumber(), attacker,
