@@ -76,7 +76,7 @@ public class Attack extends PlayerAction {
 					UseDefenseCard defense = new UseDefenseCard(model);
 					defense.useCard();
 					heldCards.getHeldCards().remove(c);
-					
+					p.resetDecorations();
 				}
 			}
 			if (p.getCharacter().isDefendAllowed() == false) {
