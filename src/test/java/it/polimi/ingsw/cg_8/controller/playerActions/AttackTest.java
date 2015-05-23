@@ -1,6 +1,6 @@
 package it.polimi.ingsw.cg_8.controller.playerActions;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 import it.polimi.ingsw.cg_8.model.Model;
 import it.polimi.ingsw.cg_8.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.cg_8.model.exceptions.GameAlreadyRunningException;
@@ -10,15 +10,15 @@ import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.player.character.alien.Alien;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class AttackTest {
-	Model model;
-	Player currentPlayer;
+	static Model model;
+	static Player currentPlayer;
 
-	@Before
-	public void init() throws NotAValidMapException,
+	@BeforeClass
+	public static void init() throws NotAValidMapException,
 			GameAlreadyRunningException, EmptyDeckException {
 		model = new Model(GameMapName.FERMI);
 		model.addPlayer("pippo");
@@ -29,6 +29,7 @@ public class AttackTest {
 			model.nextPlayer();
 			currentPlayer = model.getPlayers().get(model.getCurrentPlayer());
 		}
+		System.out.println(model.getCurrentPlayerReference());
 		model.getCurrentPlayerReference().cycleState();
 		model.getCurrentPlayerReference().setPosition(new Coordinate(8, 8));
 
@@ -49,6 +50,7 @@ public class AttackTest {
 
 		attack.makeAttack();
 		System.out.println(attack.getVictims());
+		System.out.println((model.getPlayers().get(1)));
 		assertTrue((attack.getVictims().get(0)).equals(model.getPlayers().get(1)));
 		
 	}
