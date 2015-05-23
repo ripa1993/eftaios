@@ -6,6 +6,11 @@ package it.polimi.ingsw.cg_8.model.cards.itemCards;
  */
 public class TeleportCard extends ItemCard {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4793740289984478509L;
+
+	/**
 	 * Constructor
 	 */
 	public TeleportCard() {
