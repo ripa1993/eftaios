@@ -11,7 +11,7 @@ public class AttackValidator {
 	 * 
 	 * @return validAttack: whether the attack is allowed or not
 	 */
-	public static boolean validAttack(Model model) {
+	public static boolean validateAttack(Model model) {
 		
 		Player attacker = model.getCurrentPlayerReference();
 		boolean validAttack = false;
