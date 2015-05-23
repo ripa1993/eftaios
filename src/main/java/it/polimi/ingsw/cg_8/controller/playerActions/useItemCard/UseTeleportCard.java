@@ -49,3 +49,4 @@ public class UseTeleportCard extends UseItemCard {
 
 	}
 }
+

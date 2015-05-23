@@ -1,9 +1,17 @@
 package it.polimi.ingsw.cg_8.controller.playerActions;
 
 import it.polimi.ingsw.cg_8.controller.Rules;
+import it.polimi.ingsw.cg_8.controller.playerActions.useItemCard.UseDefenseCard;
 import it.polimi.ingsw.cg_8.model.Model;
+import it.polimi.ingsw.cg_8.model.cards.Card;
+import it.polimi.ingsw.cg_8.model.cards.itemCards.DefenseCard;
+import it.polimi.ingsw.cg_8.model.noises.AttackNoise;
+import it.polimi.ingsw.cg_8.model.noises.Noise;
+import it.polimi.ingsw.cg_8.model.player.Hand;
 import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.player.PlayerState;
+import it.polimi.ingsw.cg_8.model.player.character.alien.Alien;
+import it.polimi.ingsw.cg_8.model.player.character.human.Human;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 
 import java.util.HashSet;
@@ -18,8 +26,13 @@ import java.util.Set;
  * @author Alberto Parravicini
  *
  */
+
 public class Attack extends PlayerAction {
 
+	/**
+	 * Current state of the game
+	 */
+	private Model model;
 	/**
 	 * The player who attacks
 	 */
@@ -38,38 +51,69 @@ public class Attack extends PlayerAction {
 	 * 
 	 * @param attacker
 	 */
-	public Attack(Player attacker) {
-		this.attacker = attacker;
+	public Attack(Model model) {
+		this.model = model;
+		this.attacker = model.getCurrentPlayerReference();
 		victims = new HashSet<Player>();
 		playersInSector = new HashSet<Player>();
 	}
 
 	/**
-	 * Checks if the attack is valid: if the player is a human, he had to use an
-	 * attack card before attacking, in the same turn.
+	 * Attack the players in the attacker' sector, unless they are defended; the
+	 * attacker makes a noise, and so do the attacked players. If the attacker
+	 * is an {@link Alien} and a {@link Human} is killed, the alien is upgraded.
 	 * 
-	 * @return validAttack: whether the attack is allowed or not
+	 * @param model
 	 */
-	public boolean validAttack() {
+	public void makeAttack(Model model) {
 
-		boolean validAttack = false;
+		Set<Player> attackedPlayers = this.getPlayersInSector();
 
-		if (attacker.getCharacter().isAttackAllowed() == true) {
-			validAttack = true;
+		for (Player p : attackedPlayers) {
+			/**
+			 * For every attacked player, check, if they are human, if the can
+			 * defend themselves: if so, they use the shield card.
+			 */
+			if (p.getCharacter() instanceof Human) {
+				Hand heldCards = p.getHand();
+				for (Card c : heldCards.getHeldCards()) {
+					if (c instanceof DefenseCard) {
+						UseDefenseCard defense = new UseDefenseCard(model);
+						defense.useCard();
+						heldCards.getHeldCards().remove(c);
+					}
+				}
+			}
+			if (p.getCharacter().isDefendAllowed() == false) {
+				this.killPlayer(p);
+				if (attacker.getCharacter() instanceof Alien
+						&& p.getCharacter() instanceof Human) {
+					((Alien) attacker.getCharacter()).feedAlien();
+				}
+			} else {
+				p.resetDecorations();
+			}
 		}
-		return validAttack;
+		Noise attackNoise = new AttackNoise(model.getRoundNumber(), attacker,
+				attacker.getLastPosition());
+		model.getNoiseLogger().add(attackNoise);
 	}
 
 	/**
-	 * Checks if a player has a defense card: if so, this function is called.
-	 * 
-	 * @param player
+	 * @param model
+	 * @return playersInSector: the players in the same sector as the attacker.
 	 */
+	public Set<Player> getPlayersInSector() {
+		Coordinate target = attacker.getLastPosition();
 
-	public void savePlayerWithDefense(Player player) {
-		// TODO: rimouvere carta difesa dal giocatore e chiamare il metodo
-		// resetBehaviour sull'attaccato per togliere la decorazione
-		// defenseEnable
+		List<Player> playerList = model.getPlayers();
+		for (Player p : playerList) {
+			if (p.getLastPosition().equals(target)
+					&& p.getState().equals(PlayerState.ALIVE_WAITING)) {
+				playersInSector.add(p);
+			}
+		}
+		return playersInSector;
 	}
 
 	/**
@@ -80,23 +124,6 @@ public class Attack extends PlayerAction {
 	public void killPlayer(Player victim) {
 		victim.setDead();
 		victims.add(victim);
-	}
-
-	/**
-	 * @param model
-	 * @return playersInSector: the players in the same sector as the attacker.
-	 */
-	public Set<Player> getPlayersInSector(Model model) {
-		Coordinate destination = attacker.getLastPosition();
-
-		List<Player> playerList = model.getPlayers();
-		for (Player p : playerList) {
-			if (p.getLastPosition().equals(destination)
-					&& p.getState().equals(PlayerState.ALIVE_WAITING)) {
-				playersInSector.add(p);
-			}
-		}
-		return playersInSector;
 	}
 
 	/**

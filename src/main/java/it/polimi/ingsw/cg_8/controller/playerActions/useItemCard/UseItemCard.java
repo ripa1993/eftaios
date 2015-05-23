@@ -37,3 +37,4 @@ public abstract class UseItemCard extends PlayerAction {
 	 */
 	public abstract void useCard();
 }
+

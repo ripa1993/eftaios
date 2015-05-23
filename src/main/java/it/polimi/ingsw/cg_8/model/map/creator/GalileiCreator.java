@@ -1,13 +1,13 @@
 package it.polimi.ingsw.cg_8.model.map.creator;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-
 import it.polimi.ingsw.cg_8.model.map.GalileiMap;
 import it.polimi.ingsw.cg_8.model.map.GameMap;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 import it.polimi.ingsw.cg_8.model.sectors.SectorType;
+
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  * Implementation of the factory pattern, it creates a GalileiMap
