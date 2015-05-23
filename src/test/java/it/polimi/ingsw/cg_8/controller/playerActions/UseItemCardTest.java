@@ -6,7 +6,6 @@ import static org.junit.Assert.assertTrue;
 import it.polimi.ingsw.cg_8.controller.playerActions.useItemCard.UseAdrenalineCard;
 import it.polimi.ingsw.cg_8.controller.playerActions.useItemCard.UseAttackCard;
 import it.polimi.ingsw.cg_8.controller.playerActions.useItemCard.UseDefenseCard;
-import it.polimi.ingsw.cg_8.controller.playerActions.useItemCard.UseItemCard;
 import it.polimi.ingsw.cg_8.controller.playerActions.useItemCard.UseSedativesCard;
 import it.polimi.ingsw.cg_8.controller.playerActions.useItemCard.UseSpotlightCard;
 import it.polimi.ingsw.cg_8.controller.playerActions.useItemCard.UseTeleportCard;
@@ -18,6 +17,8 @@ import it.polimi.ingsw.cg_8.model.map.GameMapName;
 import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.player.character.alien.Alien;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
+
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -43,48 +44,41 @@ public class UseItemCardTest {
 
 	@Test
 	public void testUseAdrenalineCard() {
-		UseItemCard adrenaline = new UseAdrenalineCard(model);
-		adrenaline.useCard();
+		UseAdrenalineCard.useCard(model);
 		assertEquals(2, currentPlayer.getCharacter().getMaxAllowedMovement());
 	}
 
 	@Test
 	public void testUseAttackCard() {
-		UseItemCard attack = new UseAttackCard(model);
-		attack.useCard();
+		UseAttackCard.useCard(model);
 		assertTrue(currentPlayer.getCharacter().isAttackAllowed());
 	}
 
 	@Test
 	public void testUseDefenseCard() {
-		UseItemCard defense = new UseDefenseCard(model);
-		defense.useCard();
+		UseDefenseCard.useCard(currentPlayer);
 		assertTrue(currentPlayer.getCharacter().isDefendAllowed());
 	}
 
 	@Test
 	public void testUseSedativesCard() {
-		UseItemCard sedatives = new UseSedativesCard(model);
-		sedatives.useCard();
+		UseSedativesCard.useCard(model);
 		assertFalse(currentPlayer.getCharacter().hasToDrawSectorCard());
 	}
 
 	@Test
 	public void testUseTeleportCard() {
-		UseItemCard teleport = new UseTeleportCard(model);
-		teleport.useCard();
+		UseTeleportCard.useCard(model);
 		assertEquals(model.getMap().getHumanSpawn(),
 				currentPlayer.getLastPosition());
 	}
 
 	@Test
 	public void testUseSpotlightCard() {
-		UseItemCard spotlight = new UseSpotlightCard(model, new Coordinate(
-				model.getMap().getHumanSpawn().getX(), model.getMap()
-						.getHumanSpawn().getY() + 1));
-		spotlight.useCard();
-		assertTrue(((UseSpotlightCard) spotlight).getFoundPlayers()
-				.containsAll(model.getPlayers()));
+		Set<Player> foundPlayers = UseSpotlightCard.useCard(model,
+				new Coordinate(model.getMap().getHumanSpawn().getX(), model
+						.getMap().getHumanSpawn().getY()));
+		assertTrue(foundPlayers.containsAll(model.getPlayers()));
 	}
 
 }

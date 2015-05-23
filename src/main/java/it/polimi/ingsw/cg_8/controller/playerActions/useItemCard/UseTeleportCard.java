@@ -13,18 +13,8 @@ import it.polimi.ingsw.cg_8.model.player.Player;
  *
  */
 public class UseTeleportCard extends UseItemCard {
-	/**
-	 * Constructor
-	 * 
-	 * @param model
-	 *            reference to the game
-	 */
-	public UseTeleportCard(Model model) {
-		super(model);
-	}
 
-	@Override
-	public void useCard() {
+	public static void useCard(Model model) {
 		/**
 		 * If player has already done Movement, it calls editLastPosition(),
 		 * otherwise it calls setPosition.

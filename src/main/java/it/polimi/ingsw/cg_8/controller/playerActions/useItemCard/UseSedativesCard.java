@@ -12,18 +12,12 @@ import it.polimi.ingsw.cg_8.model.player.character.human.Human;
  *
  */
 public class UseSedativesCard extends UseItemCard {
-	/**
-	 * Constructor
-	 * 
-	 * @param model
-	 *            reference to the game
-	 */
-	public UseSedativesCard(Model model) {
-		super(model);
-	}
 
-	@Override
-	public void useCard() {
+	/**
+	 * Allows a player to not draw a dangerous sector card
+	 */
+
+	public static void useCard(Model model) {
 		// TODO: change method to direct player access
 		Player currentPlayer = model.getPlayers().get(model.getCurrentPlayer());
 		// Assume that the player is a human by ipothesis
