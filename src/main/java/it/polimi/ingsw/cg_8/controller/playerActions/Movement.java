@@ -80,8 +80,6 @@ public class Movement extends PlayerAction {
 		 * performed.
 		 */
 		if (destination instanceof SecureSector) {
-
-			// TODO: logger
 		} else if (destination instanceof DangerousSector) {
 
 			drawDangerousSectorCard();
@@ -95,7 +93,7 @@ public class Movement extends PlayerAction {
 				try {
 					escapeCard = drawEHSectorCard();
 					if (escapeCard instanceof GreenEhCard) {
-						// giocatore scappato
+						player.setEscaped();
 					}
 				} catch (EmptyDeckException e) {
 					// TODO: non si verifica, la partita termina se pesco la
@@ -141,10 +139,10 @@ public class Movement extends PlayerAction {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	/**
 	 * Draw a card from the {@link EscapeHatchDeck}
+	 * 
 	 * @return an EscapeHatchCard
 	 * @throws EmptyDeckException
 	 */

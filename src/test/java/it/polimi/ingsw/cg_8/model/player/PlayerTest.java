@@ -77,6 +77,12 @@ public class PlayerTest {
 		player.setDead();
 		assertEquals(PlayerState.DEAD, player.getState());
 	}
+	
+	@Test 
+	public void testSetEscaped() {
+		player.setEscaped();
+		assertEquals(PlayerState.ESCAPED, player.getState());
+	}
 
 	@Test
 	public void testCycleState() {

@@ -18,6 +18,10 @@ public enum PlayerState {
 	 */
 	DEAD,
 	/**
+	 * The player is escaped through an Escape hatch
+	 */
+	ESCAPED,
+	/**
 	 * player is joining the game
 	 */
 	CONNECTING,
