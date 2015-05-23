@@ -1,7 +1,6 @@
 package it.polimi.ingsw.cg_8.controller.playerActions.useItemCard;
 
 import it.polimi.ingsw.cg_8.controller.playerActions.PlayerAction;
-import it.polimi.ingsw.cg_8.model.Model;
 
 /**
  * Action that use an item card. It is extend by specific item card types:
@@ -15,25 +14,8 @@ import it.polimi.ingsw.cg_8.model.Model;
 public abstract class UseItemCard extends PlayerAction {
 
 	/**
-	 * Reference to current game
-	 */
-	Model model;
-
-	/**
 	 * Constructor
-	 * 
-	 * @param model
-	 *            reference to the game
 	 */
-	public UseItemCard(Model model) {
-		this.model = model;
+	public UseItemCard() {
 	}
-
-	/**
-	 * Applies card effect
-	 * 
-	 * @param model
-	 *            current game
-	 */
-	public abstract void useCard();
 }

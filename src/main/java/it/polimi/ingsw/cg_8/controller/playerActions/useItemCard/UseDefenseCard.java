@@ -1,6 +1,5 @@
 package it.polimi.ingsw.cg_8.controller.playerActions.useItemCard;
 
-import it.polimi.ingsw.cg_8.model.Model;
 import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.player.character.human.Human;
 
@@ -14,21 +13,14 @@ import it.polimi.ingsw.cg_8.model.player.character.human.Human;
 public class UseDefenseCard extends UseItemCard {
 
 	/**
-	 * Constructor
+	 * Defends a player
 	 * 
-	 * @param model
-	 *            reference to the game
+	 * @param player
+	 *            player to be defended
 	 */
-	public UseDefenseCard(Model model) {
-		super(model);
-	}
-
-	@Override
-	public void useCard() {
-		// TODO: change method to direct player access
-		Player currentPlayer = model.getPlayers().get(model.getCurrentPlayer());
+	public static void useCard(Player player) {
 		// Assume that the player is a human by ipothesis
-		Human currentPlayerCharacter = (Human) currentPlayer.getCharacter();
+		Human currentPlayerCharacter = (Human) player.getCharacter();
 		currentPlayerCharacter.enableDefend();
 	}
 
