@@ -1,5 +1,6 @@
-package it.polimi.ingsw.cg_8.controller.playerActions;
+package it.polimi.ingsw.cg_8.controller.playerActions.otherActions;
 
+import it.polimi.ingsw.cg_8.controller.playerActions.PlayerAction;
 import it.polimi.ingsw.cg_8.model.Model;
 import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
@@ -27,5 +28,13 @@ public class GetReachableSectors extends PlayerAction {
 
 		return model.getMap().getReachableCoordinates(player.getLastPosition(),
 				maxDistance);
+	}
+	
+	public static String printReachableSectors(Model model, Player player) {
+
+		int maxDistance = player.getCharacter().getMaxAllowedMovement();
+
+		return (model.getMap().getReachableCoordinates(player.getLastPosition(),
+				maxDistance)).toString();
 	}
 }

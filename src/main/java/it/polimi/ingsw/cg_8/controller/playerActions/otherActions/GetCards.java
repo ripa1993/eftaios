@@ -1,5 +1,6 @@
-package it.polimi.ingsw.cg_8.controller.playerActions;
+package it.polimi.ingsw.cg_8.controller.playerActions.otherActions;
 
+import it.polimi.ingsw.cg_8.controller.playerActions.PlayerAction;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.ItemCard;
 import it.polimi.ingsw.cg_8.model.player.Player;
 
@@ -21,4 +22,7 @@ public class GetCards extends PlayerAction {
 		return player.getHand().getHeldCards();
 	}
 	
+	public static String printHeldCards(Player player) {
+		return player.getHand().getHeldCards().toString();
+	}
 }
