@@ -14,9 +14,8 @@ import it.polimi.ingsw.cg_8.model.player.character.alien.Alien;
 import it.polimi.ingsw.cg_8.model.player.character.human.Human;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * When the input handler gets an action attack, the
@@ -40,11 +39,11 @@ public class Attack extends PlayerAction {
 	/**
 	 * List of players in the same sector as the attacker.
 	 */
-	private Set<Player> playersInSector;
+	private List<Player> playersInSector;
 	/**
 	 * List of players who are killed by the attack
 	 */
-	private Set<Player> victims;
+	private List<Player> victims;
 
 	/**
 	 * Constructor of the class
@@ -54,8 +53,8 @@ public class Attack extends PlayerAction {
 	public Attack(Model model) {
 		this.model = model;
 		this.attacker = model.getCurrentPlayerReference();
-		victims = new HashSet<Player>();
-		playersInSector = new HashSet<Player>();
+		victims = new ArrayList<Player>();
+		playersInSector = new ArrayList<Player>();
 	}
 
 	/**
@@ -65,9 +64,9 @@ public class Attack extends PlayerAction {
 	 * 
 	 * @param model
 	 */
-	public void makeAttack(Model model) {
+	public void makeAttack() {
 
-		Set<Player> attackedPlayers = this.getPlayersInSector();
+		List<Player> attackedPlayers = this.getPlayersInSector();
 
 		for (Player p : attackedPlayers) {
 			/**
@@ -102,7 +101,7 @@ public class Attack extends PlayerAction {
 	 * @param model
 	 * @return playersInSector: the players in the same sector as the attacker.
 	 */
-	public Set<Player> getPlayersInSector() {
+	public List<Player> getPlayersInSector() {
 		Coordinate target = attacker.getLastPosition();
 
 		List<Player> playerList = model.getPlayers();
@@ -130,7 +129,7 @@ public class Attack extends PlayerAction {
 	 * 
 	 * @return victims
 	 */
-	public Set<Player> getVictims() {
+	public List<Player> getVictims() {
 		return victims;
 	}
 
