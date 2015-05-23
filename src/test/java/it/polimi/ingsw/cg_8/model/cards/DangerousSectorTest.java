@@ -50,4 +50,17 @@ public class DangerousSectorTest {
 	public void hasToMakeFakeNoiseTest4() {
 		assertTrue(c4.hasToMakeFakeNoise());
 	}
+	@Test
+	public void toStringTest1() {
+		assertTrue(c1.toString() instanceof String);
+	}
+	public void toStringTest2() {
+		assertTrue(c3.toString() instanceof String);
+	}
+	public void toStringTest3() {
+		assertTrue(c4.toString() instanceof String);
+	}
+	public void toStringTest4() {
+		assertTrue(c2.toString() instanceof String);
+	}
 }
