@@ -1,5 +1,8 @@
 package it.polimi.ingsw.cg_8.controller;
 
+import it.polimi.ingsw.cg_8.model.Model;
+import it.polimi.ingsw.cg_8.model.TurnPhase;
+
 /**
  * Main controller class: it handles the initialization of a new game, the main
  * game loop, and communicates with both the view and the model.
@@ -8,6 +11,8 @@ package it.polimi.ingsw.cg_8.controller;
  * 
  */
 public class Controller {
+	
+	Model model;
 
 	/**
 	 * Initialization of a new game. Note that the model is initialized with the
@@ -40,7 +45,7 @@ public class Controller {
 
 		startup();
 
-		while (true) {
+		while (model.getTurnPhase() != TurnPhase.GAME_END) {
 			processInput();
 			updateModel();
 			updateView();

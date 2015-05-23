@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
-// TODO: aggiungere Player getCurrentPlayer()
+
 /**
  * Contains all the references to game objects: decks, players and map.
  * 
