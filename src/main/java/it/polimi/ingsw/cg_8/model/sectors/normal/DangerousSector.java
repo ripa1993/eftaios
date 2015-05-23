@@ -1,8 +1,8 @@
 package it.polimi.ingsw.cg_8.model.sectors.normal;
 
 /**
- * Dangerous sector. When a player ends his turn in this sector, he must draw a
- * dangerous sector card
+ * Dangerous sector. When a player ends his turn in this sector, he can draw a
+ * dangerous sector card or attack.
  * 
  * @author Simone
  *

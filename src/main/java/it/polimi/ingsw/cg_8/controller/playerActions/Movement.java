@@ -4,19 +4,13 @@ import it.polimi.ingsw.cg_8.controller.Controller;
 import it.polimi.ingsw.cg_8.controller.Rules;
 import it.polimi.ingsw.cg_8.model.Model;
 import it.polimi.ingsw.cg_8.model.cards.Card;
-import it.polimi.ingsw.cg_8.model.cards.dangerousSectorCards.NoiseCard;
 import it.polimi.ingsw.cg_8.model.cards.escapeHatchCards.GreenEhCard;
-import it.polimi.ingsw.cg_8.model.cards.itemCards.ItemCard;
 import it.polimi.ingsw.cg_8.model.decks.EscapeHatchDeck;
 import it.polimi.ingsw.cg_8.model.exceptions.EmptyDeckException;
-import it.polimi.ingsw.cg_8.model.exceptions.TooManyCardsException;
 import it.polimi.ingsw.cg_8.model.noises.EscapeSectorNoise;
-import it.polimi.ingsw.cg_8.model.noises.MovementNoise;
 import it.polimi.ingsw.cg_8.model.noises.Noise;
 import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
-import it.polimi.ingsw.cg_8.model.sectors.normal.DangerousSector;
-import it.polimi.ingsw.cg_8.model.sectors.normal.SecureSector;
 import it.polimi.ingsw.cg_8.model.sectors.special.escapehatch.EscapeHatchSector;
 
 /**
@@ -79,11 +73,7 @@ public class Movement extends PlayerAction {
 		 * Depending on the type of the reached sector, different actions are
 		 * performed.
 		 */
-		if (destination instanceof SecureSector) {
-		} else if (destination instanceof DangerousSector) {
-
-			drawDangerousSectorCard();
-		} else if (destination instanceof EscapeHatchSector) {
+		 if (destination instanceof EscapeHatchSector) {
 
 			Noise escapeSectorNoise = new EscapeSectorNoise(
 					model.getRoundNumber(), player, player.getLastPosition());
@@ -100,45 +90,10 @@ public class Movement extends PlayerAction {
 					// quarta carta scialuppa.
 				}
 			}
-		}
+		 }
 	}
 
-	/**
-	 * The player produces a noise, unless otherwise is specified. If the drawn
-	 * card is decorated, the player has to make a fake noise, draw an item
-	 * card, or both.
-	 */
-	private void drawDangerousSectorCard() {
-		try {
-			Card dangerousSectorCard = model.getDangerousSectorDeck()
-					.drawCard();
-
-			if (dangerousSectorCard instanceof NoiseCard) {
-				if (((NoiseCard) dangerousSectorCard).hasToMakeFakeNoise() == false) {
-					Noise movementNoise = new MovementNoise(
-							model.getRoundNumber(), player,
-							player.getLastPosition());
-					model.getNoiseLogger().add(movementNoise);
-				} else {
-					// TODO: fakeNoise;
-				}
-				if (((NoiseCard) dangerousSectorCard).hasToDrawItem() == true) {
-					try {
-						player.getHand().addItemCard(
-								(ItemCard) model.getItemDeck().drawCard());
-					} catch (TooManyCardsException e) {
-						// TODO: something?
-					}
-				}
-			}
-		} catch (EmptyDeckException e) {
-			/**
-			 * This exception should never happen, as the deck is re-shuffled
-			 * when empty.
-			 */
-			e.printStackTrace();
-		}
-	}
+	
 
 	/**
 	 * Draw a card from the {@link EscapeHatchDeck}
