@@ -12,18 +12,14 @@ import it.polimi.ingsw.cg_8.model.player.character.human.Human;
  * 
  */
 public class UseAdrenalineCard extends UseItemCard {
+
 	/**
-	 * Constructor
+	 * Enables adrenaline to current player
 	 * 
 	 * @param model
-	 *            reference to the game
+	 *            game
 	 */
-	public UseAdrenalineCard(Model model) {
-		super(model);
-	}
-
-	@Override
-	public void useCard() {
+	public static void useCard(Model model) {
 		// TODO: change method to getCharacter
 		Player currentPlayer = model.getPlayers().get(model.getCurrentPlayer());
 		// Assume that the player is a human by ipothesis

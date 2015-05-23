@@ -78,8 +78,7 @@ public class Attack extends PlayerAction {
 				Hand heldCards = p.getHand();
 				for (Card c : heldCards.getHeldCards()) {
 					if (c instanceof DefenseCard) {
-						UseDefenseCard defense = new UseDefenseCard(model);
-						defense.useCard();
+						UseDefenseCard.useCard(p);
 						heldCards.getHeldCards().remove(c);
 					}
 				}

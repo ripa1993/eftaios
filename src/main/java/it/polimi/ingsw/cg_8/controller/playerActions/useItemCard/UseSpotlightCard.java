@@ -18,61 +18,41 @@ import java.util.Set;
  *
  */
 public class UseSpotlightCard extends UseItemCard {
-	/**
-	 * Spotlight coordinates, including starting one
-	 */
-	private Set<Coordinate> spotlightTarget;
-	/**
-	 * List of players found in the target sectors
-	 */
-	private Set<Player> foundPlayers;
-	/**
-	 * Starting coordinate
-	 */
-	private Coordinate target;
-
-	/**
-	 * Constructor
-	 * 
-	 * @param model
-	 *            reference to the game
-	 * @param coordinate
-	 *            target coordinate
-	 */
-	public UseSpotlightCard(Model model, Coordinate coordinate) {
-		super(model);
-		this.target = coordinate;
-		this.spotlightTarget = new HashSet<Coordinate>();
-		this.foundPlayers = new HashSet<Player>();
-	}
 
 	/**
 	 * Adds to {@link #spotlightTarget} the starting coordinate ({@link #target}
 	 * ) and the sourrounding six
 	 */
-	private void findSpotlightTarget() {
+	private static Set<Coordinate> findSpotlightTarget(Model model,
+			Coordinate target) {
+		Set<Coordinate> spotlightTarget = new HashSet<Coordinate>();
 		spotlightTarget.add(target);
 		spotlightTarget.addAll(model.getMap()
 				.getReachableCoordinates(target, 1));
+		return spotlightTarget;
 	}
 
 	/**
 	 * Adds the players that are in {@link #spotlightTarget} in
 	 * {@link #foundPlayers}
 	 */
-	private void findPlayers() {
+	private static Set<Player> findPlayers(Model model, Set<Coordinate> target) {
+		Set<Player> foundPlayers = new HashSet<Player>();
 		for (Player p : model.getPlayers()) {
 			if (!p.getState().equals(PlayerState.DEAD)) {
-				foundPlayers.add(p);
+				if (target.contains(p.getLastPosition())) {
+					foundPlayers.add(p);
+				}
 			}
 		}
+		return foundPlayers;
 	}
 
 	/**
 	 * For every player in {@link #foundPlayers} generates a
 	 * {@link SpotlightNoise} and adds it to the noise logger in model
 	 */
-	private void makeNoise() {
+	private static void makeNoise(Model model, Set<Player> foundPlayers) {
 		Iterator<Player> it = foundPlayers.iterator();
 		while (it.hasNext()) {
 			Player currentPlayer = it.next();
@@ -83,28 +63,15 @@ public class UseSpotlightCard extends UseItemCard {
 	}
 
 	/**
-	 * Getter for spotlight target
-	 * 
-	 * @return target coordinates
+	 * Spots players in the targeted location
 	 */
-	public Set<Coordinate> getSpotlightTarget() {
-		return spotlightTarget;
-	}
+	public static Set<Player> useCard(Model model, Coordinate coordinate) {
+		Set<Coordinate> target = findSpotlightTarget(model, coordinate);
+		Set<Player> foundPlayers = findPlayers(model, target);
+		makeNoise(model, foundPlayers);
 
-	/**
-	 * Getter for targeted players
-	 * 
-	 * @return targeted players
-	 */
-	public Set<Player> getFoundPlayers() {
+		// might be needed in future
 		return foundPlayers;
-	}
-
-	@Override
-	public void useCard() {
-		findSpotlightTarget();
-		findPlayers();
-		makeNoise();
 
 	}
 }
