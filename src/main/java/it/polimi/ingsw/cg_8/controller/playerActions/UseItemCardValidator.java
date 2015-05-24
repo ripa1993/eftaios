@@ -7,7 +7,8 @@ import it.polimi.ingsw.cg_8.model.player.character.alien.Alien;
 import java.util.List;
 
 /**
- * When a player is trying to use a card, check if he actually has the card.
+ * When a player is trying to use a card, check if he actually has the card, and
+ * if the player is Human.
  * 
  * @author Alberto Parravicini
  *
@@ -26,7 +27,7 @@ public class UseItemCardValidator {
 		if (model.getCurrentPlayerReference().getCharacter() instanceof Alien) {
 			return false;
 		}
-		
+
 		List<ItemCard> heldCards = model.getCurrentPlayerReference().getHand()
 				.getHeldCards();
 		for (ItemCard i : heldCards) {
