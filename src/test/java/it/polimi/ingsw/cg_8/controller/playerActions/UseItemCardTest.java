@@ -39,7 +39,6 @@ public class UseItemCardTest {
 			model.nextPlayer();
 			currentPlayer = model.getPlayers().get(model.getCurrentPlayer());
 		}
-
 	}
 
 	@Test
@@ -48,6 +47,12 @@ public class UseItemCardTest {
 		assertEquals(2, currentPlayer.getCharacter().getMaxAllowedMovement());
 	}
 
+	@Test
+	public void adrenalineCardRemoval() {
+		boolean check = false;
+		
+		UseAdrenalineCard.useCard(model);
+	}
 	@Test
 	public void testUseAttackCard() {
 		UseAttackCard.useCard(model);

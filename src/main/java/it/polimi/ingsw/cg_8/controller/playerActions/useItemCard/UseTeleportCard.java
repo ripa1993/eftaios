@@ -37,6 +37,7 @@ public class UseTeleportCard extends UseItemCard {
 				currentPlayer, model.getMap().getHumanSpawn());
 		model.getNoiseLogger().add(teleportNoise);
 
+		
 	}
 }
 
