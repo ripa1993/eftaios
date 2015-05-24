@@ -103,7 +103,7 @@ public class StateMachine {
 			if (a instanceof ActionMove) {
 				// validate movement
 				Coordinate destination = ((ActionMove) a).getCoordinate();
-				if (rules.MovementValidator(model, destination)) {
+				if (rules.movementValidator(model, destination)) {
 					// execute movement
 					new Movement(model, destination).makeMove();
 					Sector destinationSector = model.getMap().getSectors()
@@ -125,7 +125,7 @@ public class StateMachine {
 				ItemCard card = ((ActionUseCard) a).getItemCard();
 				Coordinate coordinate = ((ActionUseCard) a).getCoordinate();
 				if (card instanceof AdrenalineCard) {
-					if (rules.UseItemCardValidator(model, card)) {
+					if (rules.useItemCardValidator(model, card)) {
 						UseAdrenalineCard.useCard(model);
 						return true;
 					}
@@ -133,28 +133,28 @@ public class StateMachine {
 				}
 
 				if (card instanceof AttackCard) {
-					if (rules.UseItemCardValidator(model, card)) {
+					if (rules.useItemCardValidator(model, card)) {
 						UseAttackCard.useCard(model);
 						return true;
 					}
 					return false;
 				}
 				if (card instanceof TeleportCard) {
-					if (rules.UseItemCardValidator(model, card)) {
+					if (rules.useItemCardValidator(model, card)) {
 						UseTeleportCard.useCard(model);
 						return true;
 					}
 					return false;
 				}
 				if (card instanceof SedativesCard) {
-					if (rules.UseItemCardValidator(model, card)) {
+					if (rules.useItemCardValidator(model, card)) {
 						UseSedativesCard.useCard(model);
 						return true;
 					}
 					return false;
 				}
 				if (card instanceof SpotlightCard) {
-					if (rules.UseItemCardValidator(model, card)) {
+					if (rules.useItemCardValidator(model, card)) {
 						UseSpotlightCard.useCard(model, coordinate);
 						return true;
 					}
@@ -170,7 +170,7 @@ public class StateMachine {
 			// attack
 
 			if (a instanceof ActionAttack) {
-				if (rules.AttackValidator(model)) {
+				if (rules.attackValidator(model)) {
 					new Attack(model).makeAttack();
 					model.setTurnPhase(TurnPhase.ATTACK_DONE);
 					return true;
@@ -193,28 +193,28 @@ public class StateMachine {
 					Coordinate coordinate = ((ActionUseCard) a).getCoordinate();
 
 					if (card instanceof AttackCard) {
-						if (rules.UseItemCardValidator(model, card)) {
+						if (rules.useItemCardValidator(model, card)) {
 							UseAttackCard.useCard(model);
 							return true;
 						}
 						return false;
 					}
 					if (card instanceof TeleportCard) {
-						if (rules.UseItemCardValidator(model, card)) {
+						if (rules.useItemCardValidator(model, card)) {
 							UseTeleportCard.useCard(model);
 							return true;
 						}
 						return false;
 					}
 					if (card instanceof SedativesCard) {
-						if (rules.UseItemCardValidator(model, card)) {
+						if (rules.useItemCardValidator(model, card)) {
 							UseSedativesCard.useCard(model);
 							return true;
 						}
 						return false;
 					}
 					if (card instanceof SpotlightCard) {
-						if (rules.UseItemCardValidator(model, card)) {
+						if (rules.useItemCardValidator(model, card)) {
 							UseSpotlightCard.useCard(model, coordinate);
 							return true;
 						}
@@ -231,7 +231,7 @@ public class StateMachine {
 			// attack
 
 			if (a instanceof ActionAttack) {
-				if (rules.AttackValidator(model)) {
+				if (rules.attackValidator(model)) {
 					new Attack(model).makeAttack();
 					model.setTurnPhase(TurnPhase.ATTACK_DONE);
 					return true;
@@ -258,28 +258,28 @@ public class StateMachine {
 					Coordinate coordinate = ((ActionUseCard) a).getCoordinate();
 
 					if (card instanceof AttackCard) {
-						if (rules.UseItemCardValidator(model, card)) {
+						if (rules.useItemCardValidator(model, card)) {
 							UseAttackCard.useCard(model);
 							return true;
 						}
 						return false;
 					}
 					if (card instanceof TeleportCard) {
-						if (rules.UseItemCardValidator(model, card)) {
+						if (rules.useItemCardValidator(model, card)) {
 							UseTeleportCard.useCard(model);
 							return true;
 						}
 						return false;
 					}
 					if (card instanceof SedativesCard) {
-						if (rules.UseItemCardValidator(model, card)) {
+						if (rules.useItemCardValidator(model, card)) {
 							UseSedativesCard.useCard(model);
 							return true;
 						}
 						return false;
 					}
 					if (card instanceof SpotlightCard) {
-						if (rules.UseItemCardValidator(model, card)) {
+						if (rules.useItemCardValidator(model, card)) {
 							UseSpotlightCard.useCard(model, coordinate);
 							return true;
 						}
@@ -307,14 +307,14 @@ public class StateMachine {
 				ItemCard card = ((ActionUseCard) a).getItemCard();
 				Coordinate coordinate = ((ActionUseCard) a).getCoordinate();
 				if (card instanceof TeleportCard) {
-					if (rules.UseItemCardValidator(model, card)) {
+					if (rules.useItemCardValidator(model, card)) {
 						UseTeleportCard.useCard(model);
 						return true;
 					}
 					return false;
 				}
 				if (card instanceof SpotlightCard) {
-					if (rules.UseItemCardValidator(model, card)) {
+					if (rules.useItemCardValidator(model, card)) {
 						UseSpotlightCard.useCard(model, coordinate);
 						return true;
 					}
@@ -357,14 +357,14 @@ public class StateMachine {
 				ItemCard card = ((ActionUseCard) a).getItemCard();
 				Coordinate coordinate = ((ActionUseCard) a).getCoordinate();
 				if (card instanceof TeleportCard) {
-					if (rules.UseItemCardValidator(model, card)) {
+					if (rules.useItemCardValidator(model, card)) {
 						UseTeleportCard.useCard(model);
 						return true;
 					}
 					return false;
 				}
 				if (card instanceof SpotlightCard) {
-					if (rules.UseItemCardValidator(model, card)) {
+					if (rules.useItemCardValidator(model, card)) {
 						UseSpotlightCard.useCard(model, coordinate);
 						return true;
 					}

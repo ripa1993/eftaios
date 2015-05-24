@@ -16,9 +16,9 @@ import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 
 public interface Rules {
 
-	public boolean MovementValidator(Model model, Coordinate destination);
+	public boolean movementValidator(Model model, Coordinate destination);
 
-	public boolean AttackValidator(Model model);
+	public boolean attackValidator(Model model);
 	
-	public boolean UseItemCardValidator(Model model, ItemCard card);
+	public boolean useItemCardValidator(Model model, ItemCard card);
 }
