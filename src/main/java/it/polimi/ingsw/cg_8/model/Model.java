@@ -66,7 +66,7 @@ public class Model {
 	/**
 	 * Position in the array players of first player to play
 	 */
-	private int startingPlayerIndex;	
+	private int startingPlayerIndex;
 	/**
 	 * Reference to the starting player
 	 */
@@ -237,7 +237,7 @@ public class Model {
 	public Player getCurrentPlayerReference() {
 		return this.getPlayers().get(this.getCurrentPlayer());
 	}
-	
+
 	public List<Player> getPlayers() {
 		return players;
 	}
@@ -277,8 +277,12 @@ public class Model {
 	public GameMap getMap() {
 		return map;
 	}
-	
-	public List<Noise> getNoiseLogger(){
+
+	public List<Noise> getNoiseLogger() {
 		return noiseLogger;
+	}
+
+	public void setTurnPhase(TurnPhase newTurnPhase) {
+		this.turnPhase = newTurnPhase;
 	}
 }

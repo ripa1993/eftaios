@@ -82,4 +82,8 @@ public class Controller {
 	public Model getModel() {
 		return this.model;
 	}
+	
+	public Rules getRules(){
+		return this.rules;
+	}
 }

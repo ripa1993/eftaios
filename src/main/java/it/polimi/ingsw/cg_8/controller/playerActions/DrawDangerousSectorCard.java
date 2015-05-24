@@ -29,10 +29,9 @@ public class DrawDangerousSectorCard extends PlayerAction {
 	 * @require currentPlayer.getPosition(currentTurn) !=
 	 *          currentPlayer.getPosition(currentTurn-1) &&
 	 *          currentPlayer.getPosition(currentTurn) instanceof
-	 *          DangerousSector
-	 *          && currentPlayer hasn't attacked in this turn.
+	 *          DangerousSector && currentPlayer hasn't attacked in this turn.
 	 */
-	public static void drawDangerousSectorCard(Model model) {
+	public static boolean drawDangerousSectorCard(Model model) {
 
 		Player player = model.getCurrentPlayerReference();
 
@@ -41,14 +40,7 @@ public class DrawDangerousSectorCard extends PlayerAction {
 					.drawCard();
 
 			if (dangerousSectorCard instanceof NoiseCard) {
-				if (((NoiseCard) dangerousSectorCard).hasToMakeFakeNoise() == false) {
-					Noise movementNoise = new MovementNoise(
-							model.getRoundNumber(), player,
-							player.getLastPosition());
-					model.getNoiseLogger().add(movementNoise);
-				} else {
-					// TODO: fakeNoise; come ottenere la destinazione bersaglio?
-				}
+				// draw an object
 				if (((NoiseCard) dangerousSectorCard).hasToDrawItem() == true) {
 					try {
 						player.getHand().addItemCard(
@@ -57,13 +49,26 @@ public class DrawDangerousSectorCard extends PlayerAction {
 						// TODO: something?
 					}
 				}
+				// what kind of noise?
+				if (((NoiseCard) dangerousSectorCard).hasToMakeFakeNoise() == false) {
+					Noise movementNoise = new MovementNoise(
+							model.getRoundNumber(), player,
+							player.getLastPosition());
+					model.getNoiseLogger().add(movementNoise);
+					return false;
+				} else {
+					// TODO: fakeNoise; come ottenere la destinazione bersaglio?
+					return true;
+				}
 			}
+			return false;
 		} catch (EmptyDeckException e) {
 			/**
 			 * This exception should never happen, as the deck is re-shuffled
 			 * when empty.
 			 */
-			e.printStackTrace();
+			return false;
 		}
+		
 	}
 }

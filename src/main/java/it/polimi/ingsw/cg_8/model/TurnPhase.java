@@ -18,14 +18,19 @@ public enum TurnPhase {
 	TURN_BEGIN,
 
 	/**
-	 * Player is choosing where to move
+	 * Player hasn't moved into a dangerous sector
 	 */
-	MOVEMENT_PHASE,
+	MOVEMENT_DONE_NOT_DS,
 
 	/**
-	 * Player is choosing where to attack
+	 * Player has moved into a dangerous sector
 	 */
-	ATTACK_PHASE,
+	MOVEMENT_DONE_DS,
+
+	/**
+	 * Player has attacked
+	 */
+	ATTACK_DONE,
 
 	/**
 	 * Waiting for the player to communicate location of fake noise, after
