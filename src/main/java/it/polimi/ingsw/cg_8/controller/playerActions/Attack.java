@@ -75,10 +75,11 @@ public class Attack extends PlayerAction {
 			 */
 			if (p.getCharacter() instanceof Human) {
 				Hand heldCards = p.getHand();
-				for (Card c : heldCards.getHeldCards()) {
+				for (Card c : heldCards.getHeldCards() ) {
 					if (c instanceof DefenseCard) {
 						UseDefenseCard.useCard(p);
 						heldCards.getHeldCards().remove(c);
+						break;
 					}
 				}
 			}

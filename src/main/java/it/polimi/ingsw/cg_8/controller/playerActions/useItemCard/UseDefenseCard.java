@@ -24,5 +24,4 @@ public class UseDefenseCard extends UseItemCard {
 		Human currentPlayerCharacter = (Human) player.getCharacter();
 		currentPlayerCharacter.enableDefend();
 	}
-
 }

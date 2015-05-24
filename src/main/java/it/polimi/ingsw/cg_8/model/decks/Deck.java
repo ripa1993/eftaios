@@ -111,6 +111,10 @@ public abstract class Deck {
 		return this.cardList.isEmpty();
 	}
 
+	
+	protected boolean isUsedCardsDeckEmpty() {
+		return this.usedCards.isEmpty();
+	}
 	/**
 	 * Checks if the discard pile is empty
 	 * 

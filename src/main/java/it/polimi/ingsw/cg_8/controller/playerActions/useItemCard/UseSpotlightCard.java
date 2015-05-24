@@ -69,7 +69,7 @@ public class UseSpotlightCard extends UseItemCard {
 		Set<Coordinate> target = findSpotlightTarget(model, coordinate);
 		Set<Player> foundPlayers = findPlayers(model, target);
 		makeNoise(model, foundPlayers);
-
+		
 		// might be needed in future
 		return foundPlayers;
 
