@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import it.polimi.ingsw.cg_8.model.Model;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.AdrenalineCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.AttackCard;
+import it.polimi.ingsw.cg_8.model.cards.itemCards.ItemCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.SedativesCard;
 import it.polimi.ingsw.cg_8.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.cg_8.model.exceptions.GameAlreadyRunningException;
@@ -13,6 +14,8 @@ import it.polimi.ingsw.cg_8.model.exceptions.TooManyCardsException;
 import it.polimi.ingsw.cg_8.model.map.GameMapName;
 import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.player.character.alien.Alien;
+
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -49,5 +52,18 @@ public class UsetItemCardValidatorTest {
 	@Test
 	public void testCardUsage3() {
 		assertFalse(UseItemCardValidator.validateItemCardUsage(model, new SedativesCard()));
+	}
+	
+	@Test
+	public void testCardRemoval() {
+		boolean removalCheck = false;
+		UseItemCardValidator.validateItemCardUsage(model, new AdrenalineCard());
+		List<ItemCard> heldCards = currentPlayer.getHand().getHeldCards();
+		for ( ItemCard c : heldCards) {
+			if (c instanceof AdrenalineCard) {
+				removalCheck = true;
+			}
+		}
+		assertFalse(removalCheck);
 	}
 }
