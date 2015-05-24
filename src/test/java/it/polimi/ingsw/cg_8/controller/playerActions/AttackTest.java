@@ -27,7 +27,6 @@ public class AttackTest {
 		model.initGame();
 		currentPlayer = model.getPlayers().get(model.getCurrentPlayer());
 		
-		System.out.println("ehi" +model.getCurrentPlayerReference());
 		
 		if (currentPlayer.getCharacter() instanceof Alien) {
 			model.nextPlayer();
@@ -53,8 +52,7 @@ public class AttackTest {
 		Attack attack = new Attack(model);
 
 		attack.makeAttack();
-		System.out.println("1"+attack.getVictims().get(0));
-		System.out.println(("2"+model.getPlayers().get(1)));
+	
 		assertTrue((attack.getVictims().get(0)).getCharacter() instanceof Human);
 		
 	}

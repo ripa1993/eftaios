@@ -128,9 +128,7 @@ public abstract class GameMap implements ReachableCoordinatesInterface {
 
 	@Override
 	public String toString() {
-		return "GameMap [sectors=" + sectors + ", mapProxy=" + mapProxy
-				+ ", humanSpawn=" + humanSpawn + ", alienSpawn=" + alienSpawn
-				+ "]";
+		return "GameMap [sectors=" + sectors+"]";
 	}
 
 }
