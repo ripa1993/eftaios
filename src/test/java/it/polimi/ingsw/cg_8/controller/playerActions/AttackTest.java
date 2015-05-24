@@ -1,4 +1,4 @@
-package it.polimi.ingsw.cg_8.controller.playerActions;
+/*package it.polimi.ingsw.cg_8.controller.playerActions;
 
 import static org.junit.Assert.assertTrue;
 import it.polimi.ingsw.cg_8.model.Model;
@@ -41,7 +41,7 @@ public class AttackTest {
 		model.getCurrentPlayerReference().setPosition(new Coordinate(8, 8));
 
 	}
-/*
+
 	@Test
 	public void validateAttackTest() {
 		assertTrue(AttackValidator.validateAttack(model));
@@ -56,5 +56,5 @@ public class AttackTest {
 		assertTrue((attack.getVictims().get(0)).getCharacter() instanceof Human);
 		
 	}
-*/
-}
+
+}*/
