@@ -1,32 +1,35 @@
 package it.polimi.ingsw.cg_8.model.map.creator;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-
 import it.polimi.ingsw.cg_8.model.map.GalileiMap;
 import it.polimi.ingsw.cg_8.model.map.GameMap;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 import it.polimi.ingsw.cg_8.model.sectors.SectorType;
+
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
 /**
  * Implementation of the factory pattern, it creates a GalileiMap
+ * 
  * @author Simone
  *
  */
 public class GalileiCreator extends MapCreator {
 
-	
 	/**
 	 * Map that is going to be populated
 	 */
 	private final GameMap galileiMap;
+
 	/**
 	 * Constructor
 	 */
 	public GalileiCreator() {
-		super(new GalileiMap(new Coordinate(11,7), new Coordinate(11,5)));
+		super(new GalileiMap(new Coordinate(11, 7), new Coordinate(11, 5)));
 		galileiMap = this.getGm();
 	}
+
 	/**
 	 * Adds all Dangerous Sectors
 	 */
@@ -119,6 +122,7 @@ public class GalileiCreator extends MapCreator {
 			addDangerousSector(it.next());
 		}
 	}
+
 	/**
 	 * Adds all Secure Sectors
 	 */
@@ -176,6 +180,7 @@ public class GalileiCreator extends MapCreator {
 			addSecureSector(it.next());
 		}
 	}
+
 	/**
 	 * Adds all Escape Hatch sectors
 	 */
@@ -185,14 +190,15 @@ public class GalileiCreator extends MapCreator {
 		addEscapeHatchSector(new Coordinate(21, 12), 3);
 		addEscapeHatchSector(new Coordinate(1, 12), 4);
 	}
+
 	/**
-	 * Adds all spawn sectors 
+	 * Adds all spawn sectors
 	 */
-	private void addSpawn(){
-		addHumanSector(new Coordinate(11,7));
-		addAlienSector(new Coordinate(11,5));
+	private void addSpawn() {
+		addHumanSector(new Coordinate(11, 7));
+		addAlienSector(new Coordinate(11, 5));
 	}
-	
+
 	@Override
 	public GameMap createMap() {
 		addDS();
@@ -201,31 +207,6 @@ public class GalileiCreator extends MapCreator {
 		addSpawn();
 
 		return galileiMap;
-	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result
-				+ ((galileiMap == null) ? 0 : galileiMap.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		GalileiCreator other = (GalileiCreator) obj;
-		if (galileiMap == null) {
-			if (other.galileiMap != null)
-				return false;
-		} else if (!galileiMap.equals(other.galileiMap))
-			return false;
-		return true;
 	}
 
 }

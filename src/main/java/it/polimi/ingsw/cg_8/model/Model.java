@@ -21,6 +21,7 @@ import it.polimi.ingsw.cg_8.model.map.creator.FermiCreator;
 import it.polimi.ingsw.cg_8.model.map.creator.GalileiCreator;
 import it.polimi.ingsw.cg_8.model.map.creator.GalvaniCreator;
 import it.polimi.ingsw.cg_8.model.map.creator.MapCreator;
+import it.polimi.ingsw.cg_8.model.noises.Noise;
 import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.player.PlayerState;
 import it.polimi.ingsw.cg_8.model.player.character.InGameCharacter;
@@ -65,9 +66,9 @@ public class Model {
 	/**
 	 * Position in the array players of first player to play
 	 */
-	private int startingPlayerIndex;
+	private int startingPlayerIndex;	
 	/**
-	 * Current game phase
+	 * Reference to the starting player
 	 */
 	private TurnPhase turnPhase;
 	/**
@@ -91,6 +92,10 @@ public class Model {
 	 * Current map
 	 */
 	private GameMap map;
+	/**
+	 * List of all noises during a game
+	 */
+	private final List<Noise> noiseLogger;
 
 	/**
 	 * Constructor for model class
@@ -99,11 +104,13 @@ public class Model {
 	 *            name of the map to be created in the model
 	 * @throws NotAValidMapException
 	 */
+
 	public Model(GameMapName mapName) throws NotAValidMapException {
 		players = new ArrayList<Player>();
 		roundNumber = 0;
 		currentPlayerIndex = 0;
 		turnPhase = TurnPhase.GAME_SETUP;
+		noiseLogger = new ArrayList<Noise>();
 		characterDeck = new CharacterDeck();
 		dangerousSectorDeck = new DangerousSectorDeck();
 		escapeHatchDeck = new EscapeHatchDeck();
@@ -158,7 +165,8 @@ public class Model {
 	/**
 	 * Initializes the game. It populates the decks, assign a character to each
 	 * player and changes the turnPhase to TURN_BEGIN
-	 * @throws EmptyDeckException 
+	 * 
+	 * @throws EmptyDeckException
 	 */
 	public void initGame() throws EmptyDeckException {
 		// initialize decks
@@ -171,6 +179,11 @@ public class Model {
 		dangerousSectorDeck = dangerousSectorDeckCreator.createDeck();
 		escapeHatchDeck = escapeHatchDeckCreator.createDeck();
 		itemDeck = itemDeckCreator.createDeck();
+		// shuffle decks
+		characterDeck.shuffle();
+		dangerousSectorDeck.shuffle();
+		escapeHatchDeck.shuffle();
+		itemDeck.shuffle();
 		// initialize map
 		Iterator<Player> it = players.iterator();
 		while (it.hasNext()) {
@@ -217,6 +230,14 @@ public class Model {
 		}
 	}
 
+	/**
+	 * 
+	 * @return a reference to the current player
+	 */
+	public Player getCurrentPlayerReference() {
+		return this.getPlayers().get(this.getCurrentPlayer());
+	}
+	
 	public List<Player> getPlayers() {
 		return players;
 	}
@@ -256,5 +277,8 @@ public class Model {
 	public GameMap getMap() {
 		return map;
 	}
-
+	
+	public List<Noise> getNoiseLogger(){
+		return noiseLogger;
+	}
 }

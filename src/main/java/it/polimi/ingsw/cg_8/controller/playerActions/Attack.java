@@ -1,17 +1,21 @@
 package it.polimi.ingsw.cg_8.controller.playerActions;
 
 import it.polimi.ingsw.cg_8.controller.Rules;
+import it.polimi.ingsw.cg_8.controller.playerActions.useItemCard.UseDefenseCard;
 import it.polimi.ingsw.cg_8.model.Model;
-import it.polimi.ingsw.cg_8.model.cards.itemCards.AttackCard;
-import it.polimi.ingsw.cg_8.model.cards.itemCards.ItemCard;
+import it.polimi.ingsw.cg_8.model.cards.Card;
+import it.polimi.ingsw.cg_8.model.cards.itemCards.DefenseCard;
+import it.polimi.ingsw.cg_8.model.noises.AttackNoise;
+import it.polimi.ingsw.cg_8.model.noises.Noise;
+import it.polimi.ingsw.cg_8.model.player.Hand;
 import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.player.PlayerState;
+import it.polimi.ingsw.cg_8.model.player.character.alien.Alien;
 import it.polimi.ingsw.cg_8.model.player.character.human.Human;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * When the input handler gets an action attack, the
@@ -21,8 +25,13 @@ import java.util.Set;
  * @author Alberto Parravicini
  *
  */
+
 public class Attack extends PlayerAction {
 
+	/**
+	 * Current state of the game
+	 */
+	private Model model;
 	/**
 	 * The player who attacks
 	 */
@@ -30,77 +39,74 @@ public class Attack extends PlayerAction {
 	/**
 	 * List of players in the same sector as the attacker.
 	 */
-	private Set<Player> playersInSector;
+	private List<Player> playersInSector;
 	/**
 	 * List of players who are killed by the attack
 	 */
-	private Set<Player> victims;
+	private List<Player> victims;
 
 	/**
 	 * Constructor of the class
 	 * 
 	 * @param attacker
 	 */
-	public Attack(Player attacker) {
-		this.attacker = attacker;
-		victims = new HashSet<Player>();
-		playersInSector = new HashSet<Player>();
+	public Attack(Model model) {
+		this.model = model;
+		this.attacker = model.getCurrentPlayerReference();
+		victims = new ArrayList<Player>();
+		playersInSector = new ArrayList<Player>();
 	}
 
 	/**
-	 * Checks if the attack is valid: if the player is a human, he has to use an
-	 * AttackCard or have used it before attacking, in the same turn.
-	 * @return validAttack: whether the attack is allowed or not
+	 * Attack the players in the attacker' sector, unless they are defended; the
+	 * attacker makes a noise, and so do the attacked players. If the attacker
+	 * is an {@link Alien} and a {@link Human} is killed, the alien is upgraded.
+	 * 
+	 * @param model
 	 */
-	public boolean validAttack() {
-		boolean validAttack = false;
+	public void makeAttack() {
 
-		if (attacker.getCharacter().isAttackAllowed() == true) {
-			validAttack = true;
-		} else if (attacker.getCharacter() instanceof Human) {
-			List<ItemCard> heldCards = attacker.getHand().getHeldCards();
-			
-			for (ItemCard card : heldCards) {
-				
-				if (card instanceof AttackCard) {
-					heldCards.remove(card);
-					/* TODO: Use Attack Card */
-					validAttack = true;
+		List<Player> attackedPlayers = this.getPlayersInSector();
+
+		for (Player p : attackedPlayers) {
+			/**
+			 * For every attacked player, check, if they are human, if the can
+			 * defend themselves: if so, they use the shield card.
+			 */
+			if (p.getCharacter() instanceof Human) {
+				Hand heldCards = p.getHand();
+				for (Card c : heldCards.getHeldCards()) {
+					if (c instanceof DefenseCard) {
+						UseDefenseCard.useCard(p);
+						heldCards.getHeldCards().remove(c);
+					}
 				}
 			}
-
+			if (p.getCharacter().isDefendAllowed() == false) {
+				this.killPlayer(p);
+				if (attacker.getCharacter() instanceof Alien
+						&& p.getCharacter() instanceof Human) {
+					((Alien) attacker.getCharacter()).feedAlien();
+				}
+			} else {
+				p.resetDecorations();
+			}
 		}
-		return validAttack;
-	}
-
-	/**
-	 * Checks if a player has a defense card: if so, this function is called. 
-	 * @param player
-	 */
-	
-	public void savePlayerWithDefense(Player player) {
-
-	}
-
-	/**
-	 * Kills the player passed as input parameter
-	 * @param victim
-	 */
-	public void killPlayer(Player victim) {
-		victim.setDead();
-		victims.add(victim);
+		Noise attackNoise = new AttackNoise(model.getRoundNumber(), attacker,
+				attacker.getLastPosition());
+		model.getNoiseLogger().add(attackNoise);
 	}
 
 	/**
 	 * @param model
 	 * @return playersInSector: the players in the same sector as the attacker.
 	 */
-	public Set<Player> getPlayersInSector(Model model) {
-		Coordinate destination = attacker.getLastPosition();
+	public List<Player> getPlayersInSector() {
+		Coordinate target = attacker.getLastPosition();
 
 		List<Player> playerList = model.getPlayers();
 		for (Player p : playerList) {
-			if (p.getLastPosition().equals(destination)
+			if (p.getLastPosition().equals(target)
 					&& p.getState().equals(PlayerState.ALIVE_WAITING)) {
 				playersInSector.add(p);
 			}
@@ -109,10 +115,21 @@ public class Attack extends PlayerAction {
 	}
 
 	/**
+	 * Kills the player passed as input parameter
+	 * 
+	 * @param victim
+	 */
+	public void killPlayer(Player victim) {
+		victim.setDead();
+		victims.add(victim);
+	}
+
+	/**
 	 * Get the players killed in this turn
+	 * 
 	 * @return victims
 	 */
-	public Set<Player> getVictims() {
+	public List<Player> getVictims() {
 		return victims;
 	}
 

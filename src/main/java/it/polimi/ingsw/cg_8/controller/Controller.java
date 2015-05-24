@@ -1,5 +1,10 @@
 package it.polimi.ingsw.cg_8.controller;
 
+import it.polimi.ingsw.cg_8.model.Model;
+import it.polimi.ingsw.cg_8.model.TurnPhase;
+import it.polimi.ingsw.cg_8.model.exceptions.NotAValidMapException;
+import it.polimi.ingsw.cg_8.model.map.GameMapName;
+
 /**
  * Main controller class: it handles the initialization of a new game, the main
  * game loop, and communicates with both the view and the model.
@@ -8,13 +13,23 @@ package it.polimi.ingsw.cg_8.controller;
  * 
  */
 public class Controller {
+	
+	Model model;
+	Rules rules;
 
 	/**
 	 * Initialization of a new game. Note that the model is initialized with the
 	 * init() function, placed inside model
+	 * @throws NotAValidMapException 
 	 */
-	public void startup() {
+	public Controller(GameMapName mapName, Rules rules) {
 
+		try {
+			model = new Model(mapName);
+		} catch (NotAValidMapException e) {
+			// e.printStackTrace();
+		}
+		
 	}
 
 	/**
@@ -36,11 +51,11 @@ public class Controller {
 	 * reached, every human player either escapes or is killed. Then the
 	 * cleanup() method in called.
 	 */
-	public void loop() {
+	public void gameLoop() {
 
-		startup();
 
-		while (true) {
+
+		while (model.getTurnPhase() != TurnPhase.GAME_END) {
 			processInput();
 			updateModel();
 			updateView();
@@ -62,5 +77,9 @@ public class Controller {
 	 */
 	private void processInput() {
 
+	}
+	
+	public Model getModel() {
+		return this.model;
 	}
 }

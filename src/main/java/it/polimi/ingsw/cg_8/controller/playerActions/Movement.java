@@ -2,12 +2,16 @@ package it.polimi.ingsw.cg_8.controller.playerActions;
 
 import it.polimi.ingsw.cg_8.controller.Controller;
 import it.polimi.ingsw.cg_8.controller.Rules;
-import it.polimi.ingsw.cg_8.model.map.GameMap;
+import it.polimi.ingsw.cg_8.model.Model;
+import it.polimi.ingsw.cg_8.model.cards.Card;
+import it.polimi.ingsw.cg_8.model.cards.escapeHatchCards.GreenEhCard;
+import it.polimi.ingsw.cg_8.model.decks.EscapeHatchDeck;
+import it.polimi.ingsw.cg_8.model.exceptions.EmptyDeckException;
+import it.polimi.ingsw.cg_8.model.noises.EscapeSectorNoise;
+import it.polimi.ingsw.cg_8.model.noises.Noise;
 import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
-
-import java.util.HashSet;
-import java.util.Set;
+import it.polimi.ingsw.cg_8.model.sectors.special.escapehatch.EscapeHatchSector;
 
 /**
  * The {@link Controller#processInput()} takes a movement input and calls the
@@ -18,27 +22,21 @@ import java.util.Set;
  * @author Alberto Parravicini
  *
  */
+
 public class Movement extends PlayerAction {
+
 	/**
-	 * The current location of the player
+	 * The player who is moving
 	 */
-	private final Coordinate startingSector;
-	/**
-	 * The coordinates where the player is allowed to move
-	 */
-	private final Set<Coordinate> allowedCoordinates;
+	private final Player player;
 	/**
 	 * Where the player would like to move
 	 */
 	private final Coordinate destination;
 	/**
-	 * Loading the map is required to calculate the reachable coordinates
+	 * 
 	 */
-	private final GameMap gameMap;
-	/**
-	 * How far the player can move
-	 */
-	private int range;
+	private final Model model;
 
 	/**
 	 * 
@@ -47,40 +45,63 @@ public class Movement extends PlayerAction {
 	 * @param gameMap
 	 * @return Instance of the Movement class
 	 */
-	public Movement(Player player, Coordinate destination, GameMap gameMap) {
-		startingSector = player.getLastPosition();
-		allowedCoordinates = new HashSet<Coordinate>();
+	public Movement(Model model, Coordinate destination) {
+		this.player = model.getCurrentPlayerReference();
 		this.destination = destination;
-		this.gameMap = gameMap;
-		this.range = player.getCharacter().getMaxAllowedMovement();
+		this.model = model;
 	}
 
 	/**
-	 * Add to allowedCoordinates the coordinates that can be reached by the
-	 * player.
+	 * Changes the position of the player
 	 */
-	private void setAllowedCoordinates() {
-		allowedCoordinates.addAll(gameMap.getReachableCoordinates(
-				startingSector, range));
+	public void makeMove() {
+
+		int lastModelTurn = model.getRoundNumber();
+		int lastPlayerTurn = player.getRoundNumber();
+
+		/**
+		 * If the player used a teleport card, the position is changed using
+		 * editLastPosition(Coordinate);
+		 */
+		if (lastPlayerTurn == lastModelTurn - 1) {
+			player.setPosition(destination);
+		} else if (lastPlayerTurn == lastModelTurn) {
+			player.editLastPosition(destination);
+		}
+
+		/**
+		 * Depending on the type of the reached sector, different actions are
+		 * performed.
+		 */
+		 if (destination instanceof EscapeHatchSector) {
+
+			Noise escapeSectorNoise = new EscapeSectorNoise(
+					model.getRoundNumber(), player, player.getLastPosition());
+			model.getNoiseLogger().add(escapeSectorNoise);
+			if (((EscapeHatchSector) destination).getStatus().allowEscape()) {
+				Card escapeCard;
+				try {
+					escapeCard = drawEHSectorCard();
+					if (escapeCard instanceof GreenEhCard) {
+						player.setEscaped();
+					}
+				} catch (EmptyDeckException e) {
+					// TODO: non si verifica, la partita termina se pesco la
+					// quarta carta scialuppa.
+				}
+			}
+		 }
 	}
 
-	/**
-	 * Checks if the destination is reachable by the player
-	 * @return Whether the destination is reachable
-	 */
-	private boolean isMoveAllowed() {
-		if (destination != startingSector
-				&& allowedCoordinates.contains(destination)) {
-			return true;
-		} else
-			return false;
-	}
 	
-	/** 
-	 * @return Whether the move is allowed or not
+
+	/**
+	 * Draw a card from the {@link EscapeHatchDeck}
+	 * 
+	 * @return an EscapeHatchCard
+	 * @throws EmptyDeckException
 	 */
-	public boolean evaluateMove() {
-		this.setAllowedCoordinates();
-		return isMoveAllowed();
+	private Card drawEHSectorCard() throws EmptyDeckException {
+		return model.getEscapeHatchDeck().drawCard();
 	}
 }
