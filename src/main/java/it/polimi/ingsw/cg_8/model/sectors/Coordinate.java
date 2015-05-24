@@ -1,12 +1,18 @@
 package it.polimi.ingsw.cg_8.model.sectors;
 
+import java.io.Serializable;
+
 /**
  * Coordinate is used to identify a sector position inside the map
  * 
  * @author Simone
  *
  */
-public class Coordinate {
+public class Coordinate implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2956250090147335252L;
 	/**
 	 * Column number
 	 */

@@ -6,6 +6,10 @@ package it.polimi.ingsw.cg_8.model.cards.itemCards;
  */
 public class SedativesCard extends ItemCard {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8093456677367982491L;
+	/**
 	 * Constructor
 	 */
 	public SedativesCard() {

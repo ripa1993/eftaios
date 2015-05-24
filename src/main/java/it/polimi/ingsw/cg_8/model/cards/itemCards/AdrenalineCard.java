@@ -8,6 +8,10 @@ package it.polimi.ingsw.cg_8.model.cards.itemCards;
  */
 public class AdrenalineCard extends ItemCard {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -622452092576988230L;
+	/**
 	 * Constructor
 	 */
 	public AdrenalineCard() {
