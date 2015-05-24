@@ -206,6 +206,7 @@ public class Model {
 		// sets turn phase and round number
 		roundNumber = 1;
 		turnPhase = TurnPhase.TURN_BEGIN;
+		getCurrentPlayerReference().cycleState();
 
 	}
 

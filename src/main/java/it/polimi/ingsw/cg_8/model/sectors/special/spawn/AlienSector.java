@@ -24,7 +24,7 @@ public class AlienSector extends SpawnSector {
 
 	@Override
 	public String toString() {
-		return "AlienSector";
+		return "AS";
 	}
 
 }

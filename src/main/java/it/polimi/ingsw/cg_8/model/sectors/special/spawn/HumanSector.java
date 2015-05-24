@@ -23,7 +23,7 @@ public class HumanSector extends SpawnSector {
 
 	@Override
 	public String toString() {
-		return "HumanSector";
+		return "HS";
 	}
 
 }

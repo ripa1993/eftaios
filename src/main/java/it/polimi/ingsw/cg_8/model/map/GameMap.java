@@ -1,11 +1,14 @@
 package it.polimi.ingsw.cg_8.model.map;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
 import it.polimi.ingsw.cg_8.model.exceptions.NotAValidCoordinateException;
-import it.polimi.ingsw.cg_8.model.sectors.*;
+import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
+import it.polimi.ingsw.cg_8.model.sectors.Sector;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * Abstract class that represents a map
@@ -128,9 +131,9 @@ public abstract class GameMap implements ReachableCoordinatesInterface {
 
 	@Override
 	public String toString() {
-		return "GameMap [sectors=" + sectors + ", mapProxy=" + mapProxy
-				+ ", humanSpawn=" + humanSpawn + ", alienSpawn=" + alienSpawn
-				+ "]";
+		Set<Entry<Coordinate, Sector>> tempSet = sectors.entrySet();
+		
+		return tempSet.toString();
 	}
 
 }

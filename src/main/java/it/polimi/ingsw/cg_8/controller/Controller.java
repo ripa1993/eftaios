@@ -13,23 +13,25 @@ import it.polimi.ingsw.cg_8.model.map.GameMapName;
  * 
  */
 public class Controller {
-	
+
 	Model model;
 	Rules rules;
 
 	/**
 	 * Initialization of a new game. Note that the model is initialized with the
 	 * init() function, placed inside model
-	 * @throws NotAValidMapException 
+	 * 
+	 * @throws NotAValidMapException
 	 */
 	public Controller(GameMapName mapName, Rules rules) {
 
 		try {
-			model = new Model(mapName);
+			this.model = new Model(mapName);
+			this.rules = rules;
 		} catch (NotAValidMapException e) {
 			// e.printStackTrace();
 		}
-		
+
 	}
 
 	/**
@@ -52,8 +54,6 @@ public class Controller {
 	 * cleanup() method in called.
 	 */
 	public void gameLoop() {
-
-
 
 		while (model.getTurnPhase() != TurnPhase.GAME_END) {
 			processInput();
@@ -78,12 +78,12 @@ public class Controller {
 	private void processInput() {
 
 	}
-	
+
 	public Model getModel() {
 		return this.model;
 	}
-	
-	public Rules getRules(){
+
+	public Rules getRules() {
 		return this.rules;
 	}
 }
