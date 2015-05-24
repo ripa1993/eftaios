@@ -43,7 +43,7 @@ public class AttackTest {
 	public void validateAttackTest() {
 		assertTrue(AttackValidator.validateAttack(model));
 	}
-
+/*
 	@Test
 	public void attackSuccesfulTest() {
 		Attack attack = new Attack(model);
@@ -53,6 +53,6 @@ public class AttackTest {
 		System.out.println((model.getPlayers().get(1)));
 		assertTrue((attack.getVictims().get(0)).equals(model.getPlayers().get(1)));
 		
-	}
+	}*/
 
 }
