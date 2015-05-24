@@ -197,7 +197,7 @@ public class StateMachine {
 
 			if (a instanceof ActionEndTurn) {
 				EndTurn.endTurn(model);
-				model.setTurnPhase(TurnPhase.TURN_END);
+				return true;
 			}
 
 			// use card
@@ -312,7 +312,6 @@ public class StateMachine {
 
 			if (a instanceof ActionEndTurn) {
 				EndTurn.endTurn(model);
-				model.setTurnPhase(TurnPhase.TURN_END);
 				return true;
 			}
 
@@ -361,7 +360,6 @@ public class StateMachine {
 
 			if (a instanceof ActionEndTurn) {
 				EndTurn.endTurn(model);
-				model.setTurnPhase(TurnPhase.TURN_END);
 				return true;
 			}
 

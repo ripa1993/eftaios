@@ -1,6 +1,7 @@
 package it.polimi.ingsw.cg_8.controller.playerActions;
 
 import it.polimi.ingsw.cg_8.model.Model;
+import it.polimi.ingsw.cg_8.model.TurnPhase;
 import it.polimi.ingsw.cg_8.model.player.PlayerState;
 /**
  * Action used by the player when he wants to end his turn.
@@ -19,5 +20,6 @@ public class EndTurn extends PlayerAction {
 		model.getCurrentPlayerReference().cycleState();
 		model.nextPlayer();
 		model.getCurrentPlayerReference().cycleState();
+		model.setTurnPhase(TurnPhase.TURN_BEGIN);
 	}
 }

@@ -87,8 +87,7 @@ public class EscapeHatchSector extends SpecialSector {
 
 	@Override
 	public String toString() {
-		return "EscapeHatchSector [status=" + status + ", number=" + number
-				+ "]";
+		return "EH"+number;
 	}
 
 }

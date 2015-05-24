@@ -97,11 +97,7 @@ public class Human extends InGameCharacter {
 
 	@Override
 	public String toString() {
-		return "Human [currentBehaviour=" + currentBehaviour
-				+ ", isAttackAllowed()=" + isAttackAllowed()
-				+ ", isDefendAllowed()=" + isDefendAllowed()
-				+ ", getMaxAllowedMovement()=" + getMaxAllowedMovement()
-				+ ", hasToDrawSectorCard()=" + hasToDrawSectorCard() + "]";
+		return "Human";
 	}
 
 }

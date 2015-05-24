@@ -49,17 +49,17 @@ public class Coordinate implements Serializable {
 	 *            row number
 	 */
 
-	//@ requires x>=0
-	//@ requires y>=0
+	// @ requires x>=0
+	// @ requires y>=0
 	public Coordinate(int x, int y) {
 		this.x = x;
 		this.y = y;
-		
+
 	}
 
 	/**
-	 * Default constructor for {@link Coordinate}, creates a non valid coordinate
-	 * (negative value)
+	 * Default constructor for {@link Coordinate}, creates a non valid
+	 * coordinate (negative value)
 	 */
 	public Coordinate() {
 		x = -1;
@@ -93,6 +93,12 @@ public class Coordinate implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Coordinate [x=" + x + ", y=" + y + "]";
+		if (this.y >= 9) {
+			return String.valueOf((char) (this.x + 65))
+					+ String.valueOf(this.y + 1);
+		} else {
+			return String.valueOf((char) (this.x + 65)) + "0"
+					+ String.valueOf(this.y + 1);
+		}
 	}
 }

@@ -57,15 +57,11 @@ public class Alien extends InGameCharacter {
 		return true;
 	}
 
-	
-
 	@Override
 	public String toString() {
-		return "Alien [currentBehaviour=" + currentBehaviour
-				+ ", getMaxAllowedMovement()=" + getMaxAllowedMovement()
-				+ ", isAttackAllowed()=" + isAttackAllowed()
-				+ ", isDefendAllowed()=" + isDefendAllowed()
-				+ ", hasToDrawSectorCard()=" + hasToDrawSectorCard() + "]";
+		if (currentBehaviour instanceof NormalBehaviour) {
+			return "Alien";
+		} else
+			return "Fed Alien";
 	}
-
 }

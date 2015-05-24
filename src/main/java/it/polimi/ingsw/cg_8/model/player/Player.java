@@ -127,14 +127,14 @@ public class Player {
 	public void setDead() {
 		state = PlayerState.DEAD;
 	}
-	
+
 	/**
 	 * Set the player status to {@link PlayerState#ESCAPED ESCAPED}
 	 */
 	public void setEscaped() {
-		state = PlayerState.ESCAPED;	
+		state = PlayerState.ESCAPED;
 	}
-	
+
 	/**
 	 * Changes the player status from {@link PlayerState#ALIVE_WAITING
 	 * ALIVE_WAITING} to {@link PlayerState#ALIVE_PLAYING ALIVE_PLAYING} and
@@ -197,9 +197,8 @@ public class Player {
 
 	@Override
 	public String toString() {
-		return "Player [state=" + state + ", name=" + name + ", character="
-				+ character + ", rounds=" + rounds + ", hand=" + hand + "]";
+		return "Player: " + name + "\nCharacter: " + character
+				+ "\nPosition: " + getLastPosition();
 	}
 
-	
 }
