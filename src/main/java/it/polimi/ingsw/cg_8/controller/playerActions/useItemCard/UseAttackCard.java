@@ -22,8 +22,9 @@ public class UseAttackCard extends UseItemCard {
 	public static void useCard(Model model) {
 		// TODO: change method to direct player access
 		Player currentPlayer = model.getPlayers().get(model.getCurrentPlayer());
-		// Assume that the player is a human by ipothesis
+		// Assume that the player is a human by hypothesis
 		Human currentPlayerCharacter = (Human) currentPlayer.getCharacter();
+		
 		currentPlayerCharacter.enableAttack();
 
 	}
