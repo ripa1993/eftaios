@@ -39,22 +39,36 @@ import it.polimi.ingsw.cg_8.view.client.actions.ActionSetName;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionUseCard;
 import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
 
+/**
+ * Simulation of a state machine, used to handle {@link ClientAction} generated
+ * by the client
+ * 
+ * @author Simone
+ *
+ */
 public class StateMachine {
-	Model model;
-	Controller controller;
-	Player currentPlayer;
-	TurnPhase turnPhase;
-	Rules rules;
+	/**
+	 * This method evaluates an action created by a player though a client.
+	 * 
+	 * @param controller
+	 *            reference to the game
+	 * @param a
+	 *            action that needs to be evaluated
+	 * @param player
+	 *            player that submitted the action
+	 * @return true, if the action has been validated<br>
+	 *         false, if the action has been refused
+	 */
+	public static boolean evaluateAction(Controller controller, ClientAction a,
+			Player player) {
 
-	public StateMachine(Controller controller) {
-		this.model = controller.getModel();
-		this.controller = controller;
-		this.currentPlayer = model.getCurrentPlayerReference();
-		this.turnPhase = model.getTurnPhase();
-		this.rules = controller.getRules();
-	}
+		// local variables, calculated every time a new evaluation is launched
 
-	public boolean evaluateAction(ClientAction a, Player player) {
+		Model model = controller.getModel();
+		Player currentPlayer = model.getCurrentPlayerReference();
+		TurnPhase turnPhase = model.getTurnPhase();
+		Rules rules = controller.getRules();
+
 		// handles chat and disconnect action, always true
 		if (a instanceof ActionChat) {
 			// TODO: send the message to all the player
@@ -72,7 +86,8 @@ public class StateMachine {
 				try {
 					SetPlayerName.setPlayerName(name, model);
 				} catch (GameAlreadyRunningException e) {
-					// TODO: never happens if we handle concurrency in the right way
+					// TODO: never happens if we handle concurrency in the right
+					// way
 				}
 				return true;
 			}
@@ -322,12 +337,12 @@ public class StateMachine {
 				}
 			}
 		}
-		
+
 		// handle WAITING_FAKE_NOISE
 		if (turnPhase == TurnPhase.WAITING_FAKE_NOISE) {
-			
+
 			// do fake noise
-			
+
 			if (a instanceof ActionFakeNoise) {
 				Coordinate target = ((ActionFakeNoise) a).getCoordinate();
 				if (model.getMap().getSectors().keySet().contains(target)) {
@@ -338,21 +353,20 @@ public class StateMachine {
 				return false;
 			}
 		}
-		
-		
+
 		// handle DRAWN_CARD
 		if (turnPhase == TurnPhase.DRAWN_CARD) {
-			
+
 			// end turn
-			
+
 			if (a instanceof ActionEndTurn) {
 				EndTurn.endTurn(model);
 				model.setTurnPhase(TurnPhase.TURN_END);
 				return true;
 			}
-			
+
 			// use item card
-			
+
 			if (a instanceof ActionUseCard) {
 				ItemCard card = ((ActionUseCard) a).getItemCard();
 				Coordinate coordinate = ((ActionUseCard) a).getCoordinate();
