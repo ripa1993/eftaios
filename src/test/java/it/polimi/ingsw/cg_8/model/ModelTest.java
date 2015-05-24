@@ -42,7 +42,7 @@ public class ModelTest {
 	public void testGetPlayer() {
 		assertEquals(model.getPlayers().size(), 2);
 	}
-
+/*
 	@Test
 	public void testGetRoundNumber() throws EmptyDeckException {
 		model.initGame();
@@ -68,7 +68,7 @@ public class ModelTest {
 		model.nextPlayer();
 		assertEquals(model.getCurrentPlayer(), model.getStartingPlayer());
 	}
-
+*/
 	@Test
 	public void testGetTurnPhase() {
 		assertEquals(model.getTurnPhase(), TurnPhase.GAME_SETUP);
