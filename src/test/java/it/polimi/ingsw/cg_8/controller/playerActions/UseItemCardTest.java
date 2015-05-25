@@ -36,7 +36,7 @@ public class UseItemCardTest {
 		model.initGame();
 		currentPlayer = model.getPlayers().get(model.getCurrentPlayer());
 		if (currentPlayer.getCharacter() instanceof Alien) {
-			model.nextPlayer();
+			EndTurn.endTurn(model);
 			currentPlayer = model.getPlayers().get(model.getCurrentPlayer());
 		}
 	}

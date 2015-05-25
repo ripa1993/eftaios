@@ -10,7 +10,6 @@ import it.polimi.ingsw.cg_8.model.exceptions.GameAlreadyRunningException;
 import it.polimi.ingsw.cg_8.model.map.GameMapName;
 import it.polimi.ingsw.cg_8.view.client.ActionParser;
 import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
-import it.polimi.ingsw.cg_8.view.client.exceptions.NotAValidInput;
 
 import java.util.Scanner;
 
@@ -33,9 +32,9 @@ public class Main {
 		
 		System.out.println(model.getMap());
 		Scanner scanner = new Scanner(System.in);
-		while (!(model.getTurnPhase() == TurnPhase.GAME_END)) {
+		while ((model.getTurnPhase() != TurnPhase.GAME_END)) {
 			try{
-			System.out.println(model.getCurrentPlayerReference());
+			System.out.println(model.getCurrentPlayerReference()) ;
 			System.out.println("Turn: " + model.getRoundNumber() + " phase: "
 					+ model.getTurnPhase());
 			System.out.println("Insert command:");
@@ -43,6 +42,7 @@ public class Main {
 			ClientAction a = ActionParser.createEvent(input);
 			StateMachine.evaluateAction(controller, a,
 					model.getCurrentPlayerReference());
+			System.out.println("\n");
 			}
 			catch(Exception e){
 				System.out.println(e.getMessage());
