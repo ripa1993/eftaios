@@ -4,6 +4,7 @@ import it.polimi.ingsw.cg_8.controller.Controller;
 import it.polimi.ingsw.cg_8.controller.DefaultRules;
 import it.polimi.ingsw.cg_8.controller.StateMachine;
 import it.polimi.ingsw.cg_8.model.Model;
+import it.polimi.ingsw.cg_8.model.TurnPhase;
 import it.polimi.ingsw.cg_8.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.cg_8.model.exceptions.GameAlreadyRunningException;
 import it.polimi.ingsw.cg_8.model.map.GameMapName;
@@ -28,7 +29,7 @@ public class Main {
 		model.initGame();
 		System.out.println(model.getMap());
 		Scanner scanner = new Scanner(System.in);
-		while (true) {
+		while (!(model.getTurnPhase() == TurnPhase.GAME_END)) {
 			System.out.println(model.getCurrentPlayerReference());
 			System.out.println("Turn: " + model.getRoundNumber() + " phase: "
 					+ model.getTurnPhase());
@@ -39,5 +40,6 @@ public class Main {
 					model.getCurrentPlayerReference());
 
 		}
+		System.out.println("Game Over");
 	}
 }

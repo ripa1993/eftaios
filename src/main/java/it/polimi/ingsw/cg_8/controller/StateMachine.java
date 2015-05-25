@@ -77,6 +77,8 @@ public class StateMachine {
 
 		if (a instanceof ActionDisconnect) {
 			Disconnect.disconnect(player);
+			model.nextPlayer();
+			model.getCurrentPlayerReference().cycleState();
 			return true;
 		}
 
