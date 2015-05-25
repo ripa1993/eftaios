@@ -42,33 +42,32 @@ public class ModelTest {
 	public void testGetPlayer() {
 		assertEquals(model.getPlayers().size(), 2);
 	}
-/*
-	@Test
-	public void testGetRoundNumber() throws EmptyDeckException {
-		model.initGame();
-		model.nextPlayer();
-		model.nextPlayer();
-		model.nextPlayer();
-		assertEquals(model.getRoundNumber(), 2);
-	}
 
 	@Test
 	public void testGetCurrentPlayer() throws EmptyDeckException {
 		model.initGame();
 		int tempPlayer = model.getCurrentPlayer();
+		System.out.println("1:" + model.getCurrentPlayer());
+		model.getCurrentPlayerReference().cycleState();
 		model.nextPlayer();
+		System.out.println("2:" + model.getCurrentPlayer());
+		model.getCurrentPlayerReference().cycleState();
 		model.nextPlayer();
+		System.out.println("3:" + model.getCurrentPlayer());
+		model.getCurrentPlayerReference().cycleState();
 		assertEquals(tempPlayer, model.getCurrentPlayer());
 	}
 
 	@Test
 	public void testGetStartingPlayer() throws EmptyDeckException {
 		model.initGame();
+		model.getCurrentPlayerReference().cycleState();
 		model.nextPlayer();
+		model.getCurrentPlayerReference().cycleState();
 		model.nextPlayer();
 		assertEquals(model.getCurrentPlayer(), model.getStartingPlayer());
 	}
-*/
+
 	@Test
 	public void testGetTurnPhase() {
 		assertEquals(model.getTurnPhase(), TurnPhase.GAME_SETUP);
