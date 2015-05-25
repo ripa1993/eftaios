@@ -55,6 +55,11 @@ public class Model {
 	 */
 	private final List<Player> players;
 	/**
+	 * The maximum number of turn allowed in the game; if this number is
+	 * reached, the game ends with a draw.
+	 */
+	private final int MAX_ROUND_NUMBER = 39;
+	/**
 	 * Number of current round. It is increased when all the players have played
 	 * it.
 	 */
@@ -215,46 +220,45 @@ public class Model {
 	 * complete cycle has been done.
 	 */
 	public void nextPlayer() {
-		
-		if (checkGameEndNoEH()){
+
+		if (checkGameEndNoEH()) {
 			// no escape hatches left
 			setTurnPhase(TurnPhase.GAME_END);
 			return;
 		}
-		
-		if (checkGameEndNoPlayers()){
+
+		if (checkGameEndNoPlayers()) {
 			// all player dc'ed or dead or escaped
 			setTurnPhase(TurnPhase.GAME_END);
 			return;
 		}
-		
-		if (checkGameEndNoHumans()){
+
+		if (checkGameEndNoHumans()) {
 			// no humans left
 			setTurnPhase(TurnPhase.GAME_END);
 			return;
 		}
-		
-		
+
 		int counter = 0;
-		
+
 		for (Player p : players) {
 			if (p.getState() == PlayerState.ALIVE_WAITING) {
 				counter++;
 			}
 		}
-		if (counter > 0) {
+		if (counter > 1) {
 			int tempNextPlayer = currentPlayerIndex + 1;
 			if (tempNextPlayer == players.size()) {
 				tempNextPlayer = 0;
 			}
-
+			
 			if (tempNextPlayer == startingPlayerIndex) {
 				roundNumber++;
 			}
-			
-			if(checkGameEndRound40()){
+
+			if (checkGameEndRound() == true) {
 				// finished round 39, so game ends
-				setTurnPhase(TurnPhase.GAME_END);
+				this.setTurnPhase(TurnPhase.GAME_END);
 				return;
 			}
 
@@ -266,7 +270,7 @@ public class Model {
 			}
 		} else {
 			roundNumber++;
-			if(checkGameEndRound40()){
+			if (checkGameEndRound()) {
 				// finished round 39, so game ends
 				setTurnPhase(TurnPhase.GAME_END);
 				return;
@@ -278,18 +282,20 @@ public class Model {
 
 	/**
 	 * Check if turn number 40 has been reached
+	 * 
 	 * @return true, if game ends<br>
 	 *         false, if not
 	 */
-	public boolean checkGameEndRound40() {
-		// round number 39 game ends
-		if (roundNumber > 39) {
+	public boolean checkGameEndRound() {
+		if (roundNumber > MAX_ROUND_NUMBER) {
 			return true;
 		}
 		return false;
 	}
+
 	/**
 	 * Check if there is at least 1 human left
+	 * 
 	 * @return true, if game ends<br>
 	 *         false, if not
 	 */
@@ -308,8 +314,10 @@ public class Model {
 		}
 		return false;
 	}
+
 	/**
 	 * Check if there is at least a player not dead or disconnected or escaped
+	 * 
 	 * @return true, if game ends<br>
 	 *         false, if not
 	 */
@@ -327,8 +335,10 @@ public class Model {
 		}
 		return false;
 	}
+
 	/**
 	 * Check if not all escape hatches have been used
+	 * 
 	 * @return true, if game ends<br>
 	 *         false, if not
 	 */

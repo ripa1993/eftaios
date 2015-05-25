@@ -19,7 +19,9 @@ public class EndTurn extends PlayerAction {
 	public static void endTurn(Model model) {
 		model.getCurrentPlayerReference().cycleState();
 		model.nextPlayer();
-		model.getCurrentPlayerReference().cycleState();
-		model.setTurnPhase(TurnPhase.TURN_BEGIN);
+		if (model.getTurnPhase() != TurnPhase.GAME_END) {
+			model.getCurrentPlayerReference().cycleState();
+			model.setTurnPhase(TurnPhase.TURN_BEGIN);
+		}
 	}
 }
