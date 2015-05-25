@@ -16,20 +16,25 @@ import java.util.Scanner;
 
 public class Main {
 
-	public static void main(String[] args) throws GameAlreadyRunningException,
-			EmptyDeckException, NotAValidInput {
+	public static void main(String[] args){
 
 		Controller controller = new Controller(GameMapName.FERMI,
 				new DefaultRules());
 		Model model = controller.getModel();
-		model.addPlayer("simone");
-		model.addPlayer("alberto");
-		model.addPlayer("fulvio");
-		model.addPlayer("luca");
-		model.initGame();
+		try {
+			model.addPlayer("simone");
+			model.addPlayer("alberto");
+			model.addPlayer("fulvio");
+			model.addPlayer("luca");
+			model.initGame();
+		} catch (GameAlreadyRunningException | EmptyDeckException e1) {
+			System.out.println(e1.getMessage());
+		}
+		
 		System.out.println(model.getMap());
 		Scanner scanner = new Scanner(System.in);
 		while (!(model.getTurnPhase() == TurnPhase.GAME_END)) {
+			try{
 			System.out.println(model.getCurrentPlayerReference());
 			System.out.println("Turn: " + model.getRoundNumber() + " phase: "
 					+ model.getTurnPhase());
@@ -38,7 +43,10 @@ public class Main {
 			ClientAction a = ActionParser.createEvent(input);
 			StateMachine.evaluateAction(controller, a,
 					model.getCurrentPlayerReference());
-
+			}
+			catch(Exception e){
+				System.out.println(e.getMessage());
+			}
 		}
 		System.out.println("Game Over");
 	}

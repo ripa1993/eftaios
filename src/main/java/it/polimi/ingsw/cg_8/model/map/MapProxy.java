@@ -102,7 +102,8 @@ public class MapProxy implements ReachableCoordinatesInterface {
 						currentY - 1));
 			}
 		}
-
+		connectedCoordinates.remove(map.getAlienSpawn());
+		connectedCoordinates.remove(map.getHumanSpawn());
 		return connectedCoordinates;
 	}
 
@@ -144,6 +145,8 @@ public class MapProxy implements ReachableCoordinatesInterface {
 			Set<Coordinate> tempSet = getConnectedCoordinates(currentI);
 			secondRun.addAll(tempSet);
 		}
+		secondRun.remove(map.getAlienSpawn());
+		secondRun.remove(map.getHumanSpawn());
 		secondRun.remove(c);
 
 		// reiterates the operation for every coordinate obtained in second run
@@ -154,6 +157,8 @@ public class MapProxy implements ReachableCoordinatesInterface {
 			Set<Coordinate> tempSet = getConnectedCoordinates(currentI);
 			thirdRun.addAll(tempSet);
 		}
+		thirdRun.remove(map.getAlienSpawn());
+		thirdRun.remove(map.getHumanSpawn());
 		thirdRun.remove(c);
 
 		// save the 3 depth in a hashmap
