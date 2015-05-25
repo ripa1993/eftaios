@@ -33,7 +33,7 @@ public class UsetItemCardValidatorTest {
 		model.initGame();
 		currentPlayer = model.getPlayers().get(model.getCurrentPlayer());
 		if (currentPlayer.getCharacter() instanceof Alien) {
-			model.nextPlayer();
+			EndTurn.endTurn(model);
 			currentPlayer = model.getPlayers().get(model.getCurrentPlayer());
 		}
 		currentPlayer.getHand().addItemCard(new AttackCard());

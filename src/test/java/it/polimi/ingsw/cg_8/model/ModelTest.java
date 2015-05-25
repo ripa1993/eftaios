@@ -2,6 +2,7 @@ package it.polimi.ingsw.cg_8.model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import it.polimi.ingsw.cg_8.controller.playerActions.EndTurn;
 import it.polimi.ingsw.cg_8.model.decks.DangerousSectorDeck;
 import it.polimi.ingsw.cg_8.model.decks.EscapeHatchDeck;
 import it.polimi.ingsw.cg_8.model.decks.ItemDeck;
@@ -48,23 +49,19 @@ public class ModelTest {
 		model.initGame();
 		int tempPlayer = model.getCurrentPlayer();
 		System.out.println("1:" + model.getCurrentPlayer());
-		model.getCurrentPlayerReference().cycleState();
-		model.nextPlayer();
+		EndTurn.endTurn(model);
 		System.out.println("2:" + model.getCurrentPlayer());
-		model.getCurrentPlayerReference().cycleState();
-		model.nextPlayer();
+		EndTurn.endTurn(model);
 		System.out.println("3:" + model.getCurrentPlayer());
-		model.getCurrentPlayerReference().cycleState();
+		
 		assertEquals(tempPlayer, model.getCurrentPlayer());
 	}
 
 	@Test
 	public void testGetStartingPlayer() throws EmptyDeckException {
 		model.initGame();
-		model.getCurrentPlayerReference().cycleState();
-		model.nextPlayer();
-		model.getCurrentPlayerReference().cycleState();
-		model.nextPlayer();
+		EndTurn.endTurn(model);
+		EndTurn.endTurn(model);
 		assertEquals(model.getCurrentPlayer(), model.getStartingPlayer());
 	}
 
