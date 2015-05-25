@@ -27,8 +27,7 @@ public class UseSpotlightCard extends UseItemCard {
 			Coordinate target) {
 		Set<Coordinate> spotlightTarget = new HashSet<Coordinate>();
 		spotlightTarget.add(target);
-		spotlightTarget.addAll(model.getMap()
-				.getReachableCoordinates(target, 1));
+		spotlightTarget.addAll(model.getMap().getConnectedCoordinates(target));
 		return spotlightTarget;
 	}
 
@@ -69,7 +68,7 @@ public class UseSpotlightCard extends UseItemCard {
 		Set<Coordinate> target = findSpotlightTarget(model, coordinate);
 		Set<Player> foundPlayers = findPlayers(model, target);
 		makeNoise(model, foundPlayers);
-		
+
 		// might be needed in future
 		return foundPlayers;
 

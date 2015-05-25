@@ -95,6 +95,11 @@ public abstract class GameMap implements ReachableCoordinatesInterface {
 	public Set<Coordinate> getReachableCoordinates(Coordinate c, Integer depth) {
 		return mapProxy.getReachableCoordinates(c, depth);
 	}
+	
+	@Override
+	public Set<Coordinate> getConnectedCoordinates(Coordinate c){
+		return mapProxy.getConnectedCoordinates(c);
+	}
 
 	/**
 	 * Returns the sector relative to a coordinate

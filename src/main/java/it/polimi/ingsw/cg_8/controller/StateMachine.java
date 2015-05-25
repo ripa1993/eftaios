@@ -6,6 +6,8 @@ import it.polimi.ingsw.cg_8.controller.playerActions.EndTurn;
 import it.polimi.ingsw.cg_8.controller.playerActions.FakeNoise;
 import it.polimi.ingsw.cg_8.controller.playerActions.Movement;
 import it.polimi.ingsw.cg_8.controller.playerActions.otherActions.Disconnect;
+import it.polimi.ingsw.cg_8.controller.playerActions.otherActions.GetCards;
+import it.polimi.ingsw.cg_8.controller.playerActions.otherActions.GetReachableSectors;
 import it.polimi.ingsw.cg_8.controller.playerActions.otherActions.SetPlayerName;
 import it.polimi.ingsw.cg_8.controller.playerActions.useItemCard.UseAdrenalineCard;
 import it.polimi.ingsw.cg_8.controller.playerActions.useItemCard.UseAttackCard;
@@ -77,6 +79,8 @@ public class StateMachine {
 
 		if (a instanceof ActionDisconnect) {
 			Disconnect.disconnect(player);
+			model.nextPlayer();
+			model.getCurrentPlayerReference().cycleState();
 			return true;
 		}
 
@@ -93,13 +97,16 @@ public class StateMachine {
 			}
 			return false;
 		}
+		
+		// TODO: rimuovere i system out
+		
 		if (!(model.getTurnPhase() == TurnPhase.GAME_SETUP)
 				|| !(model.getTurnPhase() == TurnPhase.GAME_END)) {
 			if (a instanceof ActionGetReachableCoordinates) {
-				// TODO: handle this
+				System.out.println(GetReachableSectors.printReachableSectors(model, player));
 			}
 			if (a instanceof ActionGetHand) {
-				// TODO: handle this
+				System.out.println(GetCards.printHeldCards(player));
 			}
 			if (a instanceof ActionGetAvailableAction) {
 				// TODO: handle this

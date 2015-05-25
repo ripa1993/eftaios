@@ -1,4 +1,4 @@
-/*package it.polimi.ingsw.cg_8.controller.playerActions;
+package it.polimi.ingsw.cg_8.controller.playerActions;
 
 import static org.junit.Assert.assertTrue;
 import it.polimi.ingsw.cg_8.model.Model;
@@ -25,12 +25,14 @@ public class AttackTest {
 		model.addPlayer("a");
 		model.addPlayer("b");
 		model.initGame();
-		currentPlayer = model.getPlayers().get(model.getCurrentPlayer());
+		System.out.println(model.getCurrentPlayerReference());
+		
+		currentPlayer = model.getCurrentPlayerReference();
 		
 		
 		if (currentPlayer.getCharacter() instanceof Alien) {
-			model.nextPlayer();
-			currentPlayer = model.getPlayers().get(model.getCurrentPlayer());
+			EndTurn.endTurn(model);
+			currentPlayer = model.getCurrentPlayerReference();
 		}
 	
 		
@@ -57,4 +59,4 @@ public class AttackTest {
 		
 	}
 
-}*/
+}

@@ -17,4 +17,6 @@ public interface ReachableCoordinatesInterface {
 	 */
 	public Set<Coordinate> getReachableCoordinates (Coordinate c, Integer depth);
 	
+	public Set<Coordinate> getConnectedCoordinates(Coordinate c);
+	
 }

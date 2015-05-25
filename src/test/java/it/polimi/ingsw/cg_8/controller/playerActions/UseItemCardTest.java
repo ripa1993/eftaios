@@ -78,6 +78,8 @@ public class UseItemCardTest {
 		Set<Player> foundPlayers = UseSpotlightCard.useCard(model,
 				new Coordinate(model.getMap().getHumanSpawn().getX(), model
 						.getMap().getHumanSpawn().getY()));
+		System.out.println(foundPlayers);
+		System.out.println(model.getPlayers());
 		assertTrue(foundPlayers.containsAll(model.getPlayers()));
 	}
 
