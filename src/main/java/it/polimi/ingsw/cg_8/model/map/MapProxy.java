@@ -50,7 +50,7 @@ public class MapProxy implements ReachableCoordinatesInterface {
 	 *            starting coordinate
 	 * @return connected coordinates from c coordinate
 	 */
-	private Set<Coordinate> getConnectedCoordinates(Coordinate c) {
+	public Set<Coordinate> getConnectedCoordinates(Coordinate c) {
 		Set<Coordinate> connectedCoordinates = new HashSet<Coordinate>();
 		int currentX = c.getX();
 		int currentY = c.getY();
@@ -102,8 +102,7 @@ public class MapProxy implements ReachableCoordinatesInterface {
 						currentY - 1));
 			}
 		}
-		connectedCoordinates.remove(map.getAlienSpawn());
-		connectedCoordinates.remove(map.getHumanSpawn());
+		
 		return connectedCoordinates;
 	}
 
@@ -136,6 +135,8 @@ public class MapProxy implements ReachableCoordinatesInterface {
 
 		// calculates reachable coordinates for depth = 1
 		firstRun = getConnectedCoordinates(c);
+		firstRun.remove(map.getAlienSpawn());
+		firstRun.remove(map.getHumanSpawn());
 
 		// reiterates the operation for every coordinate obtained in first run
 		// (aka depth = 2)
