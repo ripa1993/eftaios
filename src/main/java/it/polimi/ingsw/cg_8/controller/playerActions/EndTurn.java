@@ -17,10 +17,10 @@ public class EndTurn extends PlayerAction {
 	 * @param model The current state of the game
 	 */
 	public static void endTurn(Model model) {
-		model.getCurrentPlayerReference().cycleState();
+		//model.getCurrentPlayerReference().cycleState();
 		model.nextPlayer();
 		if (model.getTurnPhase() != TurnPhase.GAME_END) {
-			model.getCurrentPlayerReference().cycleState();
+			//model.getCurrentPlayerReference().cycleState();
 			model.setTurnPhase(TurnPhase.TURN_BEGIN);
 		}
 	}

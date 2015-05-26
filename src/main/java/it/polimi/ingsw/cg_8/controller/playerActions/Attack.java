@@ -75,7 +75,7 @@ public class Attack extends PlayerAction {
 			 */
 			if (p.getCharacter() instanceof Human) {
 				Hand heldCards = p.getHand();
-				for (Card c : heldCards.getHeldCards() ) {
+				for (Card c : heldCards.getHeldCards()) {
 					if (c instanceof DefenseCard) {
 						UseDefenseCard.useCard(p);
 						heldCards.getHeldCards().remove(c);
@@ -108,7 +108,8 @@ public class Attack extends PlayerAction {
 		List<Player> playerList = model.getPlayers();
 		for (Player p : playerList) {
 			if (p.getLastPosition().equals(target)
-					&& p.getState().equals(PlayerState.ALIVE_WAITING)) {
+					&& p.getState().equals(PlayerState.ALIVE)
+					&& !(model.getCurrentPlayerReference().equals(p))) {
 				playersInSector.add(p);
 			}
 		}

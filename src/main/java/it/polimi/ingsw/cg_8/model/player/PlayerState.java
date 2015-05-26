@@ -6,13 +6,9 @@ package it.polimi.ingsw.cg_8.model.player;
  */
 public enum PlayerState {
 	/**
-	 * waiting for his turn
+	 * the player is alive, either playing or waiting for his turn
 	 */
-	ALIVE_WAITING,
-	/**
-	 * playing his turn
-	 */
-	ALIVE_PLAYING,
+	ALIVE,
 	/**
 	 * player is dead
 	 */

@@ -211,7 +211,7 @@ public class Model {
 		// sets turn phase and round number
 		roundNumber = 1;
 		turnPhase = TurnPhase.TURN_BEGIN;
-		getCurrentPlayerReference().cycleState();
+		//getCurrentPlayerReference().cycleState();
 
 	}
 
@@ -242,7 +242,7 @@ public class Model {
 		int counter = 0;
 
 		for (Player p : players) {
-			if (p.getState() == PlayerState.ALIVE_WAITING) {
+			if (p.getState() == PlayerState.ALIVE) {
 				counter++;
 			}
 		}
@@ -253,7 +253,7 @@ public class Model {
 			}
 
 			if (tempNextPlayer == startingPlayerIndex) {
-				roundNumber++;
+				this.roundNumber++;
 			}
 
 			if (checkGameEndRound() == true) {
@@ -262,7 +262,7 @@ public class Model {
 				return;
 			}
 			currentPlayerIndex = tempNextPlayer;
-			if (players.get(currentPlayerIndex).getState() == PlayerState.ALIVE_WAITING) {
+			if (players.get(currentPlayerIndex).getState() == PlayerState.ALIVE) {
 
 				return;
 			} else {
@@ -275,12 +275,12 @@ public class Model {
 			 */
 			for (int i = 0; i < this.getPlayers().size(); i++) {
 				Player p = this.getPlayers().get(i);
-				if (p.getState() == PlayerState.ALIVE_WAITING) {
+				if (p.getState() == PlayerState.ALIVE) {
 					currentPlayerIndex = i;
-					p.cycleState();
+					//p.cycleState();
 				}
 			}
-			roundNumber++;
+			this.roundNumber++;
 			if (checkGameEndRound()) {
 				// finished round 39, so game ends
 				setTurnPhase(TurnPhase.GAME_END);
@@ -315,8 +315,7 @@ public class Model {
 		int counterHumans = 0;
 		for (Player p : players) {
 			if (p.getCharacter() instanceof Human
-					&& ((p.getState() == PlayerState.ALIVE_PLAYING) || (p
-							.getState() == PlayerState.ALIVE_WAITING))) {
+					&& (p.getState() == PlayerState.ALIVE)){
 				counterHumans++;
 			}
 		}
@@ -336,8 +335,7 @@ public class Model {
 		// no one wants to play: all disconnected, dead or escaped
 		int counterPlaying = 0;
 		for (Player p : players) {
-			if ((p.getState() == PlayerState.ALIVE_PLAYING)
-					|| (p.getState() == PlayerState.ALIVE_WAITING)) {
+			if ((p.getState() == PlayerState.ALIVE)) {
 				counterPlaying++;
 			}
 		}
