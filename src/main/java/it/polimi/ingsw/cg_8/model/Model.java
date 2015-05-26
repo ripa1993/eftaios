@@ -251,7 +251,7 @@ public class Model {
 			if (tempNextPlayer == players.size()) {
 				tempNextPlayer = 0;
 			}
-			
+
 			if (tempNextPlayer == startingPlayerIndex) {
 				roundNumber++;
 			}
@@ -261,14 +261,25 @@ public class Model {
 				this.setTurnPhase(TurnPhase.GAME_END);
 				return;
 			}
+			currentPlayerIndex = tempNextPlayer;
+			if (players.get(currentPlayerIndex).getState() == PlayerState.ALIVE_WAITING) {
 
-			if (players.get(tempNextPlayer).getState() == PlayerState.ALIVE_WAITING) {
-				currentPlayerIndex = tempNextPlayer;
 				return;
 			} else {
 				nextPlayer();
 			}
 		} else {
+			/**
+			 * If there is only one player alive, and he is Human, he has to
+			 * play.
+			 */
+			for (int i = 0; i < this.getPlayers().size(); i++) {
+				Player p = this.getPlayers().get(i);
+				if (p.getState() == PlayerState.ALIVE_WAITING) {
+					currentPlayerIndex = i;
+					p.cycleState();
+				}
+			}
 			roundNumber++;
 			if (checkGameEndRound()) {
 				// finished round 39, so game ends
@@ -299,13 +310,13 @@ public class Model {
 	 * @return true, if game ends<br>
 	 *         false, if not
 	 */
-	public boolean checkGameEndNoHumans() {
+	private boolean checkGameEndNoHumans() {
 		// not all humans dead or escaped
 		int counterHumans = 0;
 		for (Player p : players) {
 			if (p.getCharacter() instanceof Human
-					&& !(p.getState() == PlayerState.DEAD)
-					&& !(p.getState() == PlayerState.ESCAPED)) {
+					&& ((p.getState() == PlayerState.ALIVE_PLAYING) || (p
+							.getState() == PlayerState.ALIVE_WAITING))) {
 				counterHumans++;
 			}
 		}
@@ -321,7 +332,7 @@ public class Model {
 	 * @return true, if game ends<br>
 	 *         false, if not
 	 */
-	public boolean checkGameEndNoPlayers() {
+	private boolean checkGameEndNoPlayers() {
 		// no one wants to play: all disconnected, dead or escaped
 		int counterPlaying = 0;
 		for (Player p : players) {
@@ -342,7 +353,7 @@ public class Model {
 	 * @return true, if game ends<br>
 	 *         false, if not
 	 */
-	public boolean checkGameEndNoEH() {
+	private boolean checkGameEndNoEH() {
 		// 4th escape hatch card drawn, so 4th escape hatch used
 		if (getEscapeHatchDeck().getCards().size() == 2) {
 			return true;
