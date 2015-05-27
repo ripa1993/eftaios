@@ -143,10 +143,11 @@ public class Model {
 	 *            name of the player
 	 * @throws GameAlreadyRunningException
 	 */
-	public void addPlayer(String name) throws GameAlreadyRunningException {
+	public Player addPlayer(String name) throws GameAlreadyRunningException {
 		if (turnPhase == TurnPhase.GAME_SETUP) {
 			Player tempPlayer = new Player(name);
 			players.add(tempPlayer);
+			return tempPlayer;
 		} else {
 			throw new GameAlreadyRunningException(
 					"Game is already running, can't add a new player");
