@@ -27,6 +27,7 @@ public class ServerSocketPublisherThread implements Runnable {
 		} catch (IOException e) {
 			System.err.println("Cannot open object output stream");
 		}
+		System.out.println("Publisher thread created");
 	}
 
 	@Override

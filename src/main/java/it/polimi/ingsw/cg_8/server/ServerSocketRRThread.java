@@ -39,6 +39,7 @@ public class ServerSocketRRThread implements Runnable {
 	public void run() {
 		while (true) {
 			try {
+				System.out.println("Waiting a connection...");
 				Socket client = serverRR.accept();
 				System.out.println("Connection accepted");
 				ObjectInputStream input = new ObjectInputStream(
@@ -58,6 +59,7 @@ public class ServerSocketRRThread implements Runnable {
 					output.flush();
 					// read player name and confirm
 					String playerName = (String) input.readObject();
+					System.out.println("Id: "+newClientId+" Name: "+playerName);
 					output.writeObject(new String("NAME ACCEPTED"));
 					output.flush();
 					// get reference to the starting game
@@ -69,13 +71,16 @@ public class ServerSocketRRThread implements Runnable {
 					Socket subscriber = serverPS.accept();
 					ServerSocketPublisherThread publisher = new ServerSocketPublisherThread(
 							subscriber);
-					nextGame.addClient(clientId, playerName, publisher);
+					nextGame.addClient(newClientId, playerName, publisher);
+					System.out.println("Player successfully added to the game");
 					Server.getId2Controller().put(clientId, nextGame);
 					// start the game if 3 players
 					if (nextGame.getNumOfPlayers() == 3) {
 						nextGame.initGame();
 						Server.nullStartingGame();
+						System.out.println("Game started");
 					}
+					
 				} else {
 					// client has already connected to the server, reads player
 					// action
@@ -89,6 +94,7 @@ public class ServerSocketRRThread implements Runnable {
 				}
 				try {
 					// close connection with the socket
+					System.out.println("Closing connection");
 					client.close();
 				} finally {
 					input = null;

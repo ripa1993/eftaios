@@ -47,6 +47,7 @@ public class Controller {
 			this.id2Player = new HashMap<Integer, Player>();
 			this.player2Id = new HashMap<Player, Integer>();
 			this.executor = Executors.newCachedThreadPool();
+			this.id2Publisher = new HashMap<Integer, ServerSocketPublisherThread>();
 		} catch (NotAValidMapException e) {
 			e.printStackTrace();
 		}
