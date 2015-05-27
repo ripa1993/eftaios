@@ -81,7 +81,6 @@ public class ClientSocket implements Runnable {
 					System.out.println("New ID received");
 					this.setClientID((int) clientIdRequested);
 					System.out.println("Your ID is: " + this.getClientID());
-					System.out.println(input.readObject());
 				} catch (IOException | ClassNotFoundException e) {
 					e.printStackTrace();
 				}
@@ -98,6 +97,8 @@ public class ClientSocket implements Runnable {
 					String serverAnswer = (String) input.readObject();
 					if (serverAnswer.equals("NAME ACCEPTED")) {
 						nameSet = true;
+						System.out
+						.println("Name accepted");
 					}
 				} catch (IOException | ClassNotFoundException e) {
 					e.printStackTrace();
@@ -110,7 +111,7 @@ public class ClientSocket implements Runnable {
 			 */
 			// TODO: ClientSocketViewPUB implementation.
 			ExecutorService executor = Executors.newCachedThreadPool();
-			executor.submit(new ClientSocketViewSUB());
+			executor.submit(new ClientSocketViewSUB(SERVER_ADDRESS, SOCKET_PORT_PUBSUB));
 
 			// TODO: Creare un thread ClientSocketViewCS che si occupi
 			// dell'invio dell'azione.
