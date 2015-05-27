@@ -73,8 +73,7 @@ public class ClientSocket implements Runnable {
 
 			do {
 				try {
-					System.out
-							.println("Your ID is not set.");
+					System.out.println("Your ID is not set.");
 					output.writeObject(new Integer(this.getClientID()));
 					output.flush();
 					Integer clientIdRequested = (Integer) input.readObject();
@@ -97,8 +96,7 @@ public class ClientSocket implements Runnable {
 					String serverAnswer = (String) input.readObject();
 					if (serverAnswer.equals("NAME ACCEPTED")) {
 						nameSet = true;
-						System.out
-						.println("Name accepted");
+						System.out.println("Name accepted");
 					}
 				} catch (IOException | ClassNotFoundException e) {
 					e.printStackTrace();
@@ -106,29 +104,38 @@ public class ClientSocket implements Runnable {
 			} while (nameSet = false);
 
 			/**
+			 * Close the socket used to establish the first connection.
+			 */
+			this.close(socket, output);
+			;
+			/**
 			 * Creates an always-on thread that works as a subscriber. When the
 			 * server publishes something, this thread is notified.
 			 */
 			// TODO: ClientSocketViewPUB implementation.
 			ExecutorService executor = Executors.newCachedThreadPool();
-			executor.submit(new ClientSocketViewSUB(SERVER_ADDRESS, SOCKET_PORT_PUBSUB));
+			executor.submit(new ClientSocketViewSUB(SERVER_ADDRESS,
+					SOCKET_PORT_PUBSUB));
 
 			// TODO: Creare un thread ClientSocketViewCS che si occupi
 			// dell'invio dell'azione.
 			// La roba qui sotto è spostata nel thread. poi al termine del
 			// thread, dopo la conferma del server, è chiamata la close().
+			// E' anche chiuso il thread creato, tramite end()
 			while (true) {
 				try {
 					String inputLine = stdin.nextLine();
 					ClientAction action = ActionParser.createEvent(inputLine);
-					output.writeObject(action);
-					output.flush();
 
-					System.out.println("CLIENT: sent event "
-							+ action.toString());
+					ExecutorService actionSender = Executors
+							.newCachedThreadPool();
+					actionSender.submit(new ClientSocketViewCS(SERVER_ADDRESS,
+							SOCKET_PORT_CLIENTSERVER, action));
+
 				} catch (NotAValidInput e) {
 					System.out.println(e.getMessage());
 				}
+
 			}
 
 		} catch (IOException e) {
@@ -137,4 +144,14 @@ public class ClientSocket implements Runnable {
 		}
 	}
 
+	private void close(Socket socket, ObjectOutputStream output) {
+		try {
+			socket.close();
+		} catch (IOException e) {
+		} finally {
+			socket = null;
+			output = null;
+			System.gc();
+		}
+	}
 }
