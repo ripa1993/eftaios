@@ -1,6 +1,8 @@
 package it.polimi.ingsw.cg_8.client;
 
+import it.polimi.ingsw.cg_8.view.client.ActionParser;
 import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
+import it.polimi.ingsw.cg_8.view.client.exceptions.NotAValidInput;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -36,11 +38,13 @@ public class ClientSocketViewCS implements Runnable {
 	 *            The IP of the server.
 	 * @param serverResponsePort
 	 *            The port used by the server to listen to incoming connections.
+	 * @throws NotAValidInput 
 	 */
-	public ClientSocketViewCS(String serverIP, int serverResponsePort, ClientAction action) {
+	public ClientSocketViewCS(String serverIP, int serverResponsePort,String inputLine) throws NotAValidInput {
 		try {
 			this.requestSocket = new Socket(serverIP, serverResponsePort);
-			this.action = action;
+			this.action = ActionParser.createEvent(inputLine);
+			
 			this.output = new ObjectOutputStream(requestSocket.getOutputStream());;
 		} catch (IOException e) {
 			System.out.println("Failed to establish a connection with the server");
@@ -50,6 +54,7 @@ public class ClientSocketViewCS implements Runnable {
 	@Override
 	public void run() {
 		try {
+			
 			output.writeObject(action);
 			output.flush();
 			
@@ -62,6 +67,18 @@ public class ClientSocketViewCS implements Runnable {
 
 		System.out.println("CLIENT: sent event "
 				+ action.toString());
+		this.close(requestSocket, output);
+	}
+	
+	private void close(Socket socket, ObjectOutputStream output) {
+		try {
+			socket.close();
+		} catch (IOException e) {
+		} finally {
+			socket = null;
+			output = null;
+			System.gc();
+		}
 	}
 
 }

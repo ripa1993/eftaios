@@ -117,20 +117,17 @@ public class ClientSocket implements Runnable {
 			executor.submit(new ClientSocketViewSUB(SERVER_ADDRESS,
 					SOCKET_PORT_PUBSUB));
 
-			// TODO: Creare un thread ClientSocketViewCS che si occupi
-			// dell'invio dell'azione.
-			// La roba qui sotto è spostata nel thread. poi al termine del
-			// thread, dopo la conferma del server, è chiamata la close().
-			// E' anche chiuso il thread creato, tramite end()
+	
+			// E' anche chiuso il thread creato, tramite end() ?
 			while (true) {
 				try {
 					String inputLine = stdin.nextLine();
-					ClientAction action = ActionParser.createEvent(inputLine);
+					
 
 					ExecutorService actionSender = Executors
 							.newCachedThreadPool();
 					actionSender.submit(new ClientSocketViewCS(SERVER_ADDRESS,
-							SOCKET_PORT_CLIENTSERVER, action));
+							SOCKET_PORT_CLIENTSERVER, inputLine));
 
 				} catch (NotAValidInput e) {
 					System.out.println(e.getMessage());
