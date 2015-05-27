@@ -83,20 +83,7 @@ public class PlayerTest {
 		player.setEscaped();
 		assertEquals(PlayerState.ESCAPED, player.getState());
 	}
-/*
-	@Test
-	public void testCycleState() {
-		player.cycleState();
-		assertEquals(PlayerState.ALIVE_PLAYING, player.getState());
-	}
 
-	@Test
-	public void testCycleState2() {
-		player.cycleState();
-		player.cycleState();
-		assertEquals(PlayerState.ALIVE_WAITING, player.getState());
-	}
-*/
 	@Test
 	public void tesGetRoundNumber() {
 		assertEquals(0, player.getRoundNumber());

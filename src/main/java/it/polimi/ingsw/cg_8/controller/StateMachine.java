@@ -80,7 +80,7 @@ public class StateMachine {
 		if (a instanceof ActionDisconnect) {
 			Disconnect.disconnect(player);
 			model.nextPlayer();
-			//model.getCurrentPlayerReference().cycleState();
+			// model.getCurrentPlayerReference().cycleState();
 			return true;
 		}
 
@@ -97,13 +97,14 @@ public class StateMachine {
 			}
 			return false;
 		}
-		
+
 		// TODO: rimuovere i system out
-		
+
 		if (!(model.getTurnPhase() == TurnPhase.GAME_SETUP)
 				|| !(model.getTurnPhase() == TurnPhase.GAME_END)) {
 			if (a instanceof ActionGetReachableCoordinates) {
-				System.out.println(GetReachableSectors.printReachableSectors(model, player));
+				System.out.println(GetReachableSectors.printReachableSectors(
+						model, player));
 			}
 			if (a instanceof ActionGetHand) {
 				System.out.println(GetCards.printHeldCards(player));
@@ -131,10 +132,14 @@ public class StateMachine {
 					move.makeMove();
 					Sector destinationSector = model.getMap().getSectors()
 							.get(destination);
-					if (destinationSector instanceof DangerousSector) {
-						model.setTurnPhase(TurnPhase.MOVEMENT_DONE_DS);
-					} else {
+					if (currentPlayer.getCharacter().hasToDrawSectorCard() == false) {
 						model.setTurnPhase(TurnPhase.MOVEMENT_DONE_NOT_DS);
+					} else {
+						if (destinationSector instanceof DangerousSector) {
+							model.setTurnPhase(TurnPhase.MOVEMENT_DONE_DS);
+						} else {
+							model.setTurnPhase(TurnPhase.MOVEMENT_DONE_NOT_DS);
+						}
 					}
 					return true;
 				}
@@ -297,6 +302,7 @@ public class StateMachine {
 					if (card instanceof SedativesCard) {
 						if (rules.useItemCardValidator(model, card)) {
 							UseSedativesCard.useCard(model);
+							model.setTurnPhase(TurnPhase.MOVEMENT_DONE_NOT_DS);
 							return true;
 						}
 						return false;
