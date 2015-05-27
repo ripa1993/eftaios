@@ -40,6 +40,8 @@ public class ClientSocket implements Runnable {
 	private final int SOCKET_PORT_CLIENTSERVER = 29998;
 
 	private final int SOCKET_PORT_PUBSUB = 29999;
+	
+	private final ClientData clientData;
 
 	/**
 	 * Changed to true when the server accepts the player's name.
@@ -48,6 +50,11 @@ public class ClientSocket implements Runnable {
 
 	public ClientSocket(String playerName) {
 		this.playerName = playerName;
+		this.clientData=new ClientData();
+	}
+
+	public ClientData getClientData() {
+		return clientData;
 	}
 
 	public void setClientID(int clientId) {
@@ -111,7 +118,7 @@ public class ClientSocket implements Runnable {
 			 */
 			// TODO: ClientSocketViewPUB implementation.
 			ExecutorService executor = Executors.newCachedThreadPool();
-			executor.submit(new ClientSocketViewSUB(SERVER_ADDRESS, SOCKET_PORT_PUBSUB));
+			executor.submit(new ClientSocketViewSUB(SERVER_ADDRESS, SOCKET_PORT_PUBSUB, this));
 
 			// TODO: Creare un thread ClientSocketViewCS che si occupi
 			// dell'invio dell'azione.
