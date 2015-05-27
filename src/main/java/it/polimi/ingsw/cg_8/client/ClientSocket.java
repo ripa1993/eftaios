@@ -23,9 +23,9 @@ public class ClientSocket implements Runnable {
 
 	/**
 	 * Identifies the client and it's assigned by the server after the first
-	 * successful connection; before the assignment it is defaulted at -1.
+	 * successful connection; before the assignment it is defaulted at 0.
 	 */
-	private int clientID;
+	private int clientID = 0;
 
 	/**
 	 * Identifies the client (and the player), it is chosen by the player at the
@@ -86,7 +86,7 @@ public class ClientSocket implements Runnable {
 				} catch (IOException | ClassNotFoundException e) {
 					e.printStackTrace();
 				}
-			} while (this.getClientID() == -1);
+			} while (this.getClientID() == 0);
 
 			do {
 				try {
