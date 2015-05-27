@@ -39,6 +39,10 @@ public class Server {
 		return nextGame;
 	}
 
+	public static void nullStartingGame(){
+		nextGame = null;
+	}
+	
 	public Server() {
 		nextGame = null;
 	}

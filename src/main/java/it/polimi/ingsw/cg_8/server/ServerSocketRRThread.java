@@ -71,6 +71,11 @@ public class ServerSocketRRThread implements Runnable {
 							subscriber);
 					nextGame.addClient(clientId, playerName, publisher);
 					Server.getId2Controller().put(clientId, nextGame);
+					// start the game if 3 players
+					if (nextGame.getNumOfPlayers() == 3) {
+						nextGame.initGame();
+						Server.nullStartingGame();
+					}
 				} else {
 					// client has already connected to the server, reads player
 					// action

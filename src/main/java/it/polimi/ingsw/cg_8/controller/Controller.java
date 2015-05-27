@@ -116,4 +116,8 @@ public class Controller {
 		int id = player2Id.get(player);
 		writeToId(id, message);
 	}
+
+	public int getNumOfPlayers() {
+		return player2Id.size();
+	}
 }
