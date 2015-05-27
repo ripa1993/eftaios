@@ -2,8 +2,20 @@ package it.polimi.ingsw.cg_8.controller;
 
 import it.polimi.ingsw.cg_8.model.Model;
 import it.polimi.ingsw.cg_8.model.TurnPhase;
+import it.polimi.ingsw.cg_8.model.exceptions.EmptyDeckException;
+import it.polimi.ingsw.cg_8.model.exceptions.GameAlreadyRunningException;
 import it.polimi.ingsw.cg_8.model.exceptions.NotAValidMapException;
 import it.polimi.ingsw.cg_8.model.map.GameMapName;
+import it.polimi.ingsw.cg_8.model.player.Player;
+import it.polimi.ingsw.cg_8.server.ServerSocketPublisherThread;
+import it.polimi.ingsw.cg_8.view.server.ServerResponse;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Main controller class: it handles the initialization of a new game, the main
@@ -14,9 +26,13 @@ import it.polimi.ingsw.cg_8.model.map.GameMapName;
  */
 public class Controller {
 
-	Model model;
-	Rules rules;
-
+	private Model model;
+	private Rules rules;
+	private Map<Integer, Player> id2Player;
+	private Map<Player, Integer> player2Id;
+	private Map<Integer, ServerSocketPublisherThread> id2Publisher;
+	private ExecutorService executor;
+	
 	/**
 	 * Initialization of a new game. Note that the model is initialized with the
 	 * init() function, placed inside model
@@ -28,55 +44,39 @@ public class Controller {
 		try {
 			this.model = new Model(mapName);
 			this.rules = rules;
+			this.id2Player = new HashMap<Integer, Player>();
+			this.player2Id = new HashMap<Player, Integer>();
+			this.executor = Executors.newCachedThreadPool();
 		} catch (NotAValidMapException e) {
-			// e.printStackTrace();
+			e.printStackTrace();
 		}
 
 	}
-
-	/**
-	 * Used to update the model after changing the state of the game or
-	 * validating an action.
-	 */
-	private void updateModel() {
-
+	
+	public Player getPlayerById(Integer id){
+		return id2Player.get(id);
 	}
-
-	/** Used to update the view. */
-	public void updateView() {
-
+	
+	public Integer getIdByPlayer(Player player){
+		return player2Id.get(player);
 	}
-
-	/**
-	 * Main game loop: after the startup the main cycle is started, until
-	 * certain conditions are verified (everyone leaves the game, turn 40 is
-	 * reached, every human player either escapes or is killed. Then the
-	 * cleanup() method in called.
-	 */
-	public void gameLoop() {
-
-		while (model.getTurnPhase() != TurnPhase.GAME_END) {
-			processInput();
-			updateModel();
-			updateView();
+	
+	public void addClient(Integer id, String playerName, ServerSocketPublisherThread pub) throws GameAlreadyRunningException{
+		Player tempPlayer =model.addPlayer(playerName);
+		id2Player.put(id, tempPlayer);
+		player2Id.put(tempPlayer, id);
+		id2Publisher.put(id, pub);
+		executor.submit(pub);
+	}
+	
+	public void initGame(){
+		try {
+			model.initGame();
+			//writeToAll( la partita è iniziata )
+		} catch (EmptyDeckException e) {
+			System.err.println(e.getMessage());
 		}
-		// cleanup();
-	}
-
-	/**
-	 * Used at the end of the game to remove resources that are no longer
-	 * needed.
-	 */
-	public void cleanup() {
-
-	}
-
-	/**
-	 * Input handler: analyze inputs given by the player and gives the
-	 * appropriate response (e.g: calls an action). Used by the main game loop.
-	 */
-	private void processInput() {
-
+		
 	}
 
 	public Model getModel() {
@@ -85,5 +85,35 @@ public class Controller {
 
 	public Rules getRules() {
 		return this.rules;
+	}
+	
+	/**
+	 * Writes a message to all the player subscribed to this game
+	 * @param message message to be sent
+	 */
+	public void writeToAll(ServerResponse message){
+		Set<Integer> ids = id2Publisher.keySet();
+		Iterator<Integer> it = ids.iterator();
+		while(it.hasNext()){
+			Integer current = it.next();
+			id2Publisher.get(current).dispatchMessage(message);
+		}
+	}
+	/**
+	 * Writes a private message to the selected clientId
+	 * @param id id of the receiver player
+	 * @param message message to be sent
+	 */
+	public void writeToId(Integer id, ServerResponse message){
+		id2Publisher.get(id).dispatchMessage(message);
+	}
+	/**
+	 * Writes a private message to the selected player
+	 * @param player receiver player
+	 * @param message message to be sent
+	 */
+	public void writeToPlayer(Player player, ServerResponse message){
+		int id = player2Id.get(player);
+		writeToId(id, message);
 	}
 }
