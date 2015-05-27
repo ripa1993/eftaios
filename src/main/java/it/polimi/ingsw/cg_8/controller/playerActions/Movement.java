@@ -65,7 +65,7 @@ public class Movement extends PlayerAction {
 		 */
 		if (lastPlayerTurn == lastModelTurn - 1) {
 			player.setPosition(destination);
-		} else if (lastPlayerTurn == lastModelTurn) {
+		} else if (lastPlayerTurn <= lastModelTurn) {
 			player.editLastPosition(destination);
 		}
 
