@@ -21,10 +21,10 @@ public class Main {
 				new DefaultRules());
 		Model model = controller.getModel();
 		try {
-			model.addPlayer("simone");
-			model.addPlayer("alberto");
-			model.addPlayer("fulvio");
-			model.addPlayer("luca");
+			model.addPlayer("Player1");
+			model.addPlayer("Player2");
+			//model.addPlayer("Player3");
+			//model.addPlayer("Player4");
 			model.initGame();
 		} catch (GameAlreadyRunningException | EmptyDeckException e1) {
 			System.out.println(e1.getMessage());
@@ -42,6 +42,9 @@ public class Main {
 			ClientAction a = ActionParser.createEvent(input);
 			StateMachine.evaluateAction(controller, a,
 					model.getCurrentPlayerReference());
+		//	System.out.println("\n");
+			
+			//System.out.println("playerlist" + model.getPlayers());
 			System.out.println("\n");
 			}
 			catch(Exception e){

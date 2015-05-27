@@ -211,7 +211,7 @@ public class Model {
 		// sets turn phase and round number
 		roundNumber = 1;
 		turnPhase = TurnPhase.TURN_BEGIN;
-		getCurrentPlayerReference().cycleState();
+		//getCurrentPlayerReference().cycleState();
 
 	}
 
@@ -242,7 +242,7 @@ public class Model {
 		int counter = 0;
 
 		for (Player p : players) {
-			if (p.getState() == PlayerState.ALIVE_WAITING) {
+			if (p.getState() == PlayerState.ALIVE) {
 				counter++;
 			}
 		}
@@ -251,9 +251,9 @@ public class Model {
 			if (tempNextPlayer == players.size()) {
 				tempNextPlayer = 0;
 			}
-			
+
 			if (tempNextPlayer == startingPlayerIndex) {
-				roundNumber++;
+				this.roundNumber++;
 			}
 
 			if (checkGameEndRound() == true) {
@@ -261,15 +261,26 @@ public class Model {
 				this.setTurnPhase(TurnPhase.GAME_END);
 				return;
 			}
+			currentPlayerIndex = tempNextPlayer;
+			if (players.get(currentPlayerIndex).getState() == PlayerState.ALIVE) {
 
-			if (players.get(tempNextPlayer).getState() == PlayerState.ALIVE_WAITING) {
-				currentPlayerIndex = tempNextPlayer;
 				return;
 			} else {
 				nextPlayer();
 			}
 		} else {
-			roundNumber++;
+			/**
+			 * If there is only one player alive, and he is Human, he has to
+			 * play.
+			 */
+			for (int i = 0; i < this.getPlayers().size(); i++) {
+				Player p = this.getPlayers().get(i);
+				if (p.getState() == PlayerState.ALIVE) {
+					currentPlayerIndex = i;
+					//p.cycleState();
+				}
+			}
+			this.roundNumber++;
 			if (checkGameEndRound()) {
 				// finished round 39, so game ends
 				setTurnPhase(TurnPhase.GAME_END);
@@ -299,13 +310,12 @@ public class Model {
 	 * @return true, if game ends<br>
 	 *         false, if not
 	 */
-	public boolean checkGameEndNoHumans() {
+	private boolean checkGameEndNoHumans() {
 		// not all humans dead or escaped
 		int counterHumans = 0;
 		for (Player p : players) {
 			if (p.getCharacter() instanceof Human
-					&& !(p.getState() == PlayerState.DEAD)
-					&& !(p.getState() == PlayerState.ESCAPED)) {
+					&& (p.getState() == PlayerState.ALIVE)){
 				counterHumans++;
 			}
 		}
@@ -321,12 +331,11 @@ public class Model {
 	 * @return true, if game ends<br>
 	 *         false, if not
 	 */
-	public boolean checkGameEndNoPlayers() {
+	private boolean checkGameEndNoPlayers() {
 		// no one wants to play: all disconnected, dead or escaped
 		int counterPlaying = 0;
 		for (Player p : players) {
-			if ((p.getState() == PlayerState.ALIVE_PLAYING)
-					|| (p.getState() == PlayerState.ALIVE_WAITING)) {
+			if ((p.getState() == PlayerState.ALIVE)) {
 				counterPlaying++;
 			}
 		}
@@ -342,7 +351,7 @@ public class Model {
 	 * @return true, if game ends<br>
 	 *         false, if not
 	 */
-	public boolean checkGameEndNoEH() {
+	private boolean checkGameEndNoEH() {
 		// 4th escape hatch card drawn, so 4th escape hatch used
 		if (getEscapeHatchDeck().getCards().size() == 2) {
 			return true;

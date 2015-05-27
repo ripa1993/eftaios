@@ -80,7 +80,7 @@ public class StateMachine {
 		if (a instanceof ActionDisconnect) {
 			Disconnect.disconnect(player);
 			model.nextPlayer();
-			model.getCurrentPlayerReference().cycleState();
+			//model.getCurrentPlayerReference().cycleState();
 			return true;
 		}
 
@@ -127,7 +127,8 @@ public class StateMachine {
 				Coordinate destination = ((ActionMove) a).getCoordinate();
 				if (rules.movementValidator(model, destination)) {
 					// execute movement
-					new Movement(model, destination).makeMove();
+					Movement move = new Movement(model, destination);
+					move.makeMove();
 					Sector destinationSector = model.getMap().getSectors()
 							.get(destination);
 					if (destinationSector instanceof DangerousSector) {

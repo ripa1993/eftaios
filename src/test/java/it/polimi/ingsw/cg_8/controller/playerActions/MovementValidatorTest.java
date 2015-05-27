@@ -25,7 +25,7 @@ public class MovementValidatorTest {
 		model.addPlayer("player2");
 		model.initGame();
 		currentPlayer = model.getPlayers().get(model.getCurrentPlayer());
-		currentPlayer.cycleState();
+		//currentPlayer.cycleState();
 		System.out.println("Turn0" + model.getPlayers());
 	}
 	
