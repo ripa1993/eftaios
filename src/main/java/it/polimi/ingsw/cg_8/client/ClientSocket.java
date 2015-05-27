@@ -74,8 +74,7 @@ public class ClientSocket implements Runnable {
 			do {
 				try {
 					System.out
-							.println("Your ID is not set. Press ENTER to get one.");
-					stdin.nextLine();
+							.println("Your ID is not set.");
 					output.writeObject(new Integer(this.getClientID()));
 					output.flush();
 					Integer clientIdRequested = (Integer) input.readObject();

@@ -11,7 +11,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Server {
-	private static int clientId = 0;
+	private static int clientId = 1;
 	private static Controller nextGame;
 	private final static int SERVER_SOCKET_RR_PORT = 29998;
 	private final static int SERVER_SOCKET_PS_PORT = 29999;
