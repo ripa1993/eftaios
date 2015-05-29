@@ -6,6 +6,7 @@ import it.polimi.ingsw.cg_8.controller.playerActions.EndTurn;
 import it.polimi.ingsw.cg_8.controller.playerActions.FakeNoise;
 import it.polimi.ingsw.cg_8.controller.playerActions.Movement;
 import it.polimi.ingsw.cg_8.controller.playerActions.otherActions.Disconnect;
+import it.polimi.ingsw.cg_8.controller.playerActions.otherActions.GetAllowedActions;
 import it.polimi.ingsw.cg_8.controller.playerActions.otherActions.GetCards;
 import it.polimi.ingsw.cg_8.controller.playerActions.otherActions.GetReachableSectors;
 import it.polimi.ingsw.cg_8.controller.playerActions.otherActions.SetPlayerName;
@@ -40,6 +41,9 @@ import it.polimi.ingsw.cg_8.view.client.actions.ActionMove;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionSetName;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionUseCard;
 import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
+import it.polimi.ingsw.cg_8.view.server.ResponseChat;
+import it.polimi.ingsw.cg_8.view.server.ResponsePrivate;
+import it.polimi.ingsw.cg_8.view.server.ServerResponse;
 
 /**
  * Simulation of a state machine, used to handle {@link ClientAction} generated
@@ -73,7 +77,8 @@ public class StateMachine {
 
 		// handles chat and disconnect action, always true
 		if (a instanceof ActionChat) {
-			// TODO: send the message to all the player
+			String message = ((ActionChat)a).getMessage();
+			controller.writeToAll(new ResponseChat(player.getName(), message));
 			return true;
 		}
 
@@ -81,6 +86,7 @@ public class StateMachine {
 			Disconnect.disconnect(player);
 			model.nextPlayer();
 			// model.getCurrentPlayerReference().cycleState();
+			controller.writeToAll(new ResponsePrivate(player.getName()+" has been disconnected."));
 			return true;
 		}
 
@@ -103,14 +109,14 @@ public class StateMachine {
 		if (!(model.getTurnPhase() == TurnPhase.GAME_SETUP)
 				|| !(model.getTurnPhase() == TurnPhase.GAME_END)) {
 			if (a instanceof ActionGetReachableCoordinates) {
-				System.out.println(GetReachableSectors.printReachableSectors(
-						model, player));
+				controller.writeToPlayer(player,new ResponsePrivate(GetReachableSectors.printReachableSectors(
+						model, player)));
 			}
 			if (a instanceof ActionGetHand) {
-				System.out.println(GetCards.printHeldCards(player));
+				controller.writeToPlayer(player,new ResponsePrivate(GetCards.printHeldCards(player)));
 			}
 			if (a instanceof ActionGetAvailableAction) {
-				// TODO: handle this
+				controller.writeToPlayer(player, new ResponsePrivate(GetAllowedActions.printActions(player)));
 			}
 		}
 
@@ -130,6 +136,7 @@ public class StateMachine {
 					// execute movement
 					Movement move = new Movement(model, destination);
 					move.makeMove();
+					controller.writeToAll(new ResponsePrivate(player.getName()+ " has moved."));
 					Sector destinationSector = model.getMap().getSectors()
 							.get(destination);
 					if (currentPlayer.getCharacter().hasToDrawSectorCard() == false) {
@@ -155,6 +162,7 @@ public class StateMachine {
 				if (card instanceof AdrenalineCard) {
 					if (rules.useItemCardValidator(model, card)) {
 						UseAdrenalineCard.useCard(model);
+						controller.writeToAll(new ResponsePrivate(player.getName()+" has used an Adrenaline Card"));
 						return true;
 					}
 					return false;
@@ -163,6 +171,8 @@ public class StateMachine {
 				if (card instanceof AttackCard) {
 					if (rules.useItemCardValidator(model, card)) {
 						UseAttackCard.useCard(model);
+						controller.writeToAll(new ResponsePrivate(player.getName()+" has used an Attack Card"));
+
 						return true;
 					}
 					return false;
@@ -170,6 +180,7 @@ public class StateMachine {
 				if (card instanceof TeleportCard) {
 					if (rules.useItemCardValidator(model, card)) {
 						UseTeleportCard.useCard(model);
+						controller.writeToAll(new ResponsePrivate(player.getName()+" has used a Teleport Card"));
 						return true;
 					}
 					return false;
@@ -177,6 +188,8 @@ public class StateMachine {
 				if (card instanceof SedativesCard) {
 					if (rules.useItemCardValidator(model, card)) {
 						UseSedativesCard.useCard(model);
+						controller.writeToAll(new ResponsePrivate(player.getName()+" has used a Sedatives Card"));
+						model.setTurnPhase(TurnPhase.MOVEMENT_DONE_NOT_DS);
 						return true;
 					}
 					return false;
@@ -184,6 +197,7 @@ public class StateMachine {
 				if (card instanceof SpotlightCard) {
 					if (rules.useItemCardValidator(model, card)) {
 						UseSpotlightCard.useCard(model, coordinate);
+						controller.writeToAll(new ResponsePrivate(player.getName()+" has used a Spotlight Card"));
 						return true;
 					}
 					return false;
@@ -210,6 +224,7 @@ public class StateMachine {
 
 			if (a instanceof ActionEndTurn) {
 				EndTurn.endTurn(model);
+				controller.writeToAll(new ResponsePrivate(player.getName()+" has finished his turn"));
 				return true;
 			}
 
@@ -223,6 +238,7 @@ public class StateMachine {
 					if (card instanceof AttackCard) {
 						if (rules.useItemCardValidator(model, card)) {
 							UseAttackCard.useCard(model);
+							controller.writeToAll(new ResponsePrivate(player.getName()+" has used an Attack Card"));
 							return true;
 						}
 						return false;
@@ -230,6 +246,8 @@ public class StateMachine {
 					if (card instanceof TeleportCard) {
 						if (rules.useItemCardValidator(model, card)) {
 							UseTeleportCard.useCard(model);
+							controller.writeToAll(new ResponsePrivate(player.getName()+" has used a Teleport Card"));
+
 							return true;
 						}
 						return false;
@@ -237,6 +255,7 @@ public class StateMachine {
 					if (card instanceof SedativesCard) {
 						if (rules.useItemCardValidator(model, card)) {
 							UseSedativesCard.useCard(model);
+							controller.writeToAll(new ResponsePrivate(player.getName()+" has used a Sedatives Card"));
 							return true;
 						}
 						return false;
@@ -244,6 +263,7 @@ public class StateMachine {
 					if (card instanceof SpotlightCard) {
 						if (rules.useItemCardValidator(model, card)) {
 							UseSpotlightCard.useCard(model, coordinate);
+							controller.writeToAll(new ResponsePrivate(player.getName()+" has used a Spotlight Card"));
 							return true;
 						}
 						return false;
@@ -274,6 +294,7 @@ public class StateMachine {
 					model.setTurnPhase(TurnPhase.WAITING_FAKE_NOISE);
 				} else {
 					model.setTurnPhase(TurnPhase.DRAWN_CARD);
+					controller.writeToAll(new ResponsePrivate(player.getName()+" has drawn a Dangerous Card"));
 				}
 				return true;
 			}
@@ -288,6 +309,8 @@ public class StateMachine {
 					if (card instanceof AttackCard) {
 						if (rules.useItemCardValidator(model, card)) {
 							UseAttackCard.useCard(model);
+							controller.writeToAll(new ResponsePrivate(player.getName()+" has used a Attack Card"));
+
 							return true;
 						}
 						return false;
@@ -295,6 +318,8 @@ public class StateMachine {
 					if (card instanceof TeleportCard) {
 						if (rules.useItemCardValidator(model, card)) {
 							UseTeleportCard.useCard(model);
+							controller.writeToAll(new ResponsePrivate(player.getName()+" has used a Teleport Card"));
+
 							return true;
 						}
 						return false;
@@ -303,6 +328,8 @@ public class StateMachine {
 						if (rules.useItemCardValidator(model, card)) {
 							UseSedativesCard.useCard(model);
 							model.setTurnPhase(TurnPhase.MOVEMENT_DONE_NOT_DS);
+							controller.writeToAll(new ResponsePrivate(player.getName()+" has used a Sedatives Card"));
+
 							return true;
 						}
 						return false;
@@ -310,6 +337,8 @@ public class StateMachine {
 					if (card instanceof SpotlightCard) {
 						if (rules.useItemCardValidator(model, card)) {
 							UseSpotlightCard.useCard(model, coordinate);
+							controller.writeToAll(new ResponsePrivate(player.getName()+" has used a Spotlight Card"));
+
 							return true;
 						}
 						return false;
@@ -326,6 +355,7 @@ public class StateMachine {
 
 			if (a instanceof ActionEndTurn) {
 				EndTurn.endTurn(model);
+				controller.writeToAll(new ResponsePrivate(player.getName()+" has finished his turn"));
 				return true;
 			}
 
@@ -337,6 +367,7 @@ public class StateMachine {
 				if (card instanceof TeleportCard) {
 					if (rules.useItemCardValidator(model, card)) {
 						UseTeleportCard.useCard(model);
+						controller.writeToAll(new ResponsePrivate(player.getName()+" has used a Teleport Card"));
 						return true;
 					}
 					return false;
@@ -344,6 +375,8 @@ public class StateMachine {
 				if (card instanceof SpotlightCard) {
 					if (rules.useItemCardValidator(model, card)) {
 						UseSpotlightCard.useCard(model, coordinate);
+						controller.writeToAll(new ResponsePrivate(player.getName()+" has used a Teleport Card"));
+
 						return true;
 					}
 					return false;
@@ -374,6 +407,8 @@ public class StateMachine {
 
 			if (a instanceof ActionEndTurn) {
 				EndTurn.endTurn(model);
+				controller.writeToAll(new ResponsePrivate(player.getName()+" has finished his turn"));
+
 				return true;
 			}
 
@@ -385,6 +420,8 @@ public class StateMachine {
 				if (card instanceof TeleportCard) {
 					if (rules.useItemCardValidator(model, card)) {
 						UseTeleportCard.useCard(model);
+						controller.writeToAll(new ResponsePrivate(player.getName()+" has used a Teleport card"));
+
 						return true;
 					}
 					return false;
@@ -392,6 +429,8 @@ public class StateMachine {
 				if (card instanceof SpotlightCard) {
 					if (rules.useItemCardValidator(model, card)) {
 						UseSpotlightCard.useCard(model, coordinate);
+						controller.writeToAll(new ResponsePrivate(player.getName()+" has used a Spotlight Card"));
+
 						return true;
 					}
 					return false;

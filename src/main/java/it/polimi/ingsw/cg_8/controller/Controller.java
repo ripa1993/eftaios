@@ -51,7 +51,7 @@ public class Controller {
 		} catch (NotAValidMapException e) {
 			e.printStackTrace();
 		}
-
+		// TODO: ServerSocketPublisherThread should extend ServerPublisherThread (also RMI do the same)
 	}
 	
 	public Player getPlayerById(Integer id){
@@ -105,6 +105,7 @@ public class Controller {
 	 * @param id id of the receiver player
 	 * @param message message to be sent
 	 */
+	//TODO: RMI publisher must implement dispatchMessage(ServerResponse response)
 	public void writeToId(Integer id, ServerResponse message){
 		id2Publisher.get(id).dispatchMessage(message);
 	}
