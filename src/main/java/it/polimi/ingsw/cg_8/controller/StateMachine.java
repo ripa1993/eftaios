@@ -68,6 +68,12 @@ public class StateMachine {
 	public static boolean evaluateAction(Controller controller, ClientAction a,
 			Player player) {
 
+		// TODO: rendere tutte ( o alcune) delle classi non statiche per poter
+		// estrarre delle informazioni, ad esempio dalla DrawDangerousSector
+		// card si può chiamare il metodo getcard che restituisce la carta
+		// appena pescata, cosi da poter comuinicare al client quale carta ha
+		// pescato
+
 		// local variables, calculated every time a new evaluation is launched
 
 		Model model = controller.getModel();
@@ -77,7 +83,7 @@ public class StateMachine {
 
 		// handles chat and disconnect action, always true
 		if (a instanceof ActionChat) {
-			String message = ((ActionChat)a).getMessage();
+			String message = ((ActionChat) a).getMessage();
 			controller.writeToAll(new ResponseChat(player.getName(), message));
 			return true;
 		}
@@ -86,7 +92,8 @@ public class StateMachine {
 			Disconnect.disconnect(player);
 			model.nextPlayer();
 			// model.getCurrentPlayerReference().cycleState();
-			controller.writeToAll(new ResponsePrivate(player.getName()+" has been disconnected."));
+			controller.writeToAll(new ResponsePrivate(player.getName()
+					+ " has been disconnected."));
 			return true;
 		}
 
@@ -109,14 +116,18 @@ public class StateMachine {
 		if (!(model.getTurnPhase() == TurnPhase.GAME_SETUP)
 				|| !(model.getTurnPhase() == TurnPhase.GAME_END)) {
 			if (a instanceof ActionGetReachableCoordinates) {
-				controller.writeToPlayer(player,new ResponsePrivate(GetReachableSectors.printReachableSectors(
-						model, player)));
+				controller.writeToPlayer(
+						player,
+						new ResponsePrivate(GetReachableSectors
+								.printReachableSectors(model, player)));
 			}
 			if (a instanceof ActionGetHand) {
-				controller.writeToPlayer(player,new ResponsePrivate(GetCards.printHeldCards(player)));
+				controller.writeToPlayer(player,
+						new ResponsePrivate(GetCards.printHeldCards(player)));
 			}
 			if (a instanceof ActionGetAvailableAction) {
-				controller.writeToPlayer(player, new ResponsePrivate(GetAllowedActions.printActions(player)));
+				controller.writeToPlayer(player, new ResponsePrivate(
+						GetAllowedActions.printActions(player)));
 			}
 		}
 
@@ -136,7 +147,8 @@ public class StateMachine {
 					// execute movement
 					Movement move = new Movement(model, destination);
 					move.makeMove();
-					controller.writeToAll(new ResponsePrivate(player.getName()+ " has moved."));
+					controller.writeToAll(new ResponsePrivate(player.getName()
+							+ " has moved."));
 					Sector destinationSector = model.getMap().getSectors()
 							.get(destination);
 					if (currentPlayer.getCharacter().hasToDrawSectorCard() == false) {
@@ -162,7 +174,8 @@ public class StateMachine {
 				if (card instanceof AdrenalineCard) {
 					if (rules.useItemCardValidator(model, card)) {
 						UseAdrenalineCard.useCard(model);
-						controller.writeToAll(new ResponsePrivate(player.getName()+" has used an Adrenaline Card"));
+						controller.writeToAll(new ResponsePrivate(player
+								.getName() + " has used an Adrenaline Card"));
 						return true;
 					}
 					return false;
@@ -171,7 +184,8 @@ public class StateMachine {
 				if (card instanceof AttackCard) {
 					if (rules.useItemCardValidator(model, card)) {
 						UseAttackCard.useCard(model);
-						controller.writeToAll(new ResponsePrivate(player.getName()+" has used an Attack Card"));
+						controller.writeToAll(new ResponsePrivate(player
+								.getName() + " has used an Attack Card"));
 
 						return true;
 					}
@@ -180,7 +194,8 @@ public class StateMachine {
 				if (card instanceof TeleportCard) {
 					if (rules.useItemCardValidator(model, card)) {
 						UseTeleportCard.useCard(model);
-						controller.writeToAll(new ResponsePrivate(player.getName()+" has used a Teleport Card"));
+						controller.writeToAll(new ResponsePrivate(player
+								.getName() + " has used a Teleport Card"));
 						return true;
 					}
 					return false;
@@ -188,7 +203,8 @@ public class StateMachine {
 				if (card instanceof SedativesCard) {
 					if (rules.useItemCardValidator(model, card)) {
 						UseSedativesCard.useCard(model);
-						controller.writeToAll(new ResponsePrivate(player.getName()+" has used a Sedatives Card"));
+						controller.writeToAll(new ResponsePrivate(player
+								.getName() + " has used a Sedatives Card"));
 						model.setTurnPhase(TurnPhase.MOVEMENT_DONE_NOT_DS);
 						return true;
 					}
@@ -197,7 +213,8 @@ public class StateMachine {
 				if (card instanceof SpotlightCard) {
 					if (rules.useItemCardValidator(model, card)) {
 						UseSpotlightCard.useCard(model, coordinate);
-						controller.writeToAll(new ResponsePrivate(player.getName()+" has used a Spotlight Card"));
+						controller.writeToAll(new ResponsePrivate(player
+								.getName() + " has used a Spotlight Card"));
 						return true;
 					}
 					return false;
@@ -224,8 +241,10 @@ public class StateMachine {
 
 			if (a instanceof ActionEndTurn) {
 				EndTurn.endTurn(model);
-				controller.writeToAll(new ResponsePrivate(player.getName()+" has finished his turn"));
-				controller.writeToAll(new ResponsePrivate("Next player is: "+model.getCurrentPlayerReference().getName()));
+				controller.writeToAll(new ResponsePrivate(player.getName()
+						+ " has finished his turn"));
+				controller.writeToAll(new ResponsePrivate("Next player is: "
+						+ model.getCurrentPlayerReference().getName()));
 
 				return true;
 			}
@@ -240,7 +259,8 @@ public class StateMachine {
 					if (card instanceof AttackCard) {
 						if (rules.useItemCardValidator(model, card)) {
 							UseAttackCard.useCard(model);
-							controller.writeToAll(new ResponsePrivate(player.getName()+" has used an Attack Card"));
+							controller.writeToAll(new ResponsePrivate(player
+									.getName() + " has used an Attack Card"));
 							return true;
 						}
 						return false;
@@ -248,7 +268,8 @@ public class StateMachine {
 					if (card instanceof TeleportCard) {
 						if (rules.useItemCardValidator(model, card)) {
 							UseTeleportCard.useCard(model);
-							controller.writeToAll(new ResponsePrivate(player.getName()+" has used a Teleport Card"));
+							controller.writeToAll(new ResponsePrivate(player
+									.getName() + " has used a Teleport Card"));
 
 							return true;
 						}
@@ -257,7 +278,8 @@ public class StateMachine {
 					if (card instanceof SedativesCard) {
 						if (rules.useItemCardValidator(model, card)) {
 							UseSedativesCard.useCard(model);
-							controller.writeToAll(new ResponsePrivate(player.getName()+" has used a Sedatives Card"));
+							controller.writeToAll(new ResponsePrivate(player
+									.getName() + " has used a Sedatives Card"));
 							return true;
 						}
 						return false;
@@ -265,7 +287,8 @@ public class StateMachine {
 					if (card instanceof SpotlightCard) {
 						if (rules.useItemCardValidator(model, card)) {
 							UseSpotlightCard.useCard(model, coordinate);
-							controller.writeToAll(new ResponsePrivate(player.getName()+" has used a Spotlight Card"));
+							controller.writeToAll(new ResponsePrivate(player
+									.getName() + " has used a Spotlight Card"));
 							return true;
 						}
 						return false;
@@ -296,7 +319,8 @@ public class StateMachine {
 					model.setTurnPhase(TurnPhase.WAITING_FAKE_NOISE);
 				} else {
 					model.setTurnPhase(TurnPhase.DRAWN_CARD);
-					controller.writeToAll(new ResponsePrivate(player.getName()+" has drawn a Dangerous Card"));
+					controller.writeToAll(new ResponsePrivate(player.getName()
+							+ " has drawn a Dangerous Card"));
 				}
 				return true;
 			}
@@ -311,7 +335,8 @@ public class StateMachine {
 					if (card instanceof AttackCard) {
 						if (rules.useItemCardValidator(model, card)) {
 							UseAttackCard.useCard(model);
-							controller.writeToAll(new ResponsePrivate(player.getName()+" has used a Attack Card"));
+							controller.writeToAll(new ResponsePrivate(player
+									.getName() + " has used a Attack Card"));
 
 							return true;
 						}
@@ -320,7 +345,8 @@ public class StateMachine {
 					if (card instanceof TeleportCard) {
 						if (rules.useItemCardValidator(model, card)) {
 							UseTeleportCard.useCard(model);
-							controller.writeToAll(new ResponsePrivate(player.getName()+" has used a Teleport Card"));
+							controller.writeToAll(new ResponsePrivate(player
+									.getName() + " has used a Teleport Card"));
 
 							return true;
 						}
@@ -330,7 +356,8 @@ public class StateMachine {
 						if (rules.useItemCardValidator(model, card)) {
 							UseSedativesCard.useCard(model);
 							model.setTurnPhase(TurnPhase.MOVEMENT_DONE_NOT_DS);
-							controller.writeToAll(new ResponsePrivate(player.getName()+" has used a Sedatives Card"));
+							controller.writeToAll(new ResponsePrivate(player
+									.getName() + " has used a Sedatives Card"));
 
 							return true;
 						}
@@ -339,7 +366,8 @@ public class StateMachine {
 					if (card instanceof SpotlightCard) {
 						if (rules.useItemCardValidator(model, card)) {
 							UseSpotlightCard.useCard(model, coordinate);
-							controller.writeToAll(new ResponsePrivate(player.getName()+" has used a Spotlight Card"));
+							controller.writeToAll(new ResponsePrivate(player
+									.getName() + " has used a Spotlight Card"));
 
 							return true;
 						}
@@ -357,8 +385,10 @@ public class StateMachine {
 
 			if (a instanceof ActionEndTurn) {
 				EndTurn.endTurn(model);
-				controller.writeToAll(new ResponsePrivate(player.getName()+" has finished his turn"));
-				controller.writeToAll(new ResponsePrivate("Next player is: "+model.getCurrentPlayerReference().getName()));
+				controller.writeToAll(new ResponsePrivate(player.getName()
+						+ " has finished his turn"));
+				controller.writeToAll(new ResponsePrivate("Next player is: "
+						+ model.getCurrentPlayerReference().getName()));
 
 				return true;
 			}
@@ -371,7 +401,8 @@ public class StateMachine {
 				if (card instanceof TeleportCard) {
 					if (rules.useItemCardValidator(model, card)) {
 						UseTeleportCard.useCard(model);
-						controller.writeToAll(new ResponsePrivate(player.getName()+" has used a Teleport Card"));
+						controller.writeToAll(new ResponsePrivate(player
+								.getName() + " has used a Teleport Card"));
 						return true;
 					}
 					return false;
@@ -379,7 +410,8 @@ public class StateMachine {
 				if (card instanceof SpotlightCard) {
 					if (rules.useItemCardValidator(model, card)) {
 						UseSpotlightCard.useCard(model, coordinate);
-						controller.writeToAll(new ResponsePrivate(player.getName()+" has used a Teleport Card"));
+						controller.writeToAll(new ResponsePrivate(player
+								.getName() + " has used a Teleport Card"));
 
 						return true;
 					}
@@ -411,8 +443,10 @@ public class StateMachine {
 
 			if (a instanceof ActionEndTurn) {
 				EndTurn.endTurn(model);
-				controller.writeToAll(new ResponsePrivate(player.getName()+" has finished his turn"));
-				controller.writeToAll(new ResponsePrivate("Next player is: "+model.getCurrentPlayerReference().getName()));
+				controller.writeToAll(new ResponsePrivate(player.getName()
+						+ " has finished his turn"));
+				controller.writeToAll(new ResponsePrivate("Next player is: "
+						+ model.getCurrentPlayerReference().getName()));
 				return true;
 			}
 
@@ -424,7 +458,8 @@ public class StateMachine {
 				if (card instanceof TeleportCard) {
 					if (rules.useItemCardValidator(model, card)) {
 						UseTeleportCard.useCard(model);
-						controller.writeToAll(new ResponsePrivate(player.getName()+" has used a Teleport card"));
+						controller.writeToAll(new ResponsePrivate(player
+								.getName() + " has used a Teleport card"));
 
 						return true;
 					}
@@ -433,7 +468,8 @@ public class StateMachine {
 				if (card instanceof SpotlightCard) {
 					if (rules.useItemCardValidator(model, card)) {
 						UseSpotlightCard.useCard(model, coordinate);
-						controller.writeToAll(new ResponsePrivate(player.getName()+" has used a Spotlight Card"));
+						controller.writeToAll(new ResponsePrivate(player
+								.getName() + " has used a Spotlight Card"));
 
 						return true;
 					}
