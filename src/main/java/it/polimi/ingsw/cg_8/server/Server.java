@@ -15,7 +15,7 @@ public class Server {
 	private static Controller nextGame;
 	private final static int SERVER_SOCKET_RR_PORT = 29998;
 	private final static int SERVER_SOCKET_PS_PORT = 29999;
-	private static Map<Integer, Controller> id2Controller;
+	private static Map<Integer, Controller> id2Controller = new HashMap<Integer, Controller>();
 	
 	public static Map<Integer, Controller> getId2Controller() {
 		return id2Controller;
@@ -35,7 +35,6 @@ public class Server {
 
 	public static Controller createNewGame(GameMapName gameMapName) {
 		nextGame = new Controller(gameMapName, new DefaultRules());
-		id2Controller = new HashMap<Integer, Controller>();
 		return nextGame;
 	}
 

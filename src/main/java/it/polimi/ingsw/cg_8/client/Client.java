@@ -6,8 +6,11 @@ import java.util.concurrent.Executors;
 
 public class Client {
 	
-	private String playerName = "Default";
+	private String playerName;
 	
+	public Client(){
+		playerName = "Default";
+	}
 	
 	public void setPlayerName(String playerName) {
 		this.playerName = playerName;
@@ -18,9 +21,9 @@ public class Client {
 	}
 	
 
-	private void startSocketThread() {
+	private void startSocketThread(Scanner stdin) {
 		ExecutorService executor = Executors.newCachedThreadPool();
-		executor.submit(new ClientSocket(this.playerName));
+		executor.submit(new ClientSocket(this.playerName, stdin));
 	}
 		
 	public static void main(String[] args) {
@@ -28,9 +31,10 @@ public class Client {
 		Client client = new Client();
 		Scanner stdin = new Scanner(System.in);
 		
+		
 		System.out.println("Choose your User-Name");
 		String name = stdin.nextLine();
 		client.setPlayerName(name);
-		client.startSocketThread();
+		client.startSocketThread(stdin);
 	}
 }

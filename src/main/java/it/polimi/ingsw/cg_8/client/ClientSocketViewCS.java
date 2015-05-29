@@ -5,6 +5,7 @@ import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
 import it.polimi.ingsw.cg_8.view.client.exceptions.NotAValidInput;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
@@ -20,17 +21,20 @@ public class ClientSocketViewCS implements Runnable {
 	/**
 	 * Socket used to communicate with the server.
 	 */
-	Socket requestSocket;
+	private Socket requestSocket;
 
 	/**
 	 * The request made by the player.
 	 */
-	ClientAction action;
-	
+	private ClientAction action;
+
 	/**
 	 * Output stream used to send requests to the server.
 	 */
-	ObjectOutputStream output;
+	private ObjectOutputStream output;
+	private ObjectInputStream input;
+	private int clientId;
+	
 	
 	/**
 	 * 
@@ -38,38 +42,52 @@ public class ClientSocketViewCS implements Runnable {
 	 *            The IP of the server.
 	 * @param serverResponsePort
 	 *            The port used by the server to listen to incoming connections.
-	 * @throws NotAValidInput 
+	 * @throws NotAValidInput
 	 */
-	public ClientSocketViewCS(String serverIP, int serverResponsePort,String inputLine) throws NotAValidInput {
+	public ClientSocketViewCS(String serverIP, int serverResponsePort,
+			String inputLine, int clientId) throws NotAValidInput {
 		try {
-			this.requestSocket = new Socket(serverIP, serverResponsePort);
+			// TODO: server must close connection if no input from client in 10 sec
+			this.clientId = clientId;
 			this.action = ActionParser.createEvent(inputLine);
-			
-			this.output = new ObjectOutputStream(requestSocket.getOutputStream());;
+			this.requestSocket = new Socket(serverIP, serverResponsePort);
+			this.output = new ObjectOutputStream(requestSocket.getOutputStream());
+			this.input = new ObjectInputStream(requestSocket.getInputStream());
+
 		} catch (IOException e) {
-			System.out.println("Failed to establish a connection with the server");
+			System.out
+					.println("Failed to establish a connection with the server");
 		}
 	}
 
 	@Override
 	public void run() {
 		try {
-			
+			// write id
+			output.writeObject(clientId);
+			output.flush();
+			System.out.println("[DEBUG] sent client id");
+			// write action
 			output.writeObject(action);
 			output.flush();
-			
+			System.out.println("[DEBUG] write server command: "+action);
+			System.out.println("[DEBUG] waiting server response");
+			try {
+				System.out.println((boolean)input.readObject());
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			// Aspetto un messaggio ResponsePrivate di conferma dal server.
-			
+
 		} catch (IOException e) {
 			System.out.println("Failed to send your request to the server");
 		}
-		
 
-		System.out.println("CLIENT: sent event "
-				+ action.toString());
-		this.close(requestSocket, output);
+		close(requestSocket, output);
+		System.out.println("Socket connection closed.");
 	}
-	
+
 	private void close(Socket socket, ObjectOutputStream output) {
 		try {
 			socket.close();

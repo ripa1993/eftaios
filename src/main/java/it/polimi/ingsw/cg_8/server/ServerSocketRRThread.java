@@ -75,7 +75,7 @@ public class ServerSocketRRThread implements Runnable {
 							subscriber);
 					nextGame.addClient(newClientId, playerName, publisher);
 					System.out.println("Player successfully added to the game");
-					Server.getId2Controller().put(clientId, nextGame);
+					Server.getId2Controller().put(newClientId, nextGame);
 					// start the game if 3 players
 					if (nextGame.getNumOfPlayers() == 3) {
 						nextGame.initGame();
@@ -88,10 +88,14 @@ public class ServerSocketRRThread implements Runnable {
 					// client has already connected to the server, reads player
 					// action
 					ClientAction action = (ClientAction) input.readObject();
+					System.out.println("[DEBUG] "+action);
 					Controller controller = Server.getId2Controller().get(
 							clientId);
+					System.out.println(controller);
+					System.out.println(controller.getPlayerById(clientId));
 					boolean result = StateMachine.evaluateAction(controller,
 							action, controller.getPlayerById(clientId));
+					System.out.println("[DEBUG]"+result);
 					output.writeObject(result);
 					output.flush();
 				}

@@ -48,9 +48,10 @@ public class ClientSocket implements Runnable {
 	 */
 	private boolean nameSet = false;
 
-	public ClientSocket(String playerName) {
+	public ClientSocket(String playerName, Scanner stdin) {
 		this.playerName = playerName;
 		this.clientData=new ClientData();
+		this.stdin = stdin;
 	}
 
 	public ClientData getClientData() {
@@ -114,7 +115,6 @@ public class ClientSocket implements Runnable {
 			 * Close the socket used to establish the first connection.
 			 */
 			this.close(socket, output);
-			;
 			/**
 			 * Creates an always-on thread that works as a subscriber. When the
 			 * server publishes something, this thread is notified.
@@ -122,19 +122,17 @@ public class ClientSocket implements Runnable {
 			// TODO: ClientSocketViewPUB implementation.
 			ExecutorService executor = Executors.newCachedThreadPool();
 			executor.submit(new ClientSocketViewSUB(SERVER_ADDRESS, SOCKET_PORT_PUBSUB, this));
+			System.out.println("[DEBUG] subscriber back to main thread");
 
-
-	
 			// E' anche chiuso il thread creato, tramite end() ?
 			while (true) {
 				try {
+					System.out.println("Write a command:");
 					String inputLine = stdin.nextLine();
-					
+					System.out.println("CLIENT: read "+ inputLine);
 
-					ExecutorService actionSender = Executors
-							.newCachedThreadPool();
-					actionSender.submit(new ClientSocketViewCS(SERVER_ADDRESS,
-							SOCKET_PORT_CLIENTSERVER, inputLine));
+					executor.submit(new ClientSocketViewCS(SERVER_ADDRESS,
+							SOCKET_PORT_CLIENTSERVER, inputLine, clientID));
 
 				} catch (NotAValidInput e) {
 					System.out.println(e.getMessage());
