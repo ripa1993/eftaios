@@ -225,6 +225,8 @@ public class StateMachine {
 			if (a instanceof ActionEndTurn) {
 				EndTurn.endTurn(model);
 				controller.writeToAll(new ResponsePrivate(player.getName()+" has finished his turn"));
+				controller.writeToAll(new ResponsePrivate("Next player is: "+model.getCurrentPlayerReference().getName()));
+
 				return true;
 			}
 
@@ -356,6 +358,8 @@ public class StateMachine {
 			if (a instanceof ActionEndTurn) {
 				EndTurn.endTurn(model);
 				controller.writeToAll(new ResponsePrivate(player.getName()+" has finished his turn"));
+				controller.writeToAll(new ResponsePrivate("Next player is: "+model.getCurrentPlayerReference().getName()));
+
 				return true;
 			}
 
@@ -408,7 +412,7 @@ public class StateMachine {
 			if (a instanceof ActionEndTurn) {
 				EndTurn.endTurn(model);
 				controller.writeToAll(new ResponsePrivate(player.getName()+" has finished his turn"));
-
+				controller.writeToAll(new ResponsePrivate("Next player is: "+model.getCurrentPlayerReference().getName()));
 				return true;
 			}
 
