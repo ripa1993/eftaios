@@ -38,7 +38,6 @@ public class Hand {
 		return heldCards;
 	}
 
-
 	/**
 	 * Returns the card according to the index and removes it from the heldCards
 	 * 
@@ -61,15 +60,14 @@ public class Hand {
 	 *            card to be added to hand
 	 * @throws TooManyCardsException
 	 */
-	public void addItemCard(ItemCard item) throws TooManyCardsException {
-		if (heldCards.size() < MAX_CARDS) {
-			heldCards.add(item);
-		} else {
-			throw new TooManyCardsException(
-					"No more space in hand, you already have "
-							+ heldCards.size() + " cards.");
-		}
+	public void addItemCard(ItemCard item) {
 
+		heldCards.add(item);
+
+	}
+
+	public static int getMaxCards() {
+		return MAX_CARDS;
 	}
 
 	@Override

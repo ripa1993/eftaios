@@ -23,7 +23,9 @@ import it.polimi.ingsw.cg_8.model.cards.itemCards.ItemCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.SedativesCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.SpotlightCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.TeleportCard;
+import it.polimi.ingsw.cg_8.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.cg_8.model.exceptions.GameAlreadyRunningException;
+import it.polimi.ingsw.cg_8.model.exceptions.TooManyCardsException;
 import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 import it.polimi.ingsw.cg_8.model.sectors.Sector;
@@ -72,7 +74,7 @@ public class StateMachine {
 		// TODO: rendere tutte ( o alcune) delle classi non statiche per poter
 		// estrarre delle informazioni, ad esempio dalla DrawDangerousSector
 		// card si può chiamare il metodo getcard che restituisce la carta
-		// appena pescata, cosi da poter comuinicare al client quale carta ha
+		// appena pescata, cosi da poter comunicare al client quale carta ha
 		// pescato
 
 		// local variables, calculated every time a new evaluation is launched
@@ -323,12 +325,40 @@ public class StateMachine {
 			// draw card
 
 			if (a instanceof ActionDrawCard) {
-				if (DrawDangerousSectorCard.drawDangerousSectorCard(model)) {
-					model.setTurnPhase(TurnPhase.WAITING_FAKE_NOISE);
-				} else {
-					model.setTurnPhase(TurnPhase.DRAWN_CARD);
-					controller.writeToAll(new ResponsePrivate(player.getName()
-							+ " has drawn a Dangerous Card"));
+				DrawDangerousSectorCard draw = new DrawDangerousSectorCard(
+						model);
+				boolean hasToMakeFakeNoise = false;
+
+				try {
+					hasToMakeFakeNoise = draw.drawDangerousSectorCard();
+					if (draw.getItemCard() != null
+							&& draw.isDiscardedItemCard() == false) {
+						controller.writeToPlayer(player, new ResponsePrivate(
+								"You have drawn a " + draw.getItemCard()));
+					} else if (draw.getItemCard() != null
+							&& draw.isDiscardedItemCard() == true) {
+						controller.writeToPlayer(player, new ResponsePrivate(
+								"You have drawn " + draw.getItemCard()
+										+ "but your hand is full,"
+										+ " so the card has been discarded."));
+					} else if (draw.getItemCard() == null
+							&& draw.isEmptyItemDeck()) {
+						controller.writeToPlayer(player, new ResponsePrivate(
+								"The item card deck is empty"));
+					} else {
+						controller.writeToPlayer(player, new ResponsePrivate(
+								"[DEBUG]: something went wrong"));
+					}
+
+				} finally {
+					if (hasToMakeFakeNoise == true) {
+						model.setTurnPhase(TurnPhase.WAITING_FAKE_NOISE);
+					} else {
+						model.setTurnPhase(TurnPhase.DRAWN_CARD);
+						controller.writeToAll(new ResponsePrivate(player
+								.getName()
+								+ " has drawn a Dangerous Sector Card"));
+					}
 				}
 				return true;
 			}
@@ -479,8 +509,9 @@ public class StateMachine {
 		// other cases
 		return false;
 	}
-	
-	private static void endTurn(Controller controller, Model model, Player player) {
+
+	private static void endTurn(Controller controller, Model model,
+			Player player) {
 		EndTurn.endTurn(model);
 		controller.writeToAll(new ResponsePrivate(player.getName()
 				+ " has finished his turn"));
@@ -488,6 +519,6 @@ public class StateMachine {
 				+ model.getCurrentPlayerReference().getName()));
 		controller.writeToPlayer(model.getCurrentPlayerReference(),
 				new ResponsePrivate(model.getCurrentPlayerReference()
-						.toString()));		
+						.toString()));
 	}
 }

@@ -9,6 +9,7 @@ import it.polimi.ingsw.cg_8.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.cg_8.model.exceptions.TooManyCardsException;
 import it.polimi.ingsw.cg_8.model.noises.MovementNoise;
 import it.polimi.ingsw.cg_8.model.noises.Noise;
+import it.polimi.ingsw.cg_8.model.player.Hand;
 import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.sectors.normal.DangerousSector;
 
@@ -17,58 +18,121 @@ import it.polimi.ingsw.cg_8.model.sectors.normal.DangerousSector;
  * {@link DangerousSectorCard}.
  * 
  * @author Alberto Parravicini
- *
+ * @version 1.0
  */
 public class DrawDangerousSectorCard extends PlayerAction {
+	/**
+	 * The current state of the game.
+	 */
+	private Model model;
+	/**
+	 * The DangerousSectorCard drawn by the player.
+	 */
+	private Card dangerousSectorCard;
+	/**
+	 * The ItemCard drawn by the player.
+	 */
+	private ItemCard itemCard;
+	
+	boolean discardedItemCard = false;
+	boolean emptyItemDeck = false;
+
+	/**
+	 * The class is not static so that it is possible to keep trace of the cards
+	 * drawn by the player.
+	 * 
+	 * @param model
+	 *            The current state of the game.
+	 */
+	public DrawDangerousSectorCard(Model model) {
+		this.model = model;
+		this.dangerousSectorCard = null;
+		this.itemCard = null;
+	}
 
 	/**
 	 * The player produces a noise, unless otherwise is specified. If the drawn
 	 * card is decorated, the player has to make a fake noise, draw an item
 	 * card, or both.
 	 * 
+	 * @throws TooManyCardsException
+	 * @throws EmptyDeckException
+	 * 
 	 * @require currentPlayer.getPosition(currentTurn) !=
 	 *          currentPlayer.getPosition(currentTurn-1) &&
 	 *          currentPlayer.getPosition(currentTurn) instanceof
 	 *          DangerousSector && currentPlayer hasn't attacked in this turn.
+	 * @return If the player has to make a fake noise;
 	 */
-	public static boolean drawDangerousSectorCard(Model model) {
+	public boolean drawDangerousSectorCard() {
 
 		Player player = model.getCurrentPlayerReference();
+		boolean hasToMakeFakeNoise = false;
+		
 
 		try {
-			Card dangerousSectorCard = model.getDangerousSectorDeck()
+			this.dangerousSectorCard = model.getDangerousSectorDeck()
 					.drawCard();
-
-			if (dangerousSectorCard instanceof NoiseCard) {
-				// draw an object
-				if (((NoiseCard) dangerousSectorCard).hasToDrawItem() == true) {
-					try {
-						player.getHand().addItemCard(
-								(ItemCard) model.getItemDeck().drawCard());
-					} catch (TooManyCardsException e) {
-						// TODO: something?
-					}
-				}
-				// what kind of noise?
-				if (((NoiseCard) dangerousSectorCard).hasToMakeFakeNoise() == false) {
-					Noise movementNoise = new MovementNoise(
-							model.getRoundNumber(), player,
-							player.getLastPosition());
-					model.getNoiseLogger().add(movementNoise);
-					return false;
-				} else {
-					// TODO: fakeNoise; come ottenere la destinazione bersaglio?
-					return true;
-				}
-			}
-			return false;
 		} catch (EmptyDeckException e) {
 			/**
-			 * This exception should never happen, as the deck is re-shuffled
-			 * when empty.
+			 * This exception never occurs, the deck is always re-shuffled when
+			 * empty.
 			 */
-			return false;
+			e.printStackTrace();
 		}
-		
+
+		if (dangerousSectorCard instanceof NoiseCard) {
+			
+			// what kind of noise?
+			if (((NoiseCard) dangerousSectorCard).hasToMakeFakeNoise() == false) {
+				Noise movementNoise = new MovementNoise(model.getRoundNumber(),
+						player, player.getLastPosition());
+				model.getNoiseLogger().add(movementNoise);
+				hasToMakeFakeNoise = false;
+			} else {
+				/**
+				 * The player has to make a fake noise.
+				 */
+				hasToMakeFakeNoise = true;
+			}
+			
+			// draw an object
+			if (((NoiseCard) dangerousSectorCard).hasToDrawItem() == true) {
+
+				try {
+					itemCard = (ItemCard) model.getItemDeck().drawCard();
+					
+					if (this.discardedItemCard == false) {
+						if (player.getHand().getHeldCards().size() < Hand.getMaxCards()) {
+							player.getHand().addItemCard(itemCard);
+						}
+						else {
+							model.getItemDeck().addUsedCard(itemCard);
+							this.discardedItemCard  = true;
+						}
+					}
+				} catch (EmptyDeckException e) {
+					this.emptyItemDeck = true;
+				}
+				
+			}
+		}
+		return hasToMakeFakeNoise;
 	}
+
+	public Card getDangerousSectorCard() {
+		return this.dangerousSectorCard;
+	}
+
+	public Card getItemCard() {
+		return this.itemCard;
+	}
+
+	public boolean isDiscardedItemCard() {
+		return discardedItemCard;
+	}
+
+	public boolean isEmptyItemDeck() {
+		return emptyItemDeck;
+	}	
 }
