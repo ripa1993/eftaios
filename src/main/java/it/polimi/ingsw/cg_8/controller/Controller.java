@@ -13,6 +13,8 @@ import it.polimi.ingsw.cg_8.view.server.ServerResponse;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -24,7 +26,7 @@ import java.util.concurrent.Executors;
  * @author Alberto Parravicini
  * 
  */
-public class Controller {
+public class Controller implements Observer {
 
 	private Model model;
 	private Rules rules;
@@ -48,6 +50,7 @@ public class Controller {
 			this.player2Id = new HashMap<Player, Integer>();
 			this.executor = Executors.newCachedThreadPool();
 			this.id2Publisher = new HashMap<Integer, ServerSocketPublisherThread>();
+			model.addObserver(this);
 		} catch (NotAValidMapException e) {
 			e.printStackTrace();
 		}
@@ -139,5 +142,10 @@ public class Controller {
 
 	public int getNumOfPlayers() {
 		return player2Id.size();
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		this.writeToAll(new ResponsePrivate(model.getNoiseLogger().toString()));
 	}
 }

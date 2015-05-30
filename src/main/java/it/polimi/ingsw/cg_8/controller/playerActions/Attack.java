@@ -95,7 +95,7 @@ public class Attack extends PlayerAction {
 		}
 		Noise attackNoise = new AttackNoise(model.getRoundNumber(), attacker,
 				attacker.getLastPosition());
-		model.getNoiseLogger().add(attackNoise);
+		model.addNoise(attackNoise);
 	}
 
 	/**
