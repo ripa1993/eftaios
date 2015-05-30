@@ -129,7 +129,7 @@ public class ClientSocket implements Runnable {
 				try {
 					System.out.println("Write a command:");
 					String inputLine = stdin.nextLine();
-					System.out.println("CLIENT: read "+ inputLine);
+					//System.out.println("CLIENT: read "+ inputLine);
 
 					executor.submit(new ClientSocketViewCS(SERVER_ADDRESS,
 							SOCKET_PORT_CLIENTSERVER, inputLine, clientID));

@@ -222,6 +222,5 @@ public class ActionParser {
 		} else {
 			throw new NotAValidInput("Not a valid command");
 		}
-
 	}
 }
