@@ -35,11 +35,11 @@ public class ServerSocketPublisherThread implements Runnable {
 		while (true) {
 			try {
 				ServerResponse message = buffer.poll();
-				if (message != null)
+				if (message != null) {
 
 					send(message);
-
-				else {
+					System.out.println("Message Sent");
+				} else {
 					try {
 						synchronized (buffer) {
 							buffer.wait();

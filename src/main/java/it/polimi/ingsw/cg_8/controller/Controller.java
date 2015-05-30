@@ -8,6 +8,7 @@ import it.polimi.ingsw.cg_8.model.exceptions.NotAValidMapException;
 import it.polimi.ingsw.cg_8.model.map.GameMapName;
 import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.server.ServerSocketPublisherThread;
+import it.polimi.ingsw.cg_8.view.server.ResponsePrivate;
 import it.polimi.ingsw.cg_8.view.server.ServerResponse;
 
 import java.util.HashMap;
@@ -74,6 +75,8 @@ public class Controller {
 		try {
 			model.initGame();
 			//writeToAll( la partita è iniziata )
+			this.writeToAll(new ResponsePrivate("The current player is: "
+					+ model.getCurrentPlayerReference().getName()));
 		} catch (EmptyDeckException e) {
 			System.err.println(e.getMessage());
 		}

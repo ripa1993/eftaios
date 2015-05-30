@@ -137,7 +137,7 @@ public class StateMachine {
 		}
 		// handle TURN_BEGIN
 		if (turnPhase == TurnPhase.TURN_BEGIN) {
-
+			
 			// movement
 
 			if (a instanceof ActionMove) {
@@ -162,6 +162,8 @@ public class StateMachine {
 					}
 					return true;
 				}
+				controller.writeToPlayer(player, new ResponsePrivate(
+						"Moving to " + destination + " is not allowed"));
 				return false;
 
 			}
@@ -232,6 +234,8 @@ public class StateMachine {
 				if (rules.attackValidator(model)) {
 					new Attack(model).makeAttack();
 					model.setTurnPhase(TurnPhase.ATTACK_DONE);
+					controller.writeToAll(new ResponsePrivate(player.getName()
+							+ " has attacked in " + player.getLastPosition()));
 					return true;
 				}
 				return false;
@@ -307,6 +311,8 @@ public class StateMachine {
 				if (rules.attackValidator(model)) {
 					new Attack(model).makeAttack();
 					model.setTurnPhase(TurnPhase.ATTACK_DONE);
+					controller.writeToAll(new ResponsePrivate(player.getName()
+							+ " has attacked in " + player.getLastPosition()));
 					return true;
 				}
 				return false;
