@@ -4,6 +4,14 @@ import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Main client class; it allows the user to set his user-name and select the
+ * connection type he prefers. It also starts the thread used to handle the
+ * game.
+ * 
+ * @author Alberto Parravicini
+ * @version 1.0
+ */
 public class Client {
 
 	private String playerName;
@@ -20,23 +28,14 @@ public class Client {
 		return this.playerName;
 	}
 
-	private void startSocketThread(Scanner stdin) {
-		ExecutorService executor = Executors.newCachedThreadPool();
-		executor.submit(new ClientSocket(this.playerName, stdin));
-	}
-
 	// TODO: select rmi or socket. crea thread di conseguenza
-	// se rmi faccio lookup registry. sul registri avrò subscribe (prendo un
-	// player id) send name (invio il nome al server) e makeMove (invio
-	// clientAction)
-	// c'è pure write to all e write to player, usate dal server per mandare
-	// messaggi
-	// fanno uso di dispatch message, da reimplementare sul client come remote
-	// method.
-	// non ho problemi di sicurezza perchè write to... non sono remote method,
-	// non fanno override della broker interface
-	//
+	
 	public static void main(String[] args) {
+
+		/**
+		 * Used to see if the player has successfully chosen a connection type;
+		 */
+		boolean connectionChosen = false;
 
 		Client client = new Client();
 		Scanner stdin = new Scanner(System.in);
@@ -44,6 +43,47 @@ public class Client {
 		System.out.println("Choose your User-Name");
 		String name = stdin.nextLine();
 		client.setPlayerName(name);
-		client.startSocketThread(stdin);
+		while (connectionChosen == false) {
+			System.out.println("Press 1 to use RMI or press 2 to use Socket");
+			String connectionType = stdin.nextLine();
+			System.out.println(connectionType);
+
+			if (connectionType.equals("1")) {
+				client.startRMIThread(stdin);
+
+				System.out.println("You have chosen to use RMI");
+				connectionChosen = true;
+			} else if (connectionType.equals("2")) {
+				System.out.println("You have chosen to use Sockets");
+				client.startSocketThread(stdin);
+				connectionChosen = true;
+			} else {
+				System.out.println("Wrong input");
+			}
+		}
+
 	}
+
+	/**
+	 * Creates a thread used to handle the connection via RMI.
+	 * 
+	 * @param stdin
+	 *            The input scanner.
+	 */
+	private void startRMIThread(Scanner stdin) {
+		ExecutorService executorRMI = Executors.newCachedThreadPool();
+		executorRMI.submit(new ClientRMI(this.playerName, stdin));
+	}
+
+	/**
+	 * Creates a thread used to handle the connection via socket.
+	 * 
+	 * @param stdin
+	 *            The input scanner.
+	 */
+	private void startSocketThread(Scanner stdin) {
+		ExecutorService executorSocket = Executors.newCachedThreadPool();
+		executorSocket.submit(new ClientSocket(this.playerName, stdin));
+	}
+
 }

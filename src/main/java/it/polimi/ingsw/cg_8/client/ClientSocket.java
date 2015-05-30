@@ -1,7 +1,5 @@
 package it.polimi.ingsw.cg_8.client;
 
-import it.polimi.ingsw.cg_8.view.client.ActionParser;
-import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
 import it.polimi.ingsw.cg_8.view.client.exceptions.NotAValidInput;
 
 import java.io.IOException;
@@ -14,7 +12,7 @@ import java.util.concurrent.Executors;
 
 /**
  * Thread created by the client when initialized. Connects the client to the
- * server.
+ * server, through Sockets.
  * 
  * @author Alberto Parravicini
  * @version 1.0
@@ -109,7 +107,7 @@ public class ClientSocket implements Runnable {
 				} catch (IOException | ClassNotFoundException e) {
 					e.printStackTrace();
 				}
-			} while (nameSet = false);
+			} while (nameSet == false);
 
 			/**
 			 * Close the socket used to establish the first connection.
