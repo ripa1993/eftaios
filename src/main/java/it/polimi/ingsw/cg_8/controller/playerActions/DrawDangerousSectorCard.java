@@ -33,7 +33,7 @@ public class DrawDangerousSectorCard extends PlayerAction {
 	 * The ItemCard drawn by the player.
 	 */
 	private ItemCard itemCard;
-	
+
 	boolean discardedItemCard = false;
 	boolean emptyItemDeck = false;
 
@@ -68,7 +68,6 @@ public class DrawDangerousSectorCard extends PlayerAction {
 
 		Player player = model.getCurrentPlayerReference();
 		boolean hasToMakeFakeNoise = false;
-		
 
 		try {
 			this.dangerousSectorCard = model.getDangerousSectorDeck()
@@ -82,7 +81,7 @@ public class DrawDangerousSectorCard extends PlayerAction {
 		}
 
 		if (dangerousSectorCard instanceof NoiseCard) {
-			
+
 			// what kind of noise?
 			if (((NoiseCard) dangerousSectorCard).hasToMakeFakeNoise() == false) {
 				Noise movementNoise = new MovementNoise(model.getRoundNumber(),
@@ -95,26 +94,27 @@ public class DrawDangerousSectorCard extends PlayerAction {
 				 */
 				hasToMakeFakeNoise = true;
 			}
-			
+
 			// draw an object
 			if (((NoiseCard) dangerousSectorCard).hasToDrawItem() == true) {
 
 				try {
 					itemCard = (ItemCard) model.getItemDeck().drawCard();
 					
-					if (this.discardedItemCard == false) {
-						if (player.getHand().getHeldCards().size() < Hand.getMaxCards()) {
-							player.getHand().addItemCard(itemCard);
-						}
-						else {
-							model.getItemDeck().addUsedCard(itemCard);
-							this.discardedItemCard  = true;
-						}
+					/**
+					 * Add the card to the player's hand, if possible.
+					 */
+					discardedItemCard = !(player.getHand().addItemCard(itemCard));
+						
+					 if (discardedItemCard == true) {
+						model.getItemDeck().addUsedCard(itemCard);
 					}
+
 				} catch (EmptyDeckException e) {
 					this.emptyItemDeck = true;
+					this.itemCard = null;
 				}
-				
+
 			}
 		}
 		return hasToMakeFakeNoise;
@@ -134,5 +134,5 @@ public class DrawDangerousSectorCard extends PlayerAction {
 
 	public boolean isEmptyItemDeck() {
 		return emptyItemDeck;
-	}	
+	}
 }

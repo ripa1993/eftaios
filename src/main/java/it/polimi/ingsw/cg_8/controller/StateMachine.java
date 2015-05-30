@@ -23,9 +23,7 @@ import it.polimi.ingsw.cg_8.model.cards.itemCards.ItemCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.SedativesCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.SpotlightCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.TeleportCard;
-import it.polimi.ingsw.cg_8.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.cg_8.model.exceptions.GameAlreadyRunningException;
-import it.polimi.ingsw.cg_8.model.exceptions.TooManyCardsException;
 import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 import it.polimi.ingsw.cg_8.model.sectors.Sector;
@@ -70,12 +68,6 @@ public class StateMachine {
 	 */
 	public static boolean evaluateAction(Controller controller, ClientAction a,
 			Player player) {
-
-		// TODO: rendere tutte ( o alcune) delle classi non statiche per poter
-		// estrarre delle informazioni, ad esempio dalla DrawDangerousSector
-		// card si può chiamare il metodo getcard che restituisce la carta
-		// appena pescata, cosi da poter comunicare al client quale carta ha
-		// pescato
 
 		// local variables, calculated every time a new evaluation is launched
 
@@ -331,6 +323,10 @@ public class StateMachine {
 
 				try {
 					hasToMakeFakeNoise = draw.drawDangerousSectorCard();
+					controller.writeToPlayer(player, new ResponsePrivate(
+							"You have drawn a " + draw.getDangerousSectorCard()));
+					System.out.println(draw.getItemCard());
+					
 					if (draw.getItemCard() != null
 							&& draw.isDiscardedItemCard() == false) {
 						controller.writeToPlayer(player, new ResponsePrivate(
@@ -339,7 +335,7 @@ public class StateMachine {
 							&& draw.isDiscardedItemCard() == true) {
 						controller.writeToPlayer(player, new ResponsePrivate(
 								"You have drawn " + draw.getItemCard()
-										+ "but your hand is full,"
+										+ " but your hand is full,"
 										+ " so the card has been discarded."));
 					} else if (draw.getItemCard() == null
 							&& draw.isEmptyItemDeck()) {
@@ -347,12 +343,16 @@ public class StateMachine {
 								"The item card deck is empty"));
 					} else {
 						controller.writeToPlayer(player, new ResponsePrivate(
-								"[DEBUG]: something went wrong"));
+								"No item card was drawn"));
 					}
 
 				} finally {
+					controller.writeToPlayer(player, new ResponsePrivate(
+							player.getHand().getHeldCards().toString()));
 					if (hasToMakeFakeNoise == true) {
 						model.setTurnPhase(TurnPhase.WAITING_FAKE_NOISE);
+						controller.writeToPlayer(player, new ResponsePrivate(
+								"Make a noise on a coordinate of your choice"));
 					} else {
 						model.setTurnPhase(TurnPhase.DRAWN_CARD);
 						controller.writeToAll(new ResponsePrivate(player
@@ -457,7 +457,7 @@ public class StateMachine {
 		if (turnPhase == TurnPhase.WAITING_FAKE_NOISE) {
 
 			// do fake noise
-
+			
 			if (a instanceof ActionFakeNoise) {
 				Coordinate target = ((ActionFakeNoise) a).getCoordinate();
 				if (model.getMap().getSectors().keySet().contains(target)) {

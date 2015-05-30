@@ -59,11 +59,14 @@ public class Hand {
 	 * @param item
 	 *            card to be added to hand
 	 * @throws TooManyCardsException
+	 * @return If the card has been added to the player's hand.
 	 */
-	public void addItemCard(ItemCard item) {
-
-		heldCards.add(item);
-
+	public boolean addItemCard(ItemCard item) {
+		if (this.heldCards.size() < Hand.MAX_CARDS) {
+			heldCards.add(item);
+			return true;
+		}
+		return false;
 	}
 
 	public static int getMaxCards() {

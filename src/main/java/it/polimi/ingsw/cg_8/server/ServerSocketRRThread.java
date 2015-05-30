@@ -5,8 +5,6 @@ import it.polimi.ingsw.cg_8.controller.StateMachine;
 import it.polimi.ingsw.cg_8.model.exceptions.GameAlreadyRunningException;
 import it.polimi.ingsw.cg_8.model.map.GameMapName;
 import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
-import it.polimi.ingsw.cg_8.view.server.ResponseChat;
-import it.polimi.ingsw.cg_8.view.server.ResponsePrivate;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
