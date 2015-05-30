@@ -230,8 +230,8 @@ public class StateMachine {
 					Attack attack = new Attack(model);
 					attack.makeAttack();
 					model.setTurnPhase(TurnPhase.ATTACK_DONE);
-					controller.writeToAll(new ResponsePrivate(player.getName()
-							+ " has attacked in " + player.getLastPosition()));
+//					controller.writeToAll(new ResponsePrivate(player.getName()
+//							+ " has attacked in " + player.getLastPosition()));
 					List<Player> victims = attack.getVictims();
 					for (Player p : victims) {
 						controller.writeToAll(new ResponsePrivate(p.getName()

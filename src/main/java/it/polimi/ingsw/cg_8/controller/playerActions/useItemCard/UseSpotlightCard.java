@@ -57,7 +57,7 @@ public class UseSpotlightCard extends UseItemCard {
 			Player currentPlayer = it.next();
 			Noise spotlightNoise = new SpotlightNoise(model.getRoundNumber(),
 					currentPlayer, currentPlayer.getLastPosition());
-			model.getNoiseLogger().add(spotlightNoise);
+			model.addNoise(spotlightNoise);
 		}
 	}
 

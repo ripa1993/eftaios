@@ -31,6 +31,7 @@ import it.polimi.ingsw.cg_8.model.player.character.human.Human;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Observable;
 import java.util.Random;
 
 /**
@@ -39,7 +40,7 @@ import java.util.Random;
  * @author Simone
  *
  */
-public class Model {
+public class Model extends Observable{
 	@Override
 	public String toString() {
 		return "Model [players=" + players + ", roundNumber=" + roundNumber
@@ -411,7 +412,13 @@ public class Model {
 	public List<Noise> getNoiseLogger() {
 		return noiseLogger;
 	}
-
+	
+	public void addNoise(Noise noise) {
+		this.noiseLogger.add(noise);
+		this.setChanged();
+		this.notifyObservers();
+	}
+ 
 	public void setTurnPhase(TurnPhase newTurnPhase) {
 		this.turnPhase = newTurnPhase;
 	}
