@@ -86,7 +86,7 @@ public class DrawDangerousSectorCard extends PlayerAction {
 			if (((NoiseCard) dangerousSectorCard).hasToMakeFakeNoise() == false) {
 				Noise movementNoise = new MovementNoise(model.getRoundNumber(),
 						player, player.getLastPosition());
-				model.getNoiseLogger().add(movementNoise);
+				model.addNoise(movementNoise);
 				hasToMakeFakeNoise = false;
 			} else {
 				/**

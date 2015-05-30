@@ -6,6 +6,7 @@ import it.polimi.ingsw.cg_8.model.Model;
 import it.polimi.ingsw.cg_8.model.cards.Card;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.DefenseCard;
 import it.polimi.ingsw.cg_8.model.noises.AttackNoise;
+import it.polimi.ingsw.cg_8.model.noises.DefenseNoise;
 import it.polimi.ingsw.cg_8.model.noises.Noise;
 import it.polimi.ingsw.cg_8.model.player.Hand;
 import it.polimi.ingsw.cg_8.model.player.Player;
@@ -79,6 +80,9 @@ public class Attack extends PlayerAction {
 					if (c instanceof DefenseCard) {
 						UseDefenseCard.useCard(p);
 						heldCards.getHeldCards().remove(c);
+						DefenseNoise defenseNoise = new DefenseNoise(
+								model.getRoundNumber(), p, attacker.getLastPosition());
+						model.addNoise(defenseNoise);
 						break;
 					}
 				}
@@ -134,6 +138,5 @@ public class Attack extends PlayerAction {
 	public List<Player> getVictims() {
 		return victims;
 	}
-	
-	
+
 }
