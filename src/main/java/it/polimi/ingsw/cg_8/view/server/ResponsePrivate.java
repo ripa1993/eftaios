@@ -20,6 +20,6 @@ public class ResponsePrivate implements Serializable, ServerResponse {
 
 	@Override
 	public String toString() {
-		return "The server said: " + message;
+		return "Server: " + message;
 	}
 }

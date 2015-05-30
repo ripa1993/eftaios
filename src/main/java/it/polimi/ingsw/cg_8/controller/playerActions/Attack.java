@@ -134,5 +134,6 @@ public class Attack extends PlayerAction {
 	public List<Player> getVictims() {
 		return victims;
 	}
-
+	
+	
 }

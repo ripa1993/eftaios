@@ -197,8 +197,8 @@ public class Player {
 
 	@Override
 	public String toString() {
-		return "Player: " + name + "\nCharacter: " + character + " "
-				+"\nPosition: " + getLastPosition() ;
+		return "Player: " + name + ", Character: " + character + " "
+				+", Position: " + getLastPosition() ;
 	}
 
 }

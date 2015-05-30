@@ -79,7 +79,7 @@ public class ServerSocketRRThread implements Runnable {
 					// start the game if 3 players
 					if (nextGame.getNumOfPlayers() == 3) {
 						nextGame.initGame();
-						nextGame.writeToAll(new ResponsePrivate("Match is starting..."));
+						
 						Server.nullStartingGame();
 						System.out.println("Game started");
 					}
@@ -93,6 +93,7 @@ public class ServerSocketRRThread implements Runnable {
 							clientId);
 					System.out.println(controller);
 					System.out.println(controller.getPlayerById(clientId));
+					
 					boolean result = StateMachine.evaluateAction(controller,
 							action, controller.getPlayerById(clientId));
 					System.out.println("[DEBUG]"+result);
@@ -111,11 +112,11 @@ public class ServerSocketRRThread implements Runnable {
 				}
 
 			} catch (IOException e) {
-				System.err.println("Cannot connect to client");
+				System.err.println("Cannot connect to the client");
 			} catch (ClassNotFoundException e) {
-				System.err.println("Cannot read from input stream");
+				System.err.println("Cannot read from the input stream");
 			} catch (GameAlreadyRunningException e) {
-				System.err.println("Game already running, can't add");
+				System.err.println("Game already running, can't add you to this game");
 			}
 		}
 	}

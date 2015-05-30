@@ -43,7 +43,8 @@ import it.polimi.ingsw.cg_8.view.client.actions.ActionUseCard;
 import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
 import it.polimi.ingsw.cg_8.view.server.ResponseChat;
 import it.polimi.ingsw.cg_8.view.server.ResponsePrivate;
-import it.polimi.ingsw.cg_8.view.server.ServerResponse;
+
+import java.util.List;
 
 /**
  * Simulation of a state machine, used to handle {@link ClientAction} generated
@@ -137,7 +138,7 @@ public class StateMachine {
 		}
 		// handle TURN_BEGIN
 		if (turnPhase == TurnPhase.TURN_BEGIN) {
-			
+
 			// movement
 
 			if (a instanceof ActionMove) {
@@ -232,10 +233,16 @@ public class StateMachine {
 
 			if (a instanceof ActionAttack) {
 				if (rules.attackValidator(model)) {
-					new Attack(model).makeAttack();
+					Attack attack = new Attack(model);
+					attack.makeAttack();
 					model.setTurnPhase(TurnPhase.ATTACK_DONE);
 					controller.writeToAll(new ResponsePrivate(player.getName()
 							+ " has attacked in " + player.getLastPosition()));
+					List<Player> victims = attack.getVictims();
+					for (Player p : victims) {
+						controller.writeToAll(new ResponsePrivate(p.getName()
+								+ " has been killed!"));
+					}
 					return true;
 				}
 				return false;
@@ -244,12 +251,7 @@ public class StateMachine {
 			// end turn
 
 			if (a instanceof ActionEndTurn) {
-				EndTurn.endTurn(model);
-				controller.writeToAll(new ResponsePrivate(player.getName()
-						+ " has finished his turn"));
-				controller.writeToAll(new ResponsePrivate("Next player is: "
-						+ model.getCurrentPlayerReference().getName()));
-
+				endTurn(controller, model, player);
 				return true;
 			}
 
@@ -390,12 +392,7 @@ public class StateMachine {
 			// end turn
 
 			if (a instanceof ActionEndTurn) {
-				EndTurn.endTurn(model);
-				controller.writeToAll(new ResponsePrivate(player.getName()
-						+ " has finished his turn"));
-				controller.writeToAll(new ResponsePrivate("Next player is: "
-						+ model.getCurrentPlayerReference().getName()));
-
+				endTurn(controller, model, player);
 				return true;
 			}
 
@@ -448,11 +445,7 @@ public class StateMachine {
 			// end turn
 
 			if (a instanceof ActionEndTurn) {
-				EndTurn.endTurn(model);
-				controller.writeToAll(new ResponsePrivate(player.getName()
-						+ " has finished his turn"));
-				controller.writeToAll(new ResponsePrivate("Next player is: "
-						+ model.getCurrentPlayerReference().getName()));
+				endTurn(controller, model, player);
 				return true;
 			}
 
@@ -485,5 +478,16 @@ public class StateMachine {
 		}
 		// other cases
 		return false;
+	}
+	
+	private static void endTurn(Controller controller, Model model, Player player) {
+		EndTurn.endTurn(model);
+		controller.writeToAll(new ResponsePrivate(player.getName()
+				+ " has finished his turn"));
+		controller.writeToAll(new ResponsePrivate("Next player is: "
+				+ model.getCurrentPlayerReference().getName()));
+		controller.writeToPlayer(model.getCurrentPlayerReference(),
+				new ResponsePrivate(model.getCurrentPlayerReference()
+						.toString()));		
 	}
 }
