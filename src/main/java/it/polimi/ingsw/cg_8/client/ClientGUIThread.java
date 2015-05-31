@@ -3,11 +3,13 @@ package it.polimi.ingsw.cg_8.client;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.LayoutManager;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
@@ -75,6 +77,14 @@ public class ClientGUIThread implements Runnable {
 		commandsPanel.add(useItemCardButton);
 		commandsPanel.add(endTurnButton);
 		commandsPanel.setVisible(true);
+		moveButton.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new JOptionPane("CAZZO", JOptionPane.ERROR_MESSAGE);
+			}
+			
+		});
 
 		// set up info panel
 		infoPanel.add(infoTextPane);
