@@ -2,6 +2,10 @@ package it.polimi.ingsw.cg_8.client;
 
 import it.polimi.ingsw.cg_8.server.ServerGameRoomInterface;
 import it.polimi.ingsw.cg_8.server.ServerRMIRegistrationViewRemote;
+import it.polimi.ingsw.cg_8.view.client.ActionParser;
+import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
+import it.polimi.ingsw.cg_8.view.client.exceptions.NotAValidInput;
+import it.polimi.ingsw.cg_8.view.server.ServerResponse;
 
 import java.io.Serializable;
 import java.rmi.AlreadyBoundException;
@@ -39,6 +43,8 @@ public class ClientRMI implements Runnable, Serializable, SubscriberInterface{
 
 	private  transient Scanner stdin;
 	
+	private transient final ClientData clientData;
+	
 	private final static String HOST = "127.0.0.1";
 	
 	private final static int REGISTRATION_PORT = 7777;
@@ -49,9 +55,9 @@ public class ClientRMI implements Runnable, Serializable, SubscriberInterface{
 
 		this.playerName = playerName;
 		this.stdin = stdin;
+		this.clientData=new ClientData();
 	}
-	
-	
+
 
 	// se rmi faccio lookup registry. sul registry avrò subscribe (prendo un
 	// player id) send name (invio il nome al server) e makeMove (invio
@@ -106,6 +112,24 @@ public class ClientRMI implements Runnable, Serializable, SubscriberInterface{
 			
 			System.out.println("Successfully registered");
 			// TODO: start game
+			
+			while (true) {
+				try {
+					System.out.println("Write a command:");
+					String inputLine = stdin.nextLine();
+					System.out.println("CLIENT: read "+ inputLine);
+
+					ClientAction action = ActionParser.createEvent(inputLine);
+					System.out.println("Created action " + action.toString());
+					view.makeAction(this.clientId, action);
+					System.out.println("Sent action to server");
+					
+				} catch (NotAValidInput e) {
+					System.out.println(e.getMessage());
+				}
+
+			}
+			
 		} catch (NotBoundException | RemoteException | AlreadyBoundException e) {
 			e.printStackTrace();
 			System.err.println("Failed to connect to the RMI Server");
@@ -122,12 +146,12 @@ public class ClientRMI implements Runnable, Serializable, SubscriberInterface{
 	}
 	
 	/**
-	 * @param msg is the message sent by the broker by invoking subscriber's remote interface
+	 * @param message is the message sent by the broker by invoking subscriber's remote interface
 	 * the method simply prints the message received by the broker
 	 */
 	@Override
-	public void publishMessage(String msg) {
-		System.out.println("Subscriber-" + playerName + " received message: " + msg);
+	public void publishMessage(ServerResponse message) {
+		System.out.println("[DEBUG] " + message);
 	}
 
 }

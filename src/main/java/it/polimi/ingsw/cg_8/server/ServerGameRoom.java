@@ -1,7 +1,6 @@
 package it.polimi.ingsw.cg_8.server;
 
 import it.polimi.ingsw.cg_8.client.ClientRMI;
-import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
 import it.polimi.ingsw.cg_8.view.server.ServerResponse;
 
@@ -19,13 +18,16 @@ public class ServerGameRoom extends ServerPublisher implements
 	}
 
 	@Override
-	public void makeAction(Player player, ClientAction action) throws RemoteException {
-		// TODO Auto-generated method stub
+	public void makeAction(int clientId, ClientAction action) throws RemoteException {
+
+
+		
 
 	}
 
 	@Override
 	public void dispatchMessage(ServerResponse message) {
-
+		System.out.println(clientRMI.getClientId());
+		clientRMI.publishMessage(message);
 	}
 }

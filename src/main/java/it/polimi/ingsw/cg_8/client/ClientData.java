@@ -38,4 +38,18 @@ public class ClientData {
 		}
 		return;
 	}
+
+	public List<ResponseChat> getChat() {
+		return chat;
+	}
+
+	public List<ResponseNoise> getNoise() {
+		return noise;
+	}
+
+	public List<ResponsePrivate> getPrivateMessages() {
+		return privateMessages;
+	}
+	
+	
 }

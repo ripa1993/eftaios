@@ -38,7 +38,7 @@ public class ServerRMI implements Runnable {
 		return server;
 	}
 
-	public void addRMIClient(ClientRMI client, ServerGameRoom view) throws GameAlreadyRunningException {
+	public synchronized void addRMIClient(ClientRMI client, ServerGameRoom view) throws GameAlreadyRunningException {
 		
 		Controller nextGame = Server.getStartingGame();
 		if (nextGame == null) {
