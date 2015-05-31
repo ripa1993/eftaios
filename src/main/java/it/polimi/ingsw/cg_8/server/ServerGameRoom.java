@@ -1,6 +1,8 @@
 package it.polimi.ingsw.cg_8.server;
 
 import it.polimi.ingsw.cg_8.client.ClientRMI;
+import it.polimi.ingsw.cg_8.controller.Controller;
+import it.polimi.ingsw.cg_8.controller.StateMachine;
 import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
 import it.polimi.ingsw.cg_8.view.server.ServerResponse;
 
@@ -20,9 +22,11 @@ public class ServerGameRoom extends ServerPublisher implements
 	@Override
 	public void makeAction(int clientId, ClientAction action) throws RemoteException {
 
-
-		
-
+		Controller controller = Server.getId2Controller().get(
+				clientId);
+		boolean result = StateMachine.evaluateAction(controller,
+				action, controller.getPlayerById(clientId));
+		System.out.println("[DEBUG]"+result);
 	}
 
 	@Override
