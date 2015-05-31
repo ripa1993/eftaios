@@ -1,6 +1,6 @@
 package it.polimi.ingsw.cg_8.server;
 
-import it.polimi.ingsw.cg_8.client.ClientRMI;
+import it.polimi.ingsw.cg_8.client.SubscriberInterface;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.Remote;
@@ -12,6 +12,6 @@ public interface ServerRMIRegistrationViewRemote extends Remote {
 	
 	public boolean sendPlayerName(String string) throws RemoteException, AlreadyBoundException;
 	
-	public ServerGameRoomInterface register(ClientRMI client) throws RemoteException,
+	public ServerGameRoomInterface register(SubscriberInterface client) throws RemoteException,
 	AlreadyBoundException;
 }

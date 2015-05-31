@@ -1,6 +1,6 @@
 package it.polimi.ingsw.cg_8.server;
 
-import it.polimi.ingsw.cg_8.client.ClientRMI;
+import it.polimi.ingsw.cg_8.client.SubscriberInterface;
 import it.polimi.ingsw.cg_8.controller.Controller;
 import it.polimi.ingsw.cg_8.model.exceptions.GameAlreadyRunningException;
 import it.polimi.ingsw.cg_8.model.map.GameMapName;
@@ -38,7 +38,7 @@ public class ServerRMI implements Runnable {
 		return server;
 	}
 
-	public synchronized void addRMIClient(ClientRMI client, ServerGameRoom view) throws GameAlreadyRunningException {
+	public synchronized void addRMIClient(SubscriberInterface client, ServerGameRoom view) throws GameAlreadyRunningException, RemoteException {
 		
 		Controller nextGame = Server.getStartingGame();
 		if (nextGame == null) {

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.cg_8.server;
 
-import it.polimi.ingsw.cg_8.client.ClientRMI;
+import it.polimi.ingsw.cg_8.client.SubscriberInterface;
 import it.polimi.ingsw.cg_8.model.exceptions.GameAlreadyRunningException;
 
 import java.rmi.AlreadyBoundException;
@@ -65,7 +65,7 @@ public class ServerRMIRegistrationView implements
 	 * Add the client to a client list, so that the server can identify it.
 	 */
 	@Override
-	public ServerGameRoomInterface register(ClientRMI client)
+	public ServerGameRoomInterface register(SubscriberInterface client)
 			throws RemoteException, AlreadyBoundException {
 		ServerGameRoom view = new ServerGameRoom(client);
 		
