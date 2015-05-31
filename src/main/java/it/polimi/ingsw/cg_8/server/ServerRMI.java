@@ -47,6 +47,14 @@ public class ServerRMI implements Runnable {
 		
 		nextGame.addClientRMI(client.getClientId(), client.getPlayerName(), view);
 		
-		
+		System.out.println("Player successfully added to the game");
+		Server.getId2Controller().put(client.getClientId(), nextGame);
+		// start the game if 3 players
+		if (nextGame.getNumOfPlayers() == 3) {
+			nextGame.initGame();
+			
+			Server.nullStartingGame();
+			System.out.println("Game started");
+		}
 	}
 }

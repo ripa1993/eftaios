@@ -109,7 +109,6 @@ public class ServerSocketRRThread implements Runnable {
 					input = null;
 					output = null;
 					client = null;
-					System.gc();
 				}
 
 			} catch (IOException e) {
