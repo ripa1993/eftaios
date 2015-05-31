@@ -53,7 +53,7 @@ public class ServerRMIRegistrationView implements
 	public boolean sendPlayerName(String name) throws RemoteException,
 			AlreadyBoundException {
 
-		String playerName = name;
+		
 		System.out.println("NAME ACCEPTED");
 		return true;
 	}

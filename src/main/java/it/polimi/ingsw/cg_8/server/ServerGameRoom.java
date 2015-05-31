@@ -29,7 +29,7 @@ public class ServerGameRoom extends ServerPublisher implements
 		System.out.println("[DEBUG]"+result);
 	}
 
-	// clientRMI non è il riferimento al vero client remoto, ma un client che il server si crea!
+	// ERRORE: clientRMI non è il riferimento al vero client remoto, ma un client che il server si crea!
 	@Override
 	public void dispatchMessage(ServerResponse message) {
 		

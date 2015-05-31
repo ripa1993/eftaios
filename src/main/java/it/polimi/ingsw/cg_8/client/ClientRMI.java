@@ -13,6 +13,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 
 /**
@@ -22,7 +23,7 @@ import java.util.Scanner;
  * @author Alberto Parravicini
  * @version 1.0
  */
-public class ClientRMI implements Runnable, Serializable, SubscriberInterface{
+public class ClientRMI implements Runnable, Serializable, SubscriberInterface {
 
 	/**
 	 * 
@@ -41,23 +42,19 @@ public class ClientRMI implements Runnable, Serializable, SubscriberInterface{
 	 */
 	private String playerName;
 
-	private  transient Scanner stdin;
-	
-	private transient final ClientData clientData;
-	
+	private transient Scanner stdin;
+
 	private final static String HOST = "127.0.0.1";
-	
+
 	private final static int REGISTRATION_PORT = 7777;
 
 	private final String registrationRoomName = "registrationRoom";
-	
+
 	public ClientRMI(String playerName, Scanner stdin) {
 
 		this.playerName = playerName;
 		this.stdin = stdin;
-		this.clientData=new ClientData();
 	}
-
 
 	// se rmi faccio lookup registry. sul registry avrò subscribe (prendo un
 	// player id) send name (invio il nome al server) e makeMove (invio
@@ -71,65 +68,66 @@ public class ClientRMI implements Runnable, Serializable, SubscriberInterface{
 	//
 	@Override
 	public void run() {
-		
+
 		/**
 		 * Value that shows if the server accepted the player's name.
 		 */
 		boolean nameSet = false;
-		
+
 		System.out.println("Contacting the broker...");
-		
-		
-		//TODO: lookup registration view
+
+		// TODO: lookup registration view
 
 		try {
-		
+
 			System.out.println("Connecting to the registry...");
-			Registry registry = LocateRegistry.getRegistry(HOST, REGISTRATION_PORT);
+			Registry registry = LocateRegistry.getRegistry(HOST,
+					REGISTRATION_PORT);
 			System.out.println("Connecting to the registration room...");
-			ServerRMIRegistrationViewRemote registrationRoom = (ServerRMIRegistrationViewRemote) registry.lookup(registrationRoomName);
-	
-	
+			ServerRMIRegistrationViewRemote registrationRoom = (ServerRMIRegistrationViewRemote) registry
+					.lookup(registrationRoomName);
+
 			System.out.println("Trying to get a clientId...");
 			while (this.clientId == 0) {
 				this.clientId = registrationRoom.getClientId(this.clientId);
 			}
 			System.out.println("Your clientId is " + this.clientId);
-			
+
 			System.out.println("Trying to send your name to the server...");
-			
+
 			while (nameSet == false) {
 				nameSet = registrationRoom.sendPlayerName(this.playerName);
 			}
 			System.out.println("NAME ACCEPTED");
-			
+
 			/**
-			 * 	The client gets a view to play the game;		
+			 * The client gets a view to play the game;
 			 */
 			System.out.println("Trying to register...");
-		
-			ServerGameRoomInterface view = registrationRoom.register(this);
-			
+
+			ServerGameRoomInterface view = registrationRoom
+					.register((SubscriberInterface) UnicastRemoteObject
+							.exportObject(this, 0));
+
 			System.out.println("Successfully registered");
-			// TODO: start game
-			
+
 			while (true) {
 				try {
 					System.out.println("Write a command:");
 					String inputLine = stdin.nextLine();
-					System.out.println("CLIENT: read "+ inputLine);
+					System.out.println("CLIENT: read " + inputLine);
 
 					ClientAction action = ActionParser.createEvent(inputLine);
 					System.out.println("Created action " + action.toString());
 					view.makeAction(this.clientId, action);
 					System.out.println("Sent action to server");
-					
+
 				} catch (NotAValidInput e) {
 					System.out.println(e.getMessage());
 				}
 
 			}
-			
+
 		} catch (NotBoundException | RemoteException | AlreadyBoundException e) {
 			e.printStackTrace();
 			System.err.println("Failed to connect to the RMI Server");
@@ -144,14 +142,16 @@ public class ClientRMI implements Runnable, Serializable, SubscriberInterface{
 	public String getPlayerName() {
 		return playerName;
 	}
-	
+
 	/**
-	 * @param message is the message sent by the broker by invoking subscriber's remote interface
-	 * the method simply prints the message received by the broker
+	 * @param message
+	 *            is the message sent by the broker by invoking subscriber's
+	 *            remote interface the method simply prints the message received
+	 *            by the broker
 	 */
 	@Override
 	public void publishMessage(ServerResponse message) {
-		System.out.println("[DEBUG] " + message);
+		System.out.println(message);
 	}
 
 }
