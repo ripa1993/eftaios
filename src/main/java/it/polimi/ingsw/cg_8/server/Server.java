@@ -16,9 +16,13 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Server {
+	
 	private static int clientId = 1;
+	
 	private static Controller nextGame;
+	
 	private final static int SERVER_SOCKET_RR_PORT = 29998;
+	
 	private final static int SERVER_SOCKET_PS_PORT = 29999;
 	/**
 	 * Associates players with the game they are playing.
@@ -28,7 +32,14 @@ public class Server {
 	 * The name of the registry.
 	 */
 	private static final String NAME = "gameRoom";
+	
 	private final Registry registry;
+	
+	public Server() throws RemoteException {
+		nextGame = null;
+		this.registry = LocateRegistry.createRegistry(7777);
+
+	}
 
 	public static Map<Integer, Controller> getId2Controller() {
 		return id2Controller;
@@ -55,11 +66,7 @@ public class Server {
 		nextGame = null;
 	}
 
-	public Server() throws RemoteException {
-		nextGame = null;
-		this.registry = LocateRegistry.createRegistry(7777);
-
-	}
+	
 
 	public static void main(String[] args) throws RemoteException,
 			AlreadyBoundException {
@@ -92,10 +99,15 @@ public class Server {
 
 		System.out.println("Starting an RMI thread");
 		
-		ServerRMIRegistrationRemote gameRegistration = new ServerRMIRegistrationView(this);
-		ServerRMIRegistrationRemote gameRemoteRegistration = (ServerRMIRegistrationRemote) UnicastRemoteObject
+		ServerRMIRegistrationViewRemote gameRegistration = new ServerRMIRegistrationView(this);
+		ServerRMIRegistrationViewRemote gameRemoteRegistration = (ServerRMIRegistrationViewRemote) UnicastRemoteObject
 				.exportObject(gameRegistration, 0);
 		System.out.println("Binding server implementation to registry...");
 		registry.bind(NAME, gameRemoteRegistration);
+	}
+
+	public void addRMIClient(ServerGameRoom view) {
+		// TODO Auto-generated method stub
+		
 	}
 }

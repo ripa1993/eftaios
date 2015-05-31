@@ -85,5 +85,4 @@ public class Client {
 		ExecutorService executorSocket = Executors.newCachedThreadPool();
 		executorSocket.submit(new ClientSocket(this.playerName, stdin));
 	}
-
 }

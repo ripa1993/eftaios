@@ -1,6 +1,6 @@
 package it.polimi.ingsw.cg_8.client;
 
-import it.polimi.ingsw.cg_8.server.GameRoom;
+import it.polimi.ingsw.cg_8.server.ServerGameRoom;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -40,6 +40,8 @@ public class ClientRMI implements Runnable {
 		this.stdin = stdin;
 		subscriber = new Subscriber(playerName);
 	}
+	
+	
 
 	// se rmi faccio lookup registry. sul registry avrò subscribe (prendo un
 	// player id) send name (invio il nome al server) e makeMove (invio
@@ -54,12 +56,16 @@ public class ClientRMI implements Runnable {
 	@Override
 	public void run() {
 		System.out.println("Contacting the broker...");
+		
+		
+		//TODO: lookup registration view
 
-		try {
+	/*	try {
+		
 
 			Registry registry = LocateRegistry.getRegistry(7777);
 
-			GameRoom broker = (GameRoom) registry.lookup("gameRoom");
+			ServerGameRoom broker = (ServerGameRoom) registry.lookup("gameRoom");
 
 			// subscriber exports its own remote interface SubscriberInterface
 			// so that it can
@@ -71,11 +77,11 @@ public class ClientRMI implements Runnable {
 					.exportObject(subscriber, 0));
 
 			broker.subscribeToGame(this.clientID);
-			
+		
 			
 		} catch (NotBoundException | RemoteException e) {
 			e.printStackTrace();
 		}
-
+*/
 	}
 }

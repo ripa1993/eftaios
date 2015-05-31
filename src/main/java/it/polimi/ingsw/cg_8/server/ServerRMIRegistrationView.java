@@ -1,9 +1,70 @@
 package it.polimi.ingsw.cg_8.server;
 
-public class ServerRMIRegistrationView extends ServerRMIRegistrationRemote {
+import it.polimi.ingsw.cg_8.client.ClientRMI;
+
+import java.rmi.AlreadyBoundException;
+import java.rmi.RemoteException;
+
+/**
+ * Class that handles the registration of a client to a game; it creates its own
+ * view and associate the client with the game it is playing.
+ * 
+ * @author Alberto Parravicini
+ * @version 1.0
+ */
+public class ServerRMIRegistrationView implements
+		ServerRMIRegistrationViewRemote {
+
+	/**
+	 * Required as i want to associate the clients with their respective
+	 * controller (unique for a certain game).
+	 */
+	private Server server;
 
 	public ServerRMIRegistrationView(Server server) {
-		// TODO Auto-generated constructor stub
+		this.server = server;
+	}
+
+	/**
+	 * Creates a {@link ServerGameRoom GameRoom} for the client so that it can
+	 * play the game.
+	 */
+	@Override
+	public ServerGameRoomInterface register(ClientRMI client)
+			throws RemoteException, AlreadyBoundException {
+		ServerGameRoom view = new ServerGameRoom(client);
+		server.addRMIClient(view);
+		return view;
+
+	}
+
+	/**
+	 * The client gets a new clientId, if it doesn't already have one. The
+	 * method is called at the beginning of the registration process, after
+	 * {@link ServerRMIRegistrationView#register(ClientRMI client)}.
+	 */
+	@Override
+	public int getClientId(int clientId) throws RemoteException,
+			AlreadyBoundException {
+
+		if (clientId == 0) {
+			Integer newClientId = Server.getClientId();
+			System.out.println("Assigning new ClientId: " + newClientId);
+			Server.increaseClientId();
+			return newClientId;
+		}
+		System.out.println("ClientId already assigned");
+		return clientId;
+	}
+
+	
+	@Override
+	public boolean sendPlayerName(String name) throws RemoteException,
+			AlreadyBoundException {
+		
+		String playerName = name;
+		System.out.println("NAME ACCEPTED");
+		return true;
 	}
 
 }
