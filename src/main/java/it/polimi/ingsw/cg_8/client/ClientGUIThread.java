@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -18,7 +19,8 @@ import javax.swing.border.EmptyBorder;
 public class ClientGUIThread implements Runnable {
 	JFrame mainFrame;
 	JPanel chatPanel, rightPanel, infoPanel, mapPanel, commandsPanel;
-	JButton moveButton, attackButton, drawButton, endTurnButton, fakeNoiseButton, useItemCardButton, chatButton;
+	JButton moveButton, attackButton, drawButton, endTurnButton,
+			fakeNoiseButton, useItemCardButton, chatButton;
 	JTextPane chatTextPane, infoTextPane;
 	JTextField chatTextField;
 
@@ -39,9 +41,7 @@ public class ClientGUIThread implements Runnable {
 		chatTextPane = new JTextPane();
 		infoTextPane = new JTextPane();
 		chatTextField = new JTextField(1);
-		
-		
-		
+
 		// add background color
 		chatPanel.setBackground(Color.BLUE);
 		infoPanel.setBackground(Color.CYAN);
@@ -77,30 +77,49 @@ public class ClientGUIThread implements Runnable {
 		commandsPanel.add(useItemCardButton);
 		commandsPanel.add(endTurnButton);
 		commandsPanel.setVisible(true);
-		moveButton.addActionListener(new ActionListener(){
+		attackButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new JOptionPane("CAZZO", JOptionPane.ERROR_MESSAGE);
+				JOptionPane optionPane = new JOptionPane("Do you want to attack?",
+						JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
+				JDialog dialog = optionPane.createDialog("Attack");
+				dialog.setVisible(true);
+				// TODO: handle YES
+			}
+
+		});
+		
+		drawButton.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane optionPane = new JOptionPane("Do you want to draw a dangerous sector card?",
+						JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
+				JDialog dialog = optionPane.createDialog("Draw a dangerous sector card");
+				dialog.setVisible(true);
+				// TODO: handle YES
 			}
 			
 		});
+		
+		
 
 		// set up info panel
 		infoPanel.add(infoTextPane);
 		infoTextPane.setEditable(false);
-		
-		//set up chat panel
+
+		// set up chat panel
 		chatPanel.add(chatTextPane, BorderLayout.NORTH);
 		chatPanel.add(chatTextField, BorderLayout.CENTER);
 		chatPanel.add(chatButton, BorderLayout.SOUTH);
 		chatTextPane.setEditable(false);
-		
+
 		rightPanel.setLayout(new BorderLayout());
 		rightPanel.add(chatPanel, BorderLayout.NORTH);
 		rightPanel.add(infoPanel, BorderLayout.CENTER);
 		rightPanel.add(commandsPanel, BorderLayout.SOUTH);
-		
+
 		mainFrame.add(mapPanel, BorderLayout.CENTER);
 		mainFrame.add(rightPanel, BorderLayout.EAST);
 		chatPanel.setVisible(true);
