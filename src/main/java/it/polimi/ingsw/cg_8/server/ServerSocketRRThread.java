@@ -49,6 +49,7 @@ public class ServerSocketRRThread implements Runnable {
 				// read client id
 				Integer clientId = (Integer) input.readObject();
 				System.out.println("ClientId is: " + clientId);
+				
 				if (clientId == 0) {
 					// client has never connected to the server
 					Integer newClientId = Server.getClientId();
@@ -57,11 +58,13 @@ public class ServerSocketRRThread implements Runnable {
 					Server.increaseClientId();
 					output.writeObject(newClientId);
 					output.flush();
+					
 					// read player name and confirm
 					String playerName = (String) input.readObject();
 					System.out.println("Id: "+newClientId+" Name: "+playerName);
 					output.writeObject(new String("NAME ACCEPTED"));
 					output.flush();
+					
 					// get reference to the starting game
 					Controller nextGame = Server.getStartingGame();
 					if (nextGame == null) {
@@ -71,7 +74,7 @@ public class ServerSocketRRThread implements Runnable {
 					Socket subscriber = serverPS.accept();
 					ServerSocketPublisherThread publisher = new ServerSocketPublisherThread(
 							subscriber);
-					nextGame.addClient(newClientId, playerName, publisher);
+					nextGame.addClientSocket(newClientId, playerName, publisher);
 					System.out.println("Player successfully added to the game");
 					Server.getId2Controller().put(newClientId, nextGame);
 					// start the game if 3 players

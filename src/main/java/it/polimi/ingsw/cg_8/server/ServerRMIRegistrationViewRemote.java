@@ -8,10 +8,10 @@ import java.rmi.RemoteException;
 
 public interface ServerRMIRegistrationViewRemote extends Remote {
 
-	public ServerGameRoomInterface register(ClientRMI client) throws RemoteException,
-	AlreadyBoundException;
-
 	public int getClientId(int clientId) throws RemoteException, AlreadyBoundException;
 	
 	public boolean sendPlayerName(String string) throws RemoteException, AlreadyBoundException;
+	
+	public ServerGameRoomInterface register(ClientRMI client) throws RemoteException,
+	AlreadyBoundException;
 }

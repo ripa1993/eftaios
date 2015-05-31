@@ -1,6 +1,7 @@
 package it.polimi.ingsw.cg_8.server;
 
 import it.polimi.ingsw.cg_8.client.ClientRMI;
+import it.polimi.ingsw.cg_8.model.exceptions.GameAlreadyRunningException;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
@@ -19,29 +20,16 @@ public class ServerRMIRegistrationView implements
 	 * Required as i want to associate the clients with their respective
 	 * controller (unique for a certain game).
 	 */
-	private Server server;
+	private ServerRMI serverRMI;
 
-	public ServerRMIRegistrationView(Server server) {
-		this.server = server;
+	public ServerRMIRegistrationView(ServerRMI server) {
+		this.serverRMI = server;
 	}
 
-	/**
-	 * Creates a {@link ServerGameRoom GameRoom} for the client so that it can
-	 * play the game.
-	 */
-	@Override
-	public ServerGameRoomInterface register(ClientRMI client)
-			throws RemoteException, AlreadyBoundException {
-		ServerGameRoom view = new ServerGameRoom(client);
-		server.addRMIClient(view);
-		return view;
-
-	}
 
 	/**
 	 * The client gets a new clientId, if it doesn't already have one. The
-	 * method is called at the beginning of the registration process, after
-	 * {@link ServerRMIRegistrationView#register(ClientRMI client)}.
+	 * method is called at the beginning of the registration process.
 	 */
 	@Override
 	public int getClientId(int clientId) throws RemoteException,
@@ -57,14 +45,38 @@ public class ServerRMIRegistrationView implements
 		return clientId;
 	}
 
-	
+	/**
+	 * Method used by the client to communicate its name to the server, before
+	 * the start of the game.
+	 */
 	@Override
 	public boolean sendPlayerName(String name) throws RemoteException,
 			AlreadyBoundException {
-		
+
 		String playerName = name;
 		System.out.println("NAME ACCEPTED");
 		return true;
+	}
+	
+
+	/**
+	 * Creates a {@link ServerGameRoom GameRoom} for the client so that it can
+	 * play the game.
+	 * Add the client to a client list, so that the server can identify it.
+	 */
+	@Override
+	public ServerGameRoomInterface register(ClientRMI client)
+			throws RemoteException, AlreadyBoundException {
+		ServerGameRoom view = new ServerGameRoom(client);
+		
+		try {
+			serverRMI.addRMIClient(client, view);
+		} catch (GameAlreadyRunningException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return view;
+
 	}
 
 }

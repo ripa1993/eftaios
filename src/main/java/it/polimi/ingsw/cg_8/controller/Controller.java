@@ -6,6 +6,8 @@ import it.polimi.ingsw.cg_8.model.exceptions.GameAlreadyRunningException;
 import it.polimi.ingsw.cg_8.model.exceptions.NotAValidMapException;
 import it.polimi.ingsw.cg_8.model.map.GameMapName;
 import it.polimi.ingsw.cg_8.model.player.Player;
+import it.polimi.ingsw.cg_8.server.ServerGameRoom;
+import it.polimi.ingsw.cg_8.server.ServerPublisher;
 import it.polimi.ingsw.cg_8.server.ServerSocketPublisherThread;
 import it.polimi.ingsw.cg_8.view.server.ResponsePrivate;
 import it.polimi.ingsw.cg_8.view.server.ServerResponse;
@@ -32,7 +34,7 @@ public class Controller implements Observer {
 	private Rules rules;
 	private Map<Integer, Player> id2Player;
 	private Map<Player, Integer> player2Id;
-	private Map<Integer, ServerSocketPublisherThread> id2Publisher;
+	private Map<Integer, ServerPublisher> id2Publisher;
 	private ExecutorService executor;
 
 	/**
@@ -49,7 +51,7 @@ public class Controller implements Observer {
 			this.id2Player = new HashMap<Integer, Player>();
 			this.player2Id = new HashMap<Player, Integer>();
 			this.executor = Executors.newCachedThreadPool();
-			this.id2Publisher = new HashMap<Integer, ServerSocketPublisherThread>();
+			this.id2Publisher = new HashMap<Integer, ServerPublisher>();
 			model.addObserver(this);
 		} catch (NotAValidMapException e) {
 			e.printStackTrace();
@@ -66,13 +68,21 @@ public class Controller implements Observer {
 		return player2Id.get(player);
 	}
 
-	public void addClient(Integer id, String playerName,
+	public void addClientSocket(Integer id, String playerName,
 			ServerSocketPublisherThread pub) throws GameAlreadyRunningException {
 		Player tempPlayer = model.addPlayer(playerName);
 		id2Player.put(id, tempPlayer);
 		player2Id.put(tempPlayer, id);
 		id2Publisher.put(id, pub);
 		executor.submit(pub);
+	}
+
+	public void addClientRMI(int id, String playerName,ServerGameRoom view) throws GameAlreadyRunningException {
+		Player tempPlayer = model.addPlayer(playerName);
+		id2Player.put(id, tempPlayer);
+		player2Id.put(tempPlayer, id);
+		id2Publisher.put(id, view);
+
 	}
 
 	public void initGame() {
@@ -83,7 +93,8 @@ public class Controller implements Observer {
 			this.writeToAll(new ResponsePrivate("The current player is: "
 					+ model.getCurrentPlayerReference().getName()));
 			this.writeToPlayer(model.getCurrentPlayerReference(),
-					new ResponsePrivate(model.getCurrentPlayerReference().toString()));
+					new ResponsePrivate(model.getCurrentPlayerReference()
+							.toString()));
 		} catch (EmptyDeckException e) {
 			System.err.println(e.getMessage());
 		}
@@ -148,4 +159,5 @@ public class Controller implements Observer {
 	public void update(Observable o, Object arg) {
 		this.writeToAll(new ResponsePrivate(model.getNoiseLogger().toString()));
 	}
+
 }

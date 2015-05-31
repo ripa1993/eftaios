@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * @author Simone
  *
  */
-public class ServerSocketPublisherThread implements Runnable {
+public class ServerSocketPublisherThread extends ServerPublisher implements Runnable {
 	private Socket subscriber;
 	private ObjectOutputStream output;
 	private ConcurrentLinkedQueue<ServerResponse> buffer;
@@ -54,6 +54,7 @@ public class ServerSocketPublisherThread implements Runnable {
 		}
 	}
 
+	@Override
 	public void dispatchMessage(ServerResponse message) {
 		buffer.add(message);
 		synchronized (buffer) {

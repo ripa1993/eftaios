@@ -16,13 +16,13 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Server {
-	
+
 	private static int clientId = 1;
-	
+
 	private static Controller nextGame;
-	
+
 	private final static int SERVER_SOCKET_RR_PORT = 29998;
-	
+
 	private final static int SERVER_SOCKET_PS_PORT = 29999;
 	/**
 	 * Associates players with the game they are playing.
@@ -31,10 +31,14 @@ public class Server {
 	/**
 	 * The name of the registry.
 	 */
-	private static final String NAME = "gameRoom";
-	
+	private static final String NAME = "registrationRoom";
+
 	private final Registry registry;
-	
+
+	/**
+	 * The constructor creates an RMI registry on port 7777.
+	 * @throws RemoteException
+	 */
 	public Server() throws RemoteException {
 		nextGame = null;
 		this.registry = LocateRegistry.createRegistry(7777);
@@ -66,8 +70,6 @@ public class Server {
 		nextGame = null;
 	}
 
-	
-
 	public static void main(String[] args) throws RemoteException,
 			AlreadyBoundException {
 		Server server = new Server();
@@ -79,10 +81,10 @@ public class Server {
 	 * Start a thread to handle the socket connections.
 	 */
 	private void startSocket() {
-		ExecutorService executor = Executors.newCachedThreadPool();
+		ExecutorService executorSocket = Executors.newCachedThreadPool();
 		try {
-			executor.submit(new ServerSocketRRThread(SERVER_SOCKET_RR_PORT,
-					SERVER_SOCKET_PS_PORT));
+			executorSocket.submit(new ServerSocketRRThread(
+					SERVER_SOCKET_RR_PORT, SERVER_SOCKET_PS_PORT));
 		} catch (IOException e) {
 			System.err.println("Cannot start server socket CS on port: "
 					+ SERVER_SOCKET_RR_PORT);
@@ -97,17 +99,17 @@ public class Server {
 	 */
 	private void startRMI() throws RemoteException, AlreadyBoundException {
 
-		System.out.println("Starting an RMI thread");
-		
-		ServerRMIRegistrationViewRemote gameRegistration = new ServerRMIRegistrationView(this);
-		ServerRMIRegistrationViewRemote gameRemoteRegistration = (ServerRMIRegistrationViewRemote) UnicastRemoteObject
-				.exportObject(gameRegistration, 0);
-		System.out.println("Binding server implementation to registry...");
-		registry.bind(NAME, gameRemoteRegistration);
+		ExecutorService executorRMI = Executors.newCachedThreadPool();
+		executorRMI.submit(new ServerRMI(this));
 	}
 
-	public void addRMIClient(ServerGameRoom view) {
-		// TODO Auto-generated method stub
-		
+	public static String getName() {
+		return NAME;
 	}
+
+	public Registry getRegistry() {
+		return registry;
+	}
+
+
 }
