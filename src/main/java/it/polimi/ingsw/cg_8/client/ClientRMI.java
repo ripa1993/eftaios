@@ -76,7 +76,6 @@ public class ClientRMI implements Runnable, Serializable, SubscriberInterface {
 
 		System.out.println("Contacting the broker...");
 
-		// TODO: lookup registration view
 
 		try {
 

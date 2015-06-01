@@ -40,7 +40,7 @@ import java.util.Random;
  * @author Simone
  *
  */
-public class Model extends Observable{
+public class Model extends Observable {
 	@Override
 	public String toString() {
 		return "Model [players=" + players + ", roundNumber=" + roundNumber
@@ -213,7 +213,7 @@ public class Model extends Observable{
 		// sets turn phase and round number
 		roundNumber = 1;
 		turnPhase = TurnPhase.TURN_BEGIN;
-		//getCurrentPlayerReference().cycleState();
+		// getCurrentPlayerReference().cycleState();
 
 	}
 
@@ -279,7 +279,7 @@ public class Model extends Observable{
 				Player p = this.getPlayers().get(i);
 				if (p.getState() == PlayerState.ALIVE) {
 					currentPlayerIndex = i;
-					//p.cycleState();
+					// p.cycleState();
 				}
 			}
 			this.roundNumber++;
@@ -317,7 +317,7 @@ public class Model extends Observable{
 		int counterHumans = 0;
 		for (Player p : players) {
 			if (p.getCharacter() instanceof Human
-					&& (p.getState() == PlayerState.ALIVE)){
+					&& (p.getState() == PlayerState.ALIVE)) {
 				counterHumans++;
 			}
 		}
@@ -412,13 +412,23 @@ public class Model extends Observable{
 	public List<Noise> getNoiseLogger() {
 		return noiseLogger;
 	}
-	
+
+	/**
+	 * Return the last noise saved in the logger: used to notify players of a
+	 * noise produced by someone else.
+	 * 
+	 * @return The last noise produced in the game.
+	 */
+	public Noise getLastNoiseEntry() {
+		return this.noiseLogger.get(this.noiseLogger.size() - 1);
+	}
+
 	public void addNoise(Noise noise) {
 		this.noiseLogger.add(noise);
 		this.setChanged();
 		this.notifyObservers();
 	}
- 
+
 	public void setTurnPhase(TurnPhase newTurnPhase) {
 		this.turnPhase = newTurnPhase;
 	}

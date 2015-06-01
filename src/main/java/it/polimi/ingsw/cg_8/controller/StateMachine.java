@@ -45,6 +45,7 @@ import it.polimi.ingsw.cg_8.view.server.ResponseChat;
 import it.polimi.ingsw.cg_8.view.server.ResponsePrivate;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Simulation of a state machine, used to handle {@link ClientAction} generated
@@ -355,6 +356,11 @@ public class StateMachine {
 								"Make a noise on a coordinate of your choice"));
 					} else {
 						model.setTurnPhase(TurnPhase.DRAWN_CARD);
+						try {
+							TimeUnit.SECONDS.sleep(1);
+						} catch (InterruptedException e) {
+							System.err.println("[DEBUG] Failed to sleep");
+						}
 						controller.writeToAll(new ResponsePrivate(player
 								.getName()
 								+ " has drawn a Dangerous Sector Card"));

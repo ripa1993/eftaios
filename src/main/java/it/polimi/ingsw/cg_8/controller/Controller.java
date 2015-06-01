@@ -157,7 +157,7 @@ public class Controller implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		this.writeToAll(new ResponsePrivate(model.getNoiseLogger().toString()));
+		this.writeToAll(new ResponsePrivate(model.getLastNoiseEntry().toString()));
 	}
 
 }
