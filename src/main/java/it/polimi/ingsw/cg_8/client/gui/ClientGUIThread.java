@@ -1,17 +1,26 @@
-package it.polimi.ingsw.cg_8.client;
+package it.polimi.ingsw.cg_8.client.gui;
+
+import it.polimi.ingsw.cg_8.Resource;
+import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
+import it.polimi.ingsw.cg_8.view.client.ActionParser;
+import it.polimi.ingsw.cg_8.view.client.exceptions.NotAValidInput;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
@@ -65,7 +74,21 @@ public class ClientGUIThread implements Runnable {
 
 		chatPanel.add(new JLabel("Chat"));
 		infoPanel.add(new JLabel("Info"));
-		mapPanel.add(new JLabel("Map"));
+
+		// set up map pane
+		JTextArea mapImageArea = new JTextArea() {
+			Image image = (new ImageIcon(Resource.FERMI_MAP)).getImage();
+			{
+				setOpaque(false);
+			}
+
+			public void paint(Graphics g) {
+				g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+				super.paint(g);
+			}
+		};
+		mapPanel.add(mapImageArea);
+		mapPanel.setVisible(true);
 
 		// set up commands jpanel
 		commandsPanel.setLayout(new FlowLayout());
@@ -77,33 +100,106 @@ public class ClientGUIThread implements Runnable {
 		commandsPanel.add(useItemCardButton);
 		commandsPanel.add(endTurnButton);
 		commandsPanel.setVisible(true);
+
+		moveButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String coordinateString = JOptionPane.showInputDialog(
+						"Insert destination coordinate", "Coordinate");
+				try {
+					Coordinate coordinate = ActionParser
+							.parseCoordinate(coordinateString);
+					// TODO: make movement
+				} catch (NotAValidInput e1) {
+					JOptionPane.showMessageDialog(mainFrame,
+							"Not a valid input!");
+				}
+			}
+
+		});
+
 		attackButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane optionPane = new JOptionPane("Do you want to attack?",
-						JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
+				JOptionPane optionPane = new JOptionPane(
+						"Do you want to attack?", JOptionPane.QUESTION_MESSAGE,
+						JOptionPane.YES_NO_OPTION);
 				JDialog dialog = optionPane.createDialog("Attack");
 				dialog.setVisible(true);
-				// TODO: handle YES
+				int selection = OptionPaneUtils.getSelection(optionPane);
+				if (selection == JOptionPane.YES_OPTION) {
+					// TODO: do an attack
+				} else {
+					// do nothing
+				}
 			}
 
 		});
-		
-		drawButton.addActionListener(new ActionListener(){
+
+		drawButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane optionPane = new JOptionPane("Do you want to draw a dangerous sector card?",
+				JOptionPane optionPane = new JOptionPane(
+						"Do you want to draw a dangerous sector card?",
 						JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
-				JDialog dialog = optionPane.createDialog("Draw a dangerous sector card");
+				JDialog dialog = optionPane
+						.createDialog("Draw a dangerous sector card");
 				dialog.setVisible(true);
-				// TODO: handle YES
+				int selection = OptionPaneUtils.getSelection(optionPane);
+				if (selection == JOptionPane.YES_OPTION) {
+					// TODO: do draw
+				} else {
+					// do nothing
+				}
 			}
-			
+
 		});
-		
-		
+
+		fakeNoiseButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String coordinateString = JOptionPane.showInputDialog(
+						"Insert target coordinate", "Coordinate");
+				try {
+					Coordinate coordinate = ActionParser
+							.parseCoordinate(coordinateString);
+					// TODO: make fake noise
+				} catch (NotAValidInput e1) {
+					JOptionPane.showMessageDialog(mainFrame,
+							"Not a valid input!");
+				}
+			}
+
+		});
+
+		useItemCardButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String cardList[] = { "Attack", "Adrenaline", "Sedatives",
+						"Spotlight", "Teleport" };
+				String output = (String) JOptionPane.showInputDialog(mainFrame,
+						"Pick a card", "Input", JOptionPane.QUESTION_MESSAGE,
+						null, cardList, "Attack");
+				if (output.equals("Attack")) {
+					// TODO: use attack card
+				} else if (output.equals("Adrenaline")) {
+					// TODO: use adrenaline card
+				} else if (output.equals("Sedatives")) {
+					// TODO: use sedatives card
+				} else if (output.equals("Spotlight")) {
+					// TODO: use spotlight Card
+				} else if (output.equals("Teleport")) {
+					// TODO: use teleport card
+				}
+
+			}
+
+		});
 
 		// set up info panel
 		infoPanel.add(infoTextPane);
@@ -126,7 +222,8 @@ public class ClientGUIThread implements Runnable {
 		infoPanel.setVisible(true);
 		mapPanel.setVisible(true);
 		mainFrame.setVisible(true);
-		mainFrame.pack();
+		mainFrame.setSize(1920, 1080);
+//		mainFrame.pack();
 
 		chatTextPane.setText("CHAT TEXT PANE TEST");
 		infoTextPane.setText("INFO TEXT PANE TEST");
