@@ -12,6 +12,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -209,13 +211,48 @@ public class ClientGUIThread implements Runnable {
 		chatPanel.add(chatTextPane, BorderLayout.NORTH);
 		chatPanel.add(chatTextField, BorderLayout.CENTER);
 		chatPanel.add(chatButton, BorderLayout.SOUTH);
+		// send chat message when send button is pressed
+		chatButton.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String message = chatTextField.getText();
+				chatTextField.setText("");
+				//TODO: create chat action
+			}
+			
+		});
+		// send chat message when enter is pressed
+		chatTextField.addKeyListener(new KeyListener(){
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				
+				
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(KeyEvent.VK_ENTER == e.getKeyCode()){
+					String message = chatTextField.getText();
+					chatTextField.setText("");
+					//TODO: create chat action
+				}
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 		chatTextPane.setEditable(false);
 
 		rightPanel.setLayout(new BorderLayout());
 		rightPanel.add(chatPanel, BorderLayout.NORTH);
 		rightPanel.add(infoPanel, BorderLayout.CENTER);
 		rightPanel.add(commandsPanel, BorderLayout.SOUTH);
-
 		mainFrame.add(mapPanel, BorderLayout.CENTER);
 		mainFrame.add(rightPanel, BorderLayout.EAST);
 		chatPanel.setVisible(true);
