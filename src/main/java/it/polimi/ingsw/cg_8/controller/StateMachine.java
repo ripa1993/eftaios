@@ -25,6 +25,7 @@ import it.polimi.ingsw.cg_8.model.cards.itemCards.SpotlightCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.TeleportCard;
 import it.polimi.ingsw.cg_8.model.exceptions.GameAlreadyRunningException;
 import it.polimi.ingsw.cg_8.model.player.Player;
+import it.polimi.ingsw.cg_8.model.player.PlayerState;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 import it.polimi.ingsw.cg_8.model.sectors.Sector;
 import it.polimi.ingsw.cg_8.model.sectors.normal.DangerousSector;
@@ -52,7 +53,7 @@ import java.util.concurrent.TimeUnit;
  * by the client
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public class StateMachine {
 	/**
@@ -69,13 +70,20 @@ public class StateMachine {
 	 */
 	public static boolean evaluateAction(Controller controller, ClientAction a,
 			Player player) {
-
+		
+		
 		// local variables, calculated every time a new evaluation is launched
-
 		Model model = controller.getModel();
 		Player currentPlayer = model.getCurrentPlayerReference();
 		TurnPhase turnPhase = model.getTurnPhase();
 		Rules rules = controller.getRules();
+
+		/**
+		 * A disconnected player isn't allowed to use any command.
+		 */
+		if (player.getState().equals(PlayerState.DISCONNECTED)) {
+			return false;
+		}
 
 		// handles chat and disconnect action, always true
 		if (a instanceof ActionChat) {
@@ -86,10 +94,13 @@ public class StateMachine {
 
 		if (a instanceof ActionDisconnect) {
 			Disconnect.disconnect(player);
-			model.nextPlayer();
-			// model.getCurrentPlayerReference().cycleState();
+			if (player.equals(model.getCurrentPlayerReference())) {
+				model.nextPlayer();
+			}
+
 			controller.writeToAll(new ResponsePrivate(player.getName()
 					+ " has been disconnected."));
+			StateMachine.endTurnMessage(controller, model, currentPlayer);
 			return true;
 		}
 
@@ -231,8 +242,9 @@ public class StateMachine {
 					Attack attack = new Attack(model);
 					attack.makeAttack();
 					model.setTurnPhase(TurnPhase.ATTACK_DONE);
-//					controller.writeToAll(new ResponsePrivate(player.getName()
-//							+ " has attacked in " + player.getLastPosition()));
+					// controller.writeToAll(new
+					// ResponsePrivate(player.getName()
+					// + " has attacked in " + player.getLastPosition()));
 					List<Player> victims = attack.getVictims();
 					for (Player p : victims) {
 						controller.writeToAll(new ResponsePrivate(p.getName()
@@ -324,10 +336,12 @@ public class StateMachine {
 
 				try {
 					hasToMakeFakeNoise = draw.drawDangerousSectorCard();
-					controller.writeToPlayer(player, new ResponsePrivate(
-							"You have drawn a " + draw.getDangerousSectorCard()));
+					controller.writeToPlayer(
+							player,
+							new ResponsePrivate("You have drawn a "
+									+ draw.getDangerousSectorCard()));
 					System.out.println(draw.getItemCard());
-					
+
 					if (draw.getItemCard() != null
 							&& draw.isDiscardedItemCard() == false) {
 						controller.writeToPlayer(player, new ResponsePrivate(
@@ -348,8 +362,8 @@ public class StateMachine {
 					}
 
 				} finally {
-					controller.writeToPlayer(player, new ResponsePrivate(
-							player.getHand().getHeldCards().toString()));
+					controller.writeToPlayer(player, new ResponsePrivate(player
+							.getHand().getHeldCards().toString()));
 					if (hasToMakeFakeNoise == true) {
 						model.setTurnPhase(TurnPhase.WAITING_FAKE_NOISE);
 						controller.writeToPlayer(player, new ResponsePrivate(
@@ -463,7 +477,7 @@ public class StateMachine {
 		if (turnPhase == TurnPhase.WAITING_FAKE_NOISE) {
 
 			// do fake noise
-			
+
 			if (a instanceof ActionFakeNoise) {
 				Coordinate target = ((ActionFakeNoise) a).getCoordinate();
 				if (model.getMap().getSectors().keySet().contains(target)) {
@@ -521,8 +535,16 @@ public class StateMachine {
 		EndTurn.endTurn(model);
 		controller.writeToAll(new ResponsePrivate(player.getName()
 				+ " has finished his turn"));
+		StateMachine.endTurnMessage(controller, model, player);
+
+	}
+
+	private static void endTurnMessage(Controller controller, Model model,
+			Player player) {
 		controller.writeToAll(new ResponsePrivate("Next player is: "
 				+ model.getCurrentPlayerReference().getName()));
+		controller.writeToPlayer(model.getCurrentPlayerReference(),
+				new ResponsePrivate("IT'S YOUR TURN"));
 		controller.writeToPlayer(model.getCurrentPlayerReference(),
 				new ResponsePrivate(model.getCurrentPlayerReference()
 						.toString()));

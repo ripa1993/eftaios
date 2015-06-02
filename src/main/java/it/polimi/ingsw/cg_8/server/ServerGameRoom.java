@@ -4,6 +4,7 @@ import it.polimi.ingsw.cg_8.client.SubscriberInterface;
 import it.polimi.ingsw.cg_8.controller.Controller;
 import it.polimi.ingsw.cg_8.controller.StateMachine;
 import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
+import it.polimi.ingsw.cg_8.view.server.ResponsePrivate;
 import it.polimi.ingsw.cg_8.view.server.ServerResponse;
 
 import java.rmi.RemoteException;
@@ -27,9 +28,10 @@ public class ServerGameRoom extends ServerPublisher implements
 		boolean result = StateMachine.evaluateAction(controller,
 				action, controller.getPlayerById(clientId));
 		System.out.println("[DEBUG]"+result);
+		this.dispatchMessage(new ResponsePrivate(String.valueOf(result)));
 	}
 
-	// ERRORE: clientRMI non è il riferimento al vero client remoto, ma un client che il server si crea!
+	
 	@Override
 	public void dispatchMessage(ServerResponse message) {
 		
