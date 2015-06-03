@@ -19,4 +19,9 @@ public class ResponseNoise implements Serializable, ServerResponse {
 		this.coordinate = coordinate;
 		this.playerName = playerName;
 	}
+
+	@Override
+	public String toString() {
+		return playerName + " made a noise in " + coordinate + " in turn " +turnNumber;
+	}
 }

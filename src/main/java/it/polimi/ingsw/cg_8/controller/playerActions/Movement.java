@@ -77,7 +77,7 @@ public class Movement extends PlayerAction {
 
 			Noise escapeSectorNoise = new EscapeSectorNoise(
 					model.getRoundNumber(), player, player.getLastPosition());
-			model.getNoiseLogger().add(escapeSectorNoise);
+			model.addNoise(escapeSectorNoise);
 			if (((EscapeHatchSector) destination).getStatus().allowEscape()) {
 				Card escapeCard;
 				try {

@@ -23,7 +23,7 @@ public class Main {
 		try {
 			model.addPlayer("Player1");
 			model.addPlayer("Player2");
-			//model.addPlayer("Player3");
+			model.addPlayer("Player3");
 			//model.addPlayer("Player4");
 			model.initGame();
 		} catch (GameAlreadyRunningException | EmptyDeckException e1) {

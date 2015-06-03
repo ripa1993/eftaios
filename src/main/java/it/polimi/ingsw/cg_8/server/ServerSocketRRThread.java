@@ -5,8 +5,6 @@ import it.polimi.ingsw.cg_8.controller.StateMachine;
 import it.polimi.ingsw.cg_8.model.exceptions.GameAlreadyRunningException;
 import it.polimi.ingsw.cg_8.model.map.GameMapName;
 import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
-import it.polimi.ingsw.cg_8.view.server.ResponseChat;
-import it.polimi.ingsw.cg_8.view.server.ResponsePrivate;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -51,6 +49,7 @@ public class ServerSocketRRThread implements Runnable {
 				// read client id
 				Integer clientId = (Integer) input.readObject();
 				System.out.println("ClientId is: " + clientId);
+				
 				if (clientId == 0) {
 					// client has never connected to the server
 					Integer newClientId = Server.getClientId();
@@ -59,11 +58,13 @@ public class ServerSocketRRThread implements Runnable {
 					Server.increaseClientId();
 					output.writeObject(newClientId);
 					output.flush();
+					
 					// read player name and confirm
 					String playerName = (String) input.readObject();
 					System.out.println("Id: "+newClientId+" Name: "+playerName);
 					output.writeObject(new String("NAME ACCEPTED"));
 					output.flush();
+					
 					// get reference to the starting game
 					Controller nextGame = Server.getStartingGame();
 					if (nextGame == null) {
@@ -73,13 +74,13 @@ public class ServerSocketRRThread implements Runnable {
 					Socket subscriber = serverPS.accept();
 					ServerSocketPublisherThread publisher = new ServerSocketPublisherThread(
 							subscriber);
-					nextGame.addClient(newClientId, playerName, publisher);
+					nextGame.addClientSocket(newClientId, playerName, publisher);
 					System.out.println("Player successfully added to the game");
 					Server.getId2Controller().put(newClientId, nextGame);
 					// start the game if 3 players
 					if (nextGame.getNumOfPlayers() == 3) {
 						nextGame.initGame();
-						nextGame.writeToAll(new ResponsePrivate("Match is starting..."));
+						
 						Server.nullStartingGame();
 						System.out.println("Game started");
 					}
@@ -93,6 +94,7 @@ public class ServerSocketRRThread implements Runnable {
 							clientId);
 					System.out.println(controller);
 					System.out.println(controller.getPlayerById(clientId));
+					
 					boolean result = StateMachine.evaluateAction(controller,
 							action, controller.getPlayerById(clientId));
 					System.out.println("[DEBUG]"+result);
@@ -107,15 +109,14 @@ public class ServerSocketRRThread implements Runnable {
 					input = null;
 					output = null;
 					client = null;
-					System.gc();
 				}
 
 			} catch (IOException e) {
-				System.err.println("Cannot connect to client");
+				System.err.println("Cannot connect to the client");
 			} catch (ClassNotFoundException e) {
-				System.err.println("Cannot read from input stream");
+				System.err.println("Cannot read from the input stream");
 			} catch (GameAlreadyRunningException e) {
-				System.err.println("Game already running, can't add");
+				System.err.println("Game already running, can't add you to this game");
 			}
 		}
 	}

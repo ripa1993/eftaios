@@ -25,6 +25,7 @@ import it.polimi.ingsw.cg_8.model.cards.itemCards.SpotlightCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.TeleportCard;
 import it.polimi.ingsw.cg_8.model.exceptions.GameAlreadyRunningException;
 import it.polimi.ingsw.cg_8.model.player.Player;
+import it.polimi.ingsw.cg_8.model.player.PlayerState;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 import it.polimi.ingsw.cg_8.model.sectors.Sector;
 import it.polimi.ingsw.cg_8.model.sectors.normal.DangerousSector;
@@ -43,14 +44,16 @@ import it.polimi.ingsw.cg_8.view.client.actions.ActionUseCard;
 import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
 import it.polimi.ingsw.cg_8.view.server.ResponseChat;
 import it.polimi.ingsw.cg_8.view.server.ResponsePrivate;
-import it.polimi.ingsw.cg_8.view.server.ServerResponse;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Simulation of a state machine, used to handle {@link ClientAction} generated
  * by the client
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public class StateMachine {
 	/**
@@ -67,19 +70,20 @@ public class StateMachine {
 	 */
 	public static boolean evaluateAction(Controller controller, ClientAction a,
 			Player player) {
-
-		// TODO: rendere tutte ( o alcune) delle classi non statiche per poter
-		// estrarre delle informazioni, ad esempio dalla DrawDangerousSector
-		// card si può chiamare il metodo getcard che restituisce la carta
-		// appena pescata, cosi da poter comuinicare al client quale carta ha
-		// pescato
-
+		
+		
 		// local variables, calculated every time a new evaluation is launched
-
 		Model model = controller.getModel();
 		Player currentPlayer = model.getCurrentPlayerReference();
 		TurnPhase turnPhase = model.getTurnPhase();
 		Rules rules = controller.getRules();
+
+		/**
+		 * A disconnected player isn't allowed to use any command.
+		 */
+		if (player.getState().equals(PlayerState.DISCONNECTED)) {
+			return false;
+		}
 
 		// handles chat and disconnect action, always true
 		if (a instanceof ActionChat) {
@@ -90,10 +94,13 @@ public class StateMachine {
 
 		if (a instanceof ActionDisconnect) {
 			Disconnect.disconnect(player);
-			model.nextPlayer();
-			// model.getCurrentPlayerReference().cycleState();
+			if (player.equals(model.getCurrentPlayerReference())) {
+				model.nextPlayer();
+			}
+
 			controller.writeToAll(new ResponsePrivate(player.getName()
 					+ " has been disconnected."));
+			StateMachine.endTurnMessage(controller, model, currentPlayer);
 			return true;
 		}
 
@@ -162,6 +169,8 @@ public class StateMachine {
 					}
 					return true;
 				}
+				controller.writeToPlayer(player, new ResponsePrivate(
+						"Moving to " + destination + " is not allowed"));
 				return false;
 
 			}
@@ -230,8 +239,17 @@ public class StateMachine {
 
 			if (a instanceof ActionAttack) {
 				if (rules.attackValidator(model)) {
-					new Attack(model).makeAttack();
+					Attack attack = new Attack(model);
+					attack.makeAttack();
 					model.setTurnPhase(TurnPhase.ATTACK_DONE);
+					// controller.writeToAll(new
+					// ResponsePrivate(player.getName()
+					// + " has attacked in " + player.getLastPosition()));
+					List<Player> victims = attack.getVictims();
+					for (Player p : victims) {
+						controller.writeToAll(new ResponsePrivate(p.getName()
+								+ " has been killed!"));
+					}
 					return true;
 				}
 				return false;
@@ -240,12 +258,7 @@ public class StateMachine {
 			// end turn
 
 			if (a instanceof ActionEndTurn) {
-				EndTurn.endTurn(model);
-				controller.writeToAll(new ResponsePrivate(player.getName()
-						+ " has finished his turn"));
-				controller.writeToAll(new ResponsePrivate("Next player is: "
-						+ model.getCurrentPlayerReference().getName()));
-
+				endTurn(controller, model, player);
 				return true;
 			}
 
@@ -307,6 +320,8 @@ public class StateMachine {
 				if (rules.attackValidator(model)) {
 					new Attack(model).makeAttack();
 					model.setTurnPhase(TurnPhase.ATTACK_DONE);
+					controller.writeToAll(new ResponsePrivate(player.getName()
+							+ " has attacked in " + player.getLastPosition()));
 					return true;
 				}
 				return false;
@@ -315,12 +330,55 @@ public class StateMachine {
 			// draw card
 
 			if (a instanceof ActionDrawCard) {
-				if (DrawDangerousSectorCard.drawDangerousSectorCard(model)) {
-					model.setTurnPhase(TurnPhase.WAITING_FAKE_NOISE);
-				} else {
-					model.setTurnPhase(TurnPhase.DRAWN_CARD);
-					controller.writeToAll(new ResponsePrivate(player.getName()
-							+ " has drawn a Dangerous Card"));
+				DrawDangerousSectorCard draw = new DrawDangerousSectorCard(
+						model);
+				boolean hasToMakeFakeNoise = false;
+
+				try {
+					hasToMakeFakeNoise = draw.drawDangerousSectorCard();
+					controller.writeToPlayer(
+							player,
+							new ResponsePrivate("You have drawn a "
+									+ draw.getDangerousSectorCard()));
+					System.out.println(draw.getItemCard());
+
+					if (draw.getItemCard() != null
+							&& draw.isDiscardedItemCard() == false) {
+						controller.writeToPlayer(player, new ResponsePrivate(
+								"You have drawn a " + draw.getItemCard()));
+					} else if (draw.getItemCard() != null
+							&& draw.isDiscardedItemCard() == true) {
+						controller.writeToPlayer(player, new ResponsePrivate(
+								"You have drawn " + draw.getItemCard()
+										+ " but your hand is full,"
+										+ " so the card has been discarded."));
+					} else if (draw.getItemCard() == null
+							&& draw.isEmptyItemDeck()) {
+						controller.writeToPlayer(player, new ResponsePrivate(
+								"The item card deck is empty"));
+					} else {
+						controller.writeToPlayer(player, new ResponsePrivate(
+								"No item card was drawn"));
+					}
+
+				} finally {
+					controller.writeToPlayer(player, new ResponsePrivate(player
+							.getHand().getHeldCards().toString()));
+					if (hasToMakeFakeNoise == true) {
+						model.setTurnPhase(TurnPhase.WAITING_FAKE_NOISE);
+						controller.writeToPlayer(player, new ResponsePrivate(
+								"Make a noise on a coordinate of your choice"));
+					} else {
+						model.setTurnPhase(TurnPhase.DRAWN_CARD);
+						try {
+							TimeUnit.SECONDS.sleep(1);
+						} catch (InterruptedException e) {
+							System.err.println("[DEBUG] Failed to sleep");
+						}
+						controller.writeToAll(new ResponsePrivate(player
+								.getName()
+								+ " has drawn a Dangerous Sector Card"));
+					}
 				}
 				return true;
 			}
@@ -384,12 +442,7 @@ public class StateMachine {
 			// end turn
 
 			if (a instanceof ActionEndTurn) {
-				EndTurn.endTurn(model);
-				controller.writeToAll(new ResponsePrivate(player.getName()
-						+ " has finished his turn"));
-				controller.writeToAll(new ResponsePrivate("Next player is: "
-						+ model.getCurrentPlayerReference().getName()));
-
+				endTurn(controller, model, player);
 				return true;
 			}
 
@@ -442,11 +495,7 @@ public class StateMachine {
 			// end turn
 
 			if (a instanceof ActionEndTurn) {
-				EndTurn.endTurn(model);
-				controller.writeToAll(new ResponsePrivate(player.getName()
-						+ " has finished his turn"));
-				controller.writeToAll(new ResponsePrivate("Next player is: "
-						+ model.getCurrentPlayerReference().getName()));
+				endTurn(controller, model, player);
 				return true;
 			}
 
@@ -479,5 +528,25 @@ public class StateMachine {
 		}
 		// other cases
 		return false;
+	}
+
+	private static void endTurn(Controller controller, Model model,
+			Player player) {
+		EndTurn.endTurn(model);
+		controller.writeToAll(new ResponsePrivate(player.getName()
+				+ " has finished his turn"));
+		StateMachine.endTurnMessage(controller, model, player);
+
+	}
+
+	private static void endTurnMessage(Controller controller, Model model,
+			Player player) {
+		controller.writeToAll(new ResponsePrivate("Next player is: "
+				+ model.getCurrentPlayerReference().getName()));
+		controller.writeToPlayer(model.getCurrentPlayerReference(),
+				new ResponsePrivate("IT'S YOUR TURN"));
+		controller.writeToPlayer(model.getCurrentPlayerReference(),
+				new ResponsePrivate(model.getCurrentPlayerReference()
+						.toString()));
 	}
 }

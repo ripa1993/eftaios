@@ -23,4 +23,9 @@ public class ResponseChat implements ServerResponse, Serializable {
 	public String getMessage() {
 		return message;
 	}
+
+	@Override
+	public String toString() {
+		return playerName + ": " + message;
+	}
 }

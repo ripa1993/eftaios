@@ -49,7 +49,7 @@ public class ClientSocketViewSUB implements Runnable {
 
 		try {
 			ServerResponse response = (ServerResponse) input.readObject();
-			System.out.println("[DEBUG] " + response);
+			System.out.println(response);
 			clientSocket.getClientData().storeResponse(response);
 		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
