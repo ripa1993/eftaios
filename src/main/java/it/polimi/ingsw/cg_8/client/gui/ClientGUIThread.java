@@ -7,8 +7,10 @@ import it.polimi.ingsw.cg_8.view.client.exceptions.NotAValidInput;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,27 +22,35 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
 
 public class ClientGUIThread implements Runnable {
 	JFrame mainFrame;
-	JPanel chatPanel, rightPanel, infoPanel, mapPanel, commandsPanel;
+	JPanel chatPanel, chatPanel2, rightPanel, infoPanel, commandsPanel,
+			chatInfoPanel;
+	JLayeredPane mapPanel;
 	JButton moveButton, attackButton, drawButton, endTurnButton,
 			fakeNoiseButton, useItemCardButton, chatButton;
 	JTextPane chatTextPane, infoTextPane;
 	JTextField chatTextField;
+	JLabel backgroundMap;
+	JLabel chatTextTitle;
+	private JLabel infoTextTitle;
+	JScrollPane chatScroll, infoScroll;
 
 	public ClientGUIThread() {
 		mainFrame = new JFrame("Escape From The Aliens In Outer Space");
 		chatPanel = new JPanel();
 		rightPanel = new JPanel();
 		infoPanel = new JPanel();
-		mapPanel = new JPanel();
+		chatInfoPanel = new JPanel();
+		mapPanel = new JLayeredPane();
 		commandsPanel = new JPanel();
 		moveButton = new JButton("Movement");
 		attackButton = new JButton("Attack");
@@ -51,15 +61,17 @@ public class ClientGUIThread implements Runnable {
 		chatButton = new JButton("Send");
 		chatTextPane = new JTextPane();
 		infoTextPane = new JTextPane();
-		chatTextField = new JTextField(1);
+		chatTextField = new JTextField();
+		chatPanel2 = new JPanel();
+		backgroundMap = new JLabel();
+		infoScroll = new JScrollPane(infoTextPane);
+		chatScroll = new JScrollPane(chatTextPane);
 
-		// add background color
-		chatPanel.setBackground(Color.BLUE);
-		infoPanel.setBackground(Color.CYAN);
-		mapPanel.setBackground(Color.GREEN);
-		commandsPanel.setBackground(Color.DARK_GRAY);
-		mainFrame.setBackground(Color.YELLOW);
-		rightPanel.setBackground(Color.PINK);
+		// add black background color
+//		chatPanel2.setBackground(Color.DARK_GRAY);
+//		infoPanel.setBackground(Color.DARK_GRAY);
+//		mapPanel.setBackground(Color.DARK_GRAY);
+//		commandsPanel.setBackground(Color.DARK_GRAY);
 
 		// add exit behaviour
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -69,16 +81,17 @@ public class ClientGUIThread implements Runnable {
 		chatPanel.setLayout(new BorderLayout());
 		infoPanel.setLayout(new BorderLayout());
 		mapPanel.setLayout(new BorderLayout());
+		chatPanel2.setLayout(new BorderLayout());
+		rightPanel.setLayout(new BorderLayout());
 
-		chatPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+		// set borders
+		chatPanel2.setBorder(new EmptyBorder(10, 10, 10, 10));
 		infoPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		mapPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+		commandsPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-		chatPanel.add(new JLabel("Chat"));
-		infoPanel.add(new JLabel("Info"));
-
-		// set up map pane
-		JTextArea mapImageArea = new JTextArea() {
+		// set up map panel
+		JLabel mapImageArea = new JLabel() {
 			Image image = (new ImageIcon(Resource.FERMI_MAP)).getImage();
 			{
 				setOpaque(false);
@@ -103,6 +116,57 @@ public class ClientGUIThread implements Runnable {
 		commandsPanel.add(endTurnButton);
 		commandsPanel.setVisible(true);
 
+		// set up info panel
+		infoTextTitle = new JLabel();
+		infoTextTitle.setText("INFORMATION");
+		infoTextTitle.setForeground(Color.RED);
+		infoPanel.add(infoTextTitle, BorderLayout.NORTH);
+		infoPanel.add(infoScroll, BorderLayout.CENTER);
+		infoTextPane.setEditable(false);
+
+		// set up chat panel
+		chatTextTitle = new JLabel();
+		chatTextTitle.setText("CHAT");
+		chatTextTitle.setForeground(Color.RED);
+		chatPanel.add(chatTextTitle, BorderLayout.NORTH);
+		chatPanel.add(chatScroll, BorderLayout.CENTER);
+		chatPanel.add(chatTextField, BorderLayout.SOUTH);
+		chatTextPane.setEditable(false);
+
+		chatInfoPanel.setLayout(new GridLayout(2, 1));
+		chatInfoPanel.add(infoPanel);
+		chatInfoPanel.add(chatPanel2);
+		chatPanel2.add(chatPanel, BorderLayout.CENTER);
+		chatPanel2.add(chatButton, BorderLayout.SOUTH);
+		rightPanel.add(chatInfoPanel, BorderLayout.CENTER);
+		rightPanel.add(commandsPanel, BorderLayout.SOUTH);
+		mainFrame.add(mapPanel, BorderLayout.CENTER);
+		mainFrame.add(rightPanel, BorderLayout.EAST);
+		chatPanel2.setVisible(true);
+		chatPanel.setVisible(true);
+		infoPanel.setVisible(true);
+		mapPanel.setVisible(true);
+		mainFrame.setVisible(true);
+		mainFrame.setSize(1280, 720);
+
+		chatTextPane.setText("");
+		infoTextPane.setText("");
+	}
+
+	public void appendChat(String player, String msg) {
+		String newMsg = chatTextPane.getText();
+		newMsg += "\n" + player + ": " + msg;
+		chatTextPane.setText(newMsg);
+	}
+
+	public void appendInfo(String type, String msg) {
+		String newMsg = infoTextPane.getText();
+		newMsg += "\n[" + type + "] " + msg;
+		infoTextPane.setText(newMsg);
+	}
+
+	@Override
+	public void run() {
 		moveButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -203,72 +267,42 @@ public class ClientGUIThread implements Runnable {
 
 		});
 
-		// set up info panel
-		infoPanel.add(infoTextPane);
-		infoTextPane.setEditable(false);
-
-		// set up chat panel
-		chatPanel.add(chatTextPane, BorderLayout.NORTH);
-		chatPanel.add(chatTextField, BorderLayout.CENTER);
-		chatPanel.add(chatButton, BorderLayout.SOUTH);
 		// send chat message when send button is pressed
-		chatButton.addActionListener(new ActionListener(){
+		chatButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String message = chatTextField.getText();
 				chatTextField.setText("");
-				//TODO: create chat action
+				// TODO: create chat action
 			}
-			
+
 		});
 		// send chat message when enter is pressed
-		chatTextField.addKeyListener(new KeyListener(){
+		chatTextField.addKeyListener(new KeyListener() {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
-				
-				
+
 			}
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if(KeyEvent.VK_ENTER == e.getKeyCode()){
+				if (KeyEvent.VK_ENTER == e.getKeyCode()) {
 					String message = chatTextField.getText();
 					chatTextField.setText("");
-					//TODO: create chat action
+					// TODO: create chat action
+					appendChat("me", message);
 				}
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 		});
-		chatTextPane.setEditable(false);
-
-		rightPanel.setLayout(new BorderLayout());
-		rightPanel.add(chatPanel, BorderLayout.NORTH);
-		rightPanel.add(infoPanel, BorderLayout.CENTER);
-		rightPanel.add(commandsPanel, BorderLayout.SOUTH);
-		mainFrame.add(mapPanel, BorderLayout.CENTER);
-		mainFrame.add(rightPanel, BorderLayout.EAST);
-		chatPanel.setVisible(true);
-		infoPanel.setVisible(true);
-		mapPanel.setVisible(true);
-		mainFrame.setVisible(true);
-		mainFrame.setSize(1920, 1080);
-//		mainFrame.pack();
-
-		chatTextPane.setText("CHAT TEXT PANE TEST");
-		infoTextPane.setText("INFO TEXT PANE TEST");
-	}
-
-	@Override
-	public void run() {
-
 	}
 
 }
