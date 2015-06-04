@@ -98,7 +98,7 @@ public class ClientGUIThread implements Runnable {
 			}
 
 			public void paint(Graphics g) {
-				g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+				g.drawImage(image, 0, 0, getWidth(), (int) (0.793*getWidth()), this);
 				super.paint(g);
 			}
 		};
