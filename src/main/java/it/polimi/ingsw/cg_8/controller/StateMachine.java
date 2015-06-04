@@ -78,6 +78,9 @@ public class StateMachine {
 		TurnPhase turnPhase = model.getTurnPhase();
 		Rules rules = controller.getRules();
 
+		
+		
+		
 		/**
 		 * A disconnected player isn't allowed to use any command.
 		 */
@@ -96,6 +99,7 @@ public class StateMachine {
 			Disconnect.disconnect(player);
 			if (player.equals(model.getCurrentPlayerReference())) {
 				model.nextPlayer();
+				model.setTurnPhase(TurnPhase.TURN_BEGIN);
 			}
 
 			controller.writeToAll(new ResponsePrivate(player.getName()
@@ -127,14 +131,17 @@ public class StateMachine {
 						player,
 						new ResponsePrivate(GetReachableSectors
 								.printReachableSectors(model, player)));
+				return true;
 			}
 			if (a instanceof ActionGetHand) {
 				controller.writeToPlayer(player,
 						new ResponsePrivate(GetCards.printHeldCards(player)));
+				return true;
 			}
 			if (a instanceof ActionGetAvailableAction) {
 				controller.writeToPlayer(player, new ResponsePrivate(
 						GetAllowedActions.printActions(player)));
+				return true;
 			}
 		}
 
