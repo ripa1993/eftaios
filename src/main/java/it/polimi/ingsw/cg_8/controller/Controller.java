@@ -1,11 +1,16 @@
 package it.polimi.ingsw.cg_8.controller;
 
+import it.polimi.ingsw.cg_8.controller.playerActions.otherActions.Disconnect;
 import it.polimi.ingsw.cg_8.model.Model;
+import it.polimi.ingsw.cg_8.model.TurnPhase;
 import it.polimi.ingsw.cg_8.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.cg_8.model.exceptions.GameAlreadyRunningException;
 import it.polimi.ingsw.cg_8.model.exceptions.NotAValidMapException;
 import it.polimi.ingsw.cg_8.model.map.GameMapName;
+import it.polimi.ingsw.cg_8.model.noises.Noise;
 import it.polimi.ingsw.cg_8.model.player.Player;
+import it.polimi.ingsw.cg_8.model.player.PlayerState;
+import it.polimi.ingsw.cg_8.model.player.character.human.Human;
 import it.polimi.ingsw.cg_8.server.ServerGameRoom;
 import it.polimi.ingsw.cg_8.server.ServerPublisher;
 import it.polimi.ingsw.cg_8.server.ServerSocketPublisherThread;
@@ -14,12 +19,15 @@ import it.polimi.ingsw.cg_8.view.server.ServerResponse;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Main controller class: it handles the initialization of a new game, the main
@@ -68,6 +76,15 @@ public class Controller implements Observer {
 		return player2Id.get(player);
 	}
 
+	// Hai un riferimento a un thread timer: quando viene chiamata una delle due
+	// AddClient si controlla che il thread sia null (oppure uso un boolean di
+	// controllo), e lo si inizializza.
+	// Passati 60 secondi, il thread verifica che la partita non sia già
+	// cominciata (gameState == running, se si hanno già 8 giocatori), e in tal
+	// caso la fa partire.
+	// Se si hanno 8 giocatori prima dei 60 secondi: faccio partire a livello
+	// dei 2 server, metto nel controller un metodo comune però (che chiama
+	// this.initGame() ecc...).
 	public void addClientSocket(Integer id, String playerName,
 			ServerSocketPublisherThread pub) throws GameAlreadyRunningException {
 		Player tempPlayer = model.addPlayer(playerName);
@@ -77,7 +94,8 @@ public class Controller implements Observer {
 		executor.submit(pub);
 	}
 
-	public void addClientRMI(int id, String playerName,ServerGameRoom view) throws GameAlreadyRunningException {
+	public void addClientRMI(int id, String playerName, ServerGameRoom view)
+			throws GameAlreadyRunningException {
 		Player tempPlayer = model.addPlayer(playerName);
 		id2Player.put(id, tempPlayer);
 		player2Id.put(tempPlayer, id);
@@ -157,7 +175,54 @@ public class Controller implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		this.writeToAll(new ResponsePrivate(model.getLastNoiseEntry().toString()));
+		/**
+		 * If a noise is passed, notify the players of that noise.
+		 */
+		if (arg instanceof Noise) {
+			this.writeToAll(new ResponsePrivate(arg.toString()));
+		}
+		
+		/**
+		 * If the game is over, disconnect the players and communicate the proper message to them.
+		 */
+		else if (arg.equals(TurnPhase.GAME_END)) {
+			List<Player> playerList = this.model.getPlayers();
+			
+			this.writeToAll(new ResponsePrivate("GAME OVER"));
+			if (this.model.checkGameEndRound() == true) {
+				this.writeToAll(new ResponsePrivate("The game reached its conclusion"));
+			}
+			if (this.model.checkGameEndNoEH() == true) {
+				this.writeToAll(new ResponsePrivate("There are no Escape Hatches left to use"));
+			}
+			
+			for (Player p : playerList) {
+				double random = Math.random();
+				if (p.getCharacter() instanceof Human && p.getState().equals(PlayerState.DEAD)) {
+					if (random < 0.5) {
+						this.writeToAll(new ResponsePrivate(p.getName() + " has met a terrible fate."));
+					} else {
+						this.writeToAll(new ResponsePrivate(p.getName() + " was slain in the dark."));
+					}
+				}
+				else if (p.getCharacter() instanceof Human && p.getState().equals(PlayerState.ESCAPED)) {
+					this.writeToAll(new ResponsePrivate(p.getName() + " managed to escape."));
+				}
+				else if (p.getState().equals(PlayerState.DISCONNECTED)) {
+					this.writeToAll(new ResponsePrivate(p.getName() + " left the game prematurely. \n\tNobody will miss him."));
+				}
+			}
+			/**
+			 * Wait 10 seconds, then automatically disconnect every player.
+			 */
+			try {
+				TimeUnit.SECONDS.sleep(10);
+			} catch (InterruptedException e) {
+				System.err.println("[DEBUG] Can't sleep at the end of the game");
+			}
+			for (Player p : playerList) {
+				Disconnect.disconnect(p);
+			}
+		}
 	}
-
 }

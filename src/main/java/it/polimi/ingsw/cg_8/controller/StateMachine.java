@@ -82,9 +82,9 @@ public class StateMachine {
 		
 		
 		/**
-		 * A disconnected player isn't allowed to use any command.
+		 * A disconnected player isn't allowed to use any command. The same goes if the game is over.
 		 */
-		if (player.getState().equals(PlayerState.DISCONNECTED)) {
+		if (player.getState().equals(PlayerState.DISCONNECTED) || model.getTurnPhase().equals(TurnPhase.GAME_END)) {
 			return false;
 		}
 

@@ -12,7 +12,7 @@ import it.polimi.ingsw.cg_8.model.player.PlayerState;
  */
 public class Disconnect extends PlayerAction {
 	/**
-	 * The next player calculated by the {@link StateMachine}.
+	 * Disconnect the player.
 	 * @param player The player who wants to leave the game.
 	 */
 	public static void disconnect(Player player) {
