@@ -5,6 +5,7 @@ import it.polimi.ingsw.cg_8.view.server.ServerResponse;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
@@ -62,7 +63,7 @@ public class ServerSocketPublisherThread extends ServerPublisher implements Runn
 		}
 	}
 
-	private void send(ServerResponse message) throws IOException {
+	private void send(ServerResponse message) throws IOException, SocketException {
 		output.writeObject(message);
 		output.flush();
 	}

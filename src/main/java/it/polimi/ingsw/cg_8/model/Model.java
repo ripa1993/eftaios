@@ -225,19 +225,19 @@ public class Model extends Observable {
 
 		if (checkGameEndNoEH()) {
 			// no escape hatches left
-			setTurnPhase(TurnPhase.GAME_END);
+			this.setGameOver();
 			return;
 		}
 
 		if (checkGameEndNoPlayers()) {
 			// all player dc'ed or dead or escaped
-			setTurnPhase(TurnPhase.GAME_END);
+			this.setGameOver();
 			return;
 		}
 
 		if (checkGameEndNoHumans()) {
 			// no humans left
-			setTurnPhase(TurnPhase.GAME_END);
+			this.setGameOver();
 			return;
 		}
 
@@ -260,7 +260,7 @@ public class Model extends Observable {
 
 			if (checkGameEndRound() == true) {
 				// finished round 39, so game ends
-				this.setTurnPhase(TurnPhase.GAME_END);
+				this.setGameOver();
 				return;
 			}
 			currentPlayerIndex = tempNextPlayer;
@@ -285,7 +285,7 @@ public class Model extends Observable {
 			this.roundNumber++;
 			if (checkGameEndRound()) {
 				// finished round 39, so game ends
-				setTurnPhase(TurnPhase.GAME_END);
+				this.setGameOver();
 				return;
 			}
 			return;

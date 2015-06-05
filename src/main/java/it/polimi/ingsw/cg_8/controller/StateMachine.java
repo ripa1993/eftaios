@@ -70,21 +70,19 @@ public class StateMachine {
 	 */
 	public static boolean evaluateAction(Controller controller, ClientAction a,
 			Player player) {
-		
-		
+
 		// local variables, calculated every time a new evaluation is launched
 		Model model = controller.getModel();
 		Player currentPlayer = model.getCurrentPlayerReference();
 		TurnPhase turnPhase = model.getTurnPhase();
 		Rules rules = controller.getRules();
 
-		
-		
-		
 		/**
-		 * A disconnected player isn't allowed to use any command. The same goes if the game is over.
+		 * A disconnected player isn't allowed to use any command. The same goes
+		 * if the game is over.
 		 */
-		if (player.getState().equals(PlayerState.DISCONNECTED) || model.getTurnPhase().equals(TurnPhase.GAME_END)) {
+		if (player.getState().equals(PlayerState.DISCONNECTED)
+				|| model.getTurnPhase().equals(TurnPhase.GAME_END)) {
 			return false;
 		}
 

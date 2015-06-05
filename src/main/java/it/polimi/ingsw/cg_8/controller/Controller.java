@@ -113,6 +113,8 @@ public class Controller implements Observer {
 			this.writeToPlayer(model.getCurrentPlayerReference(),
 					new ResponsePrivate(model.getCurrentPlayerReference()
 							.toString()));
+			this.writeToPlayer(model.getCurrentPlayerReference(),
+					new ResponsePrivate("IT'S YOUR TURN!"));
 		} catch (EmptyDeckException e) {
 			System.err.println(e.getMessage());
 		}
@@ -138,7 +140,7 @@ public class Controller implements Observer {
 		Iterator<Integer> it = ids.iterator();
 		while (it.hasNext()) {
 			Integer current = it.next();
-			id2Publisher.get(current).dispatchMessage(message);
+			this.writeToId(current, message);
 		}
 	}
 
@@ -150,10 +152,10 @@ public class Controller implements Observer {
 	 * @param message
 	 *            message to be sent
 	 */
-	// TODO: RMI publisher must implement dispatchMessage(ServerResponse
-	// response)
 	public void writeToId(Integer id, ServerResponse message) {
-		id2Publisher.get(id).dispatchMessage(message);
+		if (this.id2Player.get(id).getState() != PlayerState.DISCONNECTED) {
+			id2Publisher.get(id).dispatchMessage(message);
+		}
 	}
 
 	/**
@@ -202,7 +204,7 @@ public class Controller implements Observer {
 					if (random < 0.5) {
 						this.writeToAll(new ResponsePrivate(p.getName() + " has met a terrible fate."));
 					} else {
-						this.writeToAll(new ResponsePrivate(p.getName() + " was slain in the dark."));
+						this.writeToAll(new ResponsePrivate(p.getName() + " was slain in the darkness."));
 					}
 				}
 				else if (p.getCharacter() instanceof Human && p.getState().equals(PlayerState.ESCAPED)) {
