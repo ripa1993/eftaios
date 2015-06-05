@@ -26,9 +26,9 @@ public class ServerRMI implements Runnable {
 			ServerRMIRegistrationViewRemote gameRemoteRegistration = (ServerRMIRegistrationViewRemote) UnicastRemoteObject
 					.exportObject(gameRegistration, 0);
 			System.out.println("Binding server implementation to registry...");
-			
+
 			server.getRegistry().bind(Server.getName(), gameRemoteRegistration);
-			
+
 		} catch (RemoteException | AlreadyBoundException e) {
 			System.err.println("Cannot start an RMI registry");
 		}
@@ -38,23 +38,20 @@ public class ServerRMI implements Runnable {
 		return server;
 	}
 
-	public synchronized void addRMIClient(SubscriberInterface client, ServerGameRoom view) throws GameAlreadyRunningException, RemoteException {
-		
+	public synchronized void addRMIClient(SubscriberInterface client,
+			ServerGameRoom view) throws GameAlreadyRunningException,
+			RemoteException {
+
 		Controller nextGame = Server.getStartingGame();
-		if (nextGame == null) {
+		if (nextGame == null || nextGame.isGameStarted()==true) {
 			nextGame = Server.createNewGame(GameMapName.FERMI);
 		}
-		
-		nextGame.addClientRMI(client.getClientId(), client.getPlayerName(), view);
-		
+
+		nextGame.addClientRMI(client.getClientId(), client.getPlayerName(),
+				view);
+
 		System.out.println("Player successfully added to the game");
 		Server.getId2Controller().put(client.getClientId(), nextGame);
-		// start the game if 3 players
-		if (nextGame.getNumOfPlayers() == 3) {
-			nextGame.initGame();
-			
-			Server.nullStartingGame();
-			System.out.println("Game started");
-		}
+		Server.checkGameStart();
 	}
 }

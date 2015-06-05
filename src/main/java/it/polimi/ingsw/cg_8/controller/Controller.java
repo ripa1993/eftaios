@@ -44,6 +44,7 @@ public class Controller implements Observer {
 	private Map<Player, Integer> player2Id;
 	private Map<Integer, ServerPublisher> id2Publisher;
 	private ExecutorService executor;
+	private boolean gameStarted;
 
 	/**
 	 * Initialization of a new game. Note that the model is initialized with the
@@ -61,11 +62,16 @@ public class Controller implements Observer {
 			this.executor = Executors.newCachedThreadPool();
 			this.id2Publisher = new HashMap<Integer, ServerPublisher>();
 			model.addObserver(this);
+			gameStarted = false;
 		} catch (NotAValidMapException e) {
 			e.printStackTrace();
 		}
 		// TODO: ServerSocketPublisherThread should extend ServerPublisherThread
 		// (also RMI do the same)
+	}
+
+	public boolean isGameStarted() {
+		return gameStarted;
 	}
 
 	public Player getPlayerById(Integer id) {
@@ -106,6 +112,7 @@ public class Controller implements Observer {
 	public void initGame() {
 		try {
 			model.initGame();
+			gameStarted=true;
 			// writeToAll( la partita è iniziata )
 			this.writeToAll(new ResponsePrivate("Match is starting..."));
 			this.writeToAll(new ResponsePrivate("The current player is: "
@@ -226,5 +233,10 @@ public class Controller implements Observer {
 				Disconnect.disconnect(p);
 			}
 		}
+	}
+	
+	public void startTimeout(){
+		TimeoutThread timeout = new TimeoutThread(this);
+		timeout.run();
 	}
 }

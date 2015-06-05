@@ -68,7 +68,7 @@ public class ServerSocketRRThread implements Runnable {
 
 					// get reference to the starting game
 					Controller nextGame = Server.getStartingGame();
-					if (nextGame == null) {
+					if (nextGame == null || nextGame.isGameStarted()==true) {
 						nextGame = Server.createNewGame(GameMapName.FERMI);
 					}
 					// add player to the game
@@ -80,13 +80,7 @@ public class ServerSocketRRThread implements Runnable {
 					Server.getId2Controller().put(newClientId, nextGame);
 					
 					
-					//va messo nel controller 
-					if (nextGame.getNumOfPlayers() == 3) {
-						nextGame.initGame();
-
-						Server.nullStartingGame();
-						System.out.println("Game started");
-					}
+					Server.checkGameStart();
 
 				} else {
 					// client has already connected to the server, reads player

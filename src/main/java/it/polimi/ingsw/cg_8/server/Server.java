@@ -15,13 +15,22 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Server {
-
+	/**
+	 * Progressive id assigned to client, it is increased after assigning to one
+	 * client
+	 */
 	private static int clientId = 1;
-
+	/**
+	 * Reference to the next starting game
+	 */
 	private static Controller nextGame;
-
+	/**
+	 * Request-Response socket server port
+	 */
 	private final static int SERVER_SOCKET_RR_PORT = 29998;
-
+	/**
+	 * Publisher-Subscribe socket server port
+	 */
 	private final static int SERVER_SOCKET_PS_PORT = 29999;
 	/**
 	 * Associates players with the game they are playing.
@@ -31,11 +40,22 @@ public class Server {
 	 * The name of the registry.
 	 */
 	private static final String NAME = "registrationRoom";
-
+	/**
+	 * Maximum number of players allowed in a game
+	 */
+	public static final int MAX_PLAYER = 8;
+	/**
+	 * Minimum number of players allowed in a game
+	 */
+	public static final int MIN_PLAYER = 2;
+	/**
+	 * RMI registry
+	 */
 	private final Registry registry;
 
 	/**
 	 * The constructor creates an RMI registry on port 7777.
+	 * 
 	 * @throws RemoteException
 	 */
 	public Server() throws RemoteException {
@@ -110,5 +130,19 @@ public class Server {
 		return registry;
 	}
 
+	public static void checkGameStart() {
+		// start the timer if reached min player
+		if (nextGame.getNumOfPlayers() == Server.MIN_PLAYER) {
+			nextGame.startTimeout();
+		}
+		// start the game if reached max players
+		if (nextGame.getNumOfPlayers() == Server.MAX_PLAYER) {
+			nextGame.initGame();
+
+			Server.nullStartingGame();
+			System.out.println("Game started because reached "
+					+ Server.MAX_PLAYER + " players.");
+		}
+	}
 
 }
