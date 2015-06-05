@@ -199,6 +199,7 @@ public class Controller implements Observer {
 		else if (arg.equals(TurnPhase.GAME_END)) {
 			List<Player> playerList = this.model.getPlayers();
 			
+			System.out.println("Game Over");			
 			this.writeToAll(new ResponsePrivate("GAME OVER"));
 			if (this.model.checkGameEndRound() == true) {
 				this.writeToAll(new ResponsePrivate("The game reached its conclusion"));
