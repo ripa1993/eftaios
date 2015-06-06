@@ -1,5 +1,6 @@
 package it.polimi.ingsw.cg_8.client;
 
+import it.polimi.ingsw.cg_8.client.gui.ConnectionManager;
 import it.polimi.ingsw.cg_8.view.server.ServerResponse;
 
 import java.io.IOException;
@@ -11,6 +12,7 @@ public class ClientSocketViewSUB implements Runnable {
 	private Socket subSocket;
 	private ObjectInputStream input;
 	private ClientSocket clientSocket;
+	private ConnectionManager connectionManager;
 
 	public ClientSocketViewSUB(String serverIP, int serverPubPort,
 			ClientSocket clientSocket) {
@@ -18,6 +20,20 @@ public class ClientSocketViewSUB implements Runnable {
 			this.subSocket = new Socket(serverIP, serverPubPort);
 			this.input = new ObjectInputStream(subSocket.getInputStream());
 			this.clientSocket = clientSocket;
+			this.connectionManager = null;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public ClientSocketViewSUB(String serverIP, int serverPubPort,
+			ConnectionManager connectionManager) {
+		try {
+			this.subSocket = new Socket(serverIP, serverPubPort);
+			this.input = new ObjectInputStream(subSocket.getInputStream());
+			this.clientSocket = null;
+			this.connectionManager = connectionManager;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -28,13 +44,13 @@ public class ClientSocketViewSUB implements Runnable {
 	public void run() {
 		System.out.println("Successfully subscribed.");
 		while (true) {
-			try {
+//			try {
 				this.receive();
-				
-				Thread.sleep(5);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+
+//				Thread.sleep(5);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
 		}
 
 	}
@@ -50,7 +66,12 @@ public class ClientSocketViewSUB implements Runnable {
 		try {
 			ServerResponse response = (ServerResponse) input.readObject();
 			System.out.println(response);
-			clientSocket.getClientData().storeResponse(response);
+			if (clientSocket != null) {
+				clientSocket.getClientData().storeResponse(response);
+			} else {
+				connectionManager.getClientData().storeResponse(response);
+			}
+			return;
 		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}

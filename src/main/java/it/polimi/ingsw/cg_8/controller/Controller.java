@@ -9,6 +9,7 @@ import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.server.ServerGameRoom;
 import it.polimi.ingsw.cg_8.server.ServerPublisher;
 import it.polimi.ingsw.cg_8.server.ServerSocketPublisherThread;
+import it.polimi.ingsw.cg_8.view.server.ResponseNoise;
 import it.polimi.ingsw.cg_8.view.server.ResponsePrivate;
 import it.polimi.ingsw.cg_8.view.server.ServerResponse;
 
@@ -157,7 +158,7 @@ public class Controller implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		this.writeToAll(new ResponsePrivate(model.getLastNoiseEntry().toString()));
+		this.writeToAll(new ResponseNoise(model.getLastNoiseEntry()));
 	}
 
 }

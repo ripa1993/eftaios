@@ -7,8 +7,9 @@ import it.polimi.ingsw.cg_8.view.server.ServerResponse;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
-public class ClientData {
+public class ClientData extends Observable {
 	private List<ResponseChat> chat;
 	private List<ResponseNoise> noise;
 	private List<ResponsePrivate> privateMessages;
@@ -23,17 +24,20 @@ public class ClientData {
 	public void storeResponse(ServerResponse response){
 		if(response instanceof ResponseChat){
 			chat.add((ResponseChat) response);
-			// notify
+			setChanged();
+			notifyObservers("Chat");
 			return;
 		}
 		if(response instanceof ResponseNoise){
 			noise.add((ResponseNoise) response);
-			// notify
+			setChanged();
+			notifyObservers("Noise");
 			return;
 		}
 		if(response instanceof ResponsePrivate){
 			privateMessages.add((ResponsePrivate) response);
-			// notify
+			setChanged();
+			notifyObservers("Private");
 			return;
 		}
 		return;
@@ -49,6 +53,20 @@ public class ClientData {
 
 	public List<ResponsePrivate> getPrivateMessages() {
 		return privateMessages;
+	}
+
+	public ResponseChat getLastChat() {
+		return chat.get(chat.size()-1);
+	}
+
+	public ResponseNoise getLastNoise() {
+		return noise.get(noise.size()-1);
+		
+	}
+
+	public ResponsePrivate getLastPrivate() {
+		return privateMessages.get(privateMessages.size()-1);
+		
 	}
 	
 	

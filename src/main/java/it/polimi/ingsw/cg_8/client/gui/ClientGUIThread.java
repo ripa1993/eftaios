@@ -1,13 +1,24 @@
 package it.polimi.ingsw.cg_8.client.gui;
 
 import it.polimi.ingsw.cg_8.Resource;
+import it.polimi.ingsw.cg_8.model.cards.itemCards.AdrenalineCard;
+import it.polimi.ingsw.cg_8.model.cards.itemCards.AttackCard;
+import it.polimi.ingsw.cg_8.model.cards.itemCards.SedativesCard;
+import it.polimi.ingsw.cg_8.model.cards.itemCards.SpotlightCard;
+import it.polimi.ingsw.cg_8.model.cards.itemCards.TeleportCard;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 import it.polimi.ingsw.cg_8.view.client.ActionParser;
+import it.polimi.ingsw.cg_8.view.client.actions.ActionAttack;
+import it.polimi.ingsw.cg_8.view.client.actions.ActionChat;
+import it.polimi.ingsw.cg_8.view.client.actions.ActionDrawCard;
+import it.polimi.ingsw.cg_8.view.client.actions.ActionEndTurn;
+import it.polimi.ingsw.cg_8.view.client.actions.ActionFakeNoise;
+import it.polimi.ingsw.cg_8.view.client.actions.ActionMove;
+import it.polimi.ingsw.cg_8.view.client.actions.ActionUseCard;
 import it.polimi.ingsw.cg_8.view.client.exceptions.NotAValidInput;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.GridLayout;
@@ -43,8 +54,10 @@ public class ClientGUIThread implements Runnable {
 	JLabel chatTextTitle;
 	private JLabel infoTextTitle;
 	JScrollPane chatScroll, infoScroll;
+	ConnectionManager connectionManager;
 
-	public ClientGUIThread() {
+	public ClientGUIThread(ConnectionManager connectionManager) {
+		this.connectionManager = connectionManager;
 		mainFrame = new JFrame("Escape From The Aliens In Outer Space");
 		chatPanel = new JPanel();
 		rightPanel = new JPanel();
@@ -176,7 +189,7 @@ public class ClientGUIThread implements Runnable {
 				try {
 					Coordinate coordinate = ActionParser
 							.parseCoordinate(coordinateString);
-					// TODO: make movement
+					connectionManager.send(new ActionMove(coordinate));
 				} catch (NotAValidInput e1) {
 					JOptionPane.showMessageDialog(mainFrame,
 							"Not a valid input!");
@@ -196,7 +209,7 @@ public class ClientGUIThread implements Runnable {
 				dialog.setVisible(true);
 				int selection = OptionPaneUtils.getSelection(optionPane);
 				if (selection == JOptionPane.YES_OPTION) {
-					// TODO: do an attack
+					connectionManager.send(new ActionAttack());
 				} else {
 					// do nothing
 				}
@@ -216,7 +229,7 @@ public class ClientGUIThread implements Runnable {
 				dialog.setVisible(true);
 				int selection = OptionPaneUtils.getSelection(optionPane);
 				if (selection == JOptionPane.YES_OPTION) {
-					// TODO: do draw
+					connectionManager.send(new ActionDrawCard());
 				} else {
 					// do nothing
 				}
@@ -234,9 +247,30 @@ public class ClientGUIThread implements Runnable {
 					Coordinate coordinate = ActionParser
 							.parseCoordinate(coordinateString);
 					// TODO: make fake noise
+					connectionManager.send(new ActionFakeNoise(coordinate));
 				} catch (NotAValidInput e1) {
 					JOptionPane.showMessageDialog(mainFrame,
 							"Not a valid input!");
+				}
+			}
+
+		});
+		
+		endTurnButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane optionPane = new JOptionPane(
+						"Do you want to end your turn?",
+						JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
+				JDialog dialog = optionPane
+						.createDialog("End turn");
+				dialog.setVisible(true);
+				int selection = OptionPaneUtils.getSelection(optionPane);
+				if (selection == JOptionPane.YES_OPTION) {
+					connectionManager.send(new ActionEndTurn());
+				} else {
+					// do nothing
 				}
 			}
 
@@ -252,15 +286,27 @@ public class ClientGUIThread implements Runnable {
 						"Pick a card", "Input", JOptionPane.QUESTION_MESSAGE,
 						null, cardList, "Attack");
 				if (output.equals("Attack")) {
-					// TODO: use attack card
+					connectionManager.send(new ActionUseCard(new AttackCard()));
 				} else if (output.equals("Adrenaline")) {
-					// TODO: use adrenaline card
+					connectionManager.send(new ActionUseCard(new AdrenalineCard()));
+
 				} else if (output.equals("Sedatives")) {
-					// TODO: use sedatives card
+					connectionManager.send(new ActionUseCard(new SedativesCard()));
+
 				} else if (output.equals("Spotlight")) {
-					// TODO: use spotlight Card
+					String coordinateString = JOptionPane.showInputDialog(
+							"Insert target coordinate", "Coordinate");
+					try {
+						Coordinate coordinate = ActionParser
+								.parseCoordinate(coordinateString);
+						connectionManager.send(new ActionUseCard(new SpotlightCard(), coordinate));
+					} catch (NotAValidInput e1) {
+						JOptionPane.showMessageDialog(mainFrame,
+								"Not a valid input!");
+					}
 				} else if (output.equals("Teleport")) {
-					// TODO: use teleport card
+					connectionManager.send(new ActionUseCard(new TeleportCard()));
+
 				}
 
 			}
@@ -274,7 +320,7 @@ public class ClientGUIThread implements Runnable {
 			public void actionPerformed(ActionEvent e) {
 				String message = chatTextField.getText();
 				chatTextField.setText("");
-				// TODO: create chat action
+				connectionManager.send(new ActionChat(message));
 			}
 
 		});
@@ -291,8 +337,7 @@ public class ClientGUIThread implements Runnable {
 				if (KeyEvent.VK_ENTER == e.getKeyCode()) {
 					String message = chatTextField.getText();
 					chatTextField.setText("");
-					// TODO: create chat action
-					appendChat("me", message);
+					connectionManager.send(new ActionChat(message));
 				}
 			}
 

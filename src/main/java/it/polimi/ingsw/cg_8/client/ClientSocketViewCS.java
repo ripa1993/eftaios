@@ -34,8 +34,7 @@ public class ClientSocketViewCS implements Runnable {
 	private ObjectOutputStream output;
 	private ObjectInputStream input;
 	private int clientId;
-	
-	
+
 	/**
 	 * 
 	 * @param serverIP
@@ -47,17 +46,36 @@ public class ClientSocketViewCS implements Runnable {
 	public ClientSocketViewCS(String serverIP, int serverResponsePort,
 			String inputLine, int clientId) throws NotAValidInput {
 		try {
-			// TODO: server must close connection if no input from client in 10 sec
+			// TODO: server must close connection if no input from client in 10
+			// sec
 			this.clientId = clientId;
 			this.action = ActionParser.createEvent(inputLine);
 			this.requestSocket = new Socket(serverIP, serverResponsePort);
-			this.output = new ObjectOutputStream(requestSocket.getOutputStream());
+			this.output = new ObjectOutputStream(
+					requestSocket.getOutputStream());
 			this.input = new ObjectInputStream(requestSocket.getInputStream());
 
 		} catch (IOException e) {
 			System.out
 					.println("Failed to establish a connection with the server");
 		}
+	}
+
+	public ClientSocketViewCS(String serverIP, int serverResponsePort,
+			ClientAction input, int clientId) {
+
+		try {
+			this.clientId = clientId;
+			this.action = input;
+			this.requestSocket = new Socket(serverIP, serverResponsePort);
+			this.output = new ObjectOutputStream(
+					requestSocket.getOutputStream());
+			this.input = new ObjectInputStream(requestSocket.getInputStream());
+		} catch (IOException e) {
+			System.out
+					.println("Failed to establish a connection with the server");
+		}
+
 	}
 
 	@Override
@@ -70,10 +88,10 @@ public class ClientSocketViewCS implements Runnable {
 			// write action
 			output.writeObject(action);
 			output.flush();
-			System.out.println("[DEBUG] write server command: "+action);
+			System.out.println("[DEBUG] write server command: " + action);
 			System.out.println("[DEBUG] waiting server response");
 			try {
-				System.out.println((boolean)input.readObject());
+				System.out.println((boolean) input.readObject());
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
