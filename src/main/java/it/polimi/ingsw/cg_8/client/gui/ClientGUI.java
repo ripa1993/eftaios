@@ -53,7 +53,7 @@ public class ClientGUI {
 		// connect to the server
 		gui.getConnectionManager().setPlayerName(name);
 		gui.getConnectionManager().setGuiThread(gui.getGuiThread());
-		if (connection ==0){
+		if (connection == 0){
 			//setup rmi
 			//connectionManager.setupRMI();
 		}

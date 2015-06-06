@@ -50,6 +50,8 @@ public class ClientRMI implements Runnable, Serializable, SubscriberInterface {
 
 	private final String registrationRoomName = "registrationRoom";
 
+	private ClientData playerData;
+
 	public ClientRMI(String playerName, Scanner stdin) {
 
 		this.playerName = playerName;
@@ -144,13 +146,13 @@ public class ClientRMI implements Runnable, Serializable, SubscriberInterface {
 
 	/**
 	 * @param message
-	 *            is the message sent by the broker by invoking subscriber's
-	 *            remote interface the method simply prints the message received
-	 *            by the broker
+	 *            Message sent by the server, stored in {@link ClientData}.
 	 */
 	@Override
 	public void publishMessage(ServerResponse message) {
 		System.out.println(message);
+		this.playerData.storeResponse(message);
+		return;
 	}
 
 }
