@@ -85,26 +85,34 @@ public class ServerSocketRRThread implements Runnable {
 					output.flush();
 
 					// get reference to the starting game
+					
 					Controller nextGame = Server.getStartingGame();
-					if (nextGame == null) {
+					if (Server.getStartingGame() == null) {
 						nextGame = Server.createNewGame(GameMapName.FERMI);
 					}
-					// add player to the game
-					Socket subscriber = serverPS.accept();
-					ServerSocketPublisherThread publisher = new ServerSocketPublisherThread(
-							subscriber);
-					nextGame.addClientSocket(newClientId, playerName, publisher);
-					System.out.println("Player successfully added to the game");
-					Server.getId2Controller().put(newClientId, nextGame);
+					synchronized (Server.getStartingGame()) {
+						
+						// add player to the game
+						Socket subscriber = serverPS.accept();
+						ServerSocketPublisherThread publisher = new ServerSocketPublisherThread(
+								subscriber);
+						nextGame.addClientSocket(newClientId, playerName,
+								publisher);
+						System.out
+								.println("Player successfully added to the game");
+						Server.getId2Controller().put(newClientId, nextGame);
 
-					// va messo nel controller
-					if (nextGame.getNumOfPlayers() == 3) {
-						nextGame.initGame();
+						if (nextGame.getNumOfPlayers() == Server.MIN_PLAYERS) {
+							Server.startTimeout();
+						}
 
-						Server.nullStartingGame();
-						System.out.println("Game started");
+						if (nextGame.getNumOfPlayers() == Server.MAX_PLAYERS) {
+							Server.abortTimeout();
+							nextGame.initGame();
+							Server.nullStartingGame();
+							System.out.println("Game started");
+						}
 					}
-
 				} else {
 					// client has already connected to the server, reads player
 					// action

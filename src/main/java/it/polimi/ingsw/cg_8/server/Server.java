@@ -11,6 +11,8 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -60,6 +62,12 @@ public class Server {
 	 */
 	private final Registry registry;
 
+	private static Timer timer;
+
+	private static TimerTask timerTask;
+
+	private final static int TIMEOUT = 20000;
+
 	/**
 	 * The constructor creates an RMI registry on port 7777.
 	 * 
@@ -67,6 +75,7 @@ public class Server {
 	 */
 	public Server() throws RemoteException {
 		nextGame = null;
+		timer = new Timer();
 		this.registry = LocateRegistry.createRegistry(7777);
 
 	}
@@ -162,6 +171,28 @@ public class Server {
 	 */
 	public Registry getRegistry() {
 		return registry;
+	}
+
+	public static  void startTimeout() {
+		System.out.println("Timeout started");
+		timerTask = new TimerTask() {
+
+			@Override
+			public void run() {
+
+				synchronized (nextGame) {
+					nextGame.initGame();
+					System.out.println("Game started by TimerTask");
+					nullStartingGame();
+				}
+
+			}
+		};
+		timer.schedule(timerTask, TIMEOUT);
+	}
+
+	public static void abortTimeout() {
+		timer.cancel();
 	}
 
 	public static void main(String[] args) throws RemoteException,
