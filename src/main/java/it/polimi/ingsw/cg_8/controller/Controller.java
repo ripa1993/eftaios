@@ -1,6 +1,5 @@
 package it.polimi.ingsw.cg_8.controller;
 
-import it.polimi.ingsw.cg_8.controller.playerActions.EndTurn;
 import it.polimi.ingsw.cg_8.controller.playerActions.otherActions.Disconnect;
 import it.polimi.ingsw.cg_8.model.Model;
 import it.polimi.ingsw.cg_8.model.TurnPhase;
@@ -126,7 +125,6 @@ public class Controller implements Observer {
 		} catch (EmptyDeckException e) {
 			System.err.println(e.getMessage());
 		}
-		EndTurn.gameBegin(model);
 
 	}
 
