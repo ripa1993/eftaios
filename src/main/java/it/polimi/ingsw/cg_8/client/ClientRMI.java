@@ -49,11 +49,14 @@ public class ClientRMI implements Runnable, Serializable, SubscriberInterface {
 	private final static int REGISTRATION_PORT = 7777;
 
 	private final String registrationRoomName = "registrationRoom";
+	
+	private ClientData clientData;
 
 	public ClientRMI(String playerName, Scanner stdin) {
 
 		this.playerName = playerName;
 		this.stdin = stdin;
+		this.clientData = new ClientData();
 	}
 
 	// se rmi faccio lookup registry. sul registry avrò subscribe (prendo un
@@ -151,6 +154,7 @@ public class ClientRMI implements Runnable, Serializable, SubscriberInterface {
 	@Override
 	public void publishMessage(ServerResponse message) {
 		System.out.println(message);
+		this.clientData.storeResponse(message);
 	}
 
 }
