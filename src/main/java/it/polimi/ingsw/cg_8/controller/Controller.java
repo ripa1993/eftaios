@@ -109,6 +109,11 @@ public class Controller implements Observer {
 			model.initGame();
 			// writeToAll( la partita è iniziata )
 			this.writeToAll(new ResponsePrivate("Match is starting..."));
+			for (Player p : this.model.getPlayers()) {
+				this.writeToPlayer(p, new ResponsePrivate(
+						"You will be playing as:\n" + " "
+								+ p.getCharacter().toString()));
+			}
 			this.writeToAll(new ResponsePrivate("The current player is: "
 					+ model.getCurrentPlayerReference().getName()));
 			this.writeToPlayer(model.getCurrentPlayerReference(),
@@ -187,35 +192,43 @@ public class Controller implements Observer {
 		if (arg instanceof Noise) {
 			this.writeToAll(new ResponsePrivate(arg.toString()));
 		}
-		
+
 		/**
-		 * If the game is over, disconnect the players and communicate the proper message to them.
+		 * If the game is over, disconnect the players and communicate the
+		 * proper message to them.
 		 */
 		else if (arg.equals(TurnPhase.GAME_END)) {
 			List<Player> playerList = this.model.getPlayers();
-			
+
 			this.writeToAll(new ResponsePrivate("GAME OVER"));
 			if (this.model.checkGameEndRound() == true) {
-				this.writeToAll(new ResponsePrivate("The game reached its conclusion"));
+				this.writeToAll(new ResponsePrivate(
+						"The game reached its conclusion"));
 			}
 			if (this.model.checkGameEndNoEH() == true) {
-				this.writeToAll(new ResponsePrivate("There are no Escape Hatches left to use"));
+				this.writeToAll(new ResponsePrivate(
+						"There are no Escape Hatches left to use"));
 			}
-			
+
 			for (Player p : playerList) {
 				double random = Math.random();
-				if (p.getCharacter() instanceof Human && p.getState().equals(PlayerState.DEAD)) {
+				if (p.getCharacter() instanceof Human
+						&& p.getState().equals(PlayerState.DEAD)) {
 					if (random < 0.5) {
-						this.writeToAll(new ResponsePrivate(p.getName() + " has met a terrible fate."));
+						this.writeToAll(new ResponsePrivate(p.getName()
+								+ " has met a terrible fate."));
 					} else {
-						this.writeToAll(new ResponsePrivate(p.getName() + " was slain in the darkness."));
+						this.writeToAll(new ResponsePrivate(p.getName()
+								+ " was slain in the darkness."));
 					}
-				}
-				else if (p.getCharacter() instanceof Human && p.getState().equals(PlayerState.ESCAPED)) {
-					this.writeToAll(new ResponsePrivate(p.getName() + " managed to escape."));
-				}
-				else if (p.getState().equals(PlayerState.DISCONNECTED)) {
-					this.writeToAll(new ResponsePrivate(p.getName() + " left the game prematurely. \n\tNobody will miss him."));
+				} else if (p.getCharacter() instanceof Human
+						&& p.getState().equals(PlayerState.ESCAPED)) {
+					this.writeToAll(new ResponsePrivate(p.getName()
+							+ " managed to escape."));
+				} else if (p.getState().equals(PlayerState.DISCONNECTED)) {
+					this.writeToAll(new ResponsePrivate(
+							p.getName()
+									+ " left the game prematurely. \n\tNobody will miss him."));
 				}
 			}
 			/**
@@ -224,7 +237,8 @@ public class Controller implements Observer {
 			try {
 				TimeUnit.SECONDS.sleep(10);
 			} catch (InterruptedException e) {
-				System.err.println("[DEBUG] Can't sleep at the end of the game");
+				System.err
+						.println("[DEBUG] Can't sleep at the end of the game");
 			}
 			for (Player p : playerList) {
 				Disconnect.disconnect(p);

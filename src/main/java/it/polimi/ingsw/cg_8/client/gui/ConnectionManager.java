@@ -30,7 +30,10 @@ import java.util.Observer;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class ConnectionManager implements Observer, Serializable, SubscriberInterface {
+public class ConnectionManager implements Observer, Serializable,
+		SubscriberInterface {
+
+	private static final long serialVersionUID = -1347635297531821083L;
 	private String playerName;
 	private ClientData clientData;
 	private final String SERVER_ADDRESS = "127.0.0.1";
@@ -42,13 +45,24 @@ public class ConnectionManager implements Observer, Serializable, SubscriberInte
 	private boolean nameSet;
 	private ClientGUIThread guiThread;
 
+	/**
+	 * GameRoom used by RMI.
+	 */
+	private ServerGameRoomInterface view;
+
+	/**
+	 * Identifies the connection used: 0 for RMI, 1 for Socket.
+	 */
+	private int connectionType;
+
 	public ConnectionManager(String playerName, ClientGUIThread guiThread) {
 		this.playerName = playerName;
 		clientData = new ClientData();
 		nameSet = false;
 		clientID = 0;
 		clientData.addObserver(this);
-		this.guiThread=guiThread;
+		this.guiThread = guiThread;
+		this.connectionType = -1;
 	}
 
 	public ConnectionManager() {
@@ -57,15 +71,14 @@ public class ConnectionManager implements Observer, Serializable, SubscriberInte
 		clientID = 0;
 		clientData.addObserver(this);
 	}
-	
-	public void setPlayerName(String name){
+
+	public void setPlayerName(String name) {
 		this.playerName = name;
 	}
-	
-	public void setGuiThread(ClientGUIThread gui){
+
+	public void setGuiThread(ClientGUIThread gui) {
 		this.guiThread = gui;
 	}
-
 
 	public void setupRMI() {
 
@@ -75,7 +88,6 @@ public class ConnectionManager implements Observer, Serializable, SubscriberInte
 		boolean nameSet = false;
 
 		System.out.println("Contacting the broker...");
-
 
 		try {
 
@@ -104,13 +116,11 @@ public class ConnectionManager implements Observer, Serializable, SubscriberInte
 			 */
 			System.out.println("Trying to register...");
 
-			ServerGameRoomInterface view = registrationRoom
+			view = registrationRoom
 					.register((SubscriberInterface) UnicastRemoteObject
 							.exportObject(this, 0));
 
 			System.out.println("Successfully registered");
-
-			
 
 		} catch (NotBoundException | RemoteException | AlreadyBoundException e) {
 			e.printStackTrace();
@@ -175,8 +185,6 @@ public class ConnectionManager implements Observer, Serializable, SubscriberInte
 					SOCKET_PORT_PUBSUB, this));
 			System.out.println("[DEBUG] subscriber back to main thread");
 
-			
-			
 		} catch (IOException e) {
 			System.err.println("Cannot connect to socket server ("
 					+ SERVER_ADDRESS + ":" + SOCKET_PORT_CLIENTSERVER + ")");
@@ -195,7 +203,25 @@ public class ConnectionManager implements Observer, Serializable, SubscriberInte
 	public int getclientID() {
 		return this.clientID;
 	}
+	
+	public int getConnectionType() {
+		return connectionType;
+	}
 
+	public void setConnectionType(int connectionType) {
+		this.connectionType = connectionType;
+	}
+
+	@Override
+	public int getClientId() throws RemoteException {
+		return this.clientID;
+	}
+
+	@Override
+	public String getPlayerName() throws RemoteException {
+		return this.playerName;
+	}
+	
 	private void close(Socket socket, ObjectOutputStream output) {
 		try {
 			socket.close();
@@ -203,17 +229,30 @@ public class ConnectionManager implements Observer, Serializable, SubscriberInte
 		} finally {
 			socket = null;
 			output = null;
-			System.gc();
 		}
 	}
 
 	public void send(ClientAction inputLine) {
-
-		ClientSocketViewCS socketCS = new ClientSocketViewCS(SERVER_ADDRESS,
-				SOCKET_PORT_CLIENTSERVER, inputLine, clientID);
-		socketCS.run();
+		if (connectionType == 0) {
+			try {
+				view.makeAction(this.clientID, inputLine);
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else if (connectionType == 1) {
+			ClientSocketViewCS socketCS = new ClientSocketViewCS(
+					SERVER_ADDRESS, SOCKET_PORT_CLIENTSERVER, inputLine,
+					clientID);
+			socketCS.run();
+		}
+		else {
+			System.out.println("[DEBUG] connectionType not chosen");
+		}
 
 	}
+
+	
 
 	@Override
 	public void update(Observable o, Object arg) {
@@ -233,21 +272,11 @@ public class ConnectionManager implements Observer, Serializable, SubscriberInte
 
 	@Override
 	public void publishMessage(ServerResponse message) throws RemoteException {
-		
+
 		System.out.println(message);
 		this.clientData.storeResponse(message);
 		return;
 	}
 
-	@Override
-	public int getClientId() throws RemoteException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public String getPlayerName() throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 }

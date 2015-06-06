@@ -54,11 +54,13 @@ public class ClientGUI {
 		gui.getConnectionManager().setPlayerName(name);
 		gui.getConnectionManager().setGuiThread(gui.getGuiThread());
 		if (connection == 0){
+			gui.getConnectionManager().setConnectionType(0);
 			gui.getConnectionManager().setupRMI();
 		
 		}
 		else{
 			// setup sockets
+			gui.getConnectionManager().setConnectionType(1);
 			gui.getConnectionManager().setupSocket();
 		}
 		
