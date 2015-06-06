@@ -22,23 +22,23 @@ public class EndTurn extends PlayerAction {
 	 * @param model The current state of the game
 	 */
 	public static void endTurn(Model model) {
-		if(model2Thread.get(model)==null){
-			model2Thread.put(model, new RoundTimer(model));
-		} else {
-			model2Thread.get(model).interrupt();
-		}
+//		if(model2Thread.get(model)==null){
+//			model2Thread.put(model, new RoundTimer(model));
+//		} else {
+//			model2Thread.get(model).interrupt();
+//		}
 		model.nextPlayer();
-		model2Thread.get(model).run();
+		//model2Thread.get(model).run();
 		
 		if (model.getTurnPhase() != TurnPhase.GAME_END) {
-			//model.getCurrentPlayerReference().cycleState();
+			
 			model.setTurnPhase(TurnPhase.TURN_BEGIN);
 		}
 	}
 	
-	public static void gameBegin(Model model){
-		model2Thread.put(model, new RoundTimer(model));
-		model2Thread.get(model).run();
-	}
-	
+//	public static void gameBegin(Model model){
+//		model2Thread.put(model, new RoundTimer(model));
+//		model2Thread.get(model).run();
+//	}
+//	
 }
