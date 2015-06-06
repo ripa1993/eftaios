@@ -54,8 +54,8 @@ public class ClientGUI {
 		gui.getConnectionManager().setPlayerName(name);
 		gui.getConnectionManager().setGuiThread(gui.getGuiThread());
 		if (connection == 0){
-			//setup rmi
-			//connectionManager.setupRMI();
+			gui.getConnectionManager().setupRMI();
+		
 		}
 		else{
 			// setup sockets

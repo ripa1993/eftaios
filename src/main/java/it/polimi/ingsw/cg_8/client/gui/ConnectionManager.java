@@ -234,7 +234,9 @@ public class ConnectionManager implements Observer, Serializable, SubscriberInte
 	@Override
 	public void publishMessage(ServerResponse message) throws RemoteException {
 		
-		
+		System.out.println(message);
+		this.clientData.storeResponse(message);
+		return;
 	}
 
 	@Override
