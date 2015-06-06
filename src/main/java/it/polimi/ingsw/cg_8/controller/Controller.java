@@ -126,7 +126,7 @@ public class Controller implements Observer {
 		} catch (EmptyDeckException e) {
 			System.err.println(e.getMessage());
 		}
-		//EndTurn.gameBegin(model);
+		EndTurn.gameBegin(model);
 
 	}
 
