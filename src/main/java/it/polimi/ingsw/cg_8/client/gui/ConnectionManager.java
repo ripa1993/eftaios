@@ -70,6 +70,7 @@ public class ConnectionManager implements Observer, Serializable,
 		nameSet = false;
 		clientID = 0;
 		clientData.addObserver(this);
+		this.connectionType = -1;
 	}
 
 	public void setPlayerName(String name) {
