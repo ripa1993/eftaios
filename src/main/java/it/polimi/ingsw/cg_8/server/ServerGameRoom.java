@@ -7,6 +7,7 @@ import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
 import it.polimi.ingsw.cg_8.view.server.ResponsePrivate;
 import it.polimi.ingsw.cg_8.view.server.ServerResponse;
 
+import java.rmi.ConnectException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
@@ -38,7 +39,7 @@ public class ServerGameRoom extends ServerPublisher implements
 		try {
 			clientRMI.publishMessage(message);
 		} catch (RemoteException e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
 	}
 }

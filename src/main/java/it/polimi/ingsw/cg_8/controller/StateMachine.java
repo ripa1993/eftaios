@@ -70,8 +70,7 @@ public class StateMachine {
 	 */
 	public static boolean evaluateAction(Controller controller, ClientAction a,
 			Player player) {
-		
-		
+
 		// local variables, calculated every time a new evaluation is launched
 		Model model = controller.getModel();
 		Player currentPlayer = model.getCurrentPlayerReference();
@@ -79,9 +78,11 @@ public class StateMachine {
 		Rules rules = controller.getRules();
 
 		/**
-		 * A disconnected player isn't allowed to use any command.
+		 * A disconnected player isn't allowed to use any command. The same goes
+		 * if the game is over.
 		 */
-		if (player.getState().equals(PlayerState.DISCONNECTED)) {
+		if (player.getState().equals(PlayerState.DISCONNECTED)
+				|| model.getTurnPhase().equals(TurnPhase.GAME_END)) {
 			return false;
 		}
 
@@ -96,6 +97,7 @@ public class StateMachine {
 			Disconnect.disconnect(player);
 			if (player.equals(model.getCurrentPlayerReference())) {
 				model.nextPlayer();
+				model.setTurnPhase(TurnPhase.TURN_BEGIN);
 			}
 
 			controller.writeToAll(new ResponsePrivate(player.getName()
@@ -127,14 +129,17 @@ public class StateMachine {
 						player,
 						new ResponsePrivate(GetReachableSectors
 								.printReachableSectors(model, player)));
+				return true;
 			}
 			if (a instanceof ActionGetHand) {
 				controller.writeToPlayer(player,
 						new ResponsePrivate(GetCards.printHeldCards(player)));
+				return true;
 			}
 			if (a instanceof ActionGetAvailableAction) {
 				controller.writeToPlayer(player, new ResponsePrivate(
 						GetAllowedActions.printActions(player)));
+				return true;
 			}
 		}
 

@@ -225,19 +225,19 @@ public class Model extends Observable {
 
 		if (checkGameEndNoEH()) {
 			// no escape hatches left
-			setTurnPhase(TurnPhase.GAME_END);
+			this.setGameOver();
 			return;
 		}
 
 		if (checkGameEndNoPlayers()) {
 			// all player dc'ed or dead or escaped
-			setTurnPhase(TurnPhase.GAME_END);
+			this.setGameOver();
 			return;
 		}
 
 		if (checkGameEndNoHumans()) {
 			// no humans left
-			setTurnPhase(TurnPhase.GAME_END);
+			this.setGameOver();
 			return;
 		}
 
@@ -260,7 +260,7 @@ public class Model extends Observable {
 
 			if (checkGameEndRound() == true) {
 				// finished round 39, so game ends
-				this.setTurnPhase(TurnPhase.GAME_END);
+				this.setGameOver();
 				return;
 			}
 			currentPlayerIndex = tempNextPlayer;
@@ -285,7 +285,7 @@ public class Model extends Observable {
 			this.roundNumber++;
 			if (checkGameEndRound()) {
 				// finished round 39, so game ends
-				setTurnPhase(TurnPhase.GAME_END);
+				this.setGameOver();
 				return;
 			}
 			return;
@@ -353,7 +353,7 @@ public class Model extends Observable {
 	 * @return true, if game ends<br>
 	 *         false, if not
 	 */
-	private boolean checkGameEndNoEH() {
+	public boolean checkGameEndNoEH() {
 		// 4th escape hatch card drawn, so 4th escape hatch used
 		if (getEscapeHatchDeck().getCards().size() == 2) {
 			return true;
@@ -426,10 +426,21 @@ public class Model extends Observable {
 	public void addNoise(Noise noise) {
 		this.noiseLogger.add(noise);
 		this.setChanged();
-		this.notifyObservers();
+		this.notifyObservers(noise);
 	}
 
 	public void setTurnPhase(TurnPhase newTurnPhase) {
 		this.turnPhase = newTurnPhase;
+	}
+
+	// Creo setGameOver() chiamata dalle varie action e dal model stesso per far
+	// terminare il gioco.
+	// quando è chiamata fa notify al controller, che provvede a disconnettere i
+	// giocatori dopo 10 secondi, e a stampare messaggi di terminazione della
+	// partita
+	public void setGameOver() {
+		this.turnPhase = TurnPhase.GAME_END;
+		this.setChanged();
+		this.notifyObservers(this.turnPhase);
 	}
 }
