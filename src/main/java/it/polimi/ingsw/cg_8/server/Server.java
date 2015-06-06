@@ -14,28 +14,55 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Game server for Escape From The Aliens In Outer Space, provides a Socket and
+ * RMI connection to clients, implements a Request-Response pattern and a
+ * Publisher-Subscriber (sort of) pattern
+ * 
+ * @author Simone
+ * @version 1.0
+ */
 public class Server {
-
+	/**
+	 * Progressive unique identifier given to a connecting client
+	 */
 	private static int clientId = 1;
-
+	/**
+	 * Reference to the next starting game
+	 */
 	private static Controller nextGame;
-
+	/**
+	 * Socket port for Request-Response server
+	 */
 	private final static int SERVER_SOCKET_RR_PORT = 29998;
-
+	/**
+	 * Socket port for Publisher-Subscriber server
+	 */
 	private final static int SERVER_SOCKET_PS_PORT = 29999;
 	/**
-	 * Associates players with the game they are playing.
+	 * Minimum number of players required to start a game
+	 */
+	public final static int MIN_PLAYERS = 2;
+	/**
+	 * Maximum number of players per game
+	 */
+	public final static int MAX_PLAYERS = 8;
+	/**
+	 * Association between players and the game they are playing.
 	 */
 	private static Map<Integer, Controller> id2Controller = new HashMap<Integer, Controller>();
 	/**
 	 * The name of the registry.
 	 */
 	private static final String NAME = "registrationRoom";
-
+	/**
+	 * Registry used by RMI server
+	 */
 	private final Registry registry;
 
 	/**
 	 * The constructor creates an RMI registry on port 7777.
+	 * 
 	 * @throws RemoteException
 	 */
 	public Server() throws RemoteException {
@@ -44,36 +71,55 @@ public class Server {
 
 	}
 
+	/**
+	 * 
+	 * @return reference to the association between players and games
+	 */
 	public static Map<Integer, Controller> getId2Controller() {
 		return id2Controller;
 	}
 
+	/**
+	 * 
+	 * @return clientId that will be given to next connecting client
+	 */
 	public static int getClientId() {
 		return clientId;
 	}
 
+	/**
+	 * Increase the value of clientId
+	 */
 	public static void increaseClientId() {
 		clientId++;
 	}
 
+	/**
+	 * 
+	 * @return reference to the next starting game
+	 */
 	public static Controller getStartingGame() {
 		return nextGame;
 	}
 
+	/**
+	 * Creates a new game, replacing the previous reference in nextGame with the
+	 * new one
+	 * 
+	 * @param gameMapName
+	 *            name of the new map
+	 * @return reference to the newly created game
+	 */
 	public static Controller createNewGame(GameMapName gameMapName) {
 		nextGame = new Controller(gameMapName, new DefaultRules());
 		return nextGame;
 	}
 
+	/**
+	 * Set the nextGame to null
+	 */
 	public static void nullStartingGame() {
 		nextGame = null;
-	}
-
-	public static void main(String[] args) throws RemoteException,
-			AlreadyBoundException {
-		Server server = new Server();
-		server.startSocket();
-		server.startRMI();
 	}
 
 	/**
@@ -102,13 +148,27 @@ public class Server {
 		executorRMI.submit(new ServerRMI(this));
 	}
 
+	/**
+	 * 
+	 * @return name of the registry
+	 */
 	public static String getName() {
 		return NAME;
 	}
 
+	/**
+	 * 
+	 * @return RMI registry
+	 */
 	public Registry getRegistry() {
 		return registry;
 	}
 
+	public static void main(String[] args) throws RemoteException,
+			AlreadyBoundException {
+		Server server = new Server();
+		server.startSocket();
+		server.startRMI();
+	}
 
 }
