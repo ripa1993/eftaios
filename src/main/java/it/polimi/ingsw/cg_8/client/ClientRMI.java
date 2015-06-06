@@ -52,8 +52,6 @@ public class ClientRMI implements Runnable, Serializable, SubscriberInterface {
 	
 	private ClientData clientData;
 
-	private ClientData playerData;
-
 	public ClientRMI(String playerName, Scanner stdin) {
 
 		this.playerName = playerName;
@@ -154,7 +152,7 @@ public class ClientRMI implements Runnable, Serializable, SubscriberInterface {
 	@Override
 	public void publishMessage(ServerResponse message) {
 		System.out.println(message);
-		this.playerData.storeResponse(message);
+		this.clientData.storeResponse(message);
 		return;
 
 	}
