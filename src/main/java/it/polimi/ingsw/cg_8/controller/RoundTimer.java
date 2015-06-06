@@ -25,11 +25,8 @@ public class RoundTimer extends Thread {
 				Disconnect.disconnect(model.getCurrentPlayerReference());
 				model.nextPlayer();
 				model.setTurnPhase(TurnPhase.TURN_BEGIN);
-				if (model.getTurnPhase()== TurnPhase.GAME_END){
-					return;
-				}else{
-					this.run();	
-				}
+				// TODO: se la partita deve continuare faccio run, altrimneti uccido il thread
+				this.run();
 			}
 
 		} catch (InterruptedException e) {
