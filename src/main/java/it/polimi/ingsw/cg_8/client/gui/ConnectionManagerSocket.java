@@ -1,0 +1,141 @@
+package it.polimi.ingsw.cg_8.client.gui;
+
+import it.polimi.ingsw.cg_8.client.ClientSocketViewCS;
+import it.polimi.ingsw.cg_8.client.ClientSocketViewSUB;
+import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+/**
+ * Class used to connect the client to the server via socket. It also containt
+ * the send() function, used to communicate with the server.
+ * 
+ * @author Alberto Parravicini
+ * @version 1.1
+ */
+public class ConnectionManagerSocket extends ConnectionManager implements
+		Serializable {
+
+	private static final long serialVersionUID = -3402004204836762667L;
+	/**
+	 * The server IP address.
+	 */
+	private final String SERVER_ADDRESS = "127.0.0.1";
+	/**
+	 * The server port used for the Receive/Response communication.
+	 */
+	private final int SOCKET_PORT_CLIENTSERVER = 29998;
+	/**
+	 * The server port used for the Publisher/Subscriber communication.
+	 */
+	private final int SOCKET_PORT_PUBSUB = 29999;
+
+	public ConnectionManagerSocket(String playerName) {
+		super(playerName);
+	}
+
+	/**
+	 * Function called to setup the connection with the server.
+	 */
+	@Override
+	public void setup() {
+		try {
+			this.initializeSocket();
+
+			/**
+			 * Creates an always-on thread that works as a subscriber. When the
+			 * server publishes something, this thread is notified.
+			 */
+			ExecutorService executor = Executors.newCachedThreadPool();
+			executor.submit(new ClientSocketViewSUB(SERVER_ADDRESS,
+					SOCKET_PORT_PUBSUB, this));
+			System.out.println("[DEBUG] subscriber back to main thread");
+		} catch (IOException e) {
+			System.err.println("Cannot connect to socket server ("
+					+ SERVER_ADDRESS + ":" + SOCKET_PORT_CLIENTSERVER + ")");
+		}
+
+	}
+
+	/**
+	 * Function used to send messages (i.e {@link ClientAction} to the server.
+	 */
+	@Override
+	public void send(ClientAction inputLine) {
+
+		ClientSocketViewCS socketCS = new ClientSocketViewCS(SERVER_ADDRESS,
+				SOCKET_PORT_CLIENTSERVER, inputLine, clientID);
+		socketCS.run();
+
+	}
+
+	/**
+	 * Used to establish a connection with the server.
+	 * @throws UnknownHostException
+	 * @throws IOException
+	 */
+	public void initializeSocket() throws UnknownHostException, IOException {
+		Socket socket = new Socket(SERVER_ADDRESS, SOCKET_PORT_CLIENTSERVER);
+		System.out.println("Connected to server " + SERVER_ADDRESS
+				+ " on port " + SOCKET_PORT_CLIENTSERVER);
+
+		ObjectOutputStream output = new ObjectOutputStream(
+				socket.getOutputStream());
+		ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
+
+		do {
+			try {
+				System.out.println("Your ID is not set.");
+				output.writeObject(new Integer(this.getclientID()));
+				output.flush();
+				Integer clientIDRequested = (Integer) input.readObject();
+				System.out.println("New ID received");
+				this.setclientID((int) clientIDRequested);
+				System.out.println("Your ID is: " + this.getclientID());
+			} catch (IOException | ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		} while (this.getclientID() == 0);
+
+		do {
+			try {
+
+				System.out.println("Sending your User-Name to the server...");
+				output.writeObject(this.playerName);
+				output.flush();
+
+				String serverAnswer = (String) input.readObject();
+				if (serverAnswer.equals("NAME ACCEPTED")) {
+					nameSet = true;
+					System.out.println("Name accepted");
+				}
+			} catch (IOException | ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		} while (nameSet == false);
+
+		
+		this.close(socket, output);
+
+	}
+	
+	/**
+	 * Close the socket used to establish the first connection.
+	 */
+	private void close(Socket socket, ObjectOutputStream output) {
+		try {
+			socket.close();
+		} catch (IOException e) {
+		} finally {
+			socket = null;
+			output = null;
+		}
+	}
+}
