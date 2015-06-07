@@ -3,42 +3,40 @@ package it.polimi.ingsw.cg_8.client.gui;
 import javax.swing.JOptionPane;
 
 public class ClientGUI {
-	private String playerName;
-	private ConnectionManager connectionManager;
-	private ClientGUIThread guiThread;
-	
-	public ClientGUI() {
-		playerName = "Default";
-		connectionManager = new ConnectionManager();
-		guiThread = new ClientGUIThread(connectionManager);
-	}
 
-	public void setPlayerName(String playerName) {
-		this.playerName = playerName;
-	}
 
-	public ConnectionManager getConnectionManager() {
-		return connectionManager;
-	}
 
-	public ClientGUIThread getGuiThread() {
-		return guiThread;
-	}
-
-	public String getPlayerName() {
-		return this.playerName;
-	}
-
-	private void run() {
-		guiThread.run();
-	}
+//	public void setPlayerName(String playerName) {
+//		this.playerName = playerName;
+//	}
+//
+//	public ConnectionManager getConnectionManager() {
+//		return connectionManager;
+//	}
+//
+//	public ClientGUIThread getGuiThread() {
+//		return guiThread;
+//	}
+//
+//	public String getPlayerName() {
+//		return this.playerName;
+//	}
+//
+//	private void run() {
+//		guiThread.run();
+//	}
 
 	public static void main(String[] args) {
-		ClientGUI gui = new ClientGUI();
+
+		String playerName = "Default";
+		ConnectionManager connectionManager;
+		ClientGUIThread guiThread = new ClientGUIThread();
+
+		
 		// get player name
 		String name = JOptionPane
 				.showInputDialog("Insert your name:", "Player");
-		gui.setPlayerName(name);
+		playerName = name;
 		// get player connection mode
 		Object options[] = { "RMI", "Socket" };
 		int connection = -1;
@@ -48,24 +46,23 @@ public class ClientGUI {
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
 					null, options, options[0]);
 		}
+		
+		if (connection == 0) {
+			connectionManager = new ConnectionManagerRMI(playerName);
+
+		} else {
+			// setup sockets
+			connectionManager = new ConnectionManagerSocket(playerName);
+		}
 		// if connection = 0 -> RMI
 		// if connection = 1 -> Socket
 		// connect to the server
-		gui.getConnectionManager().setPlayerName(name);
-		gui.getConnectionManager().setGuiThread(gui.getGuiThread());
-		if (connection == 0){
-			gui.getConnectionManager().setConnectionType(0);
-			gui.getConnectionManager().setupRMI();
+		connectionManager.setPlayerName(name);
+		guiThread.setConnectionManager(connectionManager);
 		
-		}
-		else{
-			// setup sockets
-			gui.getConnectionManager().setConnectionType(1);
-			gui.getConnectionManager().setupSocket();
-		}
-		
+		guiThread.getConnectionManager().setup();
 		// acquire map
 
-		gui.run();
+		guiThread.run();
 	}
 }

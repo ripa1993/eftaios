@@ -113,7 +113,6 @@ public class ClientSocketViewCS implements Runnable {
 		} finally {
 			socket = null;
 			output = null;
-			System.gc();
 		}
 	}
 

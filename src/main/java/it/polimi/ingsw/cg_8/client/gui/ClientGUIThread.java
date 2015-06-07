@@ -1,6 +1,7 @@
 package it.polimi.ingsw.cg_8.client.gui;
 
 import it.polimi.ingsw.cg_8.Resource;
+import it.polimi.ingsw.cg_8.client.ClientData;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.AdrenalineCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.AttackCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.SedativesCard;
@@ -16,6 +17,9 @@ import it.polimi.ingsw.cg_8.view.client.actions.ActionFakeNoise;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionMove;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionUseCard;
 import it.polimi.ingsw.cg_8.view.client.exceptions.NotAValidInput;
+import it.polimi.ingsw.cg_8.view.server.ResponseChat;
+import it.polimi.ingsw.cg_8.view.server.ResponseNoise;
+import it.polimi.ingsw.cg_8.view.server.ResponsePrivate;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -27,6 +31,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -41,7 +47,11 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
 
-public class ClientGUIThread implements Runnable {
+public class ClientGUIThread implements Runnable, Observer {
+	
+	private ClientData clientData;
+	
+	
 	JFrame mainFrame;
 	JPanel chatPanel, chatPanel2, rightPanel, infoPanel, commandsPanel,
 			chatInfoPanel;
@@ -56,8 +66,7 @@ public class ClientGUIThread implements Runnable {
 	JScrollPane chatScroll, infoScroll;
 	ConnectionManager connectionManager;
 
-	public ClientGUIThread(ConnectionManager connectionManager) {
-		this.connectionManager = connectionManager;
+	public ClientGUIThread() {		
 		mainFrame = new JFrame("Escape From The Aliens In Outer Space");
 		chatPanel = new JPanel();
 		rightPanel = new JPanel();
@@ -178,6 +187,17 @@ public class ClientGUIThread implements Runnable {
 		infoTextPane.setText(newMsg);
 	}
 
+	public void setConnectionManager(ConnectionManager connectionManager) {
+		this.connectionManager = connectionManager;
+		this.clientData = connectionManager.getClientData();
+		clientData.addObserver(this);
+				
+	}
+	
+	public ConnectionManager getConnectionManager() {
+		return this.connectionManager;
+	}
+	
 	@Override
 	public void run() {
 		moveButton.addActionListener(new ActionListener() {
@@ -348,6 +368,23 @@ public class ClientGUIThread implements Runnable {
 			}
 
 		});
+	}
+	
+	
+	@Override
+	public void update(Observable o, Object arg) {
+
+		if (arg.equals("Chat")) {
+			ResponseChat chat = clientData.getLastChat();
+			this.appendChat(chat.getPlayerName(), chat.getMessage());
+		} else if (arg.equals("Noise")) {
+			ResponseNoise noise = clientData.getLastNoise();
+			this.appendInfo("NOISE", noise.toString());
+		} else {
+			ResponsePrivate privateMessage = clientData.getLastPrivate();
+			this.appendInfo("INFO", privateMessage.getMessage());
+		}
+
 	}
 
 }

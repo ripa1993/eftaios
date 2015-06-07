@@ -1,9 +1,9 @@
 package it.polimi.ingsw.cg_8.client;
 
+import it.polimi.ingsw.cg_8.client.gui.ConnectionManagerSocket;
 import it.polimi.ingsw.cg_8.view.client.exceptions.NotAValidInput;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Scanner;
@@ -41,6 +41,7 @@ public class ClientSocket implements Runnable {
 	
 	private final ClientData clientData;
 
+	private ConnectionManagerSocket connectionManager;
 	/**
 	 * Changed to true when the server accepts the player's name.
 	 */
@@ -50,6 +51,7 @@ public class ClientSocket implements Runnable {
 		this.playerName = playerName;
 		this.clientData=new ClientData();
 		this.stdin = stdin;
+		this.connectionManager = new ConnectionManagerSocket(playerName);
 	}
 
 	public ClientData getClientData() {
@@ -68,58 +70,10 @@ public class ClientSocket implements Runnable {
 	public void run() {
 
 		try {
-			Socket socket = new Socket(SERVER_ADDRESS, SOCKET_PORT_CLIENTSERVER);
-			System.out.println("Connected to server " + SERVER_ADDRESS
-					+ " on port " + SOCKET_PORT_CLIENTSERVER);
-
-			ObjectOutputStream output = new ObjectOutputStream(
-					socket.getOutputStream());
-			ObjectInputStream input = new ObjectInputStream(
-					socket.getInputStream());
-
-			do {
-				try {
-					System.out.println("Your ID is not set.");
-					output.writeObject(new Integer(this.getClientID()));
-					output.flush();
-					Integer clientIdRequested = (Integer) input.readObject();
-					System.out.println("New ID received");
-					this.setClientID((int) clientIdRequested);
-					System.out.println("Your ID is: " + this.getClientID());
-				} catch (IOException | ClassNotFoundException e) {
-					e.printStackTrace();
-				}
-			} while (this.getClientID() == 0);
-
-			do {
-				try {
-
-					System.out
-							.println("Sending your User-Name to the server...");
-					output.writeObject(this.playerName);
-					output.flush();
-
-					String serverAnswer = (String) input.readObject();
-					if (serverAnswer.equals("NAME ACCEPTED")) {
-						nameSet = true;
-						System.out.println("Name accepted");
-					}
-				} catch (IOException | ClassNotFoundException e) {
-					e.printStackTrace();
-				}
-			} while (nameSet == false);
-
-			/**
-			 * Close the socket used to establish the first connection.
-			 */
-			this.close(socket, output);
-			/**
-			 * Creates an always-on thread that works as a subscriber. When the
-			 * server publishes something, this thread is notified.
-			 */
-			// TODO: ClientSocketViewPUB implementation.
+			this.connectionManager.initializeSocket();
 			ExecutorService executor = Executors.newCachedThreadPool();
-			executor.submit(new ClientSocketViewSUB(SERVER_ADDRESS, SOCKET_PORT_PUBSUB, this));
+			executor.submit(new ClientSocketViewSUB(SERVER_ADDRESS,
+					SOCKET_PORT_PUBSUB, this));
 			System.out.println("[DEBUG] subscriber back to main thread");
 
 			// E' anche chiuso il thread creato, tramite end() ?
@@ -144,14 +98,4 @@ public class ClientSocket implements Runnable {
 		}
 	}
 
-	private void close(Socket socket, ObjectOutputStream output) {
-		try {
-			socket.close();
-		} catch (IOException e) {
-		} finally {
-			socket = null;
-			output = null;
-			System.gc();
-		}
-	}
 }

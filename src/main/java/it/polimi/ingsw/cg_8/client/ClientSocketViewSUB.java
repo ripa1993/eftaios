@@ -1,6 +1,7 @@
 package it.polimi.ingsw.cg_8.client;
 
 import it.polimi.ingsw.cg_8.client.gui.ConnectionManager;
+import it.polimi.ingsw.cg_8.client.gui.ConnectionManagerSocket;
 import it.polimi.ingsw.cg_8.view.server.ServerResponse;
 
 import java.io.IOException;
@@ -28,7 +29,7 @@ public class ClientSocketViewSUB implements Runnable {
 	}
 
 	public ClientSocketViewSUB(String serverIP, int serverPubPort,
-			ConnectionManager connectionManager) {
+			ConnectionManagerSocket connectionManager) {
 		try {
 			this.subSocket = new Socket(serverIP, serverPubPort);
 			this.input = new ObjectInputStream(subSocket.getInputStream());
