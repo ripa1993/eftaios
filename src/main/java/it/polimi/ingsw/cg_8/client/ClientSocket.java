@@ -1,6 +1,5 @@
 package it.polimi.ingsw.cg_8.client;
 
-import it.polimi.ingsw.cg_8.client.gui.ConnectionManagerSocket;
 import it.polimi.ingsw.cg_8.view.client.exceptions.NotAValidInput;
 
 import java.io.IOException;

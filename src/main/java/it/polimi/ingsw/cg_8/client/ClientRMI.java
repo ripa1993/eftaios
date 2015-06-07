@@ -1,5 +1,6 @@
 package it.polimi.ingsw.cg_8.client;
 
+import it.polimi.ingsw.cg_8.server.ServerGameRoom;
 import it.polimi.ingsw.cg_8.server.ServerGameRoomInterface;
 import it.polimi.ingsw.cg_8.server.ServerRMIRegistrationViewRemote;
 import it.polimi.ingsw.cg_8.view.client.ActionParser;
@@ -49,7 +50,7 @@ public class ClientRMI implements Runnable, Serializable, SubscriberInterface {
 	private final static int REGISTRATION_PORT = 7777;
 
 	private final String registrationRoomName = "registrationRoom";
-	
+
 	private ClientData clientData;
 
 	public ClientRMI(String playerName, Scanner stdin) {
@@ -59,16 +60,16 @@ public class ClientRMI implements Runnable, Serializable, SubscriberInterface {
 		this.clientData = new ClientData();
 	}
 
-	// se rmi faccio lookup registry. sul registry avrò subscribe (prendo un
-	// player id) send name (invio il nome al server) e makeMove (invio
-	// clientAction)
-	// c'è pure write to all e write to player, usate dal controller per mandare
-	// messaggi tramite dispatch, collocato sul server
-	// fanno uso di publish message, da reimplementare sul client come remote
-	// method.
-	// non ho problemi di sicurezza perchè write to... non sono remote method,
-	// non fanno override della broker interface
-	//
+	
+	/**
+	 * The client makes a registry lookup, and access to the registration view.
+	 * Then he registers to the game, by acquiring a player code and sending its
+	 * name. Subsequently he gets access to the main {@link ServerGameRoom},
+	 * which allows him to send {@link ClientAction} to the server. When
+	 * connecting the client exposes its {@link SubscriberInterface} to the
+	 * server, so that the server can send messages to the client and access to
+	 * its data.
+	 */
 	@Override
 	public void run() {
 
@@ -78,7 +79,6 @@ public class ClientRMI implements Runnable, Serializable, SubscriberInterface {
 		boolean nameSet = false;
 
 		System.out.println("Contacting the broker...");
-
 
 		try {
 
