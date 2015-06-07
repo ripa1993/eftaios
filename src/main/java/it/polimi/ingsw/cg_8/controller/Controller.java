@@ -23,8 +23,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Random;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -38,12 +39,17 @@ import java.util.concurrent.TimeUnit;
  */
 public class Controller implements Observer {
 
+	private static final int TIMEOUT = 30000;
 	private Model model;
 	private Rules rules;
 	private Map<Integer, Player> id2Player;
 	private Map<Player, Integer> player2Id;
 	private Map<Integer, ServerPublisher> id2Publisher;
 	private ExecutorService executor;
+	private Timer timer;
+	private TimerTask timerTask;
+	private boolean firstRun;
+	private boolean taskCompleted;
 
 	/**
 	 * Initialization of a new game. Note that the model is initialized with the
@@ -60,7 +66,10 @@ public class Controller implements Observer {
 			this.player2Id = new HashMap<Player, Integer>();
 			this.executor = Executors.newCachedThreadPool();
 			this.id2Publisher = new HashMap<Integer, ServerPublisher>();
+			timer = new Timer();
 			model.addObserver(this);
+			firstRun = true;
+			taskCompleted = true;
 		} catch (NotAValidMapException e) {
 			e.printStackTrace();
 		}
@@ -183,35 +192,43 @@ public class Controller implements Observer {
 		if (arg instanceof Noise) {
 			this.writeToAll(new ResponsePrivate(arg.toString()));
 		}
-		
+
 		/**
-		 * If the game is over, disconnect the players and communicate the proper message to them.
+		 * If the game is over, disconnect the players and communicate the
+		 * proper message to them.
 		 */
 		else if (arg.equals(TurnPhase.GAME_END)) {
 			List<Player> playerList = this.model.getPlayers();
-			
+
 			this.writeToAll(new ResponsePrivate("GAME OVER"));
 			if (this.model.checkGameEndRound() == true) {
-				this.writeToAll(new ResponsePrivate("The game reached its conclusion"));
+				this.writeToAll(new ResponsePrivate(
+						"The game reached its conclusion"));
 			}
 			if (this.model.checkGameEndNoEH() == true) {
-				this.writeToAll(new ResponsePrivate("There are no Escape Hatches left to use"));
+				this.writeToAll(new ResponsePrivate(
+						"There are no Escape Hatches left to use"));
 			}
-			
+
 			for (Player p : playerList) {
 				double random = Math.random();
-				if (p.getCharacter() instanceof Human && p.getState().equals(PlayerState.DEAD)) {
+				if (p.getCharacter() instanceof Human
+						&& p.getState().equals(PlayerState.DEAD)) {
 					if (random < 0.5) {
-						this.writeToAll(new ResponsePrivate(p.getName() + " has met a terrible fate."));
+						this.writeToAll(new ResponsePrivate(p.getName()
+								+ " has met a terrible fate."));
 					} else {
-						this.writeToAll(new ResponsePrivate(p.getName() + " was slain in the darkness."));
+						this.writeToAll(new ResponsePrivate(p.getName()
+								+ " was slain in the darkness."));
 					}
-				}
-				else if (p.getCharacter() instanceof Human && p.getState().equals(PlayerState.ESCAPED)) {
-					this.writeToAll(new ResponsePrivate(p.getName() + " managed to escape."));
-				}
-				else if (p.getState().equals(PlayerState.DISCONNECTED)) {
-					this.writeToAll(new ResponsePrivate(p.getName() + " left the game prematurely. \n\tNobody will miss him."));
+				} else if (p.getCharacter() instanceof Human
+						&& p.getState().equals(PlayerState.ESCAPED)) {
+					this.writeToAll(new ResponsePrivate(p.getName()
+							+ " managed to escape."));
+				} else if (p.getState().equals(PlayerState.DISCONNECTED)) {
+					this.writeToAll(new ResponsePrivate(
+							p.getName()
+									+ " left the game prematurely. \n\tNobody will miss him."));
 				}
 			}
 			/**
@@ -220,11 +237,58 @@ public class Controller implements Observer {
 			try {
 				TimeUnit.SECONDS.sleep(10);
 			} catch (InterruptedException e) {
-				System.err.println("[DEBUG] Can't sleep at the end of the game");
+				System.err
+						.println("[DEBUG] Can't sleep at the end of the game");
 			}
 			for (Player p : playerList) {
 				Disconnect.disconnect(p);
 			}
+		}
+
+		/**
+		 * Player has 30 seconds to complete his turn, otherwise he is
+		 * disconnected automatically
+		 */
+		if (arg instanceof Player) {
+			final String playerName = ((Player) arg).getName();
+			// remove previous timer task
+			if (!firstRun && !taskCompleted) {
+				timer.cancel();
+			} else {
+				firstRun = false;
+			}
+
+			System.out.println("Timeout started for player "
+					+ ((Player) arg).getName() + ". He has " + (TIMEOUT / 1000)
+					+ "s to complete his turn.");
+			this.writeToAll(new ResponsePrivate("Timeout started for player "
+					+ ((Player) arg).getName() + ". He has " + (TIMEOUT / 1000)
+					+ "s to complete his turn."));
+			// start new timer task
+			taskCompleted = false;
+			timerTask = new TimerTask() {
+
+				@Override
+				public void run() {
+					synchronized (this) {
+						System.out
+								.println("Time is over, disconnecting player "
+										+ playerName);
+						writeToAll(new ResponsePrivate(
+								"Time is over, disconnecting player "
+										+ playerName));
+						Disconnect
+								.disconnect(model.getCurrentPlayerReference());
+						taskCompleted = true;
+						model.nextPlayer();
+						model.setTurnPhase(TurnPhase.TURN_BEGIN);
+
+					}
+				}
+
+			};
+			timer.schedule(timerTask, TIMEOUT);
+
 		}
 	}
 }

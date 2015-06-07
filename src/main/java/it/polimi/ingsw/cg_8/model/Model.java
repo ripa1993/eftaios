@@ -265,7 +265,8 @@ public class Model extends Observable {
 			}
 			currentPlayerIndex = tempNextPlayer;
 			if (players.get(currentPlayerIndex).getState() == PlayerState.ALIVE) {
-
+				setChanged();
+				notifyObservers(getCurrentPlayerReference());
 				return;
 			} else {
 				nextPlayer();
@@ -288,6 +289,8 @@ public class Model extends Observable {
 				this.setGameOver();
 				return;
 			}
+			setChanged();
+			notifyObservers(getCurrentPlayerReference());
 			return;
 		}
 		return;
