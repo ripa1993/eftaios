@@ -102,7 +102,7 @@ public class StateMachine {
 
 			controller.writeToAll(new ResponsePrivate(player.getName()
 					+ " has been disconnected."));
-			StateMachine.endTurnMessage(controller, model, currentPlayer);
+//			StateMachine.endTurnMessage(controller, model, currentPlayer);
 			return true;
 		}
 
@@ -540,7 +540,7 @@ public class StateMachine {
 		EndTurn.endTurn(model);
 		controller.writeToAll(new ResponsePrivate(player.getName()
 				+ " has finished his turn"));
-		StateMachine.endTurnMessage(controller, model, player);
+//		StateMachine.endTurnMessage(controller, model, player);
 
 	}
 

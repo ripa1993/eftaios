@@ -174,7 +174,7 @@ public class Server {
 	}
 
 	public static  void startTimeout() {
-		System.out.println("Timeout started");
+		timer = new Timer();
 		timerTask = new TimerTask() {
 
 			@Override
@@ -189,6 +189,7 @@ public class Server {
 			}
 		};
 		timer.schedule(timerTask, TIMEOUT);
+		System.out.println("Timeout started");
 	}
 
 	public static void abortTimeout() {

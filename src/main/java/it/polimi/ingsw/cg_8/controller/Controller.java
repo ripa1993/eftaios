@@ -38,17 +38,50 @@ import java.util.concurrent.TimeUnit;
  * 
  */
 public class Controller implements Observer {
-
+	/**
+	 * Allowed time per round in ms, if time is over player is disconnected
+	 */
 	private static final int TIMEOUT = 30000;
+	/**
+	 * Model of this game
+	 */
 	private Model model;
+	/**
+	 * Ruleset of this game
+	 */
 	private Rules rules;
+	/**
+	 * Map that links a clientId to a player instance
+	 */
 	private Map<Integer, Player> id2Player;
+	/**
+	 * Map that links a player instance to a clientId
+	 */
 	private Map<Player, Integer> player2Id;
+	/**
+	 * Map that links a clientId to a publisher thread
+	 */
 	private Map<Integer, ServerPublisher> id2Publisher;
+	/**
+	 * Executor service
+	 */
 	private ExecutorService executor;
+	/**
+	 * Timer used in round timeout, if timeout is over a player is disconnected
+	 */
 	private Timer timer;
+	/**
+	 * Task used in round timeout, if timeout is over a player is disconnected
+	 */
 	private TimerTask timerTask;
+	/**
+	 * Flag that shows if this is the first round of the game
+	 */
 	private boolean firstRun;
+	/**
+	 * Flag that shows if the previous player has been disconnected due to
+	 * timeout
+	 */
 	private boolean taskCompleted;
 
 	/**
@@ -77,23 +110,38 @@ public class Controller implements Observer {
 		// (also RMI do the same)
 	}
 
+	/**
+	 * 
+	 * @param id
+	 *            clientId
+	 * @return related player instance
+	 */
 	public Player getPlayerById(Integer id) {
 		return id2Player.get(id);
 	}
 
+	/**
+	 * 
+	 * @param player
+	 *            player instance
+	 * @return related clientId
+	 */
 	public Integer getIdByPlayer(Player player) {
 		return player2Id.get(player);
 	}
 
-	// Hai un riferimento a un thread timer: quando viene chiamata una delle due
-	// AddClient si controlla che il thread sia null (oppure uso un boolean di
-	// controllo), e lo si inizializza.
-	// Passati 60 secondi, il thread verifica che la partita non sia già
-	// cominciata (gameState == running, se si hanno già 8 giocatori), e in tal
-	// caso la fa partire.
-	// Se si hanno 8 giocatori prima dei 60 secondi: faccio partire a livello
-	// dei 2 server, metto nel controller un metodo comune però (che chiama
-	// this.initGame() ecc...).
+	/**
+	 * Adds a player that is using a socket connection to the game
+	 * 
+	 * @param id
+	 *            clientId of the player
+	 * @param playerName
+	 *            name of the player
+	 * @param pub
+	 *            socket publisher thread of the player
+	 * @throws GameAlreadyRunningException
+	 *             if the player is trying to join an already started game
+	 */
 	public void addClientSocket(Integer id, String playerName,
 			ServerSocketPublisherThread pub) throws GameAlreadyRunningException {
 		Player tempPlayer = model.addPlayer(playerName);
@@ -103,6 +151,18 @@ public class Controller implements Observer {
 		executor.submit(pub);
 	}
 
+	/**
+	 * Adds a player that is using a RMI connection to the game
+	 * 
+	 * @param id
+	 *            clientId of the player
+	 * @param playerName
+	 *            name of the player
+	 * @param view
+	 *            rmi game room, used by the publisher
+	 * @throws GameAlreadyRunningException
+	 *             if the player is trying to join an already started game
+	 */
 	public void addClientRMI(int id, String playerName, ServerGameRoom view)
 			throws GameAlreadyRunningException {
 		Player tempPlayer = model.addPlayer(playerName);
@@ -112,10 +172,12 @@ public class Controller implements Observer {
 
 	}
 
+	/**
+	 *  Starts the game and communicates to the players who is the first player
+	 */
 	public void initGame() {
 		try {
 			model.initGame();
-			// writeToAll( la partita è iniziata )
 			this.writeToAll(new ResponsePrivate("Match is starting..."));
 			this.writeToAll(new ResponsePrivate("The current player is: "
 					+ model.getCurrentPlayerReference().getName()));
@@ -129,11 +191,17 @@ public class Controller implements Observer {
 		}
 
 	}
-
+	/**
+	 * 
+	 * @return this game model
+	 */
 	public Model getModel() {
 		return this.model;
 	}
-
+	/**
+	 * 
+	 * @return this game ruleset
+	 */
 	public Rules getRules() {
 		return this.rules;
 	}
@@ -179,7 +247,10 @@ public class Controller implements Observer {
 		int id = player2Id.get(player);
 		writeToId(id, message);
 	}
-
+	/**
+	 * 
+	 * @return number of players in the game
+	 */
 	public int getNumOfPlayers() {
 		return player2Id.size();
 	}
@@ -257,8 +328,19 @@ public class Controller implements Observer {
 			} else {
 				firstRun = false;
 			}
-
-			System.out.println("Timeout started for player "
+			
+			//communicate new player to clients
+			this.writeToAll(new ResponsePrivate("Next player is: "
+					+ model.getCurrentPlayerReference().getName()));
+			this.writeToPlayer(model.getCurrentPlayerReference(),
+					new ResponsePrivate("IT'S YOUR TURN"));
+			this.writeToPlayer(model.getCurrentPlayerReference(),
+					new ResponsePrivate(model.getCurrentPlayerReference()
+							.toString()));
+			
+			
+			
+			System.out.println("[DEBUG] Timeout started for player "
 					+ ((Player) arg).getName() + ". He has " + (TIMEOUT / 1000)
 					+ "s to complete his turn.");
 			this.writeToAll(new ResponsePrivate("Timeout started for player "
@@ -266,6 +348,7 @@ public class Controller implements Observer {
 					+ "s to complete his turn."));
 			// start new timer task
 			taskCompleted = false;
+			timer = new Timer();
 			timerTask = new TimerTask() {
 
 				@Override
