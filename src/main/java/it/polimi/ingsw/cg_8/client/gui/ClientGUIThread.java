@@ -47,11 +47,19 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * Class that defines the GUI.
+ * 
+ * @author Alberto Parravicini
+ * @version 1.1
+ */
 public class ClientGUIThread implements Runnable, Observer {
-	
+
+	/**
+	 * The server messages are stored here.
+	 */
 	private ClientData clientData;
-	
-	
+
 	JFrame mainFrame;
 	JPanel chatPanel, chatPanel2, rightPanel, infoPanel, commandsPanel,
 			chatInfoPanel;
@@ -66,7 +74,7 @@ public class ClientGUIThread implements Runnable, Observer {
 	JScrollPane chatScroll, infoScroll;
 	ConnectionManager connectionManager;
 
-	public ClientGUIThread() {		
+	public ClientGUIThread() {
 		mainFrame = new JFrame("Escape From The Aliens In Outer Space");
 		chatPanel = new JPanel();
 		rightPanel = new JPanel();
@@ -90,10 +98,10 @@ public class ClientGUIThread implements Runnable, Observer {
 		chatScroll = new JScrollPane(chatTextPane);
 
 		// add black background color
-//		chatPanel2.setBackground(Color.DARK_GRAY);
-//		infoPanel.setBackground(Color.DARK_GRAY);
-//		mapPanel.setBackground(Color.DARK_GRAY);
-//		commandsPanel.setBackground(Color.DARK_GRAY);
+		// chatPanel2.setBackground(Color.DARK_GRAY);
+		// infoPanel.setBackground(Color.DARK_GRAY);
+		// mapPanel.setBackground(Color.DARK_GRAY);
+		// commandsPanel.setBackground(Color.DARK_GRAY);
 
 		// add exit behaviour
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -120,7 +128,8 @@ public class ClientGUIThread implements Runnable, Observer {
 			}
 
 			public void paint(Graphics g) {
-				g.drawImage(image, 0, 0, getWidth(), (int) (0.793*getWidth()), this);
+				g.drawImage(image, 0, 0, getWidth(),
+						(int) (0.793 * getWidth()), this);
 				super.paint(g);
 			}
 		};
@@ -191,13 +200,13 @@ public class ClientGUIThread implements Runnable, Observer {
 		this.connectionManager = connectionManager;
 		this.clientData = connectionManager.getClientData();
 		clientData.addObserver(this);
-				
+
 	}
-	
+
 	public ConnectionManager getConnectionManager() {
 		return this.connectionManager;
 	}
-	
+
 	@Override
 	public void run() {
 		moveButton.addActionListener(new ActionListener() {
@@ -275,7 +284,7 @@ public class ClientGUIThread implements Runnable, Observer {
 			}
 
 		});
-		
+
 		endTurnButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -283,8 +292,7 @@ public class ClientGUIThread implements Runnable, Observer {
 				JOptionPane optionPane = new JOptionPane(
 						"Do you want to end your turn?",
 						JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
-				JDialog dialog = optionPane
-						.createDialog("End turn");
+				JDialog dialog = optionPane.createDialog("End turn");
 				dialog.setVisible(true);
 				int selection = OptionPaneUtils.getSelection(optionPane);
 				if (selection == JOptionPane.YES_OPTION) {
@@ -308,10 +316,12 @@ public class ClientGUIThread implements Runnable, Observer {
 				if (output.equals("Attack")) {
 					connectionManager.send(new ActionUseCard(new AttackCard()));
 				} else if (output.equals("Adrenaline")) {
-					connectionManager.send(new ActionUseCard(new AdrenalineCard()));
+					connectionManager.send(new ActionUseCard(
+							new AdrenalineCard()));
 
 				} else if (output.equals("Sedatives")) {
-					connectionManager.send(new ActionUseCard(new SedativesCard()));
+					connectionManager.send(new ActionUseCard(
+							new SedativesCard()));
 
 				} else if (output.equals("Spotlight")) {
 					String coordinateString = JOptionPane.showInputDialog(
@@ -319,13 +329,15 @@ public class ClientGUIThread implements Runnable, Observer {
 					try {
 						Coordinate coordinate = ActionParser
 								.parseCoordinate(coordinateString);
-						connectionManager.send(new ActionUseCard(new SpotlightCard(), coordinate));
+						connectionManager.send(new ActionUseCard(
+								new SpotlightCard(), coordinate));
 					} catch (NotAValidInput e1) {
 						JOptionPane.showMessageDialog(mainFrame,
 								"Not a valid input!");
 					}
 				} else if (output.equals("Teleport")) {
-					connectionManager.send(new ActionUseCard(new TeleportCard()));
+					connectionManager
+							.send(new ActionUseCard(new TeleportCard()));
 
 				}
 
@@ -369,8 +381,11 @@ public class ClientGUIThread implements Runnable, Observer {
 
 		});
 	}
-	
-	
+
+	/**
+	 * When a new message is added to {@link ClientData}, the GUI is notified
+	 * and displays the message on screen.
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
 
