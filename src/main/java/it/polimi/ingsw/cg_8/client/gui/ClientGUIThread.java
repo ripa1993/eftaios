@@ -40,6 +40,7 @@ import java.awt.event.KeyListener;
 import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Random;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -409,25 +410,43 @@ public class ClientGUIThread implements Runnable, Observer {
 		if (arg.equals("Chat")) {
 			ResponseChat chat = clientData.getLastChat();
 			this.appendChat(chat.getPlayerName(), chat.getMessage());
-			
+
 			// play music
 			playSound(Resource.SOUND_NOTIFICATION);
 		} else if (arg.equals("Noise")) {
 			ResponseNoise noise = clientData.getLastNoise();
 			this.appendInfo("NOISE", noise.toString());
-			
+
 			// play music
-			if(noise.getNoise() instanceof AttackNoise){
-				playSound(Resource.SOUND_HUMAN_ATTACK_1);
-			}else if(noise.getNoise() instanceof DefenseNoise){
+			if (noise.getNoise() instanceof AttackNoise) {
+				Random random = new Random();
+				int n = random.nextInt(2);
+				if (((AttackNoise) noise.getNoise()).isAlien()) {
+					if (n == 0) {
+						playSound(Resource.SOUND_ALIEN_ATTACK_1);
+					} else if (n == 1) {
+						playSound(Resource.SOUND_ALIEN_ATTACK_2);
+					} else {
+						playSound(Resource.SOUND_ALIEN_ATTACK_3);
+					}
+				} else {
+					if (n == 0) {
+						playSound(Resource.SOUND_HUMAN_ATTACK_1);
+					} else if (n == 1) {
+						playSound(Resource.SOUND_HUMAN_ATTACK_2);
+					} else {
+						playSound(Resource.SOUND_HUMAN_ATTACK_3);
+					}
+				}
+			} else if (noise.getNoise() instanceof DefenseNoise) {
 				playSound(Resource.SOUND_DEFENSE);
-			}else if(noise.getNoise() instanceof EscapeSectorNoise){
+			} else if (noise.getNoise() instanceof EscapeSectorNoise) {
 				playSound(Resource.SOUND_ESCAPE_HATCH);
-			}else if(noise.getNoise() instanceof MovementNoise){
+			} else if (noise.getNoise() instanceof MovementNoise) {
 				playSound(Resource.SOUND_MOVEMENT_NOISE);
-			}else if(noise.getNoise() instanceof SpotlightNoise){
+			} else if (noise.getNoise() instanceof SpotlightNoise) {
 				playSound(Resource.SOUND_SPOTLIGHT);
-			}else if(noise.getNoise() instanceof TeleportNoise){
+			} else if (noise.getNoise() instanceof TeleportNoise) {
 				playSound(Resource.SOUND_TELEPORT);
 			}
 		} else {
