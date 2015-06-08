@@ -16,6 +16,10 @@ public class ResponseNoise implements Serializable, ServerResponse {
 	public ResponseNoise(Noise noise) {
 		this.noise = noise;
 	}
+	
+	public Noise getNoise(){
+		return noise;
+	}
 
 	@Override
 	public String toString() {

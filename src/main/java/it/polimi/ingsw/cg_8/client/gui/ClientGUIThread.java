@@ -7,6 +7,12 @@ import it.polimi.ingsw.cg_8.model.cards.itemCards.AttackCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.SedativesCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.SpotlightCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.TeleportCard;
+import it.polimi.ingsw.cg_8.model.noises.AttackNoise;
+import it.polimi.ingsw.cg_8.model.noises.DefenseNoise;
+import it.polimi.ingsw.cg_8.model.noises.EscapeSectorNoise;
+import it.polimi.ingsw.cg_8.model.noises.MovementNoise;
+import it.polimi.ingsw.cg_8.model.noises.SpotlightNoise;
+import it.polimi.ingsw.cg_8.model.noises.TeleportNoise;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 import it.polimi.ingsw.cg_8.view.client.ActionParser;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionAttack;
@@ -31,9 +37,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -122,7 +132,7 @@ public class ClientGUIThread implements Runnable, Observer {
 
 		// set up map panel
 		JLabel mapImageArea = new JLabel() {
-			Image image = (new ImageIcon(Resource.FERMI_MAP)).getImage();
+			Image image = (new ImageIcon(Resource.IMG_FERMI_MAP)).getImage();
 			{
 				setOpaque(false);
 			}
@@ -215,13 +225,17 @@ public class ClientGUIThread implements Runnable, Observer {
 			public void actionPerformed(ActionEvent e) {
 				String coordinateString = JOptionPane.showInputDialog(
 						"Insert destination coordinate", "Coordinate");
-				try {
-					Coordinate coordinate = ActionParser
-							.parseCoordinate(coordinateString);
-					connectionManager.send(new ActionMove(coordinate));
-				} catch (NotAValidInput e1) {
-					JOptionPane.showMessageDialog(mainFrame,
-							"Not a valid input!");
+				if (coordinateString != null) {
+					try {
+
+						Coordinate coordinate = ActionParser
+								.parseCoordinate(coordinateString);
+						connectionManager.send(new ActionMove(coordinate));
+
+					} catch (NotAValidInput e1) {
+						JOptionPane.showMessageDialog(mainFrame,
+								"Not a valid input!");
+					}
 				}
 			}
 
@@ -272,14 +286,17 @@ public class ClientGUIThread implements Runnable, Observer {
 			public void actionPerformed(ActionEvent e) {
 				String coordinateString = JOptionPane.showInputDialog(
 						"Insert target coordinate", "Coordinate");
-				try {
-					Coordinate coordinate = ActionParser
-							.parseCoordinate(coordinateString);
-					// TODO: make fake noise
-					connectionManager.send(new ActionFakeNoise(coordinate));
-				} catch (NotAValidInput e1) {
-					JOptionPane.showMessageDialog(mainFrame,
-							"Not a valid input!");
+				if (coordinateString != null) {
+					try {
+						Coordinate coordinate = ActionParser
+								.parseCoordinate(coordinateString);
+						// TODO: make fake noise
+						connectionManager.send(new ActionFakeNoise(coordinate));
+
+					} catch (NotAValidInput e1) {
+						JOptionPane.showMessageDialog(mainFrame,
+								"Not a valid input!");
+					}
 				}
 			}
 
@@ -392,14 +409,44 @@ public class ClientGUIThread implements Runnable, Observer {
 		if (arg.equals("Chat")) {
 			ResponseChat chat = clientData.getLastChat();
 			this.appendChat(chat.getPlayerName(), chat.getMessage());
+			
+			// play music
+			playSound(Resource.SOUND_NOTIFICATION);
 		} else if (arg.equals("Noise")) {
 			ResponseNoise noise = clientData.getLastNoise();
 			this.appendInfo("NOISE", noise.toString());
+			
+			// play music
+			if(noise.getNoise() instanceof AttackNoise){
+				playSound(Resource.SOUND_HUMAN_ATTACK_1);
+			}else if(noise.getNoise() instanceof DefenseNoise){
+				playSound(Resource.SOUND_DEFENSE);
+			}else if(noise.getNoise() instanceof EscapeSectorNoise){
+				playSound(Resource.SOUND_ESCAPE_HATCH);
+			}else if(noise.getNoise() instanceof MovementNoise){
+				playSound(Resource.SOUND_MOVEMENT_NOISE);
+			}else if(noise.getNoise() instanceof SpotlightNoise){
+				playSound(Resource.SOUND_SPOTLIGHT);
+			}else if(noise.getNoise() instanceof TeleportNoise){
+				playSound(Resource.SOUND_TELEPORT);
+			}
 		} else {
 			ResponsePrivate privateMessage = clientData.getLastPrivate();
 			this.appendInfo("INFO", privateMessage.getMessage());
 		}
 
+	}
+
+	private void playSound(String filePath) {
+		try {
+			AudioInputStream audioInputStream = AudioSystem
+					.getAudioInputStream(new File(filePath).getAbsoluteFile());
+			Clip clip = AudioSystem.getClip();
+			clip.open(audioInputStream);
+			clip.start();
+		} catch (Exception ex) {
+			System.err.println(ex.getMessage());
+		}
 	}
 
 }
