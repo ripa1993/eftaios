@@ -25,7 +25,7 @@ public class FakeNoise extends PlayerAction {
 	public static void fakeNoise(Model model, Coordinate coordinate) {
 		Noise fakeNoise = new EscapeSectorNoise(model.getRoundNumber(), model
 				.getPlayers().get(model.getCurrentPlayer()), coordinate);
-		model.getNoiseLogger().add(fakeNoise);
+		model.addNoise(fakeNoise);
 	}
 
 }

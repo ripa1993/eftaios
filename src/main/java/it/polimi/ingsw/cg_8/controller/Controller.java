@@ -42,7 +42,7 @@ public class Controller implements Observer {
 	/**
 	 * Allowed time per round in ms, if time is over player is disconnected
 	 */
-	private static final int TIMEOUT = 30000;
+	private static final int TIMEOUT = 60000;
 	/**
 	 * Model of this game
 	 */
@@ -264,13 +264,13 @@ public class Controller implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 
-		this.writeToAll(new ResponseNoise(model.getLastNoiseEntry()));
+		
 
 		/**
 		 * If a noise is passed, notify the players of that noise.
 		 */
 		if (arg instanceof Noise) {
-			this.writeToAll(new ResponsePrivate(arg.toString()));
+			this.writeToAll(new ResponseNoise(model.getLastNoiseEntry()));
 		}
 
 		/**
