@@ -9,6 +9,11 @@ import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
  */
 public class EscapeSectorNoise extends Noise {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4362675785601722848L;
+
+	/**
 	 * Constructor
 	 * @param turnNumber turn number
 	 * @param player player that made noise

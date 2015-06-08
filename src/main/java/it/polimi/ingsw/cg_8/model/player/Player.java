@@ -5,6 +5,7 @@ import it.polimi.ingsw.cg_8.model.player.character.human.Human;
 import it.polimi.ingsw.cg_8.model.player.character.human.NormalHuman;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
  * @author Simone
  *
  */
-public class Player {
+public class Player implements Serializable {
 
 	/**
 	 * This player state
@@ -28,15 +29,15 @@ public class Player {
 	/**
 	 * This player character
 	 */
-	private InGameCharacter character;
+	private transient InGameCharacter character;
 	/**
 	 * This player list of played rounds
 	 */
-	private final List<Round> rounds;
+	private transient final List<Round> rounds;
 	/**
 	 * This player hand, contains the owned item cards
 	 */
-	private final Hand hand;
+	private transient final Hand hand;
 
 	// a player is created when he joins the game (match still not running)
 	/**

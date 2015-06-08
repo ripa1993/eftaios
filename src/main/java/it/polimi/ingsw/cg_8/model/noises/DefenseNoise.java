@@ -9,6 +9,11 @@ import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
  */
 public class DefenseNoise extends Noise {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3995763294218805299L;
+
+	/**
 	 * Constructor
 	 * @param turnNumber turn number
 	 * @param player player that made noise

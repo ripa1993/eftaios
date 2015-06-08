@@ -5,7 +5,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * Main client class; it allows the user to set his user-name and select the
+ * Main client class for the CLI; it allows the user to set his user-name and select the
  * connection type he prefers. It also starts the thread used to handle the
  * game.
  * 

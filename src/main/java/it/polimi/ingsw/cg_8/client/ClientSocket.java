@@ -82,9 +82,9 @@ public class ClientSocket implements Runnable {
 					System.out.println("Your ID is not set.");
 					output.writeObject(new Integer(this.getClientID()));
 					output.flush();
-					Integer clientIdRequested = (Integer) input.readObject();
+					Integer clientIDRequested = (Integer) input.readObject();
 					System.out.println("New ID received");
-					this.setClientID((int) clientIdRequested);
+					this.setClientID((int) clientIDRequested);
 					System.out.println("Your ID is: " + this.getClientID());
 				} catch (IOException | ClassNotFoundException e) {
 					e.printStackTrace();
@@ -113,13 +113,10 @@ public class ClientSocket implements Runnable {
 			 * Close the socket used to establish the first connection.
 			 */
 			this.close(socket, output);
-			/**
-			 * Creates an always-on thread that works as a subscriber. When the
-			 * server publishes something, this thread is notified.
-			 */
-			// TODO: ClientSocketViewPUB implementation.
+			
 			ExecutorService executor = Executors.newCachedThreadPool();
-			executor.submit(new ClientSocketViewSUB(SERVER_ADDRESS, SOCKET_PORT_PUBSUB, this));
+			executor.submit(new ClientSocketViewSUB(SERVER_ADDRESS,
+					SOCKET_PORT_PUBSUB, this));
 			System.out.println("[DEBUG] subscriber back to main thread");
 
 			// E' anche chiuso il thread creato, tramite end() ?
@@ -144,6 +141,7 @@ public class ClientSocket implements Runnable {
 		}
 	}
 
+	
 	private void close(Socket socket, ObjectOutputStream output) {
 		try {
 			socket.close();
@@ -151,7 +149,6 @@ public class ClientSocket implements Runnable {
 		} finally {
 			socket = null;
 			output = null;
-			System.gc();
 		}
 	}
 }

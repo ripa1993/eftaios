@@ -1,5 +1,7 @@
 package it.polimi.ingsw.cg_8.model.noises;
 
+import java.io.Serializable;
+
 import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 
@@ -9,7 +11,11 @@ import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
  * @author Simone
  *
  */
-public abstract class Noise {
+public abstract class Noise implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8200186418637096004L;
 	/**
 	 * Turn in which noise happened
 	 */

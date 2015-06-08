@@ -14,6 +14,7 @@ import it.polimi.ingsw.cg_8.model.player.character.human.Human;
 import it.polimi.ingsw.cg_8.server.ServerGameRoom;
 import it.polimi.ingsw.cg_8.server.ServerPublisher;
 import it.polimi.ingsw.cg_8.server.ServerSocketPublisherThread;
+import it.polimi.ingsw.cg_8.view.server.ResponseNoise;
 import it.polimi.ingsw.cg_8.view.server.ResponsePrivate;
 import it.polimi.ingsw.cg_8.view.server.ServerResponse;
 
@@ -179,6 +180,11 @@ public class Controller implements Observer {
 		try {
 			model.initGame();
 			this.writeToAll(new ResponsePrivate("Match is starting..."));
+			for (Player p : this.model.getPlayers()) {
+				this.writeToPlayer(p, new ResponsePrivate(
+						"You will be playing as:\n" + " "
+								+ p.getCharacter().toString()));
+			}
 			this.writeToAll(new ResponsePrivate("The current player is: "
 					+ model.getCurrentPlayerReference().getName()));
 			this.writeToPlayer(model.getCurrentPlayerReference(),
@@ -257,6 +263,9 @@ public class Controller implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
+
+		this.writeToAll(new ResponseNoise(model.getLastNoiseEntry()));
+
 		/**
 		 * If a noise is passed, notify the players of that noise.
 		 */
@@ -316,6 +325,7 @@ public class Controller implements Observer {
 			}
 		}
 
+
 		/**
 		 * Player has 30 seconds to complete his turn, otherwise he is
 		 * disconnected automatically
@@ -373,5 +383,6 @@ public class Controller implements Observer {
 			timer.schedule(timerTask, TIMEOUT);
 
 		}
+
 	}
 }
