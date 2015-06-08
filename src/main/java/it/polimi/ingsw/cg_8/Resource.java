@@ -95,5 +95,8 @@ public class Resource {
 	 */
 	public static final String SOUND_TELEPORT = "res" + File.separatorChar
 			+ "sounds" + File.separatorChar + "teleport.wav";
-
-}
+	/**
+	 * Bonus track
+	 */
+	public static final String SOUND_BONUS = "res" + File.separatorChar
+			+ "sounds" + File.separatorChar + "bonus.wav";}
