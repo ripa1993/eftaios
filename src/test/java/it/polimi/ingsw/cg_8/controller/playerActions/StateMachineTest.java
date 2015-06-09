@@ -231,6 +231,30 @@ public class StateMachineTest {
 	}
 
 	@Test
+	public void adrenalineUsageTest2() {
+
+		boolean result = false;
+		/**
+		 * Cycles players until it finds a Human.
+		 */
+		Player currPlayer = controller.getModel().getCurrentPlayerReference();
+		while (controller.getModel().getCurrentPlayerReference().getCharacter() instanceof Alien) {
+
+			StateMachine.evaluateAction(controller, new ActionMove(
+					new Coordinate(12, 7)), currPlayer);
+			StateMachine.evaluateAction(controller, new ActionEndTurn(),
+					currPlayer);
+			currPlayer = controller.getModel().getCurrentPlayerReference();
+		}
+		currPlayer.getHand().addItemCard(new AdrenalineCard());
+		StateMachine.evaluateAction(controller, new ActionMove(new Coordinate(
+				12, 10)), currPlayer);
+		result = StateMachine.evaluateAction(controller, new ActionUseCard(
+				new AdrenalineCard()), currPlayer);
+		assertFalse(result);
+	}
+
+	@Test
 	public void spotlightUsageTest() {
 
 		boolean result = false;
@@ -253,6 +277,30 @@ public class StateMachineTest {
 	}
 
 	@Test
+	public void spotlightUsageTest2() {
+
+		boolean result = false;
+		/**
+		 * Cycles players until it finds a Human.
+		 */
+		Player currPlayer = controller.getModel().getCurrentPlayerReference();
+		while (controller.getModel().getCurrentPlayerReference().getCharacter() instanceof Alien) {
+
+			StateMachine.evaluateAction(controller, new ActionMove(
+					new Coordinate(12, 7)), currPlayer);
+			StateMachine.evaluateAction(controller, new ActionEndTurn(),
+					currPlayer);
+			currPlayer = controller.getModel().getCurrentPlayerReference();
+		}
+		currPlayer.getHand().addItemCard(new SpotlightCard());
+		StateMachine.evaluateAction(controller, new ActionMove(new Coordinate(
+				12, 10)), currPlayer);
+		result = StateMachine.evaluateAction(controller, new ActionUseCard(
+				new SpotlightCard(), new Coordinate(12, 10)), currPlayer);
+		assertTrue(result);
+	}
+
+	@Test
 	public void sedativesUsageTest() {
 
 		boolean result = false;
@@ -269,6 +317,30 @@ public class StateMachineTest {
 			currPlayer = controller.getModel().getCurrentPlayerReference();
 		}
 		currPlayer.getHand().addItemCard(new SedativesCard());
+		result = StateMachine.evaluateAction(controller, new ActionUseCard(
+				new SedativesCard()), currPlayer);
+		assertTrue(result);
+	}
+
+	@Test
+	public void sedativesUsageTest2() {
+
+		boolean result = false;
+		/**
+		 * Cycles players until it finds a Human.
+		 */
+		Player currPlayer = controller.getModel().getCurrentPlayerReference();
+		while (controller.getModel().getCurrentPlayerReference().getCharacter() instanceof Alien) {
+
+			StateMachine.evaluateAction(controller, new ActionMove(
+					new Coordinate(12, 7)), currPlayer);
+			StateMachine.evaluateAction(controller, new ActionEndTurn(),
+					currPlayer);
+			currPlayer = controller.getModel().getCurrentPlayerReference();
+		}
+		currPlayer.getHand().addItemCard(new SedativesCard());
+		StateMachine.evaluateAction(controller, new ActionMove(new Coordinate(
+				12, 10)), currPlayer);
 		result = StateMachine.evaluateAction(controller, new ActionUseCard(
 				new SedativesCard()), currPlayer);
 		assertTrue(result);
@@ -320,6 +392,7 @@ public class StateMachineTest {
 		assertTrue(currPlayer.getLastPosition().equals(new Coordinate(11, 9)));
 	}
 	
+
 	@Test
 	public void endTurnTest() {
 
@@ -338,10 +411,11 @@ public class StateMachineTest {
 		}
 		StateMachine.evaluateAction(controller, new ActionMove(new Coordinate(
 				12, 10)), currPlayer);
-		result = StateMachine.evaluateAction(controller, new ActionEndTurn(), currPlayer);
+		result = StateMachine.evaluateAction(controller, new ActionEndTurn(),
+				currPlayer);
 		assertTrue(result);
 	}
-	
+
 	/**
 	 * Check that it isn't possible to end the turn before having moved.
 	 */
@@ -361,7 +435,8 @@ public class StateMachineTest {
 					currPlayer);
 			currPlayer = controller.getModel().getCurrentPlayerReference();
 		}
-		result = StateMachine.evaluateAction(controller, new ActionEndTurn(), currPlayer);
+		result = StateMachine.evaluateAction(controller, new ActionEndTurn(),
+				currPlayer);
 		assertFalse(result);
 	}
 
