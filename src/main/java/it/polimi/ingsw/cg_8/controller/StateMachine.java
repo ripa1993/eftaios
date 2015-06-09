@@ -240,24 +240,11 @@ public class StateMachine {
 		// handle MOVEMENT_DONE_NOT_DS
 		if (turnPhase == TurnPhase.MOVEMENT_DONE_NOT_DS) {
 
-			// attack
-
+			/**
+			 * Attack
+			 */
 			if (a instanceof ActionAttack) {
-				if (rules.attackValidator(model)) {
-					Attack attack = new Attack(model);
-					attack.makeAttack();
-					model.setTurnPhase(TurnPhase.ATTACK_DONE);
-					// controller.writeToAll(new
-					// ResponsePrivate(player.getName()
-					// + " has attacked in " + player.getLastPosition()));
-					List<Player> victims = attack.getVictims();
-					for (Player p : victims) {
-						controller.writeToAll(new ResponsePrivate(p.getName()
-								+ " has been killed!"));
-					}
-					return true;
-				}
-				return false;
+				return StateMachine.attackMove(rules, model, controller);
 			}
 
 			// end turn
@@ -319,17 +306,11 @@ public class StateMachine {
 		// handle MOVEMENT_DONE_DS
 		if (turnPhase == TurnPhase.MOVEMENT_DONE_DS) {
 
-			// attack
-
+			/**
+			 * Attack
+			 */
 			if (a instanceof ActionAttack) {
-				if (rules.attackValidator(model)) {
-					new Attack(model).makeAttack();
-					model.setTurnPhase(TurnPhase.ATTACK_DONE);
-					controller.writeToAll(new ResponsePrivate(player.getName()
-							+ " has attacked in " + player.getLastPosition()));
-					return true;
-				}
-				return false;
+				return StateMachine.attackMove(rules, model, controller);
 			}
 
 			// draw card
@@ -544,6 +525,31 @@ public class StateMachine {
 
 	}
 
+	/**
+	 * Method used to handle an attack move
+	 * @param rules
+	 * @param model
+	 * @param controller
+	 * @return Whether the attack was allowed or not.
+	 */
+	private static boolean attackMove(Rules rules, Model model, Controller controller) {
+		if (rules.attackValidator(model) == true) {
+			Attack attack = new Attack(model);
+			attack.makeAttack();
+			model.setTurnPhase(TurnPhase.ATTACK_DONE);
+			// controller.writeToAll(new
+			// ResponsePrivate(player.getName()
+			// + " has attacked in " + player.getLastPosition()));
+			List<Player> victims = attack.getVictims();
+			for (Player p : victims) {
+				controller.writeToAll(new ResponsePrivate(p.getName()
+						+ " has been killed!"));
+			}
+			return true;
+		}
+		return false;
+	}
+	
 	private static void endTurnMessage(Controller controller, Model model,
 			Player player) {
 		controller.writeToAll(new ResponsePrivate("Next player is: "
