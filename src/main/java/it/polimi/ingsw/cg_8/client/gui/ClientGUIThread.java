@@ -211,8 +211,8 @@ public class ClientGUIThread implements Runnable, Observer {
 		mainFrame.setVisible(true);
 		mainFrame.setSize(1280, 720);
 
-		chatTextPane.setText("");
-		infoTextPane.setText("");
+		chatTextPane.setText("Say hi to the other players!");
+		infoTextPane.setText("Welcome to a new EFTAIOS game!");
 	}
 
 	public void appendChat(String player, String msg) {
@@ -248,9 +248,9 @@ public class ClientGUIThread implements Runnable, Observer {
 						"Exit Confirmation", JOptionPane.YES_NO_OPTION,
 						JOptionPane.QUESTION_MESSAGE, null, null, null);
 				if (confirm == 0) {
-					try{
+					try {
 						connectionManager.send(new ActionDisconnect());
-					} catch(NullPointerException ex){
+					} catch (NullPointerException ex) {
 						// if server is down
 						System.err.println("Server is down");
 					}
@@ -444,8 +444,8 @@ public class ClientGUIThread implements Runnable, Observer {
 
 			private Coordinate getCoordinate(MouseEvent e) {
 				// result coordinates
-				int col = 0;
-				int row = 0;
+				int col = -1;
+				int row = -1;
 
 				// click coordinates
 				int mouseX = e.getX();
@@ -497,6 +497,9 @@ public class ClientGUIThread implements Runnable, Observer {
 				if (col % 2 != 0) {
 					row--;
 				}
+				if(row < 0 || col <0 || row >=(NUM_ROW-1) || col>=NUM_COLUMN){
+					return new Coordinate();
+				}
 				row = (int) Math.floor((double) (row / 2));
 				return new Coordinate(col, row);
 			}
@@ -504,20 +507,25 @@ public class ClientGUIThread implements Runnable, Observer {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				Coordinate coordinate = getCoordinate(e);
-				Object[] options = { "Movement", "Spotlight", "Do Fake Noise" };
-				Object result = JOptionPane
-						.showOptionDialog(null, "This is sector " + coordinate,
-								"What would you like to do?",
-								JOptionPane.DEFAULT_OPTION,
-								JOptionPane.QUESTION_MESSAGE, null, options,
-								options[0]);
-				if (result.equals(options[0])) {
-					connectionManager.send(new ActionMove(coordinate));
-				} else if (result.equals(options[1])) {
-					connectionManager.send(new ActionUseCard(
-							new SpotlightCard(), coordinate));
-				} else if (result.equals(options[2])) {
-					connectionManager.send(new ActionFakeNoise(coordinate));
+				if (coordinate.getX() >= 0 && coordinate.getY() >= 0
+						&& coordinate.getX() < NUM_COLUMN
+						&& coordinate.getY() < NUM_ROW) {
+					Object[] options = { "Movement", "Spotlight",
+							"Do Fake Noise" };
+					Object result = JOptionPane.showOptionDialog(null,
+							"This is sector " + coordinate,
+							"What would you like to do?",
+							JOptionPane.DEFAULT_OPTION,
+							JOptionPane.QUESTION_MESSAGE, null, options,
+							options[0]);
+					if (result.equals(options[0])) {
+						connectionManager.send(new ActionMove(coordinate));
+					} else if (result.equals(options[1])) {
+						connectionManager.send(new ActionUseCard(
+								new SpotlightCard(), coordinate));
+					} else if (result.equals(options[2])) {
+						connectionManager.send(new ActionFakeNoise(coordinate));
+					}
 				}
 
 			}
