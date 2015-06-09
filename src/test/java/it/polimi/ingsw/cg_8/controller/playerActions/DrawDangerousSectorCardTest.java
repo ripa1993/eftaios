@@ -75,6 +75,14 @@ public class DrawDangerousSectorCardTest {
 		currPlayer.getHand().addItemCard(new TeleportCard());
 		currPlayer.getHand().addItemCard(new TeleportCard());
 		currPlayer.getHand().addItemCard(new TeleportCard());
+		ItemDeck id = (ItemDeck) model.getItemDeck();
+		for(int i = 0; i<30; i++){
+				try {
+					id.drawCard();
+				} catch (EmptyDeckException e) {
+
+				}
+		}
 		boolean drawnItem = false;
 		boolean result = false;
 		do {
@@ -88,7 +96,7 @@ public class DrawDangerousSectorCardTest {
 				}
 			}
 		}while (!drawnItem);
-		assertFalse(result);
+		assertTrue(result);
 	}
 
 }
