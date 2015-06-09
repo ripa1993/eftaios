@@ -47,6 +47,30 @@ public abstract class Noise implements Serializable {
 
 	}
 
+	/**
+	 * 
+	 * @return this noise turn number
+	 */
+	public int getTurnNumber() {
+		return turnNumber;
+	}
+
+	/**
+	 * 
+	 * @return this noise coordinate
+	 */
+	public Coordinate getCoordinate() {
+		return coordinate;
+	}
+
+	/**
+	 * 
+	 * @return this noise player
+	 */
+	public Player getPlayer() {
+		return player;
+	}
+
 	public String toString() {
 
 		return " Turn: " + turnNumber + " Player: " + player.getName()
