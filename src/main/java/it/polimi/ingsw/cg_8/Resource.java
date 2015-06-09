@@ -25,6 +25,12 @@ public class Resource {
 	public static final String IMG_GALILEI_MAP = "res" + File.separatorChar
 			+ "images" + File.separatorChar + "galilei.png";
 	/**
+	 * Reference to default background image
+	 */
+	public static final String IMG_DEFAULT_BACKGROUND = "res"
+			+ File.separatorChar + "images" + File.separatorChar
+			+ "default_background.png";
+	/**
 	 * Alien attack 1
 	 */
 	public static final String SOUND_ALIEN_ATTACK_1 = "res"
@@ -73,8 +79,8 @@ public class Resource {
 	/**
 	 * Noise
 	 */
-	public static final String SOUND_MOVEMENT_NOISE = "res" + File.separatorChar
-			+ "sounds" + File.separatorChar + "noise.wav";
+	public static final String SOUND_MOVEMENT_NOISE = "res"
+			+ File.separatorChar + "sounds" + File.separatorChar + "noise.wav";
 	/**
 	 * Notification
 	 */
@@ -99,4 +105,5 @@ public class Resource {
 	 * Bonus track
 	 */
 	public static final String SOUND_BONUS = "res" + File.separatorChar
-			+ "sounds" + File.separatorChar + "bonus.wav";}
+			+ "sounds" + File.separatorChar + "bonus.wav";
+}
