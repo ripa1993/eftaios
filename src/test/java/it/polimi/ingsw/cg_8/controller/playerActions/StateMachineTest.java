@@ -319,4 +319,50 @@ public class StateMachineTest {
 
 		assertTrue(currPlayer.getLastPosition().equals(new Coordinate(11, 9)));
 	}
+	
+	@Test
+	public void endTurnTest() {
+
+		boolean result = false;
+		/**
+		 * Cycles players until it finds a Human.
+		 */
+		Player currPlayer = controller.getModel().getCurrentPlayerReference();
+		while (controller.getModel().getCurrentPlayerReference().getCharacter() instanceof Alien) {
+
+			StateMachine.evaluateAction(controller, new ActionMove(
+					new Coordinate(12, 7)), currPlayer);
+			StateMachine.evaluateAction(controller, new ActionEndTurn(),
+					currPlayer);
+			currPlayer = controller.getModel().getCurrentPlayerReference();
+		}
+		StateMachine.evaluateAction(controller, new ActionMove(new Coordinate(
+				12, 10)), currPlayer);
+		result = StateMachine.evaluateAction(controller, new ActionEndTurn(), currPlayer);
+		assertTrue(result);
+	}
+	
+	/**
+	 * Check that it isn't possible to end the turn before having moved.
+	 */
+	@Test
+	public void endTurnTest2() {
+
+		boolean result = true;
+		/**
+		 * Cycles players until it finds a Human.
+		 */
+		Player currPlayer = controller.getModel().getCurrentPlayerReference();
+		while (controller.getModel().getCurrentPlayerReference().getCharacter() instanceof Alien) {
+
+			StateMachine.evaluateAction(controller, new ActionMove(
+					new Coordinate(12, 7)), currPlayer);
+			StateMachine.evaluateAction(controller, new ActionEndTurn(),
+					currPlayer);
+			currPlayer = controller.getModel().getCurrentPlayerReference();
+		}
+		result = StateMachine.evaluateAction(controller, new ActionEndTurn(), currPlayer);
+		assertFalse(result);
+	}
+
 }
