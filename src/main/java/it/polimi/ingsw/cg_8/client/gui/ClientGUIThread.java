@@ -37,6 +37,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
@@ -57,6 +58,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.MouseInputAdapter;
 
 /**
  * Class that defines the GUI.
@@ -81,6 +83,8 @@ public class ClientGUIThread implements Runnable, Observer {
 	private JScrollPane chatScroll, infoScroll;
 	private ConnectionManager connectionManager;
 	private String backgroundImageResource;
+	private Image backgroundImageScaled;
+	private ImageIcon backgroundImage;
 
 	public ClientGUIThread() {
 		mainFrame = new JFrame("Escape From The Aliens In Outer Space");
@@ -103,6 +107,9 @@ public class ClientGUIThread implements Runnable, Observer {
 		infoScroll = new JScrollPane(infoTextPane);
 		chatScroll = new JScrollPane(chatTextPane);
 		backgroundImageResource = Resource.IMG_FERMI_MAP;
+		backgroundImage = new ImageIcon(backgroundImageResource);
+		backgroundImageScaled = new ImageIcon(backgroundImage.getImage()
+				.getScaledInstance(1500, -1, Image.SCALE_SMOOTH)).getImage();
 
 		// add black background color
 		// chatPanel2.setBackground(Color.DARK_GRAY);
@@ -114,11 +121,6 @@ public class ClientGUIThread implements Runnable, Observer {
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		mapPanel = new JPanel() {
-
-			ImageIcon backgroundImage = new ImageIcon(backgroundImageResource);
-			Image backgroundImageScaled = new ImageIcon(backgroundImage
-					.getImage().getScaledInstance(1500, -1, Image.SCALE_SMOOTH))
-					.getImage();
 
 			@Override
 			public void paintComponent(Graphics g) {
@@ -144,6 +146,10 @@ public class ClientGUIThread implements Runnable, Observer {
 				int y = (this.getHeight() - updatedHeight) / 2;
 				g.drawImage(backgroundImageScaled, x, y, updatedWidth,
 						updatedHeight, null);
+			}
+
+			public Image getBackgroundImageScaled() {
+				return backgroundImageScaled;
 			}
 		};
 		mapPanel.setVisible(true);
@@ -412,6 +418,77 @@ public class ClientGUIThread implements Runnable, Observer {
 
 			}
 
+		});
+
+		mapPanel.addMouseListener(new MouseInputAdapter() {
+			private final static int NUM_COLUMN = 23;
+			private final static int NUM_ROW = 29;
+
+			private Coordinate getCoordinate(MouseEvent e){
+				// result coordinates
+				int col = 0;
+				int row = 0;
+
+				// click coordinates
+				int mouseX = e.getX();
+				int mouseY = e.getY();
+				// mapPanel sizes
+				int mapPanelWidth = mapPanel.getWidth();
+				int mapPanelHeight = mapPanel.getHeight();
+				// background image sizes
+				float mapImageWidth = mapPanelWidth;
+				float mapImageHeight = mapPanelHeight;
+				if (mapImageWidth - backgroundImageScaled.getWidth(null) > mapImageHeight
+						- backgroundImageScaled.getHeight(null)) {
+					mapImageWidth = mapImageHeight
+							* backgroundImageScaled.getWidth(null)
+							/ backgroundImageScaled.getHeight(null);
+				} else {
+					mapImageHeight = mapImageWidth
+							* backgroundImageScaled.getHeight(null)
+							/ backgroundImageScaled.getWidth(null);
+
+				}
+				// border sizes
+				float panelBorderWidth = (mapPanelWidth - mapImageWidth) / 2;
+				float panelBorderHeigth = (mapPanelHeight - mapImageHeight) / 2;
+				// calculate col and row size
+				float columnWidth = mapImageWidth / NUM_COLUMN;
+				float rowHeigth = mapImageHeight / NUM_ROW;
+
+				// calculate coordinate
+				float imageMouseX = mouseX - panelBorderWidth;
+				float imageMouseY = mouseY - panelBorderHeigth;
+
+				// calculate column
+				for (int i = 0; i <= NUM_COLUMN; i++) {
+					if (imageMouseX >= i * columnWidth
+							&& imageMouseX <= (i + 1) * columnWidth) {
+						col = i;
+						break;
+					}
+				}
+				// calculate row
+				for (int i = 0; i <= NUM_ROW; i++) {
+					if (imageMouseY >= i * rowHeigth
+							&& imageMouseY <= (i + 1) * rowHeigth) {
+						row = i;
+						break;
+					}
+				}
+				if(col%2!=0){
+					row--;
+				}
+				row = (int) Math.floor((double)(row/2));
+				return new Coordinate(col, row);
+			}
+			
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				Coordinate coordinate = getCoordinate(e);
+				JOptionPane.showMessageDialog(mainFrame, coordinate);
+			}
 		});
 	}
 
