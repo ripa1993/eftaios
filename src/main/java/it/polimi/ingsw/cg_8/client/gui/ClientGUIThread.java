@@ -74,7 +74,8 @@ public class ClientGUIThread implements Runnable, Observer {
 	private ClientData clientData;
 	private JFrame mainFrame;
 	private JPanel chatPanel, chatPanel2, rightPanel, infoPanel, commandsPanel,
-			chatInfoPanel, mapPanel;
+			chatInfoPanel;
+	JLayeredPane mapPanel;
 	private JButton moveButton, attackButton, drawButton, endTurnButton,
 			fakeNoiseButton, useItemCardButton, chatButton;
 	private JTextPane chatTextPane, infoTextPane;
@@ -116,7 +117,7 @@ public class ClientGUIThread implements Runnable, Observer {
 
 		
 		// setup map panel
-		mapPanel = new JPanel() {
+		mapPanel = new JLayeredPane() {
 
 			@Override
 			public void paintComponent(Graphics g) {
