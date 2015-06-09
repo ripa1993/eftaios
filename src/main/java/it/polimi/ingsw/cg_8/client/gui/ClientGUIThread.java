@@ -106,20 +106,16 @@ public class ClientGUIThread implements Runnable, Observer {
 		chatPanel2 = new JPanel();
 		infoScroll = new JScrollPane(infoTextPane);
 		chatScroll = new JScrollPane(chatTextPane);
-		backgroundImageResource = Resource.IMG_FERMI_MAP;
+		backgroundImageResource = Resource.IMG_GALILEI_MAP;
 		backgroundImage = new ImageIcon(backgroundImageResource);
 		backgroundImageScaled = new ImageIcon(backgroundImage.getImage()
-				.getScaledInstance(1500, -1, Image.SCALE_SMOOTH)).getImage();
-
-		// add black background color
-		// chatPanel2.setBackground(Color.DARK_GRAY);
-		// infoPanel.setBackground(Color.DARK_GRAY);
-		// mapPanel.setBackground(Color.DARK_GRAY);
-		// commandsPanel.setBackground(Color.DARK_GRAY);
+				.getScaledInstance(1920, -1, Image.SCALE_SMOOTH)).getImage();
 
 		// add exit behaviour
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+		
+		// setup map panel
 		mapPanel = new JPanel() {
 
 			@Override
@@ -487,7 +483,19 @@ public class ClientGUIThread implements Runnable, Observer {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				Coordinate coordinate = getCoordinate(e);
-				JOptionPane.showMessageDialog(mainFrame, coordinate);
+				Object[] options = {"Movement", "Spotlight", "Do Fake Noise"};
+				Object result = JOptionPane.showOptionDialog(null, "This is sector "+coordinate, "What would you like to do?",
+						JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
+						null, options, options[0]);
+				if (result.equals(options[0])){
+					connectionManager.send(new ActionMove(coordinate));
+				} else if (result.equals(options[1])){
+					connectionManager.send(new ActionUseCard(
+							new SpotlightCard(), coordinate));
+				} else if (result.equals(options[2])){
+					connectionManager.send(new ActionFakeNoise(coordinate));
+				}
+				
 			}
 		});
 	}
