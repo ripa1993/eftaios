@@ -70,20 +70,17 @@ public class ClientGUIThread implements Runnable, Observer {
 	 * The server messages are stored here.
 	 */
 	private ClientData clientData;
-
-	JFrame mainFrame;
-	JPanel chatPanel, chatPanel2, rightPanel, infoPanel, commandsPanel,
-			chatInfoPanel;
-	JLayeredPane mapPanel;
-	JButton moveButton, attackButton, drawButton, endTurnButton,
+	private JFrame mainFrame;
+	private JPanel chatPanel, chatPanel2, rightPanel, infoPanel, commandsPanel,
+			chatInfoPanel, mapPanel;
+	private JButton moveButton, attackButton, drawButton, endTurnButton,
 			fakeNoiseButton, useItemCardButton, chatButton;
-	JTextPane chatTextPane, infoTextPane;
-	JTextField chatTextField;
-	JLabel backgroundMap;
-	JLabel chatTextTitle;
-	private JLabel infoTextTitle;
-	JScrollPane chatScroll, infoScroll;
-	ConnectionManager connectionManager;
+	private JTextPane chatTextPane, infoTextPane;
+	private JTextField chatTextField;
+	private JLabel infoTextTitle, chatTextTitle;
+	private JScrollPane chatScroll, infoScroll;
+	private ConnectionManager connectionManager;
+	private String backgroundImageResource;
 
 	public ClientGUIThread() {
 		mainFrame = new JFrame("Escape From The Aliens In Outer Space");
@@ -91,7 +88,6 @@ public class ClientGUIThread implements Runnable, Observer {
 		rightPanel = new JPanel();
 		infoPanel = new JPanel();
 		chatInfoPanel = new JPanel();
-		mapPanel = new JLayeredPane();
 		commandsPanel = new JPanel();
 		moveButton = new JButton("Movement");
 		attackButton = new JButton("Attack");
@@ -104,9 +100,9 @@ public class ClientGUIThread implements Runnable, Observer {
 		infoTextPane = new JTextPane();
 		chatTextField = new JTextField();
 		chatPanel2 = new JPanel();
-		backgroundMap = new JLabel();
 		infoScroll = new JScrollPane(infoTextPane);
 		chatScroll = new JScrollPane(chatTextPane);
+		backgroundImageResource = Resource.IMG_FERMI_MAP;
 
 		// add black background color
 		// chatPanel2.setBackground(Color.DARK_GRAY);
@@ -116,6 +112,41 @@ public class ClientGUIThread implements Runnable, Observer {
 
 		// add exit behaviour
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		mapPanel = new JPanel() {
+
+			ImageIcon backgroundImage = new ImageIcon(backgroundImageResource);
+			Image backgroundImageScaled = new ImageIcon(backgroundImage
+					.getImage().getScaledInstance(1500, -1, Image.SCALE_SMOOTH))
+					.getImage();
+
+			@Override
+			public void paintComponent(Graphics g) {
+				super.paintComponent(g);
+
+				int updatedWidth = this.getWidth();
+				int updatedHeight = this.getHeight();
+
+				if (this.getWidth() - backgroundImageScaled.getWidth(null) > this
+						.getHeight() - backgroundImageScaled.getHeight(null)) {
+					updatedWidth = updatedHeight
+							* backgroundImageScaled.getWidth(null)
+							/ backgroundImageScaled.getHeight(null);
+				}
+				if (this.getWidth() - backgroundImageScaled.getWidth(null) < this
+						.getHeight() - backgroundImageScaled.getHeight(null)) {
+					updatedHeight = updatedWidth
+							* backgroundImageScaled.getHeight(null)
+							/ backgroundImageScaled.getWidth(null);
+				}
+
+				int x = (this.getWidth() - updatedWidth) / 2;
+				int y = (this.getHeight() - updatedHeight) / 2;
+				g.drawImage(backgroundImageScaled, x, y, updatedWidth,
+						updatedHeight, null);
+			}
+		};
+		mapPanel.setVisible(true);
 
 		// set layouts
 		mainFrame.setLayout(new BorderLayout());
@@ -130,22 +161,6 @@ public class ClientGUIThread implements Runnable, Observer {
 		infoPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		mapPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		commandsPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-
-		// set up map panel
-		JLabel mapImageArea = new JLabel() {
-			Image image = (new ImageIcon(Resource.IMG_FERMI_MAP)).getImage();
-			{
-				setOpaque(false);
-			}
-
-			public void paint(Graphics g) {
-				g.drawImage(image, 0, 0, getWidth(),
-						(int) (0.793 * getWidth()), this);
-				super.paint(g);
-			}
-		};
-		mapPanel.add(mapImageArea);
-		mapPanel.setVisible(true);
 
 		// set up commands jpanel
 		commandsPanel.setLayout(new FlowLayout());
