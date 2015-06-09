@@ -47,16 +47,21 @@ public abstract class Deck {
 	/**
 	 * If the deck is empty and the discard pile contains at least one card,
 	 * reshuffles the discard pile into the deck
+	 * @throws EmptyDeckException 
 	 * 
 	 * 
 	 */
-	public void reshuffle() {
+	public void reshuffle() throws EmptyDeckException {
 
 		if (this.isDeckEmpty() == true && this.isUsedCardsEmpty() == false) {
 			for (Card i : this.usedCards) {
 				this.addCard(i);
 			}
 			this.emptyUsedCardList();
+		}
+		
+		if (this.isDeckEmpty() == true && this.isUsedCardsEmpty() == true){
+			throw new EmptyDeckException("Deck is empty");
 		}
 
 	}

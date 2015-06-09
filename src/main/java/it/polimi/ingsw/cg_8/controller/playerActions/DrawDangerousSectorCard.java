@@ -33,8 +33,13 @@ public class DrawDangerousSectorCard extends PlayerAction {
 	 * The ItemCard drawn by the player.
 	 */
 	private ItemCard itemCard;
-
+	/**
+	 * Flag that signals if the item card drawn has been discarded
+	 */
 	boolean discardedItemCard = false;
+	/**
+	 * Flag that signals if the item card deck is empty
+	 */
 	boolean emptyItemDeck = false;
 
 	/**
@@ -113,7 +118,8 @@ public class DrawDangerousSectorCard extends PlayerAction {
 				} catch (EmptyDeckException e) {
 					this.emptyItemDeck = true;
 					this.itemCard = null;
-				}
+					return hasToMakeFakeNoise;
+				} 
 
 			}
 		}
