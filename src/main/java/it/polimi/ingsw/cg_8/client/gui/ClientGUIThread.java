@@ -17,6 +17,7 @@ import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 import it.polimi.ingsw.cg_8.view.client.ActionParser;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionAttack;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionChat;
+import it.polimi.ingsw.cg_8.view.client.actions.ActionDisconnect;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionDrawCard;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionEndTurn;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionFakeNoise;
@@ -38,6 +39,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
@@ -75,7 +78,7 @@ public class ClientGUIThread implements Runnable, Observer {
 	private JFrame mainFrame;
 	private JPanel chatPanel, chatPanel2, rightPanel, infoPanel, commandsPanel,
 			chatInfoPanel;
-	JLayeredPane mapPanel;
+	private JLayeredPane mapPanel;
 	private JButton moveButton, attackButton, drawButton, endTurnButton,
 			fakeNoiseButton, useItemCardButton, chatButton;
 	private JTextPane chatTextPane, infoTextPane;
@@ -110,12 +113,11 @@ public class ClientGUIThread implements Runnable, Observer {
 		backgroundImageResource = Resource.IMG_GALILEI_MAP;
 		backgroundImage = new ImageIcon(backgroundImageResource);
 		backgroundImageScaled = new ImageIcon(backgroundImage.getImage()
-				.getScaledInstance(1920, -1, Image.SCALE_SMOOTH)).getImage();
+				.getScaledInstance(5000, -1, Image.SCALE_SMOOTH)).getImage();
 
 		// add exit behaviour
-		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mainFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
-		
 		// setup map panel
 		mapPanel = new JLayeredPane() {
 
@@ -238,6 +240,25 @@ public class ClientGUIThread implements Runnable, Observer {
 
 	@Override
 	public void run() {
+		mainFrame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				int confirm = JOptionPane.showOptionDialog(null,
+						"Are You Sure to Close Application?",
+						"Exit Confirmation", JOptionPane.YES_NO_OPTION,
+						JOptionPane.QUESTION_MESSAGE, null, null, null);
+				if (confirm == 0) {
+					try{
+						connectionManager.send(new ActionDisconnect());
+					} catch(NullPointerException ex){
+						// if server is down
+						System.err.println("Server is down");
+					}
+					System.exit(0);
+				}
+			}
+		});
+
 		moveButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -421,7 +442,7 @@ public class ClientGUIThread implements Runnable, Observer {
 			private final static int NUM_COLUMN = 23;
 			private final static int NUM_ROW = 29;
 
-			private Coordinate getCoordinate(MouseEvent e){
+			private Coordinate getCoordinate(MouseEvent e) {
 				// result coordinates
 				int col = 0;
 				int row = 0;
@@ -473,30 +494,32 @@ public class ClientGUIThread implements Runnable, Observer {
 						break;
 					}
 				}
-				if(col%2!=0){
+				if (col % 2 != 0) {
 					row--;
 				}
-				row = (int) Math.floor((double)(row/2));
+				row = (int) Math.floor((double) (row / 2));
 				return new Coordinate(col, row);
 			}
-			
-			
+
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				Coordinate coordinate = getCoordinate(e);
-				Object[] options = {"Movement", "Spotlight", "Do Fake Noise"};
-				Object result = JOptionPane.showOptionDialog(null, "This is sector "+coordinate, "What would you like to do?",
-						JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
-						null, options, options[0]);
-				if (result.equals(options[0])){
+				Object[] options = { "Movement", "Spotlight", "Do Fake Noise" };
+				Object result = JOptionPane
+						.showOptionDialog(null, "This is sector " + coordinate,
+								"What would you like to do?",
+								JOptionPane.DEFAULT_OPTION,
+								JOptionPane.QUESTION_MESSAGE, null, options,
+								options[0]);
+				if (result.equals(options[0])) {
 					connectionManager.send(new ActionMove(coordinate));
-				} else if (result.equals(options[1])){
+				} else if (result.equals(options[1])) {
 					connectionManager.send(new ActionUseCard(
 							new SpotlightCard(), coordinate));
-				} else if (result.equals(options[2])){
+				} else if (result.equals(options[2])) {
 					connectionManager.send(new ActionFakeNoise(coordinate));
 				}
-				
+
 			}
 		});
 	}
