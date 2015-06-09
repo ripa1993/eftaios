@@ -12,7 +12,10 @@ import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.player.character.human.Human;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionAttack;
+import it.polimi.ingsw.cg_8.view.client.actions.ActionChat;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionEndTurn;
+import it.polimi.ingsw.cg_8.view.client.actions.ActionGetAvailableAction;
+import it.polimi.ingsw.cg_8.view.client.actions.ActionGetHand;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionMove;
 import it.polimi.ingsw.cg_8.view.server.ServerResponse;
 
@@ -121,4 +124,28 @@ public class StateMachineTest {
 		assertTrue(result);
 	}
 
+	@Test
+	public void chatTest() {
+		Player p = controller.getModel().getCurrentPlayerReference();
+		boolean result = false;
+
+		result = StateMachine.evaluateAction(controller, new ActionChat("asdasdasd"), p);
+		assertTrue(result);
+	}
+	@Test
+	public void actionTest() {
+		Player p = controller.getModel().getCurrentPlayerReference();
+		boolean result = false;
+
+		result = StateMachine.evaluateAction(controller, new ActionGetAvailableAction(), p);
+		assertTrue(result);
+	}
+	@Test
+	public void handTest() {
+		Player p = controller.getModel().getCurrentPlayerReference();
+		boolean result = false;
+
+		result = StateMachine.evaluateAction(controller, new ActionGetHand(), p);
+		assertTrue(result);
+	}
 }
