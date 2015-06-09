@@ -327,7 +327,7 @@ public class Controller implements Observer {
 
 
 		/**
-		 * Player has 30 seconds to complete his turn, otherwise he is
+		 * Player has 60 seconds to complete his turn, otherwise he is
 		 * disconnected automatically
 		 */
 		if (arg instanceof Player) {
