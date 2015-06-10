@@ -33,7 +33,7 @@ import it.polimi.ingsw.cg_8.view.server.ResponseState;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -74,10 +74,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.MouseInputAdapter;
 
-import java.awt.Component;
-
-import javax.swing.BoxLayout;
-
 /**
  * Class that defines the GUI.
  * 
@@ -91,6 +87,8 @@ public class ClientGUIThread implements Runnable, Observer {
 	 */
 	private ClientData clientData;
 	private JFrame mainFrame;
+	Container contentPane;
+
 	private JPanel chatPanel, chatPanel2, rightPanel, infoPanel, commandsPanel,
 			chatInfoPanel;
 	private JLayeredPane mapPanel;
@@ -120,8 +118,8 @@ public class ClientGUIThread implements Runnable, Observer {
 	public ClientGUIThread() {
 		mainFrame = new JFrame("Escape From The Aliens In Outer Space");
 		mainFrame.setResizable(true);
-		mainFrame = new JFrame("Escape From The Aliens In Outer Space");
 		BufferedImage myImage;
+		contentPane = mainFrame.getContentPane();
 		try {
 			myImage = ImageIO.read(new File("resources//images//default_background.png"));
 			
