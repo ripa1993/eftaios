@@ -14,6 +14,7 @@ import it.polimi.ingsw.cg_8.model.player.character.human.Human;
 import it.polimi.ingsw.cg_8.server.ServerGameRoom;
 import it.polimi.ingsw.cg_8.server.ServerPublisher;
 import it.polimi.ingsw.cg_8.server.ServerSocketPublisherThread;
+import it.polimi.ingsw.cg_8.view.server.ResponseCard;
 import it.polimi.ingsw.cg_8.view.server.ResponseNoise;
 import it.polimi.ingsw.cg_8.view.server.ResponsePrivate;
 import it.polimi.ingsw.cg_8.view.server.ServerResponse;
@@ -174,7 +175,7 @@ public class Controller implements Observer {
 	}
 
 	/**
-	 *  Starts the game and communicates to the players who is the first player
+	 * Starts the game and communicates to the players who is the first player
 	 */
 	public void initGame() {
 		try {
@@ -197,6 +198,7 @@ public class Controller implements Observer {
 		}
 
 	}
+
 	/**
 	 * 
 	 * @return this game model
@@ -204,6 +206,7 @@ public class Controller implements Observer {
 	public Model getModel() {
 		return this.model;
 	}
+
 	/**
 	 * 
 	 * @return this game ruleset
@@ -253,6 +256,7 @@ public class Controller implements Observer {
 		int id = player2Id.get(player);
 		writeToId(id, message);
 	}
+
 	/**
 	 * 
 	 * @return number of players in the game
@@ -263,8 +267,6 @@ public class Controller implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-
-		
 
 		/**
 		 * If a noise is passed, notify the players of that noise.
@@ -325,10 +327,9 @@ public class Controller implements Observer {
 			}
 		}
 
-
 		/**
-		 * Player has 60 seconds to complete his turn, otherwise he is
-		 * disconnected automatically
+		 * The current player has 60 seconds to complete his turn, otherwise he
+		 * is disconnected automatically.
 		 */
 		if (arg instanceof Player) {
 			final String playerName = ((Player) arg).getName();
@@ -338,8 +339,8 @@ public class Controller implements Observer {
 			} else {
 				firstRun = false;
 			}
-			
-			//communicate new player to clients
+
+			// communicate the new current player to clients
 			this.writeToAll(new ResponsePrivate("Next player is: "
 					+ model.getCurrentPlayerReference().getName()));
 			this.writeToPlayer(model.getCurrentPlayerReference(),
@@ -347,9 +348,14 @@ public class Controller implements Observer {
 			this.writeToPlayer(model.getCurrentPlayerReference(),
 					new ResponsePrivate(model.getCurrentPlayerReference()
 							.toString()));
-			
-			
-			
+			/**
+			 * Informs the current player of the item cards he's holding.
+			 */
+			this.writeToPlayer(model.getCurrentPlayerReference(),
+					new ResponseCard(model.getCurrentPlayerReference()
+							.getHand().getHeldCards()));
+
+			// TODO: manda messaggio carte al current player
 			System.out.println("[DEBUG] Timeout started for player "
 					+ ((Player) arg).getName() + ". He has " + (TIMEOUT / 1000)
 					+ "s to complete his turn.");
