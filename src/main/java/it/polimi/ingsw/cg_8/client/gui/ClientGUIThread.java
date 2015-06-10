@@ -33,9 +33,11 @@ import it.polimi.ingsw.cg_8.view.server.ResponseState;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -45,6 +47,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -70,8 +73,10 @@ import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.MouseInputAdapter;
-import javax.swing.BoxLayout;
+
 import java.awt.Component;
+
+import javax.swing.BoxLayout;
 
 /**
  * Class that defines the GUI.
@@ -110,13 +115,25 @@ public class ClientGUIThread implements Runnable, Observer {
 	private JPanel cardPanel;
 	private JLabel labelCurrentState;
 	private JPanel panel_4;
+	private JPanel panel_3;
 
 	public ClientGUIThread() {
 		mainFrame = new JFrame("Escape From The Aliens In Outer Space");
 		mainFrame.setResizable(true);
+		mainFrame = new JFrame("Escape From The Aliens In Outer Space");
+		BufferedImage myImage;
+		try {
+			myImage = ImageIO.read(new File("resources//images//default_background.png"));
+			
+			mainFrame.setContentPane(new BackgroundPanel(myImage));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		mainFrame.getContentPane().setBackground(Color.PINK);
 		mainFrame.setBackground(new Color(255, 255, 255));
 		chatPanel = new JPanel();
+		chatPanel.setOpaque(false);
 		chatPanel.setBackground(Color.WHITE);
 		rightPanel = new JPanel();
 		rightPanel.setOpaque(false);
@@ -193,6 +210,11 @@ public class ClientGUIThread implements Runnable, Observer {
 
 		// set layouts
 		mainFrame.getContentPane().setLayout(new BorderLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		
+		
+		mainFrame.getContentPane().add(mapPanel, BorderLayout.CENTER);
+		mainFrame.getContentPane().add(rightPanel, BorderLayout.EAST);
 		chatPanel.setLayout(new BorderLayout());
 		infoPanel.setLayout(new BorderLayout());
 		mapPanel.setLayout(new BorderLayout());
@@ -229,37 +251,41 @@ public class ClientGUIThread implements Runnable, Observer {
 		panel_1.setLayout(new BorderLayout(0, 0));
 
 		lblPlayerState = new JLabel();
-		lblPlayerState.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblPlayerState.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		lblPlayerState.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPlayerState.setText("PLAYER STATE");
-		lblPlayerState.setForeground(new Color(0, 0, 153));
-		panel_1.add(lblPlayerState, BorderLayout.NORTH);
+		lblPlayerState.setForeground(Color.BLACK);
+		panel_1.add(lblPlayerState, BorderLayout.CENTER);
 
 		labelCurrentState = new JLabel();
 		labelCurrentState.setText("The game hasn't started yet");
-		labelCurrentState.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		labelCurrentState.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		labelCurrentState.setHorizontalAlignment(SwingConstants.CENTER);
-		labelCurrentState.setForeground(new Color(0, 0, 153));
-		panel_1.add(labelCurrentState, BorderLayout.CENTER);
+		labelCurrentState.setForeground(Color.BLACK);
+		panel_1.add(labelCurrentState, BorderLayout.SOUTH);
 
 		panel_4 = new JPanel();
 		panel_4.setOpaque(false);
 		panel_4.setBackground(Color.WHITE);
-		panel_1.add(panel_4, BorderLayout.SOUTH);
+		panel_1.add(panel_4, BorderLayout.NORTH);
 
 		panel_2 = new JPanel();
 		panel_2.setOpaque(false);
 		panel_2.setBackground(Color.WHITE);
 		panel.add(panel_2, BorderLayout.SOUTH);
 		panel_2.setLayout(new BorderLayout(0, 0));
+		
+		panel_3 = new JPanel();
+		panel_3.setOpaque(false);
+		panel_2.add(panel_3, BorderLayout.NORTH);
 
 		lblItemCards = new JLabel();
-		lblItemCards.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblItemCards.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		lblItemCards.setBackground(Color.WHITE);
 		lblItemCards.setHorizontalAlignment(SwingConstants.CENTER);
 		lblItemCards.setText("ITEM CARDS");
-		lblItemCards.setForeground(new Color(0, 0, 153));
-		panel_2.add(lblItemCards, BorderLayout.NORTH);
+		lblItemCards.setForeground(Color.BLACK);
+		panel_2.add(lblItemCards, BorderLayout.CENTER);
 
 		cardPanel = new JPanel();
 		cardPanel.setOpaque(false);
@@ -270,6 +296,8 @@ public class ClientGUIThread implements Runnable, Observer {
 		cardButton1 = new CardButton();
 		cardButton1.setBackground(Color.WHITE);
 		cardPanel.add(cardButton1);
+		
+	       
 
 		cardButton2 = new CardButton();
 		cardButton2.setBackground(Color.WHITE);
@@ -283,39 +311,44 @@ public class ClientGUIThread implements Runnable, Observer {
 		
 
 		try {
-			Image cardImage1 = ImageIO.read(new File(
+			Image card1 = ImageIO.read(new File(
 					"resources//images//card//adrenaline.png"));
+			Image cardImage1 = card1.getScaledInstance(100, -1, Image.SCALE_SMOOTH);
 			cardButton1.setIcon(new ImageIcon(cardImage1));
+			
+			
 		} catch (IOException ex) {
 		}
 		try {
-			Image cardImage2 = ImageIO.read(new File(
+			Image card2 = ImageIO.read(new File(
 					"resources//images//card//attack.png"));
+			Image cardImage2 = card2.getScaledInstance(100, -1, Image.SCALE_SMOOTH);
 			cardButton2.setIcon(new ImageIcon(cardImage2));
 		} catch (IOException ex) {
 		}
 		try {
-			Image cardImage3 = ImageIO.read(new File(
+			Image card3 = ImageIO.read(new File(
 					"resources//images//card//sedatives.png"));
+			Image cardImage3 = card3.getScaledInstance(100, -1, Image.SCALE_SMOOTH);
 			cardButton3.setIcon(new ImageIcon(cardImage3));
 		} catch (IOException ex) {
 		}
 
 		// set up info panel
 		infoTextTitle = new JLabel();
-		infoTextTitle.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		infoTextTitle.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		infoTextTitle.setText("INFORMATION");
-		infoTextTitle.setForeground(new Color(0, 0, 153));
+		infoTextTitle.setForeground(Color.BLACK);
 		infoPanel.add(infoTextTitle, BorderLayout.NORTH);
 		infoPanel.add(infoScroll, BorderLayout.CENTER);
 		infoTextPane.setEditable(false);
 
 		// set up chat panel
 		chatTextTitle = new JLabel();
-		chatTextTitle.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		chatTextTitle.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		chatTextTitle.setBackground(Color.WHITE);
 		chatTextTitle.setText("CHAT");
-		chatTextTitle.setForeground(new Color(0, 0, 153));
+		chatTextTitle.setForeground(Color.BLACK);
 		chatPanel.add(chatTextTitle, BorderLayout.NORTH);
 		chatPanel.add(chatScroll, BorderLayout.CENTER);
 		chatPanel.add(chatTextField, BorderLayout.SOUTH);
@@ -328,8 +361,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		chatPanel2.add(chatButton, BorderLayout.SOUTH);
 		rightPanel.add(chatInfoPanel, BorderLayout.CENTER);
 		rightPanel.add(commandsPanel, BorderLayout.SOUTH);
-		mainFrame.getContentPane().add(mapPanel, BorderLayout.CENTER);
-		mainFrame.getContentPane().add(rightPanel, BorderLayout.EAST);
+		
 		chatPanel2.setVisible(true);
 		chatPanel.setVisible(true);
 		infoPanel.setVisible(true);
