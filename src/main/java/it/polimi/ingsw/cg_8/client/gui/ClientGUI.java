@@ -1,5 +1,8 @@
 package it.polimi.ingsw.cg_8.client.gui;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -44,6 +47,8 @@ public class ClientGUI {
 		
 		guiThread.getConnectionManager().setup();
 		// TODO: acquire map
-		guiThread.run();
+		
+		ExecutorService exec = Executors.newCachedThreadPool();
+		exec.submit(guiThread);
 	}
 }
