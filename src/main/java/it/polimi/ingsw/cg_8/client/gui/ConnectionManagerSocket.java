@@ -20,8 +20,7 @@ import java.util.concurrent.Executors;
  * @author Alberto Parravicini
  * @version 1.1
  */
-public class ConnectionManagerSocket extends ConnectionManager implements
-		Serializable {
+public class ConnectionManagerSocket extends ConnectionManager {
 
 	private static final long serialVersionUID = -3402004204836762667L;
 	/**
@@ -36,6 +35,9 @@ public class ConnectionManagerSocket extends ConnectionManager implements
 	 * The server port used for the Publisher/Subscriber communication.
 	 */
 	private final int SOCKET_PORT_PUBSUB = 29999;
+	/**
+	 * Thread executor service
+	 */
 	private ExecutorService executor;
 
 	public ConnectionManagerSocket(String playerName) {
