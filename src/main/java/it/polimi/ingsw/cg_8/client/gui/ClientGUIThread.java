@@ -645,19 +645,20 @@ public class ClientGUIThread implements Runnable, Observer {
 			} else if (noise.getNoise() instanceof TeleportNoise) {
 				playSound(Resource.SOUND_TELEPORT);
 			}
-		} else if (arg instanceof ResponsePrivate) {
+		} else if (arg.equals("Private")) {
 			ResponsePrivate privateMessage = clientData.getLastPrivate();
 			this.appendInfo("INFO", privateMessage.getMessage());
 		}
 
-		else if  (arg instanceof ResponseCard){
+		else if  (arg.equals("Cards")){
 			ResponseCard cardMessage = clientData.getCards();
 			List<ItemCard> cards= cardMessage.getHand();
 			//TODO: visualizza carte
 		}
-		else if (arg instanceof ResponseState) {
+		else if (arg.equals("State")) {
 			ResponseState stateMessage = clientData.getState();
 			String state = stateMessage.getMessage();
+			lblPlayerState.setText("PLAYER STATE" + state);
 			// TODO: visualizza stato
 		}
 	}
