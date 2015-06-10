@@ -15,7 +15,7 @@ import java.util.Set;
  * Action that uses a spotlight card. It let's
  * 
  * @author Simone
- *
+ * @versino 1.0
  */
 public class UseSpotlightCard extends UseItemCard {
 

@@ -9,7 +9,7 @@ import it.polimi.ingsw.cg_8.model.player.character.human.Human;
  * sector card
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public class UseSedativesCard extends UseItemCard {
 
@@ -18,8 +18,7 @@ public class UseSedativesCard extends UseItemCard {
 	 */
 
 	public static void useCard(Model model) {
-		// TODO: change method to direct player access
-		Player currentPlayer = model.getPlayers().get(model.getCurrentPlayer());
+		Player currentPlayer = model.getCurrentPlayerReference();
 		// Assume that the player is a human by hypothesis
 		Human currentPlayerCharacter = (Human) currentPlayer.getCharacter();
 
