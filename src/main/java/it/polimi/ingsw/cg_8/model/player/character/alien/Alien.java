@@ -7,7 +7,7 @@ import it.polimi.ingsw.cg_8.model.player.character.InGameCharacter;
  * Alien character
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public class Alien extends InGameCharacter {
 	/**

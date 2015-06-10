@@ -69,6 +69,10 @@ public class Hand {
 		return false;
 	}
 
+	/**
+	 * 
+	 * @return max number of item cards that a player can hold
+	 */
 	public static int getMaxCards() {
 		return MAX_CARDS;
 	}

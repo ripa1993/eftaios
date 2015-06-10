@@ -4,7 +4,7 @@ package it.polimi.ingsw.cg_8.model.player.character.human;
  * Human behaviour, used to implement Decorator pattern
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public interface HumanBehaviour {
 	/**

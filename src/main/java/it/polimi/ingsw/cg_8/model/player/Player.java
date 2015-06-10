@@ -14,7 +14,7 @@ import java.util.List;
  * trace of all the players in the game.
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public class Player implements Serializable {
 
@@ -136,19 +136,15 @@ public class Player implements Serializable {
 		state = PlayerState.ESCAPED;
 	}
 
-	/*/**
-	 * Changes the player status from {@link PlayerState#ALIVE_WAITING
+	/*
+	 * /** Changes the player status from {@link PlayerState#ALIVE_WAITING
 	 * ALIVE_WAITING} to {@link PlayerState#ALIVE_PLAYING ALIVE_PLAYING} and
 	 * viceversa
-	 *
-	public void cycleState() {
-		if (state == PlayerState.ALIVE_WAITING) {
-			state = PlayerState.ALIVE_PLAYING;
-			resetDecorations();
-		} else if (state == PlayerState.ALIVE_PLAYING) {
-			state = PlayerState.ALIVE_WAITING;
-		}
-	}*/
+	 * 
+	 * public void cycleState() { if (state == PlayerState.ALIVE_WAITING) {
+	 * state = PlayerState.ALIVE_PLAYING; resetDecorations(); } else if (state
+	 * == PlayerState.ALIVE_PLAYING) { state = PlayerState.ALIVE_WAITING; } }
+	 */
 
 	/**
 	 * Restores human character to its original state. It is called
@@ -199,7 +195,7 @@ public class Player implements Serializable {
 	@Override
 	public String toString() {
 		return "Player: " + name + ", Character: " + character + " "
-				+", Position: " + getLastPosition() ;
+				+ ", Position: " + getLastPosition();
 	}
 
 }

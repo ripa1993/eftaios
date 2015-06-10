@@ -1,8 +1,10 @@
 package it.polimi.ingsw.cg_8.model.player;
+
 /**
  * Allowed player state for a player
+ * 
  * @author Simone
- *
+ * @version 1.0
  */
 public enum PlayerState {
 	/**

@@ -7,7 +7,7 @@ import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
  * keep the history of the player movements.
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public class Round {
 	/**
