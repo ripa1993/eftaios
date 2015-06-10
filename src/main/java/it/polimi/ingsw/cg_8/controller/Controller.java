@@ -14,6 +14,7 @@ import it.polimi.ingsw.cg_8.model.player.character.human.Human;
 import it.polimi.ingsw.cg_8.server.ServerGameRoom;
 import it.polimi.ingsw.cg_8.server.ServerPublisher;
 import it.polimi.ingsw.cg_8.server.ServerSocketPublisherThread;
+import it.polimi.ingsw.cg_8.view.server.ResponseCard;
 import it.polimi.ingsw.cg_8.view.server.ResponseNoise;
 import it.polimi.ingsw.cg_8.view.server.ResponsePrivate;
 import it.polimi.ingsw.cg_8.view.server.ServerResponse;
@@ -90,7 +91,8 @@ public class Controller implements Observer {
 	/**
 	 * Log4j logger
 	 */
-	private static final Logger logger = LogManager.getLogger(ServerSocketPublisherThread.class);
+	private static final Logger logger = LogManager
+			.getLogger(ServerSocketPublisherThread.class);
 
 	/**
 	 * Initialization of a new game. Note that the model is initialized with the
@@ -181,7 +183,7 @@ public class Controller implements Observer {
 	}
 
 	/**
-	 *  Starts the game and communicates to the players who is the first player
+	 * Starts the game and communicates to the players who is the first player
 	 */
 	public void initGame() {
 		try {
@@ -204,6 +206,7 @@ public class Controller implements Observer {
 		}
 
 	}
+
 	/**
 	 * 
 	 * @return this game model
@@ -211,6 +214,7 @@ public class Controller implements Observer {
 	public Model getModel() {
 		return this.model;
 	}
+
 	/**
 	 * 
 	 * @return this game ruleset
@@ -260,6 +264,7 @@ public class Controller implements Observer {
 		int id = player2Id.get(player);
 		writeToId(id, message);
 	}
+
 	/**
 	 * 
 	 * @return number of players in the game
@@ -270,8 +275,6 @@ public class Controller implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-
-		
 
 		/**
 		 * If a noise is passed, notify the players of that noise.
@@ -331,7 +334,6 @@ public class Controller implements Observer {
 			}
 		}
 
-
 		/**
 		 * Player has 60 seconds to complete his turn, otherwise he is
 		 * disconnected automatically
@@ -344,8 +346,8 @@ public class Controller implements Observer {
 			} else {
 				firstRun = false;
 			}
-			
-			//communicate new player to clients
+
+			// communicate the new player to clients
 			this.writeToAll(new ResponsePrivate("Next player is: "
 					+ model.getCurrentPlayerReference().getName()));
 			this.writeToPlayer(model.getCurrentPlayerReference(),
@@ -353,9 +355,13 @@ public class Controller implements Observer {
 			this.writeToPlayer(model.getCurrentPlayerReference(),
 					new ResponsePrivate(model.getCurrentPlayerReference()
 							.toString()));
-			
-			
-			
+			/**
+			 * Communicate to the current player the cards he's holding.
+			 */
+			this.writeToPlayer(model.getCurrentPlayerReference(),
+					new ResponseCard(model.getCurrentPlayerReference()
+							.getHand().getHeldCards()));
+
 			logger.info("Timeout started for player "
 					+ ((Player) arg).getName() + ". He has " + (TIMEOUT / 1000)
 					+ "s to complete his turn.");
@@ -371,7 +377,7 @@ public class Controller implements Observer {
 				public void run() {
 					synchronized (this) {
 						logger.info("Time is over, disconnecting player "
-										+ playerName);
+								+ playerName);
 						writeToAll(new ResponsePrivate(
 								"Time is over, disconnecting player "
 										+ playerName));
