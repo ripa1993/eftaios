@@ -344,7 +344,6 @@ public class StateMachine {
 							new ResponsePrivate("You have drawn a "
 									+ draw.getDangerousSectorCard()));
 					System.out.println(draw.getItemCard());
-					
 
 					if (draw.getItemCard() != null
 							&& draw.isDiscardedItemCard() == false) {
@@ -583,6 +582,15 @@ public class StateMachine {
 			for (Player p : victims) {
 				controller.writeToAll(new ResponsePrivate(p.getName()
 						+ " has been killed!"));
+				List<Player> survivors = attack.getSurvivor();
+				for (Player p2 : survivors) {
+					controller
+							.writeToAll(new ResponsePrivate(
+									p2.getName()
+											+ " survived to the attack by using a defense card"));
+					controller.writeToPlayer(p2, new ResponseCard(p2.getHand()
+							.getHeldCards()));
+				}
 			}
 			return true;
 		}
