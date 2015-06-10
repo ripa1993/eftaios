@@ -5,7 +5,7 @@ package it.polimi.ingsw.cg_8.model.sectors.special.spawn;
  * one per map.
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 
 public class AlienSector extends SpawnSector {

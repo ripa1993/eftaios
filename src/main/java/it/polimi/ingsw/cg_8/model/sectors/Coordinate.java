@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Coordinate is used to identify a sector position inside the map
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public class Coordinate implements Serializable {
 	/**
@@ -21,24 +21,6 @@ public class Coordinate implements Serializable {
 	 * Row number
 	 */
 	final int y;
-
-	/**
-	 * Getter for column
-	 * 
-	 * @return column number
-	 */
-	public int getX() {
-		return x;
-	}
-
-	/**
-	 * Getter for row
-	 * 
-	 * @return row number
-	 */
-	public int getY() {
-		return y;
-	}
 
 	/**
 	 * Constructor for {@link Coordinate}
@@ -64,6 +46,24 @@ public class Coordinate implements Serializable {
 	public Coordinate() {
 		x = -1;
 		y = -1;
+	}
+
+	/**
+	 * Getter for column
+	 * 
+	 * @return column number
+	 */
+	public int getX() {
+		return x;
+	}
+
+	/**
+	 * Getter for row
+	 * 
+	 * @return row number
+	 */
+	public int getY() {
+		return y;
 	}
 
 	@Override

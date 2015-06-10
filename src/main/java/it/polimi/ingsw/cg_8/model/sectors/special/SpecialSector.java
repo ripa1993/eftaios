@@ -10,7 +10,7 @@ import it.polimi.ingsw.cg_8.model.sectors.Sector;
  * SpawnSector}
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public abstract class SpecialSector extends Sector {
 	/**

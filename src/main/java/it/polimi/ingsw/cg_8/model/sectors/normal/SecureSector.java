@@ -5,7 +5,7 @@ package it.polimi.ingsw.cg_8.model.sectors.normal;
  * finish his turn with no noises.
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 
 public class SecureSector extends NormalSector {

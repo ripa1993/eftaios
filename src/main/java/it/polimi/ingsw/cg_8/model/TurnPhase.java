@@ -4,7 +4,7 @@ package it.polimi.ingsw.cg_8.model;
  * Phases in a game's turn
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public enum TurnPhase {
 	/**
