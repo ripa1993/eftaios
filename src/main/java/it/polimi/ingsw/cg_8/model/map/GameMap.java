@@ -14,7 +14,7 @@ import java.util.Set;
  * Abstract class that represents a map
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public abstract class GameMap implements ReachableCoordinatesInterface {
 	/**
