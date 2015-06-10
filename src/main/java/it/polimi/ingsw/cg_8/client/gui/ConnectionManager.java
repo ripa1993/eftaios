@@ -68,7 +68,8 @@ public abstract class ConnectionManager implements Serializable {
 	 * Method used to send messages to the server, implemented according to a
 	 * specific protocol.
 	 * 
-	 * @param inputLine The action performed by the player.
+	 * @param inputLine
+	 *            The action performed by the player.
 	 */
 	public abstract void send(ClientAction inputLine);
 

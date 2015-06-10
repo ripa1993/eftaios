@@ -46,11 +46,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -68,6 +70,8 @@ import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.MouseInputAdapter;
+import javax.swing.BoxLayout;
+import java.awt.Component;
 
 /**
  * Class that defines the GUI.
@@ -99,24 +103,32 @@ public class ClientGUIThread implements Runnable, Observer {
 	private JPanel panel_1;
 	private JPanel panel_2;
 	private JLabel lblPlayerState;
-	private JButton btnNewButton;
-	private JButton btnNewButton_1;
-	private JButton btnNewButton_2;
+	private CardButton cardButton1;
+	private CardButton cardButton2;
+	private CardButton cardButton3;
 	private JLabel lblItemCards;
-	private JPanel panel_3;
+	private JPanel cardPanel;
+	private JLabel labelCurrentState;
+	private JPanel panel_4;
 
 	public ClientGUIThread() {
 		mainFrame = new JFrame("Escape From The Aliens In Outer Space");
-		mainFrame.getContentPane().setBackground(Color.WHITE);
+		mainFrame.setResizable(true);
+		mainFrame.getContentPane().setBackground(Color.PINK);
 		mainFrame.setBackground(new Color(255, 255, 255));
 		chatPanel = new JPanel();
 		chatPanel.setBackground(Color.WHITE);
 		rightPanel = new JPanel();
+		rightPanel.setOpaque(false);
 		infoPanel = new JPanel();
+		infoPanel.setOpaque(false);
 		infoPanel.setBackground(Color.WHITE);
 		chatInfoPanel = new JPanel();
+		chatInfoPanel.setOpaque(false);
+		chatInfoPanel.setBackground(Color.WHITE);
 		commandsPanel = new JPanel();
 		commandsPanel.setBackground(Color.WHITE);
+		commandsPanel.setOpaque(false);
 		moveButton = new JButton("Movement");
 		attackButton = new JButton("Attack");
 		drawButton = new JButton("Draw");
@@ -131,6 +143,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		chatTextField.setForeground(Color.WHITE);
 		chatTextField.setBackground(Color.BLACK);
 		chatPanel2 = new JPanel();
+		chatPanel2.setOpaque(false);
 		chatPanel2.setBackground(Color.WHITE);
 		infoScroll = new JScrollPane(infoTextPane);
 		chatScroll = new JScrollPane(chatTextPane);
@@ -202,47 +215,95 @@ public class ClientGUIThread implements Runnable, Observer {
 		commandsPanel.add(useItemCardButton);
 		commandsPanel.add(endTurnButton);
 		commandsPanel.setVisible(true);
-		
+
 		panel = new JPanel();
+		panel.setOpaque(false);
+		panel.setBackground(Color.WHITE);
 		rightPanel.add(panel, BorderLayout.NORTH);
 		panel.setLayout(new BorderLayout(0, 0));
-		
+
 		panel_1 = new JPanel();
+		panel_1.setOpaque(false);
 		panel_1.setBackground(Color.WHITE);
 		panel.add(panel_1, BorderLayout.NORTH);
-		
+		panel_1.setLayout(new BorderLayout(0, 0));
+
 		lblPlayerState = new JLabel();
+		lblPlayerState.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblPlayerState.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPlayerState.setText("PLAYER STATE");
 		lblPlayerState.setForeground(new Color(0, 0, 153));
-		panel_1.add(lblPlayerState);
-		
+		panel_1.add(lblPlayerState, BorderLayout.NORTH);
+
+		labelCurrentState = new JLabel();
+		labelCurrentState.setText("The game hasn't started yet");
+		labelCurrentState.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		labelCurrentState.setHorizontalAlignment(SwingConstants.CENTER);
+		labelCurrentState.setForeground(new Color(0, 0, 153));
+		panel_1.add(labelCurrentState, BorderLayout.CENTER);
+
+		panel_4 = new JPanel();
+		panel_4.setOpaque(false);
+		panel_4.setBackground(Color.WHITE);
+		panel_1.add(panel_4, BorderLayout.SOUTH);
+
 		panel_2 = new JPanel();
+		panel_2.setOpaque(false);
 		panel_2.setBackground(Color.WHITE);
 		panel.add(panel_2, BorderLayout.SOUTH);
 		panel_2.setLayout(new BorderLayout(0, 0));
-		
+
 		lblItemCards = new JLabel();
+		lblItemCards.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblItemCards.setBackground(Color.WHITE);
 		lblItemCards.setHorizontalAlignment(SwingConstants.CENTER);
 		lblItemCards.setText("ITEM CARDS");
 		lblItemCards.setForeground(new Color(0, 0, 153));
 		panel_2.add(lblItemCards, BorderLayout.NORTH);
+
+		cardPanel = new JPanel();
+		cardPanel.setOpaque(false);
+		cardPanel.setBackground(Color.WHITE);
+		panel_2.add(cardPanel, BorderLayout.SOUTH);
+		cardPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+
+		cardButton1 = new CardButton();
+		cardButton1.setBackground(Color.WHITE);
+		cardPanel.add(cardButton1);
+
+		cardButton2 = new CardButton();
+		cardButton2.setBackground(Color.WHITE);
+		cardPanel.add(cardButton2);
+
+		cardButton3 = new CardButton();
+		cardButton3.setBackground(Color.WHITE);
+		cardPanel.add(cardButton3);
+		cardButton3.setSize(50, 50);
+		cardButton3.setMaximumSize(cardButton3.getSize());
 		
-		panel_3 = new JPanel();
-		panel_3.setBackground(Color.WHITE);
-		panel_2.add(panel_3, BorderLayout.SOUTH);
-		
-		btnNewButton = new JButton("Card 1");
-		panel_3.add(btnNewButton);
-		
-		btnNewButton_1 = new JButton("Card 2");
-		panel_3.add(btnNewButton_1);
-		
-		btnNewButton_2 = new JButton("Card 3");
-		panel_3.add(btnNewButton_2);
+
+		try {
+			Image cardImage1 = ImageIO.read(new File(
+					"resources//images//card//adrenaline.png"));
+			cardButton1.setIcon(new ImageIcon(cardImage1));
+		} catch (IOException ex) {
+		}
+		try {
+			Image cardImage2 = ImageIO.read(new File(
+					"resources//images//card//attack.png"));
+			cardButton2.setIcon(new ImageIcon(cardImage2));
+		} catch (IOException ex) {
+		}
+		try {
+			Image cardImage3 = ImageIO.read(new File(
+					"resources//images//card//sedatives.png"));
+			cardButton3.setIcon(new ImageIcon(cardImage3));
+		} catch (IOException ex) {
+		}
 
 		// set up info panel
 		infoTextTitle = new JLabel();
+		infoTextTitle.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		infoTextTitle.setText("INFORMATION");
 		infoTextTitle.setForeground(new Color(0, 0, 153));
 		infoPanel.add(infoTextTitle, BorderLayout.NORTH);
@@ -251,6 +312,7 @@ public class ClientGUIThread implements Runnable, Observer {
 
 		// set up chat panel
 		chatTextTitle = new JLabel();
+		chatTextTitle.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		chatTextTitle.setBackground(Color.WHITE);
 		chatTextTitle.setText("CHAT");
 		chatTextTitle.setForeground(new Color(0, 0, 153));
@@ -561,7 +623,8 @@ public class ClientGUIThread implements Runnable, Observer {
 				if (col % 2 != 0) {
 					row--;
 				}
-				if(row < 0 || col <0 || row >=(NUM_ROW-1) || col>=NUM_COLUMN){
+				if (row < 0 || col < 0 || row >= (NUM_ROW - 1)
+						|| col >= NUM_COLUMN) {
 					return new Coordinate();
 				}
 				row = (int) Math.floor((double) (row / 2));
@@ -650,15 +713,14 @@ public class ClientGUIThread implements Runnable, Observer {
 			this.appendInfo("INFO", privateMessage.getMessage());
 		}
 
-		else if  (arg.equals("Cards")){
+		else if (arg.equals("Cards")) {
 			ResponseCard cardMessage = clientData.getCards();
-			List<ItemCard> cards= cardMessage.getHand();
-			//TODO: visualizza carte
-		}
-		else if (arg.equals("State")) {
+			List<ItemCard> cards = cardMessage.getHand();
+			// TODO: visualizza carte
+		} else if (arg.equals("State")) {
 			ResponseState stateMessage = clientData.getState();
 			String state = stateMessage.getMessage();
-			lblPlayerState.setText("PLAYER STATE" + state);
+			labelCurrentState.setText(state);
 			// TODO: visualizza stato
 		}
 	}
