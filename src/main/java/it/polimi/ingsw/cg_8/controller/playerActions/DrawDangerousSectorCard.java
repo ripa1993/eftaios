@@ -1,9 +1,5 @@
 package it.polimi.ingsw.cg_8.controller.playerActions;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import it.polimi.ingsw.cg_8.client.ClientSocketViewSUB;
 import it.polimi.ingsw.cg_8.model.Model;
 import it.polimi.ingsw.cg_8.model.cards.Card;
 import it.polimi.ingsw.cg_8.model.cards.dangerousSectorCards.DangerousSectorCard;
@@ -13,9 +9,11 @@ import it.polimi.ingsw.cg_8.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.cg_8.model.exceptions.TooManyCardsException;
 import it.polimi.ingsw.cg_8.model.noises.MovementNoise;
 import it.polimi.ingsw.cg_8.model.noises.Noise;
-import it.polimi.ingsw.cg_8.model.player.Hand;
 import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.sectors.normal.DangerousSector;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * When the player reaches a {@link DangerousSector}, he can draw a

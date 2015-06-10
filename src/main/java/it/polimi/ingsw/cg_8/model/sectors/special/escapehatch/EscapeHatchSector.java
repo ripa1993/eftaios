@@ -11,6 +11,10 @@ import it.polimi.ingsw.cg_8.model.sectors.special.SpecialSector;
  */
 public class EscapeHatchSector extends SpecialSector {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4782069866892094554L;
+	/**
 	 * Current behaviour of the escape hatch sector
 	 */
 	private EscapeHatchBehaviour status;

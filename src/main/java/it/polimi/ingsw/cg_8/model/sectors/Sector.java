@@ -10,6 +10,11 @@ package it.polimi.ingsw.cg_8.model.sectors;
 public abstract class Sector extends Coordinate {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 38270096213388500L;
+
+	/**
 	 * Default constructor for {@link Sector}
 	 * 
 	 * @param x

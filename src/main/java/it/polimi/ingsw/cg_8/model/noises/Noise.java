@@ -1,7 +1,6 @@
 package it.polimi.ingsw.cg_8.model.noises;
 
 import it.polimi.ingsw.cg_8.model.player.Player;
-import it.polimi.ingsw.cg_8.model.player.character.alien.Alien;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 
 import java.io.Serializable;

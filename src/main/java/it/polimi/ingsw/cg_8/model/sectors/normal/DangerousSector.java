@@ -9,6 +9,11 @@ package it.polimi.ingsw.cg_8.model.sectors.normal;
  */
 public class DangerousSector extends NormalSector {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7964533045952694323L;
+
+	/**
 	 * Constructor for dangerous sector
 	 * 
 	 * @param x

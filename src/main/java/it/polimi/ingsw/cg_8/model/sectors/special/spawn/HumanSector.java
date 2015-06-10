@@ -10,6 +10,11 @@ package it.polimi.ingsw.cg_8.model.sectors.special.spawn;
 public class HumanSector extends SpawnSector {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3422910957939391661L;
+
+	/**
 	 * Constructor for {@link HumanSector}
 	 * 
 	 * @param x

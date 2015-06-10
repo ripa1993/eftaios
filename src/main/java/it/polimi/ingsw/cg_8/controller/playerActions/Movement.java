@@ -1,8 +1,5 @@
 package it.polimi.ingsw.cg_8.controller.playerActions;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import it.polimi.ingsw.cg_8.controller.Controller;
 import it.polimi.ingsw.cg_8.controller.Rules;
 import it.polimi.ingsw.cg_8.model.Model;
@@ -15,7 +12,9 @@ import it.polimi.ingsw.cg_8.model.noises.Noise;
 import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 import it.polimi.ingsw.cg_8.model.sectors.special.escapehatch.EscapeHatchSector;
-import it.polimi.ingsw.cg_8.server.ServerSocketPublisherThread;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * The {@link Controller#processInput()} takes a movement input and calls the
