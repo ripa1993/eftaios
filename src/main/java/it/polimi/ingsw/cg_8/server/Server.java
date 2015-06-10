@@ -16,6 +16,9 @@ import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Game server for Escape From The Aliens In Outer Space, provides a Socket and
  * RMI connection to clients, implements a Request-Response pattern and a
@@ -61,12 +64,23 @@ public class Server {
 	 * Registry used by RMI server
 	 */
 	private final Registry registry;
-
+	/**
+	 * Timer used in timeout
+	 */
 	private static Timer timer;
-
+	/**
+	 * TimerTask used in timeout
+	 */
 	private static TimerTask timerTask;
-
+	/**
+	 * Milliseconds after which the game is automatically started when 2 player
+	 * join the game
+	 */
 	private final static int TIMEOUT = 20000;
+	/**
+	 * Log4j logger
+	 */
+	private static final Logger logger = LogManager.getLogger(Server.class);
 
 	/**
 	 * The constructor creates an RMI registry on port 7777.
@@ -121,6 +135,7 @@ public class Server {
 	 */
 	public static Controller createNewGame(GameMapName gameMapName) {
 		nextGame = new Controller(gameMapName, new DefaultRules());
+		logger.debug("New game created: " + gameMapName);
 		return nextGame;
 	}
 
@@ -129,6 +144,7 @@ public class Server {
 	 */
 	public static void nullStartingGame() {
 		nextGame = null;
+		logger.debug("Now the next game is null");
 	}
 
 	/**
@@ -140,7 +156,7 @@ public class Server {
 			executorSocket.submit(new ServerSocketRRThread(
 					SERVER_SOCKET_RR_PORT, SERVER_SOCKET_PS_PORT));
 		} catch (IOException e) {
-			System.err.println("Cannot start server socket CS on port: "
+			logger.error("Cannot start server socket CS on port: "
 					+ SERVER_SOCKET_RR_PORT);
 		}
 	}
@@ -173,7 +189,7 @@ public class Server {
 		return registry;
 	}
 
-	public static  void startTimeout() {
+	public static void startTimeout() {
 		timer = new Timer();
 		timerTask = new TimerTask() {
 
@@ -182,24 +198,28 @@ public class Server {
 
 				synchronized (nextGame) {
 					nextGame.initGame();
-					System.out.println("Game started by TimerTask");
+					logger.info("Game started because timeout is over");
 					nullStartingGame();
 				}
 
 			}
 		};
 		timer.schedule(timerTask, TIMEOUT);
-		System.out.println("Timeout started");
+		logger.info("Timeout started");
 	}
 
 	public static void abortTimeout() {
 		timer.cancel();
+		logger.info("Timeout aborted");
 	}
 
 	public static void main(String[] args) throws RemoteException,
 			AlreadyBoundException {
+		logger.info("Starting server main");
 		Server server = new Server();
+		logger.info("Starting Socket");
 		server.startSocket();
+		logger.info("Starting RMI");
 		server.startRMI();
 	}
 

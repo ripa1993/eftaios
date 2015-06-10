@@ -9,28 +9,37 @@ import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-public class ServerRMI implements Runnable {
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+public class ServerRMI implements Runnable {
+	/**
+	 * Main server reference
+	 */
 	private Server server;
 
+	/**
+	 * Log4j logger
+	 */
+	private static final Logger logger = LogManager.getLogger(ServerRMI.class);
+	
 	public ServerRMI(Server server) {
 		this.server = server;
 	}
 
 	public void run() {
-		System.out.println("Starting an RMI thread");
 
 		ServerRMIRegistrationViewRemote gameRegistration = new ServerRMIRegistrationView(
 				this);
 		try {
 			ServerRMIRegistrationViewRemote gameRemoteRegistration = (ServerRMIRegistrationViewRemote) UnicastRemoteObject
 					.exportObject(gameRegistration, 0);
-			System.out.println("Binding server implementation to registry...");
+			logger.info("Binding server implementation to registry...");
 
 			server.getRegistry().bind(Server.getName(), gameRemoteRegistration);
-
+			logger.info("RMI successfully started");
 		} catch (RemoteException | AlreadyBoundException e) {
-			System.err.println("Cannot start an RMI registry");
+			logger.error("Cannot start an RMI registry");
 		}
 	}
 
@@ -51,7 +60,7 @@ public class ServerRMI implements Runnable {
 			nextGame.addClientRMI(client.getClientId(), client.getPlayerName(),
 					view);
 
-			System.out.println("Player successfully added to the game");
+			logger.info("Player successfully added to the game");
 			Server.getId2Controller().put(client.getClientId(), nextGame);
 			if (nextGame.getNumOfPlayers() == Server.MIN_PLAYERS) {
 				Server.startTimeout();
@@ -60,7 +69,7 @@ public class ServerRMI implements Runnable {
 				Server.abortTimeout();
 				nextGame.initGame();
 				Server.nullStartingGame();
-				System.out.println("Game started");
+				logger.info("Game started");
 			}
 		}
 	}

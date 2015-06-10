@@ -12,6 +12,9 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Socket server implementation, it accepts connection from clients, if they
  * haven't got a valid id (0) it assignes them a valid one and creates an
@@ -32,6 +35,10 @@ public class ServerSocketRRThread implements Runnable {
 	private ServerSocket serverPS;
 
 	/**
+	 * Log4j logger
+	 */
+	private static final Logger logger = LogManager.getLogger(ServerSocketRRThread.class);
+	/**
 	 * It starts both RR and PS server on the given ports
 	 * 
 	 * @param serverSocketRRPort
@@ -44,11 +51,10 @@ public class ServerSocketRRThread implements Runnable {
 	public ServerSocketRRThread(int serverSocketRRPort, int serverSocketPSPort)
 			throws IOException {
 		serverRR = new ServerSocket(serverSocketRRPort);
-		System.out.println("Server socket (request-response) running on port: "
+		logger.info("Server socket (request-response) running on port: "
 				+ serverSocketRRPort);
 		serverPS = new ServerSocket(serverSocketPSPort);
-		System.out
-				.println("Server socket (publisher-subscribe) running on port: "
+		logger.info("Server socket (publisher-subscribe) running on port: "
 						+ serverSocketPSPort);
 
 	}
@@ -57,29 +63,28 @@ public class ServerSocketRRThread implements Runnable {
 	public void run() {
 		while (true) {
 			try {
-				System.out.println("Waiting a connection...");
+				logger.info("Waiting a connection...");
 				Socket client = serverRR.accept();
-				System.out.println("Connection accepted");
+				logger.info("Connection accepted");
 				ObjectInputStream input = new ObjectInputStream(
 						client.getInputStream());
 				ObjectOutputStream output = new ObjectOutputStream(
 						client.getOutputStream());
 				// read client id
 				Integer clientId = (Integer) input.readObject();
-				System.out.println("ClientId is: " + clientId);
+				logger.info("ClientId is: " + clientId);
 
 				if (clientId == 0) {
 					// client has never connected to the server
 					Integer newClientId = Server.getClientId();
-					System.out
-							.println("Assigning new ClientId: " + newClientId);
+					logger.info("Assigning new ClientId: " + newClientId);
 					Server.increaseClientId();
 					output.writeObject(newClientId);
 					output.flush();
 
 					// read player name and confirm
 					String playerName = (String) input.readObject();
-					System.out.println("Id: " + newClientId + " Name: "
+					logger.debug("Id: " + newClientId + " Name: "
 							+ playerName);
 					output.writeObject(new String("NAME ACCEPTED"));
 					output.flush();
@@ -98,8 +103,7 @@ public class ServerSocketRRThread implements Runnable {
 								subscriber);
 						nextGame.addClientSocket(newClientId, playerName,
 								publisher);
-						System.out
-								.println("Player successfully added to the game");
+						logger.info("Player successfully added to the game");
 						Server.getId2Controller().put(newClientId, nextGame);
 
 						if (nextGame.getNumOfPlayers() == Server.MIN_PLAYERS) {
@@ -110,28 +114,29 @@ public class ServerSocketRRThread implements Runnable {
 							Server.abortTimeout();
 							nextGame.initGame();
 							Server.nullStartingGame();
-							System.out.println("Game started");
+							logger.info("Game started");
 						}
 					}
 				} else {
 					// client has already connected to the server, reads player
 					// action
 					ClientAction action = (ClientAction) input.readObject();
-					System.out.println("[DEBUG] " + action);
+					logger.debug("Received client action: "+action);
 					Controller controller = Server.getId2Controller().get(
 							clientId);
-					System.out.println(controller);
-					System.out.println(controller.getPlayerById(clientId));
+					logger.debug("Client is assigned to controller: "+controller);
+					logger.debug("Client is player: "+controller.getPlayerById(clientId));
 
 					boolean result = StateMachine.evaluateAction(controller,
 							action, controller.getPlayerById(clientId));
-					System.out.println("[DEBUG]" + result);
+					logger.debug("Validation output is: " + result);
 					output.writeObject(result);
 					output.flush();
+					logger.debug("Result sent to client");
 				}
 				try {
 					// close connection with the socket
-					System.out.println("Closing connection");
+					logger.info("Closing connection");
 					client.close();
 				} finally {
 					input = null;
@@ -140,12 +145,11 @@ public class ServerSocketRRThread implements Runnable {
 				}
 
 			} catch (IOException e) {
-				System.err.println("Cannot connect to the client");
+				logger.error("Cannot connect to the client");
 			} catch (ClassNotFoundException e) {
-				System.err.println("Cannot read from the input stream");
+				logger.error("Cannot read from the input stream");
 			} catch (GameAlreadyRunningException e) {
-				System.err
-						.println("Game already running, can't add you to this game");
+				logger.error("Game already running, can't add the player to this game");
 			}
 		}
 	}
