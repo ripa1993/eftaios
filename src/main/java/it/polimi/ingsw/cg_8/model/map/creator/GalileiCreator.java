@@ -13,7 +13,7 @@ import java.util.Set;
  * Implementation of the factory pattern, it creates a GalileiMap
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public class GalileiCreator extends MapCreator {
 

@@ -11,7 +11,7 @@ import it.polimi.ingsw.cg_8.model.sectors.SectorType;
 /**
  * Implementation of the factory pattern, it creates a GalvaniMap
  * @author Simone
- *
+ * @version 1.0
  */
 public class GalvaniCreator extends MapCreator {
 	

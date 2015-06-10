@@ -19,7 +19,7 @@ import it.polimi.ingsw.cg_8.model.sectors.special.spawn.HumanSector;
  * MapCreator abstract class.
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public abstract class MapCreator {
 
@@ -186,6 +186,7 @@ public abstract class MapCreator {
 		Sector currentSector = new AlienSector(c.getX(), c.getY());
 		this.addSector(c, currentSector);
 	}
+
 	/**
 	 * Adds a alien spawn sector to the sectors map in the (x,y) coordinate
 	 * 
@@ -200,11 +201,17 @@ public abstract class MapCreator {
 	}
 
 	/**
-	 * Adds a column of sectors. Can be used only with secure and dangerous sectors, otherwise it will do nothing
-	 * @param st sector type
-	 * @param column column number
-	 * @param startingRow starting row number
-	 * @param endingRow ending row number
+	 * Adds a column of sectors. Can be used only with secure and dangerous
+	 * sectors, otherwise it will do nothing
+	 * 
+	 * @param st
+	 *            sector type
+	 * @param column
+	 *            column number
+	 * @param startingRow
+	 *            starting row number
+	 * @param endingRow
+	 *            ending row number
 	 */
 	protected void addColumn(SectorType st, int column, int startingRow,
 			int endingRow) {
@@ -219,8 +226,11 @@ public abstract class MapCreator {
 
 	/**
 	 * Adds sectors according to the elements in the Iterator
-	 * @param it iterator of coordinates
-	 * @param st sector type
+	 * 
+	 * @param it
+	 *            iterator of coordinates
+	 * @param st
+	 *            sector type
 	 */
 	private void sectorsIteration(Iterator<Coordinate> it, SectorType st) {
 		if (st == SectorType.DANGEROUS_SECTOR) {
@@ -239,11 +249,17 @@ public abstract class MapCreator {
 	}
 
 	/**
-	 * Adds a row of sectors. Can be used only with secure and dangerous sectors, otherwise it will do nothing
-	 * @param st sector type
-	 * @param row row number
-	 * @param startingColumn starting column number
-	 * @param endingColumn ending column number
+	 * Adds a row of sectors. Can be used only with secure and dangerous
+	 * sectors, otherwise it will do nothing
+	 * 
+	 * @param st
+	 *            sector type
+	 * @param row
+	 *            row number
+	 * @param startingColumn
+	 *            starting column number
+	 * @param endingColumn
+	 *            ending column number
 	 */
 	protected void addRow(SectorType st, int row, int startingColumn,
 			int endingColumn) {
@@ -255,14 +271,13 @@ public abstract class MapCreator {
 		Iterator<Coordinate> it = currentSet.iterator();
 		sectorsIteration(it, st);
 	}
-	
+
 	/**
 	 * Collection of statements that populate the map
+	 * 
 	 * @return complete map
 	 */
 	abstract public GameMap createMap();
-
-
 
 	@Override
 	public String toString() {

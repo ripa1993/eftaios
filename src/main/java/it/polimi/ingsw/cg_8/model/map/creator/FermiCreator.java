@@ -13,7 +13,7 @@ import it.polimi.ingsw.cg_8.model.sectors.SectorType;
  * Implementation of the factory pattern, it creates a FermiMap
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public class FermiCreator extends MapCreator {
 
