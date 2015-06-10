@@ -4,7 +4,7 @@ import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 /**
  * Fermi map
  * @author Simone
- *
+ * @version 1.0
  */
 public class FermiMap extends GameMap {
 	/**

@@ -7,7 +7,7 @@ import it.polimi.ingsw.cg_8.model.sectors.Sector;
  * {@link DangerousSector} and {@link SecureSector}
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public abstract class NormalSector extends Sector {
 	/**

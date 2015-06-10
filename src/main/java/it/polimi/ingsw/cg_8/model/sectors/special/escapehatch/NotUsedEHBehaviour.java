@@ -4,7 +4,7 @@ package it.polimi.ingsw.cg_8.model.sectors.special.escapehatch;
  * Implementation of the not used escape hatch behaviour
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public class NotUsedEHBehaviour implements EscapeHatchBehaviour {
 

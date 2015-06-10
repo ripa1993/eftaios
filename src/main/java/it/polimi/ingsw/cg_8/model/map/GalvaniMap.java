@@ -4,7 +4,7 @@ import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 /**
  * Galvani map
  * @author Simone
- *
+ * @version 1.0
  */
 public class GalvaniMap extends GameMap {
 	/**

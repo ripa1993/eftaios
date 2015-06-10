@@ -38,7 +38,7 @@ import java.util.Random;
  * Contains all the references to game objects: decks, players and map.
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public class Model extends Observable {
 	@Override
@@ -372,46 +372,90 @@ public class Model extends Observable {
 		return this.getPlayers().get(this.getCurrentPlayer());
 	}
 
+	/**
+	 * 
+	 * @return list of players in this game
+	 */
 	public List<Player> getPlayers() {
 		return players;
 	}
 
+	/**
+	 * 
+	 * @return current round number
+	 */
 	public int getRoundNumber() {
 		return roundNumber;
 	}
 
+	/**
+	 * 
+	 * @return current player index in getPlayers() list
+	 */
 	public int getCurrentPlayer() {
 		return currentPlayerIndex;
 	}
 
+	/**
+	 * 
+	 * @return starting player index in getPlayers() list
+	 */
 	public int getStartingPlayer() {
 		return startingPlayerIndex;
 	}
 
+	/**
+	 * 
+	 * @return turn phase
+	 */
 	public TurnPhase getTurnPhase() {
 		return turnPhase;
 	}
 
+	/**
+	 * 
+	 * @return character deck for this game
+	 */
 	public Deck getCharacterDeck() {
 		return characterDeck;
 	}
 
+	/**
+	 * 
+	 * @return dangerous sector deck for this game
+	 */
 	public Deck getDangerousSectorDeck() {
 		return dangerousSectorDeck;
 	}
 
+	/**
+	 * 
+	 * @return escape hatch deck for this game
+	 */
 	public Deck getEscapeHatchDeck() {
 		return escapeHatchDeck;
 	}
 
+	/**
+	 * 
+	 * @return item deck for this game
+	 */
 	public Deck getItemDeck() {
 		return itemDeck;
 	}
 
+	/**
+	 * 
+	 * @return game map for this game
+	 */
 	public GameMap getMap() {
 		return map;
 	}
 
+	/**
+	 * 
+	 * @return list of noise for this game
+	 */
 	public List<Noise> getNoiseLogger() {
 		return noiseLogger;
 	}
@@ -426,21 +470,35 @@ public class Model extends Observable {
 		return this.noiseLogger.get(this.noiseLogger.size() - 1);
 	}
 
+	/**
+	 * Adds a nois to getNoiseLogger list of noise and notifies all the
+	 * observers
+	 * 
+	 * @param noise
+	 *            noise to be added
+	 */
 	public void addNoise(Noise noise) {
 		this.noiseLogger.add(noise);
 		this.setChanged();
 		this.notifyObservers(noise);
 	}
 
+	/**
+	 * Changes the turn phase
+	 * 
+	 * @param newTurnPhase
+	 *            new turn phase
+	 */
 	public void setTurnPhase(TurnPhase newTurnPhase) {
 		this.turnPhase = newTurnPhase;
 	}
 
-	// Creo setGameOver() chiamata dalle varie action e dal model stesso per far
-	// terminare il gioco.
-	// quando è chiamata fa notify al controller, che provvede a disconnettere i
-	// giocatori dopo 10 secondi, e a stampare messaggi di terminazione della
-	// partita
+	/**
+	 * Called by some Actions and by the model itself in order to end the game.
+	 * When this method is called, it notifies the controller that will
+	 * disconnect the still connected players in 10 seconds and send ending game
+	 * messages to those players
+	 */
 	public void setGameOver() {
 		this.turnPhase = TurnPhase.GAME_END;
 		this.setChanged();

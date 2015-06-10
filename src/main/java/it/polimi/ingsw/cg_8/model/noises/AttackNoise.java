@@ -8,7 +8,7 @@ import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
  * Noise made when a player attacks
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public class AttackNoise extends Noise {
 	/**
@@ -39,12 +39,16 @@ public class AttackNoise extends Noise {
 		}
 	}
 
-	public boolean isAlien(){
+	/**
+	 * 
+	 * @return true, if the player is an alien<br>
+	 *         false, if the player is a human
+	 */
+	public boolean isAlien() {
 		return isAlien;
 	}
-	
-	
-	
+
+	@Override
 	public String toString() {
 		String character;
 		if (isAlien) {

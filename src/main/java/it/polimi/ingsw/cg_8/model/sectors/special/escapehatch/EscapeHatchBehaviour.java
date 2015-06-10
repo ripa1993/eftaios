@@ -7,7 +7,7 @@ package it.polimi.ingsw.cg_8.model.sectors.special.escapehatch;
  * that denies the player to escape (if the escape hatch has already been used)
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public interface EscapeHatchBehaviour {
 	/**

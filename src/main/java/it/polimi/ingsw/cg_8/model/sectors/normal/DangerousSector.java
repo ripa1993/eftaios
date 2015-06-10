@@ -5,7 +5,7 @@ package it.polimi.ingsw.cg_8.model.sectors.normal;
  * dangerous sector card or attack.
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public class DangerousSector extends NormalSector {
 	/**
