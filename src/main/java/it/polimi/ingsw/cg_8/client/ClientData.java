@@ -1,5 +1,6 @@
 package it.polimi.ingsw.cg_8.client;
 
+import it.polimi.ingsw.cg_8.view.server.ResponseCard;
 import it.polimi.ingsw.cg_8.view.server.ResponseChat;
 import it.polimi.ingsw.cg_8.view.server.ResponseNoise;
 import it.polimi.ingsw.cg_8.view.server.ResponsePrivate;
@@ -30,11 +31,16 @@ public class ClientData extends Observable {
 	 * List used to store {@link ResponsePrivate private messages}.
 	 */
 	private List<ResponsePrivate> privateMessages;
-
+	/**
+	 * List used to store {@link ResponseCard card responses};
+	 */
+	private List<ResponseCard> cards;
+	
 	public ClientData() {
 		chat = new ArrayList<ResponseChat>();
 		noise = new ArrayList<ResponseNoise>();
 		privateMessages = new ArrayList<ResponsePrivate>();
+		cards = new ArrayList<ResponseCard>();
 	}
 
 	/**
@@ -60,6 +66,11 @@ public class ClientData extends Observable {
 			notifyObservers("Private");
 			return;
 		}
+		if (response instanceof ResponseCard) {
+			cards.add((ResponseCard) response);
+			setChanged();
+			notifyObservers("Cards");
+		}
 		return;
 	}
 
@@ -73,6 +84,10 @@ public class ClientData extends Observable {
 
 	public List<ResponsePrivate> getPrivateMessages() {
 		return privateMessages;
+	}
+	
+	public List<ResponseCard> getCards() {
+		return cards;
 	}
 
 	/**
@@ -98,5 +113,13 @@ public class ClientData extends Observable {
 		return privateMessages.get(privateMessages.size() - 1);
 
 	}
-
+	
+	/**
+	 * Used to get the last message added to the list.
+	 * @return the list {@link ResponseCard card response}
+	 */
+	public ResponseCard getLastResponseCard() {
+		return cards.get(cards.size() - 1);
+	}
+	
 }
