@@ -36,9 +36,11 @@ public class ConnectionManagerSocket extends ConnectionManager implements
 	 * The server port used for the Publisher/Subscriber communication.
 	 */
 	private final int SOCKET_PORT_PUBSUB = 29999;
+	private ExecutorService executor;
 
 	public ConnectionManagerSocket(String playerName) {
 		super(playerName);
+		executor = Executors.newCachedThreadPool();
 	}
 
 	/**
@@ -53,7 +55,6 @@ public class ConnectionManagerSocket extends ConnectionManager implements
 			 * Creates an always-on thread that works as a subscriber. When the
 			 * server publishes something, this thread is notified.
 			 */
-			ExecutorService executor = Executors.newCachedThreadPool();
 			executor.submit(new ClientSocketViewSUB(SERVER_ADDRESS,
 					SOCKET_PORT_PUBSUB, this));
 			System.out.println("[DEBUG] subscriber back to main thread");
@@ -72,7 +73,7 @@ public class ConnectionManagerSocket extends ConnectionManager implements
 
 		ClientSocketViewCS socketCS = new ClientSocketViewCS(SERVER_ADDRESS,
 				SOCKET_PORT_CLIENTSERVER, inputLine, clientID);
-		socketCS.run();
+		executor.submit(socketCS);
 
 	}
 

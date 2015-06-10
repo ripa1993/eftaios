@@ -32,6 +32,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Main controller class: it handles the initialization of a new game, the main
  * game loop, and communicates with both the view and the model.
@@ -85,6 +88,11 @@ public class Controller implements Observer {
 	 * timeout
 	 */
 	private boolean taskCompleted;
+	/**
+	 * Log4j logger
+	 */
+	private static final Logger logger = LogManager
+			.getLogger(ServerSocketPublisherThread.class);
 
 	/**
 	 * Initialization of a new game. Note that the model is initialized with the
@@ -106,7 +114,7 @@ public class Controller implements Observer {
 			firstRun = true;
 			taskCompleted = true;
 		} catch (NotAValidMapException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		// TODO: ServerSocketPublisherThread should extend ServerPublisherThread
 		// (also RMI do the same)
@@ -194,7 +202,7 @@ public class Controller implements Observer {
 			this.writeToPlayer(model.getCurrentPlayerReference(),
 					new ResponsePrivate("IT'S YOUR TURN!"));
 		} catch (EmptyDeckException e) {
-			System.err.println(e.getMessage());
+			logger.error(e.getMessage());
 		}
 
 	}
@@ -319,8 +327,7 @@ public class Controller implements Observer {
 			try {
 				TimeUnit.SECONDS.sleep(10);
 			} catch (InterruptedException e) {
-				System.err
-						.println("[DEBUG] Can't sleep at the end of the game");
+				logger.error("Can't sleep at the end of the game");
 			}
 			for (Player p : playerList) {
 				Disconnect.disconnect(p);
@@ -328,8 +335,8 @@ public class Controller implements Observer {
 		}
 
 		/**
-		 * The current player has 60 seconds to complete his turn, otherwise he
-		 * is disconnected automatically.
+		 * Player has 60 seconds to complete his turn, otherwise he is
+		 * disconnected automatically
 		 */
 		if (arg instanceof Player) {
 			final String playerName = ((Player) arg).getName();
@@ -340,7 +347,7 @@ public class Controller implements Observer {
 				firstRun = false;
 			}
 
-			// communicate the new current player to clients
+			// communicate the new player to clients
 			this.writeToAll(new ResponsePrivate("Next player is: "
 					+ model.getCurrentPlayerReference().getName()));
 			this.writeToPlayer(model.getCurrentPlayerReference(),
@@ -349,14 +356,13 @@ public class Controller implements Observer {
 					new ResponsePrivate(model.getCurrentPlayerReference()
 							.toString()));
 			/**
-			 * Informs the current player of the item cards he's holding.
+			 * Communicate to the current player the cards he's holding.
 			 */
 			this.writeToPlayer(model.getCurrentPlayerReference(),
 					new ResponseCard(model.getCurrentPlayerReference()
 							.getHand().getHeldCards()));
 
-			// TODO: manda messaggio carte al current player
-			System.out.println("[DEBUG] Timeout started for player "
+			logger.info("Timeout started for player "
 					+ ((Player) arg).getName() + ". He has " + (TIMEOUT / 1000)
 					+ "s to complete his turn.");
 			this.writeToAll(new ResponsePrivate("Timeout started for player "
@@ -370,9 +376,8 @@ public class Controller implements Observer {
 				@Override
 				public void run() {
 					synchronized (this) {
-						System.out
-								.println("Time is over, disconnecting player "
-										+ playerName);
+						logger.info("Time is over, disconnecting player "
+								+ playerName);
 						writeToAll(new ResponsePrivate(
 								"Time is over, disconnecting player "
 										+ playerName));
