@@ -1,9 +1,5 @@
 package it.polimi.ingsw.cg_8.controller.playerActions;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import it.polimi.ingsw.cg_8.client.ClientSocketViewSUB;
 import it.polimi.ingsw.cg_8.model.Model;
 import it.polimi.ingsw.cg_8.model.cards.Card;
 import it.polimi.ingsw.cg_8.model.cards.dangerousSectorCards.DangerousSectorCard;
@@ -13,9 +9,11 @@ import it.polimi.ingsw.cg_8.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.cg_8.model.exceptions.TooManyCardsException;
 import it.polimi.ingsw.cg_8.model.noises.MovementNoise;
 import it.polimi.ingsw.cg_8.model.noises.Noise;
-import it.polimi.ingsw.cg_8.model.player.Hand;
 import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.sectors.normal.DangerousSector;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * When the player reaches a {@link DangerousSector}, he can draw a
@@ -48,7 +46,9 @@ public class DrawDangerousSectorCard extends PlayerAction {
 	/**
 	 * Log4j logger
 	 */
-	private static final Logger logger = LogManager.getLogger(DrawDangerousSectorCard.class);
+	private static final Logger logger = LogManager
+			.getLogger(DrawDangerousSectorCard.class);
+
 	/**
 	 * The class is not static so that it is possible to keep trace of the cards
 	 * drawn by the player.
@@ -112,13 +112,14 @@ public class DrawDangerousSectorCard extends PlayerAction {
 
 				try {
 					itemCard = (ItemCard) model.getItemDeck().drawCard();
-					
+
 					/**
 					 * Add the card to the player's hand, if possible.
 					 */
-					discardedItemCard = !(player.getHand().addItemCard(itemCard));
-						
-					 if (discardedItemCard == true) {
+					discardedItemCard = !(player.getHand()
+							.addItemCard(itemCard));
+
+					if (discardedItemCard == true) {
 						model.getItemDeck().addUsedCard(itemCard);
 					}
 
@@ -127,25 +128,45 @@ public class DrawDangerousSectorCard extends PlayerAction {
 					this.emptyItemDeck = true;
 					this.itemCard = null;
 					return hasToMakeFakeNoise;
-				} 
+				}
 
 			}
 		}
 		return hasToMakeFakeNoise;
 	}
 
+	/**
+	 * 
+	 * @return dangerous sector card that has been drawn
+	 */
 	public Card getDangerousSectorCard() {
 		return this.dangerousSectorCard;
 	}
 
+	/**
+	 * 
+	 * @return item card that has been drawn, if it hasn't been drawn it returns
+	 *         a null
+	 */
 	public Card getItemCard() {
 		return this.itemCard;
 	}
 
+	/**
+	 * 
+	 * @return true, if the item card has been discarded becaus player has
+	 *         already 3 cards in hand<br>
+	 *         false, if not
+	 */
 	public boolean isDiscardedItemCard() {
 		return discardedItemCard;
 	}
 
+	/**
+	 * 
+	 * @return true, if the item deck is empty<br>
+	 *         false, if not
+	 */
 	public boolean isEmptyItemDeck() {
 		return emptyItemDeck;
 	}

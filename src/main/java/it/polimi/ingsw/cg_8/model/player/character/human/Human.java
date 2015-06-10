@@ -11,7 +11,7 @@ import it.polimi.ingsw.cg_8.model.player.character.human.decorations.EnableSedat
  * Human character
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public class Human extends InGameCharacter {
 	/**

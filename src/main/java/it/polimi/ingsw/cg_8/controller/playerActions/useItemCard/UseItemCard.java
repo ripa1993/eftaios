@@ -9,7 +9,7 @@ import it.polimi.ingsw.cg_8.controller.playerActions.PlayerAction;
  * {@link UseSpotlightCard Spotlight} and {@link UseTeleportCard Teleport}
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public abstract class UseItemCard extends PlayerAction {
 
@@ -19,4 +19,3 @@ public abstract class UseItemCard extends PlayerAction {
 	public UseItemCard() {
 	}
 }
-

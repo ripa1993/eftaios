@@ -10,6 +10,11 @@ package it.polimi.ingsw.cg_8.model.sectors.normal;
 
 public class SecureSector extends NormalSector {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8710341825606799472L;
+
+	/**
 	 * Secure sector constructor
 	 * 
 	 * @param x

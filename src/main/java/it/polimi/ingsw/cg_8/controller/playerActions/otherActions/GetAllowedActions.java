@@ -3,7 +3,20 @@ package it.polimi.ingsw.cg_8.controller.playerActions.otherActions;
 import it.polimi.ingsw.cg_8.controller.playerActions.PlayerAction;
 import it.polimi.ingsw.cg_8.model.player.Player;
 
-public class GetAllowedActions extends PlayerAction{
+/**
+ * This action lists all the available commands in a CLI
+ * 
+ * @author Simone
+ * @version 1.0
+ */
+public class GetAllowedActions extends PlayerAction {
+	/**
+	 * List of all recognized commands
+	 * 
+	 * @param player
+	 *            requesting player
+	 * @return list of all recognized commands
+	 */
 	public static String printActions(Player player) {
 		String actions = "List of supported commands:\n"
 				+ "SAY message - sends a chat message to all the other players\n"

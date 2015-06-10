@@ -4,11 +4,9 @@ package it.polimi.ingsw.cg_8.model.player.character.human;
  * Default {@link Human} {@link HumanBehaviour Behaviour}
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public class NormalHuman implements HumanBehaviour {
-
-	
 
 	@Override
 	public boolean isAttackAllowed() {
@@ -29,7 +27,7 @@ public class NormalHuman implements HumanBehaviour {
 	public boolean hasToDrawSectorCard() {
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "NormalHuman";

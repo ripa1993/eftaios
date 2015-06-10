@@ -8,7 +8,7 @@ import it.polimi.ingsw.cg_8.model.decks.EscapeHatchDeck;
  * Escape hatch deck creator
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public class EscapeHatchDeckCreator extends DeckCreator {
 	/**

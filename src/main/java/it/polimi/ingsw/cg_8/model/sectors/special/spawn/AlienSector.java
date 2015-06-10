@@ -11,6 +11,11 @@ package it.polimi.ingsw.cg_8.model.sectors.special.spawn;
 public class AlienSector extends SpawnSector {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8065999857578160970L;
+
+	/**
 	 * Constructor for {@link AlienSector}
 	 * 
 	 * @param x

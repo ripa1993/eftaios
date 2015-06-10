@@ -10,7 +10,7 @@ import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
  * comunicate a Coordinate in which will happen a fake noise
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public class FakeNoise extends PlayerAction {
 

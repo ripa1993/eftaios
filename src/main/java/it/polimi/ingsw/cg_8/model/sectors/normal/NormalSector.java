@@ -11,6 +11,11 @@ import it.polimi.ingsw.cg_8.model.sectors.Sector;
  */
 public abstract class NormalSector extends Sector {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3925058303611953264L;
+
+	/**
 	 * Default constructor for normal sector
 	 * 
 	 * @param x

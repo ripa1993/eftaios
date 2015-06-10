@@ -6,7 +6,7 @@ import it.polimi.ingsw.cg_8.model.player.character.human.HumanBehaviour;
  * Allows the human to walk to distance 2 instead of distance 1
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public class EnableAdrenaline extends HumanDecorator {
 	/**
@@ -26,9 +26,7 @@ public class EnableAdrenaline extends HumanDecorator {
 
 	@Override
 	public String toString() {
-		return "EnableAdrenaline "+humanBehaviourToBeDecorated.toString();
+		return "EnableAdrenaline " + humanBehaviourToBeDecorated.toString();
 	}
-	
-	
 
 }

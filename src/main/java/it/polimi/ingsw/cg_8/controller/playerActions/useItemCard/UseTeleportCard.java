@@ -10,17 +10,21 @@ import it.polimi.ingsw.cg_8.model.player.Player;
  * human spawn
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public class UseTeleportCard extends UseItemCard {
-
+	/**
+	 * Applies card effect to the model
+	 * 
+	 * @param model
+	 *            reference to the game in which the card is used
+	 */
 	public static void useCard(Model model) {
 		/**
 		 * If player has already done Movement, it calls editLastPosition(),
 		 * otherwise it calls setPosition.
 		 */
-		// TODO: change method to simpler one
-		Player currentPlayer = model.getPlayers().get(model.getCurrentPlayer());
+		Player currentPlayer = model.getCurrentPlayerReference();
 		int lastModelTurn = model.getRoundNumber();
 		int lastPlayerTurn = currentPlayer.getRoundNumber();
 		// case: player has not done a movement in this turn
@@ -37,7 +41,5 @@ public class UseTeleportCard extends UseItemCard {
 				currentPlayer, model.getMap().getHumanSpawn());
 		model.addNoise(teleportNoise);
 
-		
 	}
 }
-

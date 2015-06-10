@@ -11,6 +11,11 @@ import it.polimi.ingsw.cg_8.model.sectors.special.SpecialSector;
 public abstract class SpawnSector extends SpecialSector {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1851902876364291445L;
+
+	/**
 	 * Default constructor for {@link SpecialSector}
 	 * 
 	 * @param x

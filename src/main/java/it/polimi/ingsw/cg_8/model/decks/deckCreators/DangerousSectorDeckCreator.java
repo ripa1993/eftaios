@@ -10,7 +10,7 @@ import it.polimi.ingsw.cg_8.model.decks.DangerousSectorDeck;
  * Dangerous sector deck creator
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public class DangerousSectorDeckCreator extends DeckCreator {
 	/**

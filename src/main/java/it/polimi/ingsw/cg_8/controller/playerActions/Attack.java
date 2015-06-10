@@ -24,7 +24,7 @@ import java.util.List;
  * instantiate this Class and uses its method to validate the attack.
  * 
  * @author Alberto Parravicini
- *
+ * @version 1.0
  */
 
 public class Attack extends PlayerAction {
