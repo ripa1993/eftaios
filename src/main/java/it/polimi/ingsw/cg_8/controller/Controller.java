@@ -17,6 +17,7 @@ import it.polimi.ingsw.cg_8.server.ServerSocketPublisherThread;
 import it.polimi.ingsw.cg_8.view.server.ResponseCard;
 import it.polimi.ingsw.cg_8.view.server.ResponseNoise;
 import it.polimi.ingsw.cg_8.view.server.ResponsePrivate;
+import it.polimi.ingsw.cg_8.view.server.ResponseState;
 import it.polimi.ingsw.cg_8.view.server.ServerResponse;
 
 import java.util.HashMap;
@@ -52,7 +53,7 @@ public class Controller implements Observer {
 	 */
 	private Model model;
 	/**
-	 * Ruleset of this game
+	 * Rule-Set of this game
 	 */
 	private Rules rules;
 	/**
@@ -355,6 +356,12 @@ public class Controller implements Observer {
 			this.writeToPlayer(model.getCurrentPlayerReference(),
 					new ResponsePrivate(model.getCurrentPlayerReference()
 							.toString()));
+			/**
+			 * Notify every player about their state.
+			 */
+			for (Player p : model.getPlayers()) {
+				this.writeToPlayer(p, new  ResponseState(p.toString()));
+			}
 			/**
 			 * Communicate to the current player the cards he's holding.
 			 */

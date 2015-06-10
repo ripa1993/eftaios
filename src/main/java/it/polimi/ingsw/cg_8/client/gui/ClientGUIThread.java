@@ -29,10 +29,12 @@ import it.polimi.ingsw.cg_8.view.server.ResponseCard;
 import it.polimi.ingsw.cg_8.view.server.ResponseChat;
 import it.polimi.ingsw.cg_8.view.server.ResponseNoise;
 import it.polimi.ingsw.cg_8.view.server.ResponsePrivate;
+import it.polimi.ingsw.cg_8.view.server.ResponseState;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -63,10 +65,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.MouseInputAdapter;
-import javax.swing.SwingConstants;
-import java.awt.Font;
 
 /**
  * Class that defines the GUI.
@@ -650,8 +651,14 @@ public class ClientGUIThread implements Runnable, Observer {
 		}
 
 		else if  (arg instanceof ResponseCard){
-			ResponseCard cardMessage = clientData.getLastResponseCard();
+			ResponseCard cardMessage = clientData.getCards();
 			List<ItemCard> cards= cardMessage.getHand();
+			//TODO: visualizza carte
+		}
+		else if (arg instanceof ResponseState) {
+			ResponseState stateMessage = clientData.getState();
+			String state = stateMessage.getMessage();
+			// TODO: visualizza stato
 		}
 	}
 

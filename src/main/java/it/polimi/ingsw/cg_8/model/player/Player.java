@@ -18,9 +18,7 @@ import java.util.List;
  */
 public class Player implements Serializable {
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -6339404514199154790L;
 	/**
 	 * This player state
@@ -199,7 +197,8 @@ public class Player implements Serializable {
 	@Override
 	public String toString() {
 		return "Player: " + name + ", Character: " + character + " "
-				+ ", Position: " + getLastPosition();
+				+ ", State: " + state + ", Position: " + getLastPosition() ;
+
 	}
 
 }
