@@ -4,6 +4,7 @@ import it.polimi.ingsw.cg_8.Resource;
 import it.polimi.ingsw.cg_8.client.ClientData;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.AdrenalineCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.AttackCard;
+import it.polimi.ingsw.cg_8.model.cards.itemCards.ItemCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.SedativesCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.SpotlightCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.TeleportCard;
@@ -24,6 +25,7 @@ import it.polimi.ingsw.cg_8.view.client.actions.ActionFakeNoise;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionMove;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionUseCard;
 import it.polimi.ingsw.cg_8.view.client.exceptions.NotAValidInput;
+import it.polimi.ingsw.cg_8.view.server.ResponseCard;
 import it.polimi.ingsw.cg_8.view.server.ResponseChat;
 import it.polimi.ingsw.cg_8.view.server.ResponseNoise;
 import it.polimi.ingsw.cg_8.view.server.ResponsePrivate;
@@ -42,6 +44,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
@@ -581,11 +584,15 @@ public class ClientGUIThread implements Runnable, Observer {
 			} else if (noise.getNoise() instanceof TeleportNoise) {
 				playSound(Resource.SOUND_TELEPORT);
 			}
-		} else {
+		} else if (arg instanceof ResponsePrivate) {
 			ResponsePrivate privateMessage = clientData.getLastPrivate();
 			this.appendInfo("INFO", privateMessage.getMessage());
 		}
 
+		else if  (arg instanceof ResponseCard){
+			ResponseCard cardMessage = clientData.getLastResponseCard();
+			List<ItemCard> cards= cardMessage.getHand();
+		}
 	}
 
 	private void playSound(String filePath) {
