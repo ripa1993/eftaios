@@ -2,11 +2,15 @@ package it.polimi.ingsw.cg_8.client;
 
 import it.polimi.ingsw.cg_8.client.gui.ConnectionManager;
 import it.polimi.ingsw.cg_8.client.gui.ConnectionManagerSocket;
+import it.polimi.ingsw.cg_8.server.Server;
 import it.polimi.ingsw.cg_8.view.server.ServerResponse;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Class used as subscriber to receive messages from the server and store the in
@@ -34,7 +38,10 @@ public class ClientSocketViewSUB implements Runnable {
 	 * Used to store messages in {@link ClientData}.
 	 */
 	private ConnectionManager connectionManager;
-
+	/**
+	 * Log4j logger
+	 */
+	private static final Logger logger = LogManager.getLogger(ClientSocketViewSUB.class);
 	/**
 	 * Used in the CLI
 	 * @param serverIP
@@ -49,8 +56,7 @@ public class ClientSocketViewSUB implements Runnable {
 			this.clientSocket = clientSocket;
 			this.connectionManager = null;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -68,8 +74,7 @@ public class ClientSocketViewSUB implements Runnable {
 			this.clientSocket = null;
 			this.connectionManager = connectionManager;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -103,7 +108,7 @@ public class ClientSocketViewSUB implements Runnable {
 			}
 			return;
 		} catch (IOException | ClassNotFoundException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 

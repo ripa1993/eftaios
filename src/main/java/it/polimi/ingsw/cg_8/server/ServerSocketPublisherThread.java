@@ -53,7 +53,7 @@ public class ServerSocketPublisherThread extends ServerPublisher implements Runn
 							buffer.wait();
 						}
 					} catch (InterruptedException e) {
-						e.printStackTrace();
+						logger.error(e.getMessage());
 					}
 				}
 			} catch (IOException e1) {

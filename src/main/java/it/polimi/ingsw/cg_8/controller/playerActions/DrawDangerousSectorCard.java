@@ -1,5 +1,9 @@
 package it.polimi.ingsw.cg_8.controller.playerActions;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import it.polimi.ingsw.cg_8.client.ClientSocketViewSUB;
 import it.polimi.ingsw.cg_8.model.Model;
 import it.polimi.ingsw.cg_8.model.cards.Card;
 import it.polimi.ingsw.cg_8.model.cards.dangerousSectorCards.DangerousSectorCard;
@@ -41,7 +45,10 @@ public class DrawDangerousSectorCard extends PlayerAction {
 	 * Flag that signals if the item card deck is empty
 	 */
 	boolean emptyItemDeck = false;
-
+	/**
+	 * Log4j logger
+	 */
+	private static final Logger logger = LogManager.getLogger(DrawDangerousSectorCard.class);
 	/**
 	 * The class is not static so that it is possible to keep trace of the cards
 	 * drawn by the player.
@@ -82,7 +89,7 @@ public class DrawDangerousSectorCard extends PlayerAction {
 			 * This exception never occurs, the deck is always re-shuffled when
 			 * empty.
 			 */
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 
 		if (dangerousSectorCard instanceof NoiseCard) {
@@ -116,6 +123,7 @@ public class DrawDangerousSectorCard extends PlayerAction {
 					}
 
 				} catch (EmptyDeckException e) {
+					logger.error(e.getMessage());
 					this.emptyItemDeck = true;
 					this.itemCard = null;
 					return hasToMakeFakeNoise;

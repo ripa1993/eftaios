@@ -1,5 +1,6 @@
 package it.polimi.ingsw.cg_8.client;
 
+import it.polimi.ingsw.cg_8.server.ServerSocketPublisherThread;
 import it.polimi.ingsw.cg_8.view.client.ActionParser;
 import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
 import it.polimi.ingsw.cg_8.view.client.exceptions.NotAValidInput;
@@ -8,6 +9,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Temporary thread used to send requests to the server. The thread is closed
@@ -32,8 +36,19 @@ public class ClientSocketViewCS implements Runnable {
 	 * Output stream used to send requests to the server.
 	 */
 	private ObjectOutputStream output;
+	/**
+	 * Input stream used to receive messages from the server
+	 */
 	private ObjectInputStream input;
+	/**
+	 * This client id
+	 */
 	private int clientId;
+	/**
+	 * Log4j logger
+	 */
+	private static final Logger logger = LogManager.getLogger(ServerSocketPublisherThread.class);
+
 
 	/**
 	 * 
@@ -56,8 +71,7 @@ public class ClientSocketViewCS implements Runnable {
 			this.input = new ObjectInputStream(requestSocket.getInputStream());
 
 		} catch (IOException e) {
-			System.out
-					.println("Failed to establish a connection with the server");
+			logger.error("Failed to establish a connection with the server");
 		}
 	}
 
@@ -72,8 +86,7 @@ public class ClientSocketViewCS implements Runnable {
 					requestSocket.getOutputStream());
 			this.input = new ObjectInputStream(requestSocket.getInputStream());
 		} catch (IOException e) {
-			System.out
-					.println("Failed to establish a connection with the server");
+			logger.error("Failed to establish a connection with the server");
 		}
 
 	}
@@ -84,26 +97,25 @@ public class ClientSocketViewCS implements Runnable {
 			// write id
 			output.writeObject(clientId);
 			output.flush();
-			System.out.println("[DEBUG] sent client id");
+			logger.debug("Sent client id: "+clientId);
 			// write action
 			output.writeObject(action);
 			output.flush();
-			System.out.println("[DEBUG] write server command: " + action);
-			System.out.println("[DEBUG] waiting server response");
+			logger.debug("Write server command: " + action);
+			logger.debug("Waiting server response");
 			try {
-				System.out.println((boolean) input.readObject());
+				logger.debug((boolean) input.readObject());
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.error(e.getMessage());
 			}
 			// Aspetto un messaggio ResponsePrivate di conferma dal server.
 
 		} catch (IOException e) {
-			System.out.println("Failed to send your request to the server");
+			logger.error("Failed to send your request to the server");
 		}
 
 		close(requestSocket, output);
-		System.out.println("Socket connection closed.");
+		logger.debug("Socket connection closed.");
 	}
 
 	private void close(Socket socket, ObjectOutputStream output) {
