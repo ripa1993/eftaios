@@ -10,7 +10,7 @@ import java.io.Serializable;
  * Noise made by a player
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public abstract class Noise implements Serializable {
 	/**
@@ -71,6 +71,7 @@ public abstract class Noise implements Serializable {
 		return player;
 	}
 
+	@Override
 	public String toString() {
 
 		return " Turn: " + turnNumber + " Player: " + player.getName()
