@@ -65,6 +65,8 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.MouseInputAdapter;
+import javax.swing.SwingConstants;
+import java.awt.Font;
 
 /**
  * Class that defines the GUI.
@@ -92,14 +94,28 @@ public class ClientGUIThread implements Runnable, Observer {
 	private String backgroundImageResource;
 	private Image backgroundImageScaled;
 	private ImageIcon backgroundImage;
+	private JPanel panel;
+	private JPanel panel_1;
+	private JPanel panel_2;
+	private JLabel lblPlayerState;
+	private JButton btnNewButton;
+	private JButton btnNewButton_1;
+	private JButton btnNewButton_2;
+	private JLabel lblItemCards;
+	private JPanel panel_3;
 
 	public ClientGUIThread() {
 		mainFrame = new JFrame("Escape From The Aliens In Outer Space");
+		mainFrame.getContentPane().setBackground(Color.WHITE);
+		mainFrame.setBackground(new Color(255, 255, 255));
 		chatPanel = new JPanel();
+		chatPanel.setBackground(Color.WHITE);
 		rightPanel = new JPanel();
 		infoPanel = new JPanel();
+		infoPanel.setBackground(Color.WHITE);
 		chatInfoPanel = new JPanel();
 		commandsPanel = new JPanel();
+		commandsPanel.setBackground(Color.WHITE);
 		moveButton = new JButton("Movement");
 		attackButton = new JButton("Attack");
 		drawButton = new JButton("Draw");
@@ -110,7 +126,11 @@ public class ClientGUIThread implements Runnable, Observer {
 		chatTextPane = new JTextPane();
 		infoTextPane = new JTextPane();
 		chatTextField = new JTextField();
+		chatTextField.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		chatTextField.setForeground(Color.WHITE);
+		chatTextField.setBackground(Color.BLACK);
 		chatPanel2 = new JPanel();
+		chatPanel2.setBackground(Color.WHITE);
 		infoScroll = new JScrollPane(infoTextPane);
 		chatScroll = new JScrollPane(chatTextPane);
 		backgroundImageResource = Resource.IMG_GALILEI_MAP;
@@ -154,10 +174,11 @@ public class ClientGUIThread implements Runnable, Observer {
 				return backgroundImageScaled;
 			}
 		};
+		mapPanel.setBackground(Color.WHITE);
 		mapPanel.setVisible(true);
 
 		// set layouts
-		mainFrame.setLayout(new BorderLayout());
+		mainFrame.getContentPane().setLayout(new BorderLayout());
 		chatPanel.setLayout(new BorderLayout());
 		infoPanel.setLayout(new BorderLayout());
 		mapPanel.setLayout(new BorderLayout());
@@ -180,19 +201,58 @@ public class ClientGUIThread implements Runnable, Observer {
 		commandsPanel.add(useItemCardButton);
 		commandsPanel.add(endTurnButton);
 		commandsPanel.setVisible(true);
+		
+		panel = new JPanel();
+		rightPanel.add(panel, BorderLayout.NORTH);
+		panel.setLayout(new BorderLayout(0, 0));
+		
+		panel_1 = new JPanel();
+		panel_1.setBackground(Color.WHITE);
+		panel.add(panel_1, BorderLayout.NORTH);
+		
+		lblPlayerState = new JLabel();
+		lblPlayerState.setText("PLAYER STATE");
+		lblPlayerState.setForeground(new Color(0, 0, 153));
+		panel_1.add(lblPlayerState);
+		
+		panel_2 = new JPanel();
+		panel_2.setBackground(Color.WHITE);
+		panel.add(panel_2, BorderLayout.SOUTH);
+		panel_2.setLayout(new BorderLayout(0, 0));
+		
+		lblItemCards = new JLabel();
+		lblItemCards.setBackground(Color.WHITE);
+		lblItemCards.setHorizontalAlignment(SwingConstants.CENTER);
+		lblItemCards.setText("ITEM CARDS");
+		lblItemCards.setForeground(new Color(0, 0, 153));
+		panel_2.add(lblItemCards, BorderLayout.NORTH);
+		
+		panel_3 = new JPanel();
+		panel_3.setBackground(Color.WHITE);
+		panel_2.add(panel_3, BorderLayout.SOUTH);
+		
+		btnNewButton = new JButton("Card 1");
+		panel_3.add(btnNewButton);
+		
+		btnNewButton_1 = new JButton("Card 2");
+		panel_3.add(btnNewButton_1);
+		
+		btnNewButton_2 = new JButton("Card 3");
+		panel_3.add(btnNewButton_2);
 
 		// set up info panel
 		infoTextTitle = new JLabel();
 		infoTextTitle.setText("INFORMATION");
-		infoTextTitle.setForeground(Color.RED);
+		infoTextTitle.setForeground(new Color(0, 0, 153));
 		infoPanel.add(infoTextTitle, BorderLayout.NORTH);
 		infoPanel.add(infoScroll, BorderLayout.CENTER);
 		infoTextPane.setEditable(false);
 
 		// set up chat panel
 		chatTextTitle = new JLabel();
+		chatTextTitle.setBackground(Color.WHITE);
 		chatTextTitle.setText("CHAT");
-		chatTextTitle.setForeground(Color.RED);
+		chatTextTitle.setForeground(new Color(0, 0, 153));
 		chatPanel.add(chatTextTitle, BorderLayout.NORTH);
 		chatPanel.add(chatScroll, BorderLayout.CENTER);
 		chatPanel.add(chatTextField, BorderLayout.SOUTH);
@@ -205,8 +265,8 @@ public class ClientGUIThread implements Runnable, Observer {
 		chatPanel2.add(chatButton, BorderLayout.SOUTH);
 		rightPanel.add(chatInfoPanel, BorderLayout.CENTER);
 		rightPanel.add(commandsPanel, BorderLayout.SOUTH);
-		mainFrame.add(mapPanel, BorderLayout.CENTER);
-		mainFrame.add(rightPanel, BorderLayout.EAST);
+		mainFrame.getContentPane().add(mapPanel, BorderLayout.CENTER);
+		mainFrame.getContentPane().add(rightPanel, BorderLayout.EAST);
 		chatPanel2.setVisible(true);
 		chatPanel.setVisible(true);
 		infoPanel.setVisible(true);
@@ -247,7 +307,7 @@ public class ClientGUIThread implements Runnable, Observer {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				int confirm = JOptionPane.showOptionDialog(null,
-						"Are You Sure to Close Application?",
+						"Do you really want to quit the game?",
 						"Exit Confirmation", JOptionPane.YES_NO_OPTION,
 						JOptionPane.QUESTION_MESSAGE, null, null, null);
 				if (confirm == 0) {

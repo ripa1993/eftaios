@@ -45,6 +45,10 @@ public class Attack extends PlayerAction {
 	 * List of players who are killed by the attack
 	 */
 	private List<Player> victims;
+	/**
+	 * List of players who used a defense card.
+	 */
+	private List<Player> survivors;
 
 	/**
 	 * Constructor of the class
@@ -56,6 +60,7 @@ public class Attack extends PlayerAction {
 		this.attacker = model.getCurrentPlayerReference();
 		victims = new ArrayList<Player>();
 		playersInSector = new ArrayList<Player>();
+		survivors = new ArrayList<Player>();
 	}
 
 	/**
@@ -81,7 +86,9 @@ public class Attack extends PlayerAction {
 						UseDefenseCard.useCard(p);
 						heldCards.getHeldCards().remove(c);
 						DefenseNoise defenseNoise = new DefenseNoise(
-								model.getRoundNumber(), p, attacker.getLastPosition());
+								model.getRoundNumber(), p,
+								attacker.getLastPosition());
+						survivors.add(p);
 						model.addNoise(defenseNoise);
 						break;
 					}
@@ -139,4 +146,13 @@ public class Attack extends PlayerAction {
 		return victims;
 	}
 
+	/**
+	 * Get the player who survived to the attack thanks to a defense card.
+	 * Method used to notify the players.
+	 * 
+	 * @return survivors;
+	 */
+	public List<Player> getSurvivor() {
+		return survivors;
+	}
 }
