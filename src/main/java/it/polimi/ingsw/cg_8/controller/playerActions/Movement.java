@@ -1,5 +1,8 @@
 package it.polimi.ingsw.cg_8.controller.playerActions;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import it.polimi.ingsw.cg_8.controller.Controller;
 import it.polimi.ingsw.cg_8.controller.Rules;
 import it.polimi.ingsw.cg_8.model.Model;
@@ -12,6 +15,7 @@ import it.polimi.ingsw.cg_8.model.noises.Noise;
 import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 import it.polimi.ingsw.cg_8.model.sectors.special.escapehatch.EscapeHatchSector;
+import it.polimi.ingsw.cg_8.server.ServerSocketPublisherThread;
 
 /**
  * The {@link Controller#processInput()} takes a movement input and calls the
@@ -20,7 +24,7 @@ import it.polimi.ingsw.cg_8.model.sectors.special.escapehatch.EscapeHatchSector;
  * move.
  * 
  * @author Alberto Parravicini
- *
+ * @version 1.0
  */
 
 public class Movement extends PlayerAction {
@@ -34,16 +38,21 @@ public class Movement extends PlayerAction {
 	 */
 	private final Coordinate destination;
 	/**
-	 * 
+	 * Current game
 	 */
 	private final Model model;
+	/**
+	 * Log4j logger
+	 */
+	private static final Logger logger = LogManager.getLogger(Movement.class);
 
 	/**
+	 * Constructor
 	 * 
-	 * @param player
+	 * @param model
+	 *            current game
 	 * @param destination
-	 * @param gameMap
-	 * @return Instance of the Movement class
+	 *            coordinate of destination
 	 */
 	public Movement(Model model, Coordinate destination) {
 		this.player = model.getCurrentPlayerReference();
@@ -52,7 +61,7 @@ public class Movement extends PlayerAction {
 	}
 
 	/**
-	 * Changes the position of the player
+	 * Changes the position of the player inside the model
 	 */
 	public void makeMove() {
 
@@ -73,7 +82,7 @@ public class Movement extends PlayerAction {
 		 * Depending on the type of the reached sector, different actions are
 		 * performed.
 		 */
-		 if (destination instanceof EscapeHatchSector) {
+		if (destination instanceof EscapeHatchSector) {
 
 			Noise escapeSectorNoise = new EscapeSectorNoise(
 					model.getRoundNumber(), player, player.getLastPosition());
@@ -86,14 +95,11 @@ public class Movement extends PlayerAction {
 						player.setEscaped();
 					}
 				} catch (EmptyDeckException e) {
-					// TODO: non si verifica, la partita termina se pesco la
-					// quarta carta scialuppa.
+					logger.error(e.getMessage());
 				}
 			}
-		 }
+		}
 	}
-
-	
 
 	/**
 	 * Draw a card from the {@link EscapeHatchDeck}
