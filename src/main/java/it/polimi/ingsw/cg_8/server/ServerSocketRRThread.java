@@ -84,7 +84,7 @@ public class ServerSocketRRThread implements Runnable {
 
 					// read player name and confirm
 					String playerName = (String) input.readObject();
-					logger.debug("Id: " + newClientId + " Name: "
+					logger.debug("Name accepted: "
 							+ playerName);
 					output.writeObject(new String("NAME ACCEPTED"));
 					output.flush();
@@ -120,6 +120,7 @@ public class ServerSocketRRThread implements Runnable {
 				} else {
 					// client has already connected to the server, reads player
 					// action
+					logger.debug("ClientId already assigned");
 					ClientAction action = (ClientAction) input.readObject();
 					logger.debug("Received client action: "+action);
 					Controller controller = Server.getId2Controller().get(

@@ -8,6 +8,9 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Implmentation of a publisher thread, it sends objects to a specific
  * subscriber
@@ -19,6 +22,10 @@ public class ServerSocketPublisherThread extends ServerPublisher implements Runn
 	private Socket subscriber;
 	private ObjectOutputStream output;
 	private ConcurrentLinkedQueue<ServerResponse> buffer;
+	/**
+	 * Log4j logger
+	 */
+	private static final Logger logger = LogManager.getLogger(ServerSocketPublisherThread.class);
 
 	public ServerSocketPublisherThread(Socket subscriber) {
 		this.subscriber = subscriber;
@@ -26,9 +33,9 @@ public class ServerSocketPublisherThread extends ServerPublisher implements Runn
 		try {
 			this.output = new ObjectOutputStream(subscriber.getOutputStream());
 		} catch (IOException e) {
-			System.err.println("Cannot open object output stream");
+			logger.error("Cannot open object output stream");
 		}
-		System.out.println("Publisher thread created");
+		logger.debug("Publisher thread created");
 	}
 
 	@Override
@@ -39,7 +46,7 @@ public class ServerSocketPublisherThread extends ServerPublisher implements Runn
 				if (message != null) {
 
 					send(message);
-					System.out.println("Message Sent");
+					logger.debug("Message sent: "+message);
 				} else {
 					try {
 						synchronized (buffer) {
@@ -50,7 +57,7 @@ public class ServerSocketPublisherThread extends ServerPublisher implements Runn
 					}
 				}
 			} catch (IOException e1) {
-				System.err.println("Cannot write object to output");
+				logger.error("Cannot write object to output");
 			}
 		}
 	}

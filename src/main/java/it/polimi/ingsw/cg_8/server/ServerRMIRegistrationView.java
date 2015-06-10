@@ -6,6 +6,9 @@ import it.polimi.ingsw.cg_8.model.exceptions.GameAlreadyRunningException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Class that handles the registration of a client to a game; it creates its own
  * view and associate the client with the game it is playing.
@@ -15,6 +18,11 @@ import java.rmi.RemoteException;
  */
 public class ServerRMIRegistrationView implements
 		ServerRMIRegistrationViewRemote {
+	/**
+	 * Log4j logger
+	 */
+	private static final Logger logger = LogManager
+			.getLogger(ServerRMIRegistrationView.class);
 
 	/**
 	 * Required as i want to associate the clients with their respective
@@ -26,7 +34,6 @@ public class ServerRMIRegistrationView implements
 		this.serverRMI = server;
 	}
 
-
 	/**
 	 * The client gets a new clientId, if it doesn't already have one. The
 	 * method is called at the beginning of the registration process.
@@ -34,14 +41,14 @@ public class ServerRMIRegistrationView implements
 	@Override
 	public int getClientId(int clientId) throws RemoteException,
 			AlreadyBoundException {
-
+		logger.info("ClientId is: " + clientId);
 		if (clientId == 0) {
 			Integer newClientId = Server.getClientId();
-			System.out.println("Assigning new ClientId: " + newClientId);
+			logger.info("Assigning new ClientId: " + newClientId);
 			Server.increaseClientId();
 			return newClientId;
 		}
-		System.out.println("ClientId already assigned");
+		logger.debug("ClientId already assigned");
 		return clientId;
 	}
 
@@ -53,27 +60,24 @@ public class ServerRMIRegistrationView implements
 	public boolean sendPlayerName(String name) throws RemoteException,
 			AlreadyBoundException {
 
-		
-		System.out.println("NAME ACCEPTED");
+		logger.debug("Name accepted: " + name);
 		return true;
 	}
-	
 
 	/**
 	 * Creates a {@link ServerGameRoom GameRoom} for the client so that it can
-	 * play the game.
-	 * Add the client to a client list, so that the server can identify it.
+	 * play the game. Add the client to a client list, so that the server can
+	 * identify it.
 	 */
 	@Override
 	public ServerGameRoomInterface register(SubscriberInterface client)
 			throws RemoteException, AlreadyBoundException {
 		ServerGameRoom view = new ServerGameRoom(client);
-		
+
 		try {
 			serverRMI.addRMIClient(client, view);
 		} catch (GameAlreadyRunningException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Game already running, can't add the player to this game");
 		}
 		return view;
 
