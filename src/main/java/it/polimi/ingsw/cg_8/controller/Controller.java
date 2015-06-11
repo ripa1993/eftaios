@@ -47,7 +47,7 @@ public class Controller implements Observer {
 	/**
 	 * Allowed time per round in ms, if time is over player is disconnected
 	 */
-	private static final int TIMEOUT = 60000;
+	private static final int TIMEOUT = 300000;
 	/**
 	 * Model of this game
 	 */
