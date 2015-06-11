@@ -53,6 +53,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -89,6 +90,10 @@ public class ClientGUIThread implements Runnable, Observer {
 	 * The server messages are stored here.
 	 */
 	private ClientData clientData;
+	/**
+	 * Maximum number of cards
+	 */
+	private static final int CARD_NUM = 3;
 	private JFrame mainFrame;
 	private JPanel chatPanel, chatPanel2, rightPanel, infoPanel, commandsPanel,
 			chatInfoPanel;
@@ -117,6 +122,7 @@ public class ClientGUIThread implements Runnable, Observer {
 	private JPanel panel_3;
 	private Font fontTitilliumBoldUpright;
 	private Font fontTitilliumSemiboldUpright;
+	private CardButton[] cardList;
 
 	public ClientGUIThread() {
 		try {
@@ -315,9 +321,20 @@ public class ClientGUIThread implements Runnable, Observer {
 		panel_2.add(cardPanel, BorderLayout.SOUTH);
 		cardPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
+		// TODO: handle initialization with cycles
+		// cardList = new CardButton[CARD_NUM];
+		//
+		//
+		// // for (int i = 0; i < CARD_NUM; i++) {
+		// // cardList[i] = new CardButton();
+		// // cardList[i].setBackground(Color.WHITE);
+		// // cardList[i].setCardType(CardType.DEFAULT);
+		// // cardPanel.add(cardList[i]);
+		// // cardPanel.repaint();
+		// // }
 		cardButton1 = new CardButton();
 		cardButton1.setBackground(Color.WHITE);
-		cardButton1.setCardType(CardType.TELEPORT);
+		cardButton1.setCardType(CardType.DEFAULT);
 		cardPanel.add(cardButton1);
 
 		cardButton2 = new CardButton();
@@ -777,11 +794,10 @@ public class ClientGUIThread implements Runnable, Observer {
 		else if (arg.equals("Cards")) {
 			ResponseCard cardMessage = clientData.getCards();
 			List<ItemCard> cards = cardMessage.getHand();
-			ItemCard cardArray[] = new ItemCard[3];
+			ItemCard cardArray[] = new ItemCard[CARD_NUM];
 			for (int i = 0; i < cards.size(); i++) {
 				cardArray[i] = cards.get(i);
 			}
-			// TODO: visualizza carte
 			ItemCard tempCard1 = cardArray[0];
 			this.updateCard(cardButton1, tempCard1);
 			cardButton1.repaint();
@@ -791,6 +807,7 @@ public class ClientGUIThread implements Runnable, Observer {
 			ItemCard tempCard3 = cardArray[2];
 			this.updateCard(cardButton3, tempCard3);
 			cardButton3.repaint();
+
 		} else if (arg.equals("State")) {
 			ResponseState stateMessage = clientData.getState();
 			String state = stateMessage.getMessage();
@@ -811,27 +828,21 @@ public class ClientGUIThread implements Runnable, Observer {
 			System.err.println(ex.getMessage());
 		}
 	}
-	
+
 	private void updateCard(CardButton cardButton, ItemCard tempCard) {
 		if (tempCard instanceof AdrenalineCard) {
 			cardButton.setCardType(CardButton.CardType.ADRENALINE);
-		}
-		else if (tempCard instanceof AttackCard) {
+		} else if (tempCard instanceof AttackCard) {
 			cardButton.setCardType(CardButton.CardType.ATTACK);
-		}
-		else if (tempCard instanceof AttackCard) {
+		} else if (tempCard instanceof AttackCard) {
 			cardButton.setCardType(CardButton.CardType.DEFENSE);
-		}
-		else if (tempCard instanceof AttackCard) {
+		} else if (tempCard instanceof AttackCard) {
 			cardButton.setCardType(CardButton.CardType.SEDATIVES);
-		}
-		else if (tempCard instanceof AttackCard) {
+		} else if (tempCard instanceof AttackCard) {
 			cardButton.setCardType(CardButton.CardType.SPOTLIGHT);
-		}
-		else if (tempCard instanceof AttackCard) {
+		} else if (tempCard instanceof AttackCard) {
 			cardButton.setCardType(CardButton.CardType.TELEPORT);
-		}
-		else if (tempCard == null) {
+		} else if (tempCard == null) {
 			cardButton.setCardType(CardButton.CardType.DEFAULT);
 		}
 	}
