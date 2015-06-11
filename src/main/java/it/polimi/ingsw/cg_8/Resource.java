@@ -1,6 +1,7 @@
 package it.polimi.ingsw.cg_8;
 
 import java.io.File;
+import java.io.InputStream;
 
 /**
  * Container for references to resource files
@@ -184,4 +185,22 @@ public class Resource {
 	public static final String IMG_TELEPORT = "resources" + File.separatorChar
 			+ "images" + File.separatorChar + "card" + File.separatorChar
 			+ "teleport.png";
+	/**
+	 * titillium bold upright
+	 */
+	public static final String FONT_TITILLIUM_BOLD_UPRIGHT = "resources"
+			+ File.separatorChar + "fonts" + File.separatorChar
+			+ "Titillium-BoldUpright.otf";
+	/**
+	 * titillium bold upright
+	 */
+	public static final String FONT_TITILLIUM_SEMIBOLD_UPRIGHT = "resources"
+			+ File.separatorChar + "fonts" + File.separatorChar
+			+ "Titillium-SemiboldUpright.otf";
+	/**
+	 * Mr jones font
+	 */
+	public static final String FONT_MRJONES = "resources" + File.separatorChar
+			+ "fonts" + File.separatorChar + "MrJonesBook.otf";
+
 }

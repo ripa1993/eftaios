@@ -13,8 +13,11 @@ import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
 import it.polimi.ingsw.cg_8.view.client.exceptions.NotAValidInput;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Image;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -23,7 +26,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import java.awt.Font;
 
 /**
  * JButton that allows the player to use an item card.
@@ -44,7 +46,12 @@ public class CardButton extends JPanel {
 		this.setLayout(new BorderLayout());
 
 		this.text = new JLabel("No Card");
-		text.setFont(new Font("Tahoma", Font.BOLD, 14));
+		try {
+			text.setFont(Font.createFont(Font.TRUETYPE_FONT,
+					new FileInputStream(Resource.FONT_TITILLIUM_BOLD_UPRIGHT)));
+		} catch (FontFormatException | IOException e) {
+			System.out.println(e.getMessage());
+		}
 		text.setHorizontalAlignment(SwingConstants.CENTER);
 		this.cardButton = new JLabel();
 

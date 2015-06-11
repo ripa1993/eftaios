@@ -37,6 +37,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
@@ -50,6 +51,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Observable;
@@ -113,15 +115,36 @@ public class ClientGUIThread implements Runnable, Observer {
 	private JLabel labelCurrentState;
 	private JPanel panel_4;
 	private JPanel panel_3;
+	private Font fontTitilliumBoldUpright;
+	private Font fontTitilliumSemiboldUpright;
 
 	public ClientGUIThread() {
+		try {
+			fontTitilliumBoldUpright = Font.createFont(Font.TRUETYPE_FONT,
+					new FileInputStream(Resource.FONT_TITILLIUM_BOLD_UPRIGHT))
+					.deriveFont((float) 30);
+		} catch (FontFormatException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			fontTitilliumSemiboldUpright = Font.createFont(
+					Font.TRUETYPE_FONT,
+					new FileInputStream(
+							Resource.FONT_TITILLIUM_SEMIBOLD_UPRIGHT))
+					.deriveFont((float) 20);
+		} catch (FontFormatException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		mainFrame = new JFrame("Escape From The Aliens In Outer Space");
 		mainFrame.setResizable(true);
 		mainFrame = new JFrame("Escape From The Aliens In Outer Space");
 		BufferedImage myImage;
 		try {
-			myImage = ImageIO.read(new File(
-					"resources//images//default_background.png"));
+			myImage = ImageIO.read(new File(Resource.IMG_DEFAULT_BACKGROUND));
 
 			mainFrame.setContentPane(new BackgroundPanel(myImage));
 		} catch (IOException e) {
@@ -248,7 +271,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		panel_1.setLayout(new BorderLayout(0, 0));
 
 		lblPlayerState = new JLabel();
-		lblPlayerState.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		lblPlayerState.setFont(fontTitilliumBoldUpright);
 		lblPlayerState.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPlayerState.setText("PLAYER STATE");
 		lblPlayerState.setForeground(Color.BLACK);
@@ -256,7 +279,7 @@ public class ClientGUIThread implements Runnable, Observer {
 
 		labelCurrentState = new JLabel();
 		labelCurrentState.setText("The game hasn't started yet");
-		labelCurrentState.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		labelCurrentState.setFont(fontTitilliumSemiboldUpright);
 		labelCurrentState.setHorizontalAlignment(SwingConstants.CENTER);
 		labelCurrentState.setForeground(Color.BLACK);
 		panel_1.add(labelCurrentState, BorderLayout.SOUTH);
@@ -277,7 +300,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		panel_2.add(panel_3, BorderLayout.NORTH);
 
 		lblItemCards = new JLabel();
-		lblItemCards.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		lblItemCards.setFont(fontTitilliumBoldUpright);
 		lblItemCards.setBackground(Color.WHITE);
 		lblItemCards.setHorizontalAlignment(SwingConstants.CENTER);
 		lblItemCards.setText("ITEM CARDS");
@@ -307,7 +330,7 @@ public class ClientGUIThread implements Runnable, Observer {
 
 		// set up info panel
 		infoTextTitle = new JLabel();
-		infoTextTitle.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		infoTextTitle.setFont(fontTitilliumBoldUpright);
 		infoTextTitle.setText("INFORMATION");
 		infoTextTitle.setForeground(Color.BLACK);
 		infoPanel.add(infoTextTitle, BorderLayout.NORTH);
@@ -316,10 +339,11 @@ public class ClientGUIThread implements Runnable, Observer {
 
 		// set up chat panel
 		chatTextTitle = new JLabel();
-		chatTextTitle.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		chatTextTitle.setFont(fontTitilliumBoldUpright);
 		chatTextTitle.setBackground(Color.WHITE);
 		chatTextTitle.setText("CHAT");
 		chatTextTitle.setForeground(Color.BLACK);
+
 		chatPanel.add(chatTextTitle, BorderLayout.NORTH);
 		chatPanel.add(chatScroll, BorderLayout.CENTER);
 		chatPanel.add(chatTextField, BorderLayout.SOUTH);
@@ -340,6 +364,8 @@ public class ClientGUIThread implements Runnable, Observer {
 		mainFrame.setVisible(true);
 		mainFrame.setSize(1280, 720);
 
+		chatTextPane.setFont(fontTitilliumSemiboldUpright);
+		infoTextPane.setFont(fontTitilliumSemiboldUpright);
 		chatTextPane.setText("Say hi to the other players!");
 		infoTextPane.setText("Welcome to a new EFTAIOS game!");
 	}
