@@ -13,9 +13,12 @@ import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
 import it.polimi.ingsw.cg_8.view.client.exceptions.NotAValidInput;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -70,6 +73,25 @@ public class CardButton extends JPanel {
 
 		setOpaque(false);
 		this.setVisible(true);
+		cardButton.addMouseListener(new MouseAdapter() {
+			int width, height;
+
+			@Override
+			public void mouseEntered(MouseEvent event) {
+				width = cardButton.getWidth();
+				height = cardButton.getHeight();
+				cardButton.setSize((int) (1.05 * width),
+						((int) (1.05 * height)));
+				cardButton.repaint();
+			}
+
+			@Override
+			public void mouseExited(MouseEvent event) {
+				cardButton.setSize(width, height);
+				cardButton.repaint();
+			}
+
+		});
 
 	}
 
@@ -95,24 +117,44 @@ public class CardButton extends JPanel {
 		if (this.cardType.equals(CardType.DEFAULT)) {
 			this.setImage(Resource.IMG_ITEM);
 			this.setText("No Card");
+			this.cardButton
+					.setToolTipText("This is not an empty slot for item card");
 		} else if (this.cardType.equals(CardType.ADRENALINE)) {
 			this.setImage(Resource.IMG_ADRENALINE);
 			this.setText("Adrenaline");
+			this.cardButton
+					.setToolTipText("<html>This card allows you to move two Sectors this turn.</html>");
 		} else if (this.cardType.equals(CardType.ATTACK)) {
 			this.setImage(Resource.IMG_ATTACK);
 			this.setText("Attack");
+			this.cardButton
+					.setToolTipText("<html>This card allows you to attack, using the same rules as the Aliens.<br>"
+							+ "Note: the Human character can still move only one Sector.</html>");
 		} else if (this.cardType.equals(CardType.DEFENSE)) {
 			this.setImage(Resource.IMG_DEFENSE);
 			this.setText("Defense");
+			this.cardButton
+					.setToolTipText("<html>Play this card immediately when an Alien attacks you.<br>"
+							+ "You are not affected by the attack.</html>");
 		} else if (this.cardType.equals(CardType.SEDATIVES)) {
 			this.setImage(Resource.IMG_SEDATIVES);
 			this.setText("Sedatives");
+			this.cardButton
+					.setToolTipText("<html>If you play this card you do not draw a Dangerous Sector Card this turn,<br>"
+							+ "even if you move into a Dangerous Sector.</html>");
 		} else if (this.cardType.equals(CardType.SPOTLIGHT)) {
 			this.setImage(Resource.IMG_SPOTLIGHT);
 			this.setText("Spotlight");
+			this.cardButton
+					.setToolTipText("<html>When you play this card, name any Sector. Any players (including you)<br>"
+							+ "that are in the named Sector or any of the six adjacent Sectors must immediately<br>"
+							+ "announce their exact location Coordinates. This card affects both Humans and Aliens.<html>");
 		} else if (this.cardType.equals(CardType.TELEPORT)) {
 			this.setImage(Resource.IMG_TELEPORT);
 			this.setText("Teleport");
+			this.cardButton
+					.setToolTipText("<html>This card allows you to move directly to the Human Sector from any part of the ship.<br>"
+							+ "This is in addition to your normal movement which can happen before or after you use the item.</html>");
 		}
 
 	}
