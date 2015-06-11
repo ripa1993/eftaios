@@ -42,6 +42,9 @@ public class CardButton extends JPanel {
 	private Font fontTitilliumSemiboldUpright;
 
 	public CardButton() {
+		this.cardButton = new JLabel();
+		this.text = new JLabel("No Card");
+		this.cardType = CardType.DEFAULT;
 		try {
 			fontTitilliumSemiboldUpright = Font.createFont(
 					Font.TRUETYPE_FONT,
@@ -53,18 +56,13 @@ public class CardButton extends JPanel {
 			e.printStackTrace();
 		}
 		setOpaque(false);
-		this.cardType = CardType.DEFAULT;
+		
 		this.setLayout(new BorderLayout());
 		this.text.setFont(fontTitilliumSemiboldUpright);
-		this.text = new JLabel("No Card");
-		try {
-			text.setFont(Font.createFont(Font.TRUETYPE_FONT,
-					new FileInputStream(Resource.FONT_TITILLIUM_BOLD_UPRIGHT)));
-		} catch (FontFormatException | IOException e) {
-			System.out.println(e.getMessage());
-		}
+	
+		
 		text.setHorizontalAlignment(SwingConstants.CENTER);
-		this.cardButton = new JLabel();
+		
 
 		this.add(cardButton, BorderLayout.CENTER);
 		this.add(text, BorderLayout.SOUTH);

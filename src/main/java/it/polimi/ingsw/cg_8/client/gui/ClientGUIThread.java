@@ -141,7 +141,6 @@ public class ClientGUIThread implements Runnable, Observer {
 
 		mainFrame = new JFrame("Escape From The Aliens In Outer Space");
 		mainFrame.setResizable(true);
-		mainFrame = new JFrame("Escape From The Aliens In Outer Space");
 		BufferedImage myImage;
 		try {
 			myImage = ImageIO.read(new File(Resource.IMG_DEFAULT_BACKGROUND));
@@ -779,7 +778,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		} else if (arg.equals("State")) {
 			ResponseState stateMessage = clientData.getState();
 			String state = stateMessage.getMessage();
-			labelCurrentState.setText(state);
+			//labelCurrentState.setText(state);
 			// TODO: visualizza stato
 		}
 	}
