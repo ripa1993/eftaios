@@ -319,7 +319,7 @@ public class ClientGUIThread implements Runnable, Observer {
 
 		cardButton1 = new CardButton();
 		cardButton1.setBackground(Color.WHITE);
-		cardButton1.setCardType(CardType.TELEPORT);
+		cardButton1.setCardType(CardType.DEFAULT);
 		cardPanel.add(cardButton1);
 
 		cardButton2 = new CardButton();
@@ -329,7 +329,7 @@ public class ClientGUIThread implements Runnable, Observer {
 
 		cardButton3 = new CardButton();
 		cardButton3.setBackground(Color.WHITE);
-		cardButton3.setCardType(CardType.SPOTLIGHT);
+		cardButton3.setCardType(CardType.DEFAULT);
 		cardPanel.add(cardButton3);
 
 		// set up info panel
