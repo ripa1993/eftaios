@@ -77,6 +77,7 @@ import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.MouseInputAdapter;
+import java.awt.Rectangle;
 
 /**
  * Class that defines the GUI.
@@ -118,8 +119,6 @@ public class ClientGUIThread implements Runnable, Observer {
 	private JLabel lblItemCards;
 	private JPanel cardPanel;
 	private JLabel labelCurrentState;
-	private JPanel panel_4;
-	private JPanel panel_3;
 	private Font fontTitilliumBoldUpright;
 	private Font fontTitilliumSemiboldUpright;
 	private CardButton[] cardList;
@@ -277,35 +276,28 @@ public class ClientGUIThread implements Runnable, Observer {
 		panel_1.setBackground(Color.WHITE);
 		panel.add(panel_1, BorderLayout.NORTH);
 		panel_1.setLayout(new BorderLayout(0, 0));
-
-		lblPlayerState = new JLabel();
-		lblPlayerState.setFont(fontTitilliumBoldUpright);
-		lblPlayerState.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPlayerState.setText("PLAYER STATE");
-		lblPlayerState.setForeground(Color.BLACK);
-		panel_1.add(lblPlayerState, BorderLayout.CENTER);
-
-		labelCurrentState = new JLabel();
-		labelCurrentState.setText("The game hasn't started yet");
-		labelCurrentState.setFont(fontTitilliumSemiboldUpright);
-		labelCurrentState.setHorizontalAlignment(SwingConstants.CENTER);
-		labelCurrentState.setForeground(Color.BLACK);
-		panel_1.add(labelCurrentState, BorderLayout.SOUTH);
-
-		panel_4 = new JPanel();
-		panel_4.setOpaque(false);
-		panel_4.setBackground(Color.WHITE);
-		panel_1.add(panel_4, BorderLayout.NORTH);
+		panel_1.setBorder(new EmptyBorder(10, 0, 0, 0));
+						
+								lblPlayerState = new JLabel();
+								panel_1.add(lblPlayerState, BorderLayout.NORTH);
+								lblPlayerState.setFont(fontTitilliumBoldUpright);
+								lblPlayerState.setHorizontalAlignment(SwingConstants.CENTER);
+								lblPlayerState.setText("PLAYER STATE");
+								lblPlayerState.setForeground(Color.BLACK);
+								
+										labelCurrentState = new JLabel();
+										panel_1.add(labelCurrentState, BorderLayout.CENTER);
+										labelCurrentState.setText("The game hasn't started yet");
+										labelCurrentState.setFont(fontTitilliumSemiboldUpright);
+										labelCurrentState.setHorizontalAlignment(SwingConstants.CENTER);
+										labelCurrentState.setForeground(Color.BLACK);
 
 		panel_2 = new JPanel();
 		panel_2.setOpaque(false);
 		panel_2.setBackground(Color.WHITE);
+		panel_2.setBorder(new EmptyBorder(10, 0, 0, 0));
 		panel.add(panel_2, BorderLayout.SOUTH);
 		panel_2.setLayout(new BorderLayout(0, 0));
-
-		panel_3 = new JPanel();
-		panel_3.setOpaque(false);
-		panel_2.add(panel_3, BorderLayout.NORTH);
 
 		lblItemCards = new JLabel();
 		lblItemCards.setFont(fontTitilliumBoldUpright);
