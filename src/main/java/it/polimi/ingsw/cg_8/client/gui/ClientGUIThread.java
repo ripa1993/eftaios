@@ -2,6 +2,7 @@ package it.polimi.ingsw.cg_8.client.gui;
 
 import it.polimi.ingsw.cg_8.Resource;
 import it.polimi.ingsw.cg_8.client.ClientData;
+import it.polimi.ingsw.cg_8.client.gui.CardButton.CardType;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.AdrenalineCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.AttackCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.ItemCard;
@@ -24,6 +25,7 @@ import it.polimi.ingsw.cg_8.view.client.actions.ActionEndTurn;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionFakeNoise;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionMove;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionUseCard;
+import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
 import it.polimi.ingsw.cg_8.view.client.exceptions.NotAValidInput;
 import it.polimi.ingsw.cg_8.view.server.ResponseCard;
 import it.polimi.ingsw.cg_8.view.server.ResponseChat;
@@ -33,7 +35,6 @@ import it.polimi.ingsw.cg_8.view.server.ResponseState;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -73,10 +74,6 @@ import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.MouseInputAdapter;
-
-import java.awt.Component;
-
-import javax.swing.BoxLayout;
 
 /**
  * Class that defines the GUI.
@@ -123,8 +120,9 @@ public class ClientGUIThread implements Runnable, Observer {
 		mainFrame = new JFrame("Escape From The Aliens In Outer Space");
 		BufferedImage myImage;
 		try {
-			myImage = ImageIO.read(new File("resources//images//default_background.png"));
-			
+			myImage = ImageIO.read(new File(
+					"resources//images//default_background.png"));
+
 			mainFrame.setContentPane(new BackgroundPanel(myImage));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -211,8 +209,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		// set layouts
 		mainFrame.getContentPane().setLayout(new BorderLayout());
 		GridBagConstraints c = new GridBagConstraints();
-		
-		
+
 		mainFrame.getContentPane().add(mapPanel, BorderLayout.CENTER);
 		mainFrame.getContentPane().add(rightPanel, BorderLayout.EAST);
 		chatPanel.setLayout(new BorderLayout());
@@ -274,7 +271,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		panel_2.setBackground(Color.WHITE);
 		panel.add(panel_2, BorderLayout.SOUTH);
 		panel_2.setLayout(new BorderLayout(0, 0));
-		
+
 		panel_3 = new JPanel();
 		panel_3.setOpaque(false);
 		panel_2.add(panel_3, BorderLayout.NORTH);
@@ -295,44 +292,18 @@ public class ClientGUIThread implements Runnable, Observer {
 
 		cardButton1 = new CardButton();
 		cardButton1.setBackground(Color.WHITE);
+		cardButton1.setCardType(CardType.TELEPORT);
 		cardPanel.add(cardButton1);
-		
-	       
 
 		cardButton2 = new CardButton();
 		cardButton2.setBackground(Color.WHITE);
+		cardButton2.setCardType(CardType.DEFAULT);
 		cardPanel.add(cardButton2);
 
 		cardButton3 = new CardButton();
 		cardButton3.setBackground(Color.WHITE);
+		cardButton3.setCardType(CardType.SPOTLIGHT);
 		cardPanel.add(cardButton3);
-		cardButton3.setSize(50, 50);
-		cardButton3.setMaximumSize(cardButton3.getSize());
-		
-
-		try {
-			Image card1 = ImageIO.read(new File(
-					"resources//images//card//adrenaline.png"));
-			Image cardImage1 = card1.getScaledInstance(100, -1, Image.SCALE_SMOOTH);
-			cardButton1.setIcon(new ImageIcon(cardImage1));
-			
-			
-		} catch (IOException ex) {
-		}
-		try {
-			Image card2 = ImageIO.read(new File(
-					"resources//images//card//attack.png"));
-			Image cardImage2 = card2.getScaledInstance(100, -1, Image.SCALE_SMOOTH);
-			cardButton2.setIcon(new ImageIcon(cardImage2));
-		} catch (IOException ex) {
-		}
-		try {
-			Image card3 = ImageIO.read(new File(
-					"resources//images//card//sedatives.png"));
-			Image cardImage3 = card3.getScaledInstance(100, -1, Image.SCALE_SMOOTH);
-			cardButton3.setIcon(new ImageIcon(cardImage3));
-		} catch (IOException ex) {
-		}
 
 		// set up info panel
 		infoTextTitle = new JLabel();
@@ -361,7 +332,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		chatPanel2.add(chatButton, BorderLayout.SOUTH);
 		rightPanel.add(chatInfoPanel, BorderLayout.CENTER);
 		rightPanel.add(commandsPanel, BorderLayout.SOUTH);
-		
+
 		chatPanel2.setVisible(true);
 		chatPanel.setVisible(true);
 		infoPanel.setVisible(true);
@@ -398,6 +369,36 @@ public class ClientGUIThread implements Runnable, Observer {
 
 	@Override
 	public void run() {
+
+		cardButton1.addMouseListener(new MouseInputAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				ClientAction action = cardButton1.createAction();
+				if (action != null) {
+					connectionManager.send(action);
+				}
+			}
+
+		});
+		cardButton2.addMouseListener(new MouseInputAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				ClientAction action = cardButton2.createAction();
+				if (action != null) {
+					connectionManager.send(action);
+				}
+			}
+		});
+		cardButton3.addMouseListener(new MouseInputAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				ClientAction action = cardButton3.createAction();
+				if (action != null) {
+					connectionManager.send(action);
+				}
+			}
+		});
+
 		mainFrame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {

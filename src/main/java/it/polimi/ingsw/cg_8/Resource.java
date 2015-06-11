@@ -17,13 +17,15 @@ public class Resource {
 	/**
 	 * Reference to Galvani map image
 	 */
-	public static final String IMG_GALVANI_MAP = "resources" + File.separatorChar
-			+ "images" + File.separatorChar + "galvani.png";
+	public static final String IMG_GALVANI_MAP = "resources"
+			+ File.separatorChar + "images" + File.separatorChar
+			+ "galvani.png";
 	/**
 	 * Reference to Galilei map image
 	 */
-	public static final String IMG_GALILEI_MAP = "resources" + File.separatorChar
-			+ "images" + File.separatorChar + "galilei.png";
+	public static final String IMG_GALILEI_MAP = "resources"
+			+ File.separatorChar + "images" + File.separatorChar
+			+ "galilei.png";
 	/**
 	 * Reference to default background image
 	 */
@@ -56,8 +58,9 @@ public class Resource {
 	/**
 	 * Escape hatch
 	 */
-	public static final String SOUND_ESCAPE_HATCH = "resources" + File.separatorChar
-			+ "sounds" + File.separatorChar + "escape_hatch.wav";
+	public static final String SOUND_ESCAPE_HATCH = "resources"
+			+ File.separatorChar + "sounds" + File.separatorChar
+			+ "escape_hatch.wav";
 	/**
 	 * Human Attack 1
 	 */
@@ -84,8 +87,9 @@ public class Resource {
 	/**
 	 * Notification
 	 */
-	public static final String SOUND_NOTIFICATION = "resources" + File.separatorChar
-			+ "sounds" + File.separatorChar + "notification.wav";
+	public static final String SOUND_NOTIFICATION = "resources"
+			+ File.separatorChar + "sounds" + File.separatorChar
+			+ "notification.wav";
 	/**
 	 * Shield
 	 */
@@ -94,16 +98,90 @@ public class Resource {
 	/**
 	 * Spotlight
 	 */
-	public static final String SOUND_SPOTLIGHT = "resources" + File.separatorChar
-			+ "sounds" + File.separatorChar + "spotlight.wav";
+	public static final String SOUND_SPOTLIGHT = "resources"
+			+ File.separatorChar + "sounds" + File.separatorChar
+			+ "spotlight.wav";
 	/**
 	 * Teleport
 	 */
-	public static final String SOUND_TELEPORT = "resources" + File.separatorChar
-			+ "sounds" + File.separatorChar + "teleport.wav";
+	public static final String SOUND_TELEPORT = "resources"
+			+ File.separatorChar + "sounds" + File.separatorChar
+			+ "teleport.wav";
 	/**
 	 * Bonus track
 	 */
 	public static final String SOUND_BONUS = "resources" + File.separatorChar
 			+ "sounds" + File.separatorChar + "bonus.wav";
+	/**
+	 * Adrenaline card
+	 */
+	public static final String IMG_ADRENALINE = "resources"
+			+ File.separatorChar + "images" + File.separatorChar + "card"
+			+ File.separatorChar + "adrenaline.png";
+	/**
+	 * attack card
+	 */
+	public static final String IMG_ATTACK = "resources" + File.separatorChar
+			+ "images" + File.separatorChar + "card" + File.separatorChar
+			+ "attack.png";
+	/**
+	 * defense card
+	 */
+	public static final String IMG_DEFENSE = "resources" + File.separatorChar
+			+ "images" + File.separatorChar + "card" + File.separatorChar
+			+ "defense.png";
+	/**
+	 * escape green card
+	 */
+	public static final String IMG_ESCAPE_GREEN = "resources"
+			+ File.separatorChar + "images" + File.separatorChar + "card"
+			+ File.separatorChar + "escape_green.png";
+	/**
+	 * escape red card
+	 */
+	public static final String IMG_ESCAPE_RED = "resources"
+			+ File.separatorChar + "images" + File.separatorChar + "card"
+			+ File.separatorChar + "escape_red.png";
+	/**
+	 * item card
+	 */
+	public static final String IMG_ITEM = "resources" + File.separatorChar
+			+ "images" + File.separatorChar + "card" + File.separatorChar
+			+ "item_icon.png";
+	/**
+	 * noise in any sector card
+	 */
+	public static final String IMG_NOISE_IN_ANY_SECTOR = "resources"
+			+ File.separatorChar + "images" + File.separatorChar + "card"
+			+ File.separatorChar + "noise_in_any_sector.png";
+	/**
+	 * noise in your sector card
+	 */
+	public static final String IMG_NOISE_IN_YOUR_SECTOR = "resources"
+			+ File.separatorChar + "images" + File.separatorChar + "card"
+			+ File.separatorChar + "noise_in_your_sector.png";
+	/**
+	 * sedatives card
+	 */
+	public static final String IMG_SEDATIVES = "resources" + File.separatorChar
+			+ "images" + File.separatorChar + "card" + File.separatorChar
+			+ "sedatives.png";
+	/**
+	 * silence card
+	 */
+	public static final String IMG_SILENCE = "resources" + File.separatorChar
+			+ "images" + File.separatorChar + "card" + File.separatorChar
+			+ "silence.png";
+	/**
+	 * spotlight card
+	 */
+	public static final String IMG_SPOTLIGHT = "resources" + File.separatorChar
+			+ "images" + File.separatorChar + "card" + File.separatorChar
+			+ "spotlight.png";
+	/**
+	 * teleport card
+	 */
+	public static final String IMG_TELEPORT = "resources" + File.separatorChar
+			+ "images" + File.separatorChar + "card" + File.separatorChar
+			+ "teleport.png";
 }
