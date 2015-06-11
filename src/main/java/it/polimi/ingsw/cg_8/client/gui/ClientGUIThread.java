@@ -189,7 +189,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		chatPanel2.setBackground(Color.WHITE);
 		infoScroll = new JScrollPane(infoTextPane);
 		chatScroll = new JScrollPane(chatTextPane);
-		backgroundImageResource = Resource.IMG_GALILEI_MAP;
+		backgroundImageResource = Resource.IMG_FERMI_MAP;
 		backgroundImage = new ImageIcon(backgroundImageResource);
 		backgroundImageScaled = new ImageIcon(backgroundImage.getImage()
 				.getScaledInstance(5000, -1, Image.SCALE_SMOOTH)).getImage();
@@ -363,7 +363,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		chatInfoPanel.add(infoPanel);
 		chatInfoPanel.add(chatPanel2);
 		chatPanel2.add(chatPanel, BorderLayout.CENTER);
-//		chatPanel2.add(chatButton, BorderLayout.SOUTH);
+		// chatPanel2.add(chatButton, BorderLayout.SOUTH);
 		rightPanel.add(chatInfoPanel, BorderLayout.CENTER);
 		rightPanel.add(commandsPanel, BorderLayout.SOUTH);
 
