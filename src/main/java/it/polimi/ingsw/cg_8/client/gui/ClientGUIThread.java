@@ -148,7 +148,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		BufferedImage myImage;
 		contentPane = mainFrame.getContentPane();
 		try {
-			myImage = ImageIO.read(new File(Resource.IMG_DEFAULT_BACKGROUND));
+			myImage = ImageIO.read(new File(Resource.IMG_BACKGROUND_PATTERN));
 
 			mainFrame.setContentPane(new BackgroundPanel(myImage));
 		} catch (IOException e) {

@@ -30,6 +30,12 @@ public class Resource {
 	/**
 	 * Reference to default background image
 	 */
+	public static final String IMG_BACKGROUND_PATTERN = "resources"
+			+ File.separatorChar + "images" + File.separatorChar
+			+ "background_pattern.png";
+	/**
+	 * Reference to default background image
+	 */
 	public static final String IMG_DEFAULT_BACKGROUND = "resources"
 			+ File.separatorChar + "images" + File.separatorChar
 			+ "default_background.png";
