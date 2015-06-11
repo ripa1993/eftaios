@@ -783,7 +783,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		} else if (arg.equals("State")) {
 			ResponseState stateMessage = clientData.getState();
 			String state = stateMessage.getMessage();
-			labelCurrentState.setText(state);
+			//labelCurrentState.setText(state);
 			// TODO: visualizza stato
 		}
 	}
