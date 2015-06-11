@@ -164,8 +164,12 @@ public class StateMachine {
 							+ " has moved."));
 					Sector destinationSector = model.getMap().getSectors()
 							.get(destination);
+
 					controller.writeToPlayer(player,
-							new ResponseState(player.toString()));
+							new ResponseState(player.getName(), player
+									.getCharacter().toString(), player
+									.getState().toString(), player
+									.getLastPosition().toString()));
 					if (currentPlayer.getCharacter().hasToDrawSectorCard() == false) {
 						model.setTurnPhase(TurnPhase.MOVEMENT_DONE_NOT_DS);
 
@@ -221,8 +225,11 @@ public class StateMachine {
 								.getName() + " has used a Teleport Card"));
 						controller.writeToPlayer(player, new ResponseCard(
 								player.getHand().getHeldCards()));
-						controller.writeToPlayer(player,
-								new ResponseState(player.toString()));
+						controller.writeToPlayer(player, new ResponseState(
+								player.getName(), player.getCharacter()
+										.toString(), player.getState()
+										.toString(), player.getLastPosition()
+										.toString()));
 						return true;
 					}
 					return false;
@@ -296,8 +303,11 @@ public class StateMachine {
 									.getName() + " has used a Teleport Card"));
 							controller.writeToPlayer(player, new ResponseCard(
 									player.getHand().getHeldCards()));
-							controller.writeToPlayer(player,
-									new ResponseState(player.toString()));
+							controller.writeToPlayer(player, new ResponseState(
+									player.getName(), player.getCharacter()
+											.toString(), player.getState()
+											.toString(), player
+											.getLastPosition().toString()));
 							return true;
 						}
 						return false;
@@ -425,8 +435,11 @@ public class StateMachine {
 									.getName() + " has used a Teleport Card"));
 							controller.writeToPlayer(player, new ResponseCard(
 									player.getHand().getHeldCards()));
-							controller.writeToPlayer(player,
-									new ResponseState(player.toString()));
+							controller.writeToPlayer(player, new ResponseState(
+									player.getName(), player.getCharacter()
+											.toString(), player.getState()
+											.toString(), player
+											.getLastPosition().toString()));
 							return true;
 						}
 						return false;
@@ -483,8 +496,11 @@ public class StateMachine {
 								.getName() + " has used a Teleport Card"));
 						controller.writeToPlayer(player, new ResponseCard(
 								player.getHand().getHeldCards()));
-						controller.writeToPlayer(player,
-								new ResponseState(player.toString()));
+						controller.writeToPlayer(player, new ResponseState(
+								player.getName(), player.getCharacter()
+										.toString(), player.getState()
+										.toString(), player.getLastPosition()
+										.toString()));
 						return true;
 					}
 					return false;
@@ -594,8 +610,9 @@ public class StateMachine {
 			for (Player p : victims) {
 				controller.writeToAll(new ResponsePrivate(p.getName()
 						+ " has been killed!"));
-				controller.writeToPlayer(p,
-						new ResponseState(p.toString()));
+				controller.writeToPlayer(p, new ResponseState(p.getName(), p
+						.getCharacter().toString(), p.getState().toString(), p
+						.getLastPosition().toString()));
 				List<Player> survivors = attack.getSurvivor();
 				for (Player p2 : survivors) {
 					controller

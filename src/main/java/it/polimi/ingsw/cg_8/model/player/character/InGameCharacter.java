@@ -59,6 +59,9 @@ public abstract class InGameCharacter {
 		return characterCard;
 	}
 
+	/**
+	 * Never used, overridden by its children.
+	 */
 	@Override
 	public String toString() {
 		return "InGameCharacter [characterCard=" + characterCard + "]";

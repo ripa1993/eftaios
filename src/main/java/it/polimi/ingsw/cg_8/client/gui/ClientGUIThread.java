@@ -274,22 +274,18 @@ public class ClientGUIThread implements Runnable, Observer {
 		rightPanel.add(state_panel, BorderLayout.NORTH);
 		state_panel.setLayout(new BorderLayout(0, 0));
 
-		
-		
-		
-		
-		
 		panel_3 = new JPanel();
 		panel_3.setOpaque(false);
 		state_panel.add(panel_3, BorderLayout.CENTER);
 		panel_3.setLayout(new BorderLayout(0, 0));
-		
+
 		state_image = new JLabel("");
 		panel_3.add(state_image, BorderLayout.WEST);
 		state_image.setBorder(new EmptyBorder(0, 60, 0, 0));
-		
+
 		try {
-			Image tempImage = ImageIO.read(new File("resources//images//player//alien_1.png"));
+			Image tempImage = ImageIO.read(new File(
+					"resources//images//player//alien_1.png"));
 			Image cardImage = tempImage.getScaledInstance(60, -1,
 					Image.SCALE_SMOOTH);
 			state_image.setIcon(new ImageIcon(cardImage));
@@ -828,7 +824,11 @@ public class ClientGUIThread implements Runnable, Observer {
 
 		} else if (arg.equals("State")) {
 			ResponseState stateMessage = clientData.getState();
-			String state = stateMessage.getMessage();
+			// TODO: get random image
+			String state = stateMessage.getPlayerName() + ", "
+					+ stateMessage.getCharacter() + ", State:"
+					+ stateMessage.getState() + ", Position: "
+					+ stateMessage.getPosition();
 			labelCurrentState.setText(state);
 			labelCurrentState.repaint();
 			// TODO: visualizza stato
