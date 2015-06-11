@@ -112,7 +112,7 @@ public class CardButton extends JPanel {
 			this.setImage(Resource.IMG_TELEPORT);
 			this.setText("Teleport");
 		}
-
+		this.repaint();
 	}
 
 	private void setImage(String pathToImage) {

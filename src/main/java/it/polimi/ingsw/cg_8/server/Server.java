@@ -76,7 +76,7 @@ public class Server {
 	 * Milliseconds after which the game is automatically started when 2 player
 	 * join the game
 	 */
-	private final static int TIMEOUT = 20000;
+	private final static int TIMEOUT = 5000;
 	/**
 	 * Log4j logger
 	 */

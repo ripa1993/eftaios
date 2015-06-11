@@ -184,7 +184,10 @@ public class ClientGUIThread implements Runnable, Observer {
 		chatPanel2.setBackground(Color.WHITE);
 		infoScroll = new JScrollPane(infoTextPane);
 		chatScroll = new JScrollPane(chatTextPane);
-		backgroundImageResource = Resource.IMG_GALILEI_MAP;
+		/**
+		 * Which map is loaded.
+		 */
+		backgroundImageResource = Resource.IMG_FERMI_MAP;
 		backgroundImage = new ImageIcon(backgroundImageResource);
 		backgroundImageScaled = new ImageIcon(backgroundImage.getImage()
 				.getScaledInstance(5000, -1, Image.SCALE_SMOOTH)).getImage();
@@ -324,7 +327,7 @@ public class ClientGUIThread implements Runnable, Observer {
 
 		cardButton3 = new CardButton();
 		cardButton3.setBackground(Color.WHITE);
-		cardButton3.setCardType(CardType.SPOTLIGHT);
+		cardButton3.setCardType(CardType.DEFAULT);
 		cardPanel.add(cardButton3);
 
 		// set up info panel
@@ -774,11 +777,25 @@ public class ClientGUIThread implements Runnable, Observer {
 		else if (arg.equals("Cards")) {
 			ResponseCard cardMessage = clientData.getCards();
 			List<ItemCard> cards = cardMessage.getHand();
+			ItemCard cardArray[] = new ItemCard[3];
+			for (int i = 0; i < cards.size(); i++) {
+				cardArray[i] = cards.get(i);
+			}
 			// TODO: visualizza carte
+			ItemCard tempCard1 = cardArray[0];
+			this.updateCard(cardButton1, tempCard1);
+			cardButton1.repaint();
+			ItemCard tempCard2 = cardArray[1];
+			this.updateCard(cardButton2, tempCard2);
+			cardButton2.repaint();
+			ItemCard tempCard3 = cardArray[2];
+			this.updateCard(cardButton3, tempCard3);
+			cardButton3.repaint();
 		} else if (arg.equals("State")) {
 			ResponseState stateMessage = clientData.getState();
 			String state = stateMessage.getMessage();
-			//labelCurrentState.setText(state);
+			labelCurrentState.setText(state);
+			labelCurrentState.repaint();
 			// TODO: visualizza stato
 		}
 	}
@@ -792,6 +809,30 @@ public class ClientGUIThread implements Runnable, Observer {
 			clip.start();
 		} catch (Exception ex) {
 			System.err.println(ex.getMessage());
+		}
+	}
+	
+	private void updateCard(CardButton cardButton, ItemCard tempCard) {
+		if (tempCard instanceof AdrenalineCard) {
+			cardButton.setCardType(CardButton.CardType.ADRENALINE);
+		}
+		else if (tempCard instanceof AttackCard) {
+			cardButton.setCardType(CardButton.CardType.ATTACK);
+		}
+		else if (tempCard instanceof AttackCard) {
+			cardButton.setCardType(CardButton.CardType.DEFENSE);
+		}
+		else if (tempCard instanceof AttackCard) {
+			cardButton.setCardType(CardButton.CardType.SEDATIVES);
+		}
+		else if (tempCard instanceof AttackCard) {
+			cardButton.setCardType(CardButton.CardType.SPOTLIGHT);
+		}
+		else if (tempCard instanceof AttackCard) {
+			cardButton.setCardType(CardButton.CardType.TELEPORT);
+		}
+		else if (tempCard == null) {
+			cardButton.setCardType(CardButton.CardType.DEFAULT);
 		}
 	}
 
