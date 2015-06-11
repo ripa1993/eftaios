@@ -348,16 +348,22 @@ public class ClientGUIThread implements Runnable, Observer {
 		chatTextTitle.setText("CHAT");
 		chatTextTitle.setForeground(Color.BLACK);
 
+		JPanel chatTextAndButton;
+		chatTextAndButton = new JPanel();
+		chatTextAndButton.setLayout(new BorderLayout());
+		chatTextAndButton.add(chatTextField, BorderLayout.CENTER);
+		chatTextAndButton.add(chatButton, BorderLayout.EAST);
+
 		chatPanel.add(chatTextTitle, BorderLayout.NORTH);
 		chatPanel.add(chatScroll, BorderLayout.CENTER);
-		chatPanel.add(chatTextField, BorderLayout.SOUTH);
+		chatPanel.add(chatTextAndButton, BorderLayout.SOUTH);
 		chatTextPane.setEditable(false);
 
 		chatInfoPanel.setLayout(new GridLayout(2, 1));
 		chatInfoPanel.add(infoPanel);
 		chatInfoPanel.add(chatPanel2);
 		chatPanel2.add(chatPanel, BorderLayout.CENTER);
-		chatPanel2.add(chatButton, BorderLayout.SOUTH);
+//		chatPanel2.add(chatButton, BorderLayout.SOUTH);
 		rightPanel.add(chatInfoPanel, BorderLayout.CENTER);
 		rightPanel.add(commandsPanel, BorderLayout.SOUTH);
 
@@ -783,7 +789,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		} else if (arg.equals("State")) {
 			ResponseState stateMessage = clientData.getState();
 			String state = stateMessage.getMessage();
-			//labelCurrentState.setText(state);
+			// labelCurrentState.setText(state);
 			// TODO: visualizza stato
 		}
 	}
