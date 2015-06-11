@@ -109,7 +109,7 @@ public class ClientGUIThread implements Runnable, Observer {
 	private String backgroundImageResource;
 	private Image backgroundImageScaled;
 	private ImageIcon backgroundImage;
-	private JPanel panel;
+	private JPanel state_panel;
 	private JPanel panel_1;
 	private JPanel panel_2;
 	private JLabel lblPlayerState;
@@ -122,6 +122,8 @@ public class ClientGUIThread implements Runnable, Observer {
 	private Font fontTitilliumBoldUpright;
 	private Font fontTitilliumSemiboldUpright;
 	private CardButton[] cardList;
+	private JPanel panel_3;
+	private JLabel state_image;
 
 	public ClientGUIThread() {
 		try {
@@ -265,38 +267,62 @@ public class ClientGUIThread implements Runnable, Observer {
 		commandsPanel.add(endTurnButton);
 		commandsPanel.setVisible(true);
 
-		panel = new JPanel();
-		panel.setOpaque(false);
-		panel.setBackground(Color.WHITE);
-		rightPanel.add(panel, BorderLayout.NORTH);
-		panel.setLayout(new BorderLayout(0, 0));
+		state_panel = new JPanel();
+		state_panel.setBorder(new EmptyBorder(10, 0, 0, 0));
+		state_panel.setOpaque(false);
+		state_panel.setBackground(Color.WHITE);
+		rightPanel.add(state_panel, BorderLayout.NORTH);
+		state_panel.setLayout(new BorderLayout(0, 0));
+
+		
+		
+		
+		
+		
+		panel_3 = new JPanel();
+		panel_3.setOpaque(false);
+		state_panel.add(panel_3, BorderLayout.CENTER);
+		panel_3.setLayout(new BorderLayout(0, 0));
+		
+		state_image = new JLabel("");
+		panel_3.add(state_image, BorderLayout.WEST);
+		state_image.setBorder(new EmptyBorder(0, 60, 0, 0));
+		
+		try {
+			Image tempImage = ImageIO.read(new File("resources//images//player//alien_1.png"));
+			Image cardImage = tempImage.getScaledInstance(60, -1,
+					Image.SCALE_SMOOTH);
+			state_image.setIcon(new ImageIcon(cardImage));
+		} catch (IOException ex) {
+		}
 
 		panel_1 = new JPanel();
+		panel_3.add(panel_1, BorderLayout.CENTER);
 		panel_1.setOpaque(false);
 		panel_1.setBackground(Color.WHITE);
-		panel.add(panel_1, BorderLayout.NORTH);
 		panel_1.setLayout(new BorderLayout(0, 0));
-		panel_1.setBorder(new EmptyBorder(10, 0, 0, 0));
-						
-								lblPlayerState = new JLabel();
-								panel_1.add(lblPlayerState, BorderLayout.NORTH);
-								lblPlayerState.setFont(fontTitilliumBoldUpright);
-								lblPlayerState.setHorizontalAlignment(SwingConstants.CENTER);
-								lblPlayerState.setText("PLAYER STATE");
-								lblPlayerState.setForeground(Color.BLACK);
-								
-										labelCurrentState = new JLabel();
-										panel_1.add(labelCurrentState, BorderLayout.CENTER);
-										labelCurrentState.setText("The game hasn't started yet");
-										labelCurrentState.setFont(fontTitilliumSemiboldUpright);
-										labelCurrentState.setHorizontalAlignment(SwingConstants.CENTER);
-										labelCurrentState.setForeground(Color.BLACK);
+		panel_1.setBorder(new EmptyBorder(0, 20, 0, 0));
+
+		lblPlayerState = new JLabel();
+		lblPlayerState.setBorder(new EmptyBorder(0, 67, 0, 0));
+		panel_1.add(lblPlayerState, BorderLayout.NORTH);
+		lblPlayerState.setFont(fontTitilliumBoldUpright);
+		lblPlayerState.setHorizontalAlignment(SwingConstants.LEFT);
+		lblPlayerState.setText("PLAYER STATE");
+		lblPlayerState.setForeground(Color.BLACK);
+
+		labelCurrentState = new JLabel();
+		panel_1.add(labelCurrentState, BorderLayout.CENTER);
+		labelCurrentState.setText("The game hasn't started yet");
+		labelCurrentState.setFont(fontTitilliumSemiboldUpright);
+		labelCurrentState.setHorizontalAlignment(SwingConstants.LEFT);
+		labelCurrentState.setForeground(Color.BLACK);
 
 		panel_2 = new JPanel();
 		panel_2.setOpaque(false);
 		panel_2.setBackground(Color.WHITE);
 		panel_2.setBorder(new EmptyBorder(10, 0, 0, 0));
-		panel.add(panel_2, BorderLayout.SOUTH);
+		state_panel.add(panel_2, BorderLayout.SOUTH);
 		panel_2.setLayout(new BorderLayout(0, 0));
 
 		lblItemCards = new JLabel();
