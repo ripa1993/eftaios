@@ -77,6 +77,7 @@ import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.MouseInputAdapter;
+
 import java.awt.Rectangle;
 
 /**
@@ -124,8 +125,13 @@ public class ClientGUIThread implements Runnable, Observer {
 	private CardButton[] cardList;
 	private JPanel panel_3;
 	private JLabel state_image;
+	/**
+	 * Shows if the player image has been set or not.
+	 */
+	private boolean playerImageSet;
 
 	public ClientGUIThread() {
+		playerImageSet = false;
 		try {
 			fontTitilliumBoldUpright = Font.createFont(Font.TRUETYPE_FONT,
 					new FileInputStream(Resource.FONT_TITILLIUM_BOLD_UPRIGHT))
@@ -283,6 +289,10 @@ public class ClientGUIThread implements Runnable, Observer {
 		panel_3.add(state_image, BorderLayout.WEST);
 		state_image.setBorder(new EmptyBorder(0, 60, 0, 0));
 
+		/**
+		 * Set the default image for the player, changed as soon as he gets an
+		 * in-game character.
+		 */
 		try {
 			Image tempImage = ImageIO.read(new File(
 					"resources//images//player//alien_1.png"));
@@ -824,14 +834,39 @@ public class ClientGUIThread implements Runnable, Observer {
 
 		} else if (arg.equals("State")) {
 			ResponseState stateMessage = clientData.getState();
-			// TODO: get random image
+
+			if (playerImageSet == false) {
+				double random = Math.random();
+				if (stateMessage.getCharacter().equals("Human")) {
+					if (random < 0.25) {
+
+					} else if (random < 0.5) {
+
+					} else if (random < 0.75) {
+
+					} else {
+
+					}
+				} else if (stateMessage.getCharacter().equals("Alien")) {
+					if (random < 0.25) {
+
+					} else if (random < 0.5) {
+
+					} else if (random < 0.75) {
+
+					} else {
+
+					}
+				}
+
+				playerImageSet = true;
+			}
 			String state = stateMessage.getPlayerName() + ", "
 					+ stateMessage.getCharacter() + ", State:"
 					+ stateMessage.getState() + ", Position: "
 					+ stateMessage.getPosition();
 			labelCurrentState.setText(state);
 			labelCurrentState.repaint();
-			// TODO: visualizza stato
 		}
 	}
 
