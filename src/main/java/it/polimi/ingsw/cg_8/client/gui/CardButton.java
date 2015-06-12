@@ -124,42 +124,42 @@ public class CardButton extends JPanel {
 			this.setImage(Resource.IMG_ITEM);
 			this.setText("No Card");
 			this.cardButton
-					.setToolTipText("This is not an empty slot for item card");
+					.setToolTipText("<html>This is an <b>empty slot</b> for item card</html>");
 		} else if (this.cardType.equals(CardType.ADRENALINE)) {
 			this.setImage(Resource.IMG_ADRENALINE);
 			this.setText("Adrenaline");
 			this.cardButton
-					.setToolTipText("<html>This card allows you to move two Sectors this turn.</html>");
+					.setToolTipText("<html>This card allows you to <b>move two Sectors</b> this turn.</html>");
 		} else if (this.cardType.equals(CardType.ATTACK)) {
 			this.setImage(Resource.IMG_ATTACK);
 			this.setText("Attack");
 			this.cardButton
-					.setToolTipText("<html>This card allows you to attack, using the same rules as the Aliens.<br>"
+					.setToolTipText("<html>This card allows you to <b>attack</b>, using the same rules as the Aliens.<br>"
 							+ "Note: the Human character can still move only one Sector.</html>");
 		} else if (this.cardType.equals(CardType.DEFENSE)) {
 			this.setImage(Resource.IMG_DEFENSE);
 			this.setText("Defense");
 			this.cardButton
 					.setToolTipText("<html>Play this card immediately when an Alien attacks you.<br>"
-							+ "You are not affected by the attack.</html>");
+							+ "You are  <b>not affected</b> by the attack.</html>");
 		} else if (this.cardType.equals(CardType.SEDATIVES)) {
 			this.setImage(Resource.IMG_SEDATIVES);
 			this.setText("Sedatives");
 			this.cardButton
-					.setToolTipText("<html>If you play this card you do not draw a Dangerous Sector Card this turn,<br>"
+					.setToolTipText("<html>If you play this card  <b>you do not draw </b> a Dangerous Sector Card this turn,<br>"
 							+ "even if you move into a Dangerous Sector.</html>");
 		} else if (this.cardType.equals(CardType.SPOTLIGHT)) {
 			this.setImage(Resource.IMG_SPOTLIGHT);
 			this.setText("Spotlight");
 			this.cardButton
 					.setToolTipText("<html>When you play this card, name any Sector. Any players (including you)<br>"
-							+ "that are in the named Sector or any of the six adjacent Sectors must immediately<br>"
-							+ "announce their exact location Coordinates. This card affects both Humans and Aliens.<html>");
+							+ "that are in the named Sector or in any of the six adjacent Sectors must immediately<br>"
+							+ " <b>announce their exact location </b> Coordinates. This card affects both Humans and Aliens.<html>");
 		} else if (this.cardType.equals(CardType.TELEPORT)) {
 			this.setImage(Resource.IMG_TELEPORT);
 			this.setText("Teleport");
 			this.cardButton
-					.setToolTipText("<html>This card allows you to move directly to the Human Sector from any part of the ship.<br>"
+					.setToolTipText("<html>This card allows you to  <b>move directly </b> to the Human Sector from any part of the ship.<br>"
 							+ "This is in addition to your normal movement which can happen before or after you use the item.</html>");
 		}
 		this.repaint();
