@@ -75,6 +75,10 @@ public class CardButton extends JPanel {
 		cardButtonImage.setBackground(Color.GREEN);
 
 		cardButtonImage.setBorder(new EmptyBorder(0, 0, 5, 0));
+		cardButtonOverlay.setBorder(new EmptyBorder(0, 0, 5, 0));
+		/**
+		 * Load the font.
+		 */
 		try {
 			fontTitilliumSemiboldUpright = Font.createFont(
 					Font.TRUETYPE_FONT,
@@ -111,20 +115,24 @@ public class CardButton extends JPanel {
 		layeredPane.setLayer(cardButtonImage, 1);
 		layeredPane.add(cardButtonOverlay);
 		layeredPane.setLayer(cardButtonOverlay, 2);
-		cardButtonOverlay.setBorder(new EmptyBorder(0, 0, 5, 0));
+		
 
+		/**
+		 * Input handling on the cardButton
+		 */
 		cardButtonImage.addMouseListener(new MouseAdapter() {
 			int width, height;
 
 			@Override
 			public void mouseEntered(MouseEvent event) {
-				// cardLayout.show(cardButton, "cardButtonOverlay");
+				
+				cardButtonOverlay.setVisible(true);
 				cardButtonImage.repaint();
 			}
 
 			@Override
 			public void mouseExited(MouseEvent event) {
-				// cardLayout.show(cardButton, "cardButtonImage");
+				cardButtonOverlay.setVisible(false);
 				cardButtonImage.repaint();
 
 			}
@@ -136,20 +144,25 @@ public class CardButton extends JPanel {
 				cardButtonImage.setSize((int) (1.05 * width),
 						((int) (1.05 * height)));
 				cardButtonImage.repaint();
+				cardButtonOverlay.setSize((int) (1.05 * width),
+						((int) (1.05 * height)));
+				cardButtonOverlay.repaint();
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent event) {
 				cardButtonImage.setSize(width, height);
 				cardButtonImage.repaint();
+				cardButtonOverlay.setSize(width, height);
+				cardButtonOverlay.repaint();
 			}
 
 		});
 		this.text.setFont(fontTitilliumSemiboldUpright);
-
 		text.setHorizontalAlignment(SwingConstants.CENTER);
 		this.add(text, BorderLayout.SOUTH);
-
+		
+		cardButtonOverlay.setVisible(false);
 		setOpaque(false);
 		this.setVisible(true);
 
