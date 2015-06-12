@@ -303,7 +303,7 @@ public class ClientGUIThread implements Runnable, Observer {
 
 		state_image = new JLabel("");
 		panel_3.add(state_image, BorderLayout.WEST);
-		state_image.setBorder(new EmptyBorder(0, 60, 0, 0));
+		state_image.setBorder(new EmptyBorder(0, 60, 5, 0));
 
 		/**
 		 * Set the default image for the player, changed as soon as he gets an
@@ -327,6 +327,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		lblPlayerState.setForeground(Color.BLACK);
 
 		labelCurrentState = new JLabel();
+		labelCurrentState.setBorder(new EmptyBorder(0, 0, 5, 0));
 		panel_1.add(labelCurrentState, BorderLayout.CENTER);
 		labelCurrentState.setText("The game hasn't started yet");
 		labelCurrentState.setFont(fontTitilliumSemiboldUpright);
@@ -345,7 +346,7 @@ public class ClientGUIThread implements Runnable, Observer {
 			logger.error(ex.getMessage());
 		}
 		turnNumberLabel.setHorizontalTextPosition(SwingConstants.CENTER);
-		turnNumberLabel.setBorder(new EmptyBorder(0, 0, 0, 60));
+		turnNumberLabel.setBorder(new EmptyBorder(0, 0, 5, 60));
 		panel_3.add(turnNumberLabel, BorderLayout.EAST);
 		turnNumberLabel.setVisible(true);
 
