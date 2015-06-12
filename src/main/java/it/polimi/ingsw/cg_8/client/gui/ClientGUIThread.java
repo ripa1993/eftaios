@@ -16,7 +16,6 @@ import it.polimi.ingsw.cg_8.model.noises.MovementNoise;
 import it.polimi.ingsw.cg_8.model.noises.SpotlightNoise;
 import it.polimi.ingsw.cg_8.model.noises.TeleportNoise;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
-import it.polimi.ingsw.cg_8.server.Server;
 import it.polimi.ingsw.cg_8.view.client.ActionParser;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionAttack;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionChat;
@@ -37,16 +36,24 @@ import it.polimi.ingsw.cg_8.view.server.ResponseState;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
+import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -69,23 +76,12 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
 import javax.swing.event.MouseInputAdapter;
+import javax.swing.text.DefaultCaret;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.Rectangle;
-
-import javax.swing.border.MatteBorder;
 
 /**
  * Class that defines the GUI.
@@ -409,6 +405,9 @@ public class ClientGUIThread implements Runnable, Observer {
 		infoPanel.add(infoScroll, BorderLayout.CENTER);
 		infoTextPane.setEditable(false);
 
+		DefaultCaret caretInfo = (DefaultCaret)infoTextPane.getCaret();
+		caretInfo.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+		
 		// set up chat panel
 		chatTextTitle = new JLabel();
 		chatTextTitle.setFont(fontTitilliumBoldUpright);
@@ -426,6 +425,9 @@ public class ClientGUIThread implements Runnable, Observer {
 		chatPanel.add(chatScroll, BorderLayout.CENTER);
 		chatPanel.add(chatTextAndButton, BorderLayout.SOUTH);
 		chatTextPane.setEditable(false);
+		
+		DefaultCaret caretChat = (DefaultCaret)	chatTextPane.getCaret();
+		caretChat.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 
 		chatInfoPanel.setLayout(new GridLayout(2, 1));
 		chatInfoPanel.add(infoPanel);
