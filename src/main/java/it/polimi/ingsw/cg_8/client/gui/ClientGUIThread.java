@@ -384,17 +384,17 @@ public class ClientGUIThread implements Runnable, Observer {
 		// // }
 		cardButton1 = new CardButton();
 		cardButton1.setBackground(Color.WHITE);
-		cardButton1.setCardType(CardType.DEFAULT);
+		cardButton1.setCardType(CardType.ADRENALINE);
 		cardPanel.add(cardButton1);
 
 		cardButton2 = new CardButton();
 		cardButton2.setBackground(Color.WHITE);
-		cardButton2.setCardType(CardType.DEFAULT);
+		cardButton2.setCardType(CardType.ATTACK);
 		cardPanel.add(cardButton2);
 
 		cardButton3 = new CardButton();
 		cardButton3.setBackground(Color.WHITE);
-		cardButton3.setCardType(CardType.DEFAULT);
+		cardButton3.setCardType(CardType.DEFENSE);
 		cardPanel.add(cardButton3);
 
 		// set up info panel
@@ -406,9 +406,9 @@ public class ClientGUIThread implements Runnable, Observer {
 		infoPanel.add(infoScroll, BorderLayout.CENTER);
 		infoTextPane.setEditable(false);
 
-		DefaultCaret caretInfo = (DefaultCaret)infoTextPane.getCaret();
+		DefaultCaret caretInfo = (DefaultCaret) infoTextPane.getCaret();
 		caretInfo.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-		
+
 		// set up chat panel
 		chatTextTitle = new JLabel();
 		chatTextTitle.setFont(fontTitilliumBoldUpright);
@@ -426,8 +426,8 @@ public class ClientGUIThread implements Runnable, Observer {
 		chatPanel.add(chatScroll, BorderLayout.CENTER);
 		chatPanel.add(chatTextAndButton, BorderLayout.SOUTH);
 		chatTextPane.setEditable(false);
-		
-		DefaultCaret caretChat = (DefaultCaret)	chatTextPane.getCaret();
+
+		DefaultCaret caretChat = (DefaultCaret) chatTextPane.getCaret();
 		caretChat.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 
 		chatInfoPanel.setLayout(new GridLayout(2, 1));
@@ -876,17 +876,22 @@ public class ClientGUIThread implements Runnable, Observer {
 		else if (arg.equals("Cards")) {
 			ResponseCard cardMessage = clientData.getCards();
 			List<ItemCard> cards = cardMessage.getHand();
+			System.out.println("carte" + cards.toString());
 			ItemCard cardArray[] = new ItemCard[CARD_NUM];
 			for (int i = 0; i < cards.size(); i++) {
 				cardArray[i] = cards.get(i);
 			}
+
 			ItemCard tempCard1 = cardArray[0];
 			this.updateCard(cardButton1, tempCard1);
+			// System.out.println("carta1" +cardArray[0].toString());
 			cardButton1.repaint();
 			ItemCard tempCard2 = cardArray[1];
+			// System.out.println("carta2" +cardArray[1].toString());
 			this.updateCard(cardButton2, tempCard2);
 			cardButton2.repaint();
 			ItemCard tempCard3 = cardArray[2];
+			// System.out.println("carta3" +cardArray[2].toString());
 			this.updateCard(cardButton3, tempCard3);
 			cardButton3.repaint();
 
@@ -912,6 +917,10 @@ public class ClientGUIThread implements Runnable, Observer {
 					}
 				} else if (stateMessage.getCharacter().equals("Alien")) {
 					logger.debug("I'm an alien, so i set my img");
+					cardButton1.updateOverlay(Resource.IMG_ALIEN_OVERLAY);
+					cardButton2.updateOverlay(Resource.IMG_ALIEN_OVERLAY);
+					cardButton3.updateOverlay(Resource.IMG_ALIEN_OVERLAY);
+
 					if (random < 0.25) {
 						setStateImage(Resource.IMG_ALIEN_1);
 

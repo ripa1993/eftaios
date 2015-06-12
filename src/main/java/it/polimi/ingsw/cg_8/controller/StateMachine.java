@@ -366,7 +366,8 @@ public class StateMachine {
 							new ResponsePrivate("You have drawn a "
 									+ draw.getDangerousSectorCard()));
 					System.out.println(draw.getItemCard());
-
+					controller.writeToPlayer(player, new ResponseCard(
+							player.getHand().getHeldCards()));
 					if (draw.getItemCard() != null
 							&& draw.isDiscardedItemCard() == false) {
 						controller.writeToPlayer(player, new ResponsePrivate(
@@ -393,6 +394,8 @@ public class StateMachine {
 				} finally {
 					controller.writeToPlayer(player, new ResponsePrivate(player
 							.getHand().getHeldCards().toString()));
+					controller.writeToPlayer(player, new ResponseCard(
+							player.getHand().getHeldCards()));
 					if (hasToMakeFakeNoise == true) {
 						model.setTurnPhase(TurnPhase.WAITING_FAKE_NOISE);
 						controller.writeToPlayer(player, new ResponsePrivate(

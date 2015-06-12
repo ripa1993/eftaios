@@ -92,15 +92,7 @@ public class CardButton extends JPanel {
 		/**
 		 * Load the default overlay.
 		 */
-		try {
-			Image tempOverlay = ImageIO.read(new File(
-					Resource.IMG_HUMAN_OVERLAY));
-			cardOverlay = tempOverlay.getScaledInstance(100, -1,
-					Image.SCALE_SMOOTH);
-
-		} catch (IOException ex) {
-			logger.error(ex.getMessage());
-		}
+		this.setOverlay(Resource.IMG_HUMAN_OVERLAY);
 		/**
 		 * Set the default image.
 		 */
@@ -115,7 +107,6 @@ public class CardButton extends JPanel {
 		layeredPane.setLayer(cardButtonImage, 1);
 		layeredPane.add(cardButtonOverlay);
 		layeredPane.setLayer(cardButtonOverlay, 2);
-		
 
 		/**
 		 * Input handling on the cardButton
@@ -125,7 +116,7 @@ public class CardButton extends JPanel {
 
 			@Override
 			public void mouseEntered(MouseEvent event) {
-				
+
 				cardButtonOverlay.setVisible(true);
 				cardButtonImage.repaint();
 			}
@@ -161,7 +152,7 @@ public class CardButton extends JPanel {
 		this.text.setFont(fontTitilliumSemiboldUpright);
 		text.setHorizontalAlignment(SwingConstants.CENTER);
 		this.add(text, BorderLayout.SOUTH);
-		
+
 		cardButtonOverlay.setVisible(false);
 		setOpaque(false);
 		this.setVisible(true);
@@ -229,9 +220,16 @@ public class CardButton extends JPanel {
 					.setToolTipText("<html>This card allows you to  <b>move directly </b> to the Human Sector from any part of the ship.<br>"
 							+ "This is in addition to your normal movement which can happen before or after you use the item.</html>");
 		}
-		this.repaint();
 	}
 
+	/**
+	 * Used to set the card image, according to its type.
+	 * 
+	 * @param pathToImage
+	 *            The path to the image, saved in {@link Resource the resource
+	 *            file}
+	 *
+	 */
 	private void setImage(String pathToImage) {
 		try {
 			Image tempImage = ImageIO.read(new File(pathToImage));
@@ -242,6 +240,33 @@ public class CardButton extends JPanel {
 		} catch (IOException ex) {
 			logger.error(ex.getMessage());
 		}
+	}
+
+	/**
+	 * Used to set the card overlay, according to the player's character.
+	 * 
+	 * @param pathToImage
+	 *            The path to the image, saved in {@link Resource the resource
+	 *            file}
+	 *
+	 */
+	private void setOverlay(String pathToImage) {
+		try {
+			Image tempOverlay = ImageIO.read(new File(pathToImage));
+			cardOverlay = tempOverlay.getScaledInstance(100, -1,
+					Image.SCALE_SMOOTH);
+
+		} catch (IOException ex) {
+			logger.error(ex.getMessage());
+		}
+	}
+	
+	/**
+	 * Used to update the player overlay.
+	 */
+	public void updateOverlay(String pathToImage) {
+		this.setOverlay(pathToImage);
+		this.cardButtonOverlay.setIcon(new ImageIcon(cardOverlay));
 	}
 
 	private void setText(String text) {

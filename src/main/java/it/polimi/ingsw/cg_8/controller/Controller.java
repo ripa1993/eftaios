@@ -367,10 +367,14 @@ public class Controller implements Observer {
 			/**
 			 * Communicate to the current player the cards he's holding.
 			 */
-			this.writeToPlayer(model.getCurrentPlayerReference(),
-					new ResponseCard(model.getCurrentPlayerReference()
-							.getHand().getHeldCards()));
-
+			for (Player p : model.getPlayers()) {
+				ResponseCard response = new ResponseCard(p
+								.getHand().getHeldCards());
+				System.out.println("asdasdasd"+response);
+				this.writeToPlayer(p,
+						response);
+			}
+			
 			logger.info("Timeout started for player "
 					+ ((Player) arg).getName() + ". He has " + (TIMEOUT / 1000)
 					+ "s to complete his turn.");
