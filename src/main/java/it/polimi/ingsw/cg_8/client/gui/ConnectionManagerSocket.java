@@ -68,7 +68,7 @@ public class ConnectionManagerSocket extends ConnectionManager {
 			 */
 			executor.submit(new ClientSocketViewSUB(SERVER_ADDRESS,
 					SOCKET_PORT_PUBSUB, this));
-			System.out.println("[DEBUG] subscriber back to main thread");
+			logger.debug("Subscriber back to main thread");
 		} catch (IOException e) {
 			logger.error("Cannot connect to socket server (" + SERVER_ADDRESS
 					+ ":" + SOCKET_PORT_CLIENTSERVER + ")");
@@ -81,7 +81,7 @@ public class ConnectionManagerSocket extends ConnectionManager {
 	 */
 	@Override
 	public void send(ClientAction inputLine) {
-
+		logger.debug("Sending action...");
 		ClientSocketViewCS socketCS = new ClientSocketViewCS(SERVER_ADDRESS,
 				SOCKET_PORT_CLIENTSERVER, inputLine, clientID);
 		executor.submit(socketCS);
@@ -96,7 +96,7 @@ public class ConnectionManagerSocket extends ConnectionManager {
 	 */
 	public void initializeSocket() throws UnknownHostException, IOException {
 		Socket socket = new Socket(SERVER_ADDRESS, SOCKET_PORT_CLIENTSERVER);
-		System.out.println("Connected to server " + SERVER_ADDRESS
+		logger.debug("Connected to server " + SERVER_ADDRESS
 				+ " on port " + SOCKET_PORT_CLIENTSERVER);
 
 		ObjectOutputStream output = new ObjectOutputStream(
@@ -105,13 +105,13 @@ public class ConnectionManagerSocket extends ConnectionManager {
 
 		do {
 			try {
-				System.out.println("Your ID is not set.");
+				logger.info("Your ID is not set.");
 				output.writeObject(new Integer(this.getclientID()));
 				output.flush();
 				Integer clientIDRequested = (Integer) input.readObject();
-				System.out.println("New ID received");
+				logger.info("New ID received");
 				this.setclientID((int) clientIDRequested);
-				System.out.println("Your ID is: " + this.getclientID());
+				logger.info("Your ID is: " + this.getclientID());
 			} catch (IOException | ClassNotFoundException e) {
 				logger.error(e.getMessage());
 			}
@@ -120,21 +120,20 @@ public class ConnectionManagerSocket extends ConnectionManager {
 		do {
 			try {
 
-				System.out.println("Sending your User-Name to the server...");
+				logger.debug("Sending your User-Name to the server...");
 				output.writeObject(this.playerName);
 				output.flush();
 
 				String serverAnswer = (String) input.readObject();
 				if (serverAnswer.equals("NAME ACCEPTED")) {
 					nameSet = true;
-					System.out.println("Name accepted");
+					logger.debug("Name accepted");
 				}
 			} catch (IOException | ClassNotFoundException e) {
 				logger.error(e.getMessage());
 			}
 		} while (nameSet == false);
 
-		
 		this.close(socket, output);
 
 	}
