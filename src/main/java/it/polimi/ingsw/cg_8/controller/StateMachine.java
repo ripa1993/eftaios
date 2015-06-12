@@ -165,11 +165,13 @@ public class StateMachine {
 					Sector destinationSector = model.getMap().getSectors()
 							.get(destination);
 
-					controller.writeToPlayer(player,
+					controller.writeToPlayer(
+							player,
 							new ResponseState(player.getName(), player
 									.getCharacter().toString(), player
 									.getState().toString(), player
-									.getLastPosition().toString()));
+									.getLastPosition().toString(), model
+									.getRoundNumber()));
 					if (currentPlayer.getCharacter().hasToDrawSectorCard() == false) {
 						model.setTurnPhase(TurnPhase.MOVEMENT_DONE_NOT_DS);
 
@@ -229,7 +231,7 @@ public class StateMachine {
 								player.getName(), player.getCharacter()
 										.toString(), player.getState()
 										.toString(), player.getLastPosition()
-										.toString()));
+										.toString(), model.getRoundNumber()));
 						return true;
 					}
 					return false;
@@ -307,7 +309,8 @@ public class StateMachine {
 									player.getName(), player.getCharacter()
 											.toString(), player.getState()
 											.toString(), player
-											.getLastPosition().toString()));
+											.getLastPosition().toString(),
+									model.getRoundNumber()));
 							return true;
 						}
 						return false;
@@ -439,7 +442,8 @@ public class StateMachine {
 									player.getName(), player.getCharacter()
 											.toString(), player.getState()
 											.toString(), player
-											.getLastPosition().toString()));
+											.getLastPosition().toString(),
+									model.getRoundNumber()));
 							return true;
 						}
 						return false;
@@ -500,7 +504,7 @@ public class StateMachine {
 								player.getName(), player.getCharacter()
 										.toString(), player.getState()
 										.toString(), player.getLastPosition()
-										.toString()));
+										.toString(), model.getRoundNumber()));
 						return true;
 					}
 					return false;
@@ -612,7 +616,7 @@ public class StateMachine {
 						+ " has been killed!"));
 				controller.writeToPlayer(p, new ResponseState(p.getName(), p
 						.getCharacter().toString(), p.getState().toString(), p
-						.getLastPosition().toString()));
+						.getLastPosition().toString(), model.getRoundNumber()));
 				List<Player> survivors = attack.getSurvivor();
 				for (Player p2 : survivors) {
 					controller

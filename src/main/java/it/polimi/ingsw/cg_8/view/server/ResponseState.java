@@ -17,16 +17,16 @@ public class ResponseState implements ServerResponse, Serializable {
 	private final String character;
 	private final String state;
 	private final String position;
+	private final int roundNumber;
 
 	public ResponseState(String playerName, String character, String state,
-			String position) {
+			String position, int roundNumber) {
 		this.playerName = playerName;
 		this.character = character;
 		this.state = state;
 		this.position = position;
+		this.roundNumber = roundNumber;
 	}
-	
-	
 
 	public String getPlayerName() {
 		return playerName;
@@ -44,11 +44,15 @@ public class ResponseState implements ServerResponse, Serializable {
 		return position;
 	}
 
+	public String getRoundNumber() {
+		return String.valueOf(roundNumber);
+	}
+
 	@Override
 	public String toString() {
 		return "ResponseState [playerName=" + playerName + ", character="
 				+ character + ", state=" + state + ", position=" + position
-				+ "]";
+				+ ", roundNumber=" + roundNumber + "]";
 	}
-	
+
 }
