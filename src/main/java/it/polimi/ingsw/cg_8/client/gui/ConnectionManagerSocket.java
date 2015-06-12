@@ -2,6 +2,7 @@ package it.polimi.ingsw.cg_8.client.gui;
 
 import it.polimi.ingsw.cg_8.client.ClientSocketViewCS;
 import it.polimi.ingsw.cg_8.client.ClientSocketViewSUB;
+import it.polimi.ingsw.cg_8.server.Server;
 import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
 
 import java.io.IOException;
@@ -12,6 +13,9 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Class used to connect the client to the server via socket. It also containt
@@ -39,6 +43,11 @@ public class ConnectionManagerSocket extends ConnectionManager {
 	 * Thread executor service
 	 */
 	private ExecutorService executor;
+	/**
+	 * Log4j logger
+	 */
+	private static final Logger logger = LogManager
+			.getLogger(ConnectionManagerSocket.class);
 
 	public ConnectionManagerSocket(String playerName) {
 		super(playerName);
@@ -61,8 +70,8 @@ public class ConnectionManagerSocket extends ConnectionManager {
 					SOCKET_PORT_PUBSUB, this));
 			System.out.println("[DEBUG] subscriber back to main thread");
 		} catch (IOException e) {
-			System.err.println("Cannot connect to socket server ("
-					+ SERVER_ADDRESS + ":" + SOCKET_PORT_CLIENTSERVER + ")");
+			logger.error("Cannot connect to socket server (" + SERVER_ADDRESS
+					+ ":" + SOCKET_PORT_CLIENTSERVER + ")");
 		}
 
 	}
@@ -81,6 +90,7 @@ public class ConnectionManagerSocket extends ConnectionManager {
 
 	/**
 	 * Used to establish a connection with the server.
+	 * 
 	 * @throws UnknownHostException
 	 * @throws IOException
 	 */
@@ -103,7 +113,7 @@ public class ConnectionManagerSocket extends ConnectionManager {
 				this.setclientID((int) clientIDRequested);
 				System.out.println("Your ID is: " + this.getclientID());
 			} catch (IOException | ClassNotFoundException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage());
 			}
 		} while (this.getclientID() == 0);
 
@@ -120,7 +130,7 @@ public class ConnectionManagerSocket extends ConnectionManager {
 					System.out.println("Name accepted");
 				}
 			} catch (IOException | ClassNotFoundException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage());
 			}
 		} while (nameSet == false);
 
@@ -128,7 +138,7 @@ public class ConnectionManagerSocket extends ConnectionManager {
 		this.close(socket, output);
 
 	}
-	
+
 	/**
 	 * Close the socket used to establish the first connection.
 	 */
@@ -136,6 +146,7 @@ public class ConnectionManagerSocket extends ConnectionManager {
 		try {
 			socket.close();
 		} catch (IOException e) {
+			logger.error(e.getMessage());
 		} finally {
 			socket = null;
 			output = null;

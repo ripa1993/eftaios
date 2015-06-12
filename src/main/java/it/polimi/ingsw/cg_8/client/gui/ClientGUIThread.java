@@ -16,6 +16,7 @@ import it.polimi.ingsw.cg_8.model.noises.MovementNoise;
 import it.polimi.ingsw.cg_8.model.noises.SpotlightNoise;
 import it.polimi.ingsw.cg_8.model.noises.TeleportNoise;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
+import it.polimi.ingsw.cg_8.server.Server;
 import it.polimi.ingsw.cg_8.view.client.ActionParser;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionAttack;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionChat;
@@ -68,6 +69,10 @@ import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.MouseInputAdapter;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 //AlbertoParravicini@bitbucket.org/SimoneRipamonti/escape-from-the-aliens-in-outer-space.git
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -121,6 +126,10 @@ public class ClientGUIThread implements Runnable, Observer {
 	private JPanel panel_3;
 	private Font fontTitilliumBoldUpright;
 	private Font fontTitilliumSemiboldUpright;
+	/**
+	 * Log4j logger
+	 */
+	private static final Logger logger = LogManager.getLogger(ClientGUIThread.class);
 
 	public ClientGUIThread() {
 		try {
@@ -128,8 +137,7 @@ public class ClientGUIThread implements Runnable, Observer {
 					new FileInputStream(Resource.FONT_TITILLIUM_BOLD_UPRIGHT))
 					.deriveFont((float) 30);
 		} catch (FontFormatException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 
 		try {
@@ -139,8 +147,7 @@ public class ClientGUIThread implements Runnable, Observer {
 							Resource.FONT_TITILLIUM_SEMIBOLD_UPRIGHT))
 					.deriveFont((float) 20);
 		} catch (FontFormatException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 
 		mainFrame = new JFrame("Escape From The Aliens In Outer Space");
@@ -152,8 +159,7 @@ public class ClientGUIThread implements Runnable, Observer {
 
 			mainFrame.setContentPane(new BackgroundPanel(myImage));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		mainFrame.getContentPane().setBackground(Color.PINK);
 		mainFrame.setBackground(new Color(255, 255, 255));

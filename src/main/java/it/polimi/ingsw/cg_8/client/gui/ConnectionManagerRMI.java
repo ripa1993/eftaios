@@ -3,6 +3,7 @@ package it.polimi.ingsw.cg_8.client.gui;
 
 import it.polimi.ingsw.cg_8.client.ClientData;
 import it.polimi.ingsw.cg_8.client.SubscriberInterface;
+import it.polimi.ingsw.cg_8.server.Server;
 import it.polimi.ingsw.cg_8.server.ServerGameRoomInterface;
 import it.polimi.ingsw.cg_8.server.ServerRMIRegistrationViewRemote;
 import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
@@ -15,6 +16,9 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class ConnectionManagerRMI extends ConnectionManager implements
 		Serializable, SubscriberInterface {
@@ -37,7 +41,10 @@ public class ConnectionManagerRMI extends ConnectionManager implements
 	 * GameRoom used by RMI.
 	 */
 	private ServerGameRoomInterface view;
-
+	/**
+	 * Log4j logger
+	 */
+	private static final Logger logger = LogManager.getLogger(ConnectionManagerRMI.class);
 	/**
 	 * The constructor is the same as the parent class.
 	 * @param playerName
@@ -58,8 +65,7 @@ public class ConnectionManagerRMI extends ConnectionManager implements
 			this.view = this.initializeRMI();
 			System.out.println("Successfully registered");
 		} catch (NotBoundException | RemoteException | AlreadyBoundException e) {
-			e.printStackTrace();
-			System.err.println("Failed to connect to the RMI Server");
+			logger.error("Failed to connect to the RMI Server");
 		}
 	}
 

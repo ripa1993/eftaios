@@ -7,6 +7,7 @@ import it.polimi.ingsw.cg_8.model.cards.itemCards.SedativesCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.SpotlightCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.TeleportCard;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
+import it.polimi.ingsw.cg_8.server.Server;
 import it.polimi.ingsw.cg_8.view.client.ActionParser;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionUseCard;
 import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
@@ -30,6 +31,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * JButton that allows the player to use an item card.
  * 
@@ -43,7 +47,10 @@ public class CardButton extends JPanel {
 	private JLabel text;
 	private CardType cardType;
 	private Font fontTitilliumSemiboldUpright;
-
+	/**
+	 * Log4j logger
+	 */
+	private static final Logger logger = LogManager.getLogger(CardButton.class);
 	public CardButton() {
 
 		this.cardButton = new JLabel();
@@ -56,8 +63,7 @@ public class CardButton extends JPanel {
 							Resource.FONT_TITILLIUM_SEMIBOLD_UPRIGHT))
 					.deriveFont((float) 20);
 		} catch (FontFormatException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 
 		setOpaque(false);
@@ -167,6 +173,7 @@ public class CardButton extends JPanel {
 			cardButton.setIcon(new ImageIcon(cardImage));
 
 		} catch (IOException ex) {
+			logger.error(ex.getMessage());
 		}
 	}
 
