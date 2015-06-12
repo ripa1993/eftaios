@@ -2,6 +2,7 @@ package it.polimi.ingsw.cg_8.client.gui;
 
 import it.polimi.ingsw.cg_8.client.ClientSocketViewCS;
 import it.polimi.ingsw.cg_8.client.ClientSocketViewSUB;
+import it.polimi.ingsw.cg_8.server.Server;
 import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
 
 import java.io.IOException;
@@ -12,6 +13,9 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Class used to connect the client to the server via socket. It also containt
@@ -39,6 +43,11 @@ public class ConnectionManagerSocket extends ConnectionManager {
 	 * Thread executor service
 	 */
 	private ExecutorService executor;
+	/**
+	 * Log4j logger
+	 */
+	private static final Logger logger = LogManager
+			.getLogger(ConnectionManagerSocket.class);
 
 	public ConnectionManagerSocket(String playerName) {
 		super(playerName);
@@ -59,10 +68,10 @@ public class ConnectionManagerSocket extends ConnectionManager {
 			 */
 			executor.submit(new ClientSocketViewSUB(SERVER_ADDRESS,
 					SOCKET_PORT_PUBSUB, this));
-			System.out.println("[DEBUG] subscriber back to main thread");
+			logger.debug("Subscriber back to main thread");
 		} catch (IOException e) {
-			System.err.println("Cannot connect to socket server ("
-					+ SERVER_ADDRESS + ":" + SOCKET_PORT_CLIENTSERVER + ")");
+			logger.error("Cannot connect to socket server (" + SERVER_ADDRESS
+					+ ":" + SOCKET_PORT_CLIENTSERVER + ")");
 		}
 
 	}
@@ -72,7 +81,7 @@ public class ConnectionManagerSocket extends ConnectionManager {
 	 */
 	@Override
 	public void send(ClientAction inputLine) {
-
+		logger.debug("Sending action...");
 		ClientSocketViewCS socketCS = new ClientSocketViewCS(SERVER_ADDRESS,
 				SOCKET_PORT_CLIENTSERVER, inputLine, clientID);
 		executor.submit(socketCS);
@@ -81,12 +90,13 @@ public class ConnectionManagerSocket extends ConnectionManager {
 
 	/**
 	 * Used to establish a connection with the server.
+	 * 
 	 * @throws UnknownHostException
 	 * @throws IOException
 	 */
 	public void initializeSocket() throws UnknownHostException, IOException {
 		Socket socket = new Socket(SERVER_ADDRESS, SOCKET_PORT_CLIENTSERVER);
-		System.out.println("Connected to server " + SERVER_ADDRESS
+		logger.debug("Connected to server " + SERVER_ADDRESS
 				+ " on port " + SOCKET_PORT_CLIENTSERVER);
 
 		ObjectOutputStream output = new ObjectOutputStream(
@@ -95,40 +105,39 @@ public class ConnectionManagerSocket extends ConnectionManager {
 
 		do {
 			try {
-				System.out.println("Your ID is not set.");
+				logger.info("Your ID is not set.");
 				output.writeObject(new Integer(this.getclientID()));
 				output.flush();
 				Integer clientIDRequested = (Integer) input.readObject();
-				System.out.println("New ID received");
+				logger.info("New ID received");
 				this.setclientID((int) clientIDRequested);
-				System.out.println("Your ID is: " + this.getclientID());
+				logger.info("Your ID is: " + this.getclientID());
 			} catch (IOException | ClassNotFoundException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage());
 			}
 		} while (this.getclientID() == 0);
 
 		do {
 			try {
 
-				System.out.println("Sending your User-Name to the server...");
+				logger.debug("Sending your User-Name to the server...");
 				output.writeObject(this.playerName);
 				output.flush();
 
 				String serverAnswer = (String) input.readObject();
 				if (serverAnswer.equals("NAME ACCEPTED")) {
 					nameSet = true;
-					System.out.println("Name accepted");
+					logger.debug("Name accepted");
 				}
 			} catch (IOException | ClassNotFoundException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage());
 			}
 		} while (nameSet == false);
 
-		
 		this.close(socket, output);
 
 	}
-	
+
 	/**
 	 * Close the socket used to establish the first connection.
 	 */
@@ -136,6 +145,7 @@ public class ConnectionManagerSocket extends ConnectionManager {
 		try {
 			socket.close();
 		} catch (IOException e) {
+			logger.error(e.getMessage());
 		} finally {
 			socket = null;
 			output = null;

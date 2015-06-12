@@ -360,10 +360,9 @@ public class Controller implements Observer {
 			 * Notify every player about their state.
 			 */
 			for (Player p : model.getPlayers()) {
-				this.writeToPlayer(
-						p,
-						new ResponseState(p.getName(), p.getCharacter().toString(), p
-								.getState().toString(), p.getLastPosition().toString()));
+				this.writeToPlayer(p, new ResponseState(p.getName(), p
+						.getCharacter().toString(), p.getState().toString(), p
+						.getLastPosition().toString(), model.getRoundNumber()));
 			}
 			/**
 			 * Communicate to the current player the cards he's holding.
