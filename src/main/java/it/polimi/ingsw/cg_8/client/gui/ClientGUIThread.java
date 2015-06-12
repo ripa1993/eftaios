@@ -85,6 +85,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
 import java.awt.Rectangle;
+import javax.swing.border.MatteBorder;
 
 /**
  * Class that defines the GUI.
@@ -181,6 +182,8 @@ public class ClientGUIThread implements Runnable, Observer {
 		chatPanel.setOpaque(false);
 		chatPanel.setBackground(Color.WHITE);
 		rightPanel = new JPanel();
+		rightPanel.setBorder(new MatteBorder(5, 5, 5, 5, (Color) new Color(64,
+				64, 64, 150)));
 		rightPanel.setOpaque(false);
 		infoPanel = new JPanel();
 		infoPanel.setOpaque(false);
@@ -287,14 +290,16 @@ public class ClientGUIThread implements Runnable, Observer {
 		commandsPanel.setVisible(true);
 
 		state_panel = new JPanel();
-		state_panel.setBorder(new EmptyBorder(10, 0, 0, 0));
+		state_panel.setBorder(new MatteBorder(10, 0, 0, 0, new Color(100, 100,
+				100, 100)));
 		state_panel.setOpaque(false);
-		state_panel.setBackground(Color.WHITE);
 		rightPanel.add(state_panel, BorderLayout.NORTH);
 		state_panel.setLayout(new BorderLayout(0, 0));
 
 		panel_3 = new JPanel();
-		panel_3.setOpaque(false);
+		panel_3.setBorder(new MatteBorder(0, 0, 5, 0, (Color) new Color(100, 100, 100, 100)));
+		panel_3.setBackground(new Color(100, 100, 100, 100));
+		panel_3.setOpaque(true);
 		state_panel.add(panel_3, BorderLayout.CENTER);
 		panel_3.setLayout(new BorderLayout(0, 0));
 
@@ -419,17 +424,19 @@ public class ClientGUIThread implements Runnable, Observer {
 		rightPanel.add(chatInfoPanel, BorderLayout.CENTER);
 		rightPanel.add(commandsPanel, BorderLayout.SOUTH);
 
+		chatTextPane.setAutoscrolls(true);
+		infoTextPane.setAutoscrolls(true);
+		chatTextPane.setFont(fontTitilliumSemiboldUpright);
+		infoTextPane.setFont(fontTitilliumSemiboldUpright);
+		chatTextPane.setText("Say hi to the other players!");
+		infoTextPane.setText("Welcome to a new EFTAIOS game!");
+
 		chatPanel2.setVisible(true);
 		chatPanel.setVisible(true);
 		infoPanel.setVisible(true);
 		mapPanel.setVisible(true);
 		mainFrame.setVisible(true);
 		mainFrame.setSize(1280, 720);
-
-		chatTextPane.setFont(fontTitilliumSemiboldUpright);
-		infoTextPane.setFont(fontTitilliumSemiboldUpright);
-		chatTextPane.setText("Say hi to the other players!");
-		infoTextPane.setText("Welcome to a new EFTAIOS game!");
 	}
 
 	public void appendChat(String player, String msg) {
@@ -897,7 +904,7 @@ public class ClientGUIThread implements Runnable, Observer {
 			clip.open(audioInputStream);
 			clip.start();
 		} catch (Exception ex) {
-			System.err.println(ex.getMessage());
+			logger.error(ex.getMessage());
 		}
 	}
 
