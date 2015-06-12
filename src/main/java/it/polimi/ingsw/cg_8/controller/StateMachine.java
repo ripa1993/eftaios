@@ -44,6 +44,7 @@ import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
 import it.polimi.ingsw.cg_8.view.server.ResponseCard;
 import it.polimi.ingsw.cg_8.view.server.ResponseChat;
 import it.polimi.ingsw.cg_8.view.server.ResponsePrivate;
+import it.polimi.ingsw.cg_8.view.server.ResponseState;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -163,13 +164,22 @@ public class StateMachine {
 							+ " has moved."));
 					Sector destinationSector = model.getMap().getSectors()
 							.get(destination);
+
+					controller.writeToPlayer(player,
+							new ResponseState(player.getName(), player
+									.getCharacter().toString(), player
+									.getState().toString(), player
+									.getLastPosition().toString()));
 					if (currentPlayer.getCharacter().hasToDrawSectorCard() == false) {
 						model.setTurnPhase(TurnPhase.MOVEMENT_DONE_NOT_DS);
+
 					} else {
 						if (destinationSector instanceof DangerousSector) {
 							model.setTurnPhase(TurnPhase.MOVEMENT_DONE_DS);
+
 						} else {
 							model.setTurnPhase(TurnPhase.MOVEMENT_DONE_NOT_DS);
+
 						}
 					}
 					return true;
@@ -215,6 +225,11 @@ public class StateMachine {
 								.getName() + " has used a Teleport Card"));
 						controller.writeToPlayer(player, new ResponseCard(
 								player.getHand().getHeldCards()));
+						controller.writeToPlayer(player, new ResponseState(
+								player.getName(), player.getCharacter()
+										.toString(), player.getState()
+										.toString(), player.getLastPosition()
+										.toString()));
 						return true;
 					}
 					return false;
@@ -288,7 +303,11 @@ public class StateMachine {
 									.getName() + " has used a Teleport Card"));
 							controller.writeToPlayer(player, new ResponseCard(
 									player.getHand().getHeldCards()));
-
+							controller.writeToPlayer(player, new ResponseState(
+									player.getName(), player.getCharacter()
+											.toString(), player.getState()
+											.toString(), player
+											.getLastPosition().toString()));
 							return true;
 						}
 						return false;
@@ -416,7 +435,11 @@ public class StateMachine {
 									.getName() + " has used a Teleport Card"));
 							controller.writeToPlayer(player, new ResponseCard(
 									player.getHand().getHeldCards()));
-
+							controller.writeToPlayer(player, new ResponseState(
+									player.getName(), player.getCharacter()
+											.toString(), player.getState()
+											.toString(), player
+											.getLastPosition().toString()));
 							return true;
 						}
 						return false;
@@ -473,6 +496,11 @@ public class StateMachine {
 								.getName() + " has used a Teleport Card"));
 						controller.writeToPlayer(player, new ResponseCard(
 								player.getHand().getHeldCards()));
+						controller.writeToPlayer(player, new ResponseState(
+								player.getName(), player.getCharacter()
+										.toString(), player.getState()
+										.toString(), player.getLastPosition()
+										.toString()));
 						return true;
 					}
 					return false;
@@ -481,7 +509,7 @@ public class StateMachine {
 					if (rules.useItemCardValidator(model, card)) {
 						UseSpotlightCard.useCard(model, coordinate);
 						controller.writeToAll(new ResponsePrivate(player
-								.getName() + " has used a Teleport Card"));
+								.getName() + " has used a Spotlight Card"));
 						controller.writeToPlayer(player, new ResponseCard(
 								player.getHand().getHeldCards()));
 
@@ -582,6 +610,9 @@ public class StateMachine {
 			for (Player p : victims) {
 				controller.writeToAll(new ResponsePrivate(p.getName()
 						+ " has been killed!"));
+				controller.writeToPlayer(p, new ResponseState(p.getName(), p
+						.getCharacter().toString(), p.getState().toString(), p
+						.getLastPosition().toString()));
 				List<Player> survivors = attack.getSurvivor();
 				for (Player p2 : survivors) {
 					controller

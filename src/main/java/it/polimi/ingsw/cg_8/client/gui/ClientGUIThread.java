@@ -46,6 +46,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -73,7 +74,6 @@ import javax.swing.event.MouseInputAdapter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-//AlbertoParravicini@bitbucket.org/SimoneRipamonti/escape-from-the-aliens-in-outer-space.git
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.ActionEvent;
@@ -83,6 +83,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+
+import java.awt.Rectangle;
 
 /**
  * Class that defines the GUI.
@@ -96,6 +98,10 @@ public class ClientGUIThread implements Runnable, Observer {
 	 * The server messages are stored here.
 	 */
 	private ClientData clientData;
+	/**
+	 * Maximum number of cards
+	 */
+	private static final int CARD_NUM = 3;
 	private JFrame mainFrame;
 	Container contentPane;
 
@@ -112,7 +118,7 @@ public class ClientGUIThread implements Runnable, Observer {
 	private String backgroundImageResource;
 	private Image backgroundImageScaled;
 	private ImageIcon backgroundImage;
-	private JPanel panel;
+	private JPanel state_panel;
 	private JPanel panel_1;
 	private JPanel panel_2;
 	private JLabel lblPlayerState;
@@ -122,16 +128,24 @@ public class ClientGUIThread implements Runnable, Observer {
 	private JLabel lblItemCards;
 	private JPanel cardPanel;
 	private JLabel labelCurrentState;
-	private JPanel panel_4;
-	private JPanel panel_3;
 	private Font fontTitilliumBoldUpright;
 	private Font fontTitilliumSemiboldUpright;
 	/**
 	 * Log4j logger
 	 */
-	private static final Logger logger = LogManager.getLogger(ClientGUIThread.class);
+	private static final Logger logger = LogManager
+			.getLogger(ClientGUIThread.class);
+
+	private CardButton[] cardList;
+	private JPanel panel_3;
+	private JLabel state_image;
+	/**
+	 * Shows if the player image has been set or not.
+	 */
+	private boolean playerImageSet;
 
 	public ClientGUIThread() {
+		playerImageSet = false;
 		try {
 			fontTitilliumBoldUpright = Font.createFont(Font.TRUETYPE_FONT,
 					new FileInputStream(Resource.FONT_TITILLIUM_BOLD_UPRIGHT))
@@ -195,6 +209,10 @@ public class ClientGUIThread implements Runnable, Observer {
 		chatPanel2.setBackground(Color.WHITE);
 		infoScroll = new JScrollPane(infoTextPane);
 		chatScroll = new JScrollPane(chatTextPane);
+
+		/**
+		 * Which map is loaded.
+		 */
 		backgroundImageResource = Resource.IMG_FERMI_MAP;
 		backgroundImage = new ImageIcon(backgroundImageResource);
 		backgroundImageScaled = new ImageIcon(backgroundImage.getImage()
@@ -268,46 +286,63 @@ public class ClientGUIThread implements Runnable, Observer {
 		commandsPanel.add(endTurnButton);
 		commandsPanel.setVisible(true);
 
-		panel = new JPanel();
-		panel.setOpaque(false);
-		panel.setBackground(Color.WHITE);
-		rightPanel.add(panel, BorderLayout.NORTH);
-		panel.setLayout(new BorderLayout(0, 0));
+		state_panel = new JPanel();
+		state_panel.setBorder(new EmptyBorder(10, 0, 0, 0));
+		state_panel.setOpaque(false);
+		state_panel.setBackground(Color.WHITE);
+		rightPanel.add(state_panel, BorderLayout.NORTH);
+		state_panel.setLayout(new BorderLayout(0, 0));
+
+		panel_3 = new JPanel();
+		panel_3.setOpaque(false);
+		state_panel.add(panel_3, BorderLayout.CENTER);
+		panel_3.setLayout(new BorderLayout(0, 0));
+
+		state_image = new JLabel("");
+		panel_3.add(state_image, BorderLayout.WEST);
+		state_image.setBorder(new EmptyBorder(0, 60, 0, 0));
+
+		/**
+		 * Set the default image for the player, changed as soon as he gets an
+		 * in-game character.
+		 */
+		try {
+			Image tempImage = ImageIO.read(new File(
+					"resources//images//player//alien_1.png"));
+			Image cardImage = tempImage.getScaledInstance(60, -1,
+					Image.SCALE_SMOOTH);
+			state_image.setIcon(new ImageIcon(cardImage));
+		} catch (IOException ex) {
+		}
 
 		panel_1 = new JPanel();
+		panel_3.add(panel_1, BorderLayout.CENTER);
 		panel_1.setOpaque(false);
 		panel_1.setBackground(Color.WHITE);
-		panel.add(panel_1, BorderLayout.NORTH);
 		panel_1.setLayout(new BorderLayout(0, 0));
+		panel_1.setBorder(new EmptyBorder(0, 20, 0, 0));
 
 		lblPlayerState = new JLabel();
+		lblPlayerState.setBorder(new EmptyBorder(0, 67, 0, 0));
+		panel_1.add(lblPlayerState, BorderLayout.NORTH);
 		lblPlayerState.setFont(fontTitilliumBoldUpright);
-		lblPlayerState.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPlayerState.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPlayerState.setText("PLAYER STATE");
 		lblPlayerState.setForeground(Color.BLACK);
-		panel_1.add(lblPlayerState, BorderLayout.CENTER);
 
 		labelCurrentState = new JLabel();
+		panel_1.add(labelCurrentState, BorderLayout.CENTER);
 		labelCurrentState.setText("The game hasn't started yet");
 		labelCurrentState.setFont(fontTitilliumSemiboldUpright);
-		labelCurrentState.setHorizontalAlignment(SwingConstants.CENTER);
+		labelCurrentState.setHorizontalAlignment(SwingConstants.LEFT);
 		labelCurrentState.setForeground(Color.BLACK);
-		panel_1.add(labelCurrentState, BorderLayout.SOUTH);
-
-		panel_4 = new JPanel();
-		panel_4.setOpaque(false);
-		panel_4.setBackground(Color.WHITE);
-		panel_1.add(panel_4, BorderLayout.NORTH);
 
 		panel_2 = new JPanel();
 		panel_2.setOpaque(false);
 		panel_2.setBackground(Color.WHITE);
-		panel.add(panel_2, BorderLayout.SOUTH);
+		panel_2.setBorder(new EmptyBorder(10, 0, 0, 0));
+		state_panel.add(panel_2, BorderLayout.SOUTH);
 		panel_2.setLayout(new BorderLayout(0, 0));
-
-		panel_3 = new JPanel();
-		panel_3.setOpaque(false);
-		panel_2.add(panel_3, BorderLayout.NORTH);
 
 		lblItemCards = new JLabel();
 		lblItemCards.setFont(fontTitilliumBoldUpright);
@@ -323,6 +358,17 @@ public class ClientGUIThread implements Runnable, Observer {
 		panel_2.add(cardPanel, BorderLayout.SOUTH);
 		cardPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
+		// TODO: handle initialization with cycles
+		// cardList = new CardButton[CARD_NUM];
+		//
+		//
+		// // for (int i = 0; i < CARD_NUM; i++) {
+		// // cardList[i] = new CardButton();
+		// // cardList[i].setBackground(Color.WHITE);
+		// // cardList[i].setCardType(CardType.DEFAULT);
+		// // cardPanel.add(cardList[i]);
+		// // cardPanel.repaint();
+		// // }
 		cardButton1 = new CardButton();
 		cardButton1.setBackground(Color.WHITE);
 		cardButton1.setCardType(CardType.DEFAULT);
@@ -791,12 +837,55 @@ public class ClientGUIThread implements Runnable, Observer {
 		else if (arg.equals("Cards")) {
 			ResponseCard cardMessage = clientData.getCards();
 			List<ItemCard> cards = cardMessage.getHand();
-			// TODO: visualizza carte
+			ItemCard cardArray[] = new ItemCard[CARD_NUM];
+			for (int i = 0; i < cards.size(); i++) {
+				cardArray[i] = cards.get(i);
+			}
+			ItemCard tempCard1 = cardArray[0];
+			this.updateCard(cardButton1, tempCard1);
+			cardButton1.repaint();
+			ItemCard tempCard2 = cardArray[1];
+			this.updateCard(cardButton2, tempCard2);
+			cardButton2.repaint();
+			ItemCard tempCard3 = cardArray[2];
+			this.updateCard(cardButton3, tempCard3);
+			cardButton3.repaint();
+
 		} else if (arg.equals("State")) {
 			ResponseState stateMessage = clientData.getState();
-			String state = stateMessage.getMessage();
-			// labelCurrentState.setText(state);
-			// TODO: visualizza stato
+
+			if (playerImageSet == false) {
+				double random = Math.random();
+				if (stateMessage.getCharacter().equals("Human")) {
+					if (random < 0.25) {
+
+					} else if (random < 0.5) {
+
+					} else if (random < 0.75) {
+
+					} else {
+
+					}
+				} else if (stateMessage.getCharacter().equals("Alien")) {
+					if (random < 0.25) {
+
+					} else if (random < 0.5) {
+
+					} else if (random < 0.75) {
+
+					} else {
+
+					}
+				}
+
+				playerImageSet = true;
+			}
+			String state = stateMessage.getPlayerName() + ", "
+					+ stateMessage.getCharacter() + ", State:"
+					+ stateMessage.getState() + ", Position: "
+					+ stateMessage.getPosition();
+			labelCurrentState.setText(state);
+			labelCurrentState.repaint();
 		}
 	}
 
@@ -809,6 +898,24 @@ public class ClientGUIThread implements Runnable, Observer {
 			clip.start();
 		} catch (Exception ex) {
 			System.err.println(ex.getMessage());
+		}
+	}
+
+	private void updateCard(CardButton cardButton, ItemCard tempCard) {
+		if (tempCard instanceof AdrenalineCard) {
+			cardButton.setCardType(CardButton.CardType.ADRENALINE);
+		} else if (tempCard instanceof AttackCard) {
+			cardButton.setCardType(CardButton.CardType.ATTACK);
+		} else if (tempCard instanceof AttackCard) {
+			cardButton.setCardType(CardButton.CardType.DEFENSE);
+		} else if (tempCard instanceof AttackCard) {
+			cardButton.setCardType(CardButton.CardType.SEDATIVES);
+		} else if (tempCard instanceof AttackCard) {
+			cardButton.setCardType(CardButton.CardType.SPOTLIGHT);
+		} else if (tempCard instanceof AttackCard) {
+			cardButton.setCardType(CardButton.CardType.TELEPORT);
+		} else if (tempCard == null) {
+			cardButton.setCardType(CardButton.CardType.DEFAULT);
 		}
 	}
 

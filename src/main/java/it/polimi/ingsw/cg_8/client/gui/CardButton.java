@@ -162,7 +162,7 @@ public class CardButton extends JPanel {
 					.setToolTipText("<html>This card allows you to move directly to the Human Sector from any part of the ship.<br>"
 							+ "This is in addition to your normal movement which can happen before or after you use the item.</html>");
 		}
-
+		this.repaint();
 	}
 
 	private void setImage(String pathToImage) {
