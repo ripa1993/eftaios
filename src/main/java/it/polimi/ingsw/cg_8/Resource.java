@@ -263,4 +263,14 @@ public class Resource {
 	public static final String IMG_UNKNOWN_CHAR = "resources" + File.separatorChar
 			+ "images" + File.separatorChar + "player" + File.separatorChar
 			+ "unknown_char.png";
+	/**
+	 * human blue overlay
+	 */
+	public static final String IMG_HUMAN_OVERLAY = "resources" + File.separatorChar
+			+ "images" + File.separatorChar + "human_item_overlay.png";
+	/**
+	 * Reference to Fermi map image
+	 */
+	public static final String IMG_ALIEN_OVERLAY = "resources" + File.separatorChar
+			+ "images" + File.separatorChar + "alien_item_overlay.png";
 }
