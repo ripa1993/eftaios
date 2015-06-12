@@ -257,4 +257,10 @@ public class Resource {
 	public static final String IMG_HUMAN_4 = "resources" + File.separatorChar
 			+ "images" + File.separatorChar + "player" + File.separatorChar
 			+ "human_4.png";
+	/**
+	 * human 4
+	 */
+	public static final String IMG_UNKNOWN_CHAR = "resources" + File.separatorChar
+			+ "images" + File.separatorChar + "player" + File.separatorChar
+			+ "unknown_char.png";
 }

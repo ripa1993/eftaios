@@ -312,7 +312,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		 * Set the default image for the player, changed as soon as he gets an
 		 * in-game character.
 		 */
-		setStateImage(Resource.IMG_ITEM);
+		setStateImage(Resource.IMG_UNKNOWN_CHAR);
 
 		panel_1 = new JPanel();
 		panel_3.add(panel_1, BorderLayout.CENTER);
