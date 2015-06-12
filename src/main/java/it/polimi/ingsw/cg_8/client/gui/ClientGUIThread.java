@@ -5,6 +5,7 @@ import it.polimi.ingsw.cg_8.client.ClientData;
 import it.polimi.ingsw.cg_8.client.gui.CardButton.CardType;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.AdrenalineCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.AttackCard;
+import it.polimi.ingsw.cg_8.model.cards.itemCards.DefenseCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.ItemCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.SedativesCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.SpotlightCard;
@@ -965,13 +966,13 @@ public class ClientGUIThread implements Runnable, Observer {
 			cardButton.setCardType(CardButton.CardType.ADRENALINE);
 		} else if (tempCard instanceof AttackCard) {
 			cardButton.setCardType(CardButton.CardType.ATTACK);
-		} else if (tempCard instanceof AttackCard) {
+		} else if (tempCard instanceof DefenseCard) {
 			cardButton.setCardType(CardButton.CardType.DEFENSE);
-		} else if (tempCard instanceof AttackCard) {
+		} else if (tempCard instanceof SedativesCard) {
 			cardButton.setCardType(CardButton.CardType.SEDATIVES);
-		} else if (tempCard instanceof AttackCard) {
+		} else if (tempCard instanceof SpotlightCard) {
 			cardButton.setCardType(CardButton.CardType.SPOTLIGHT);
-		} else if (tempCard instanceof AttackCard) {
+		} else if (tempCard instanceof TeleportCard) {
 			cardButton.setCardType(CardButton.CardType.TELEPORT);
 		} else if (tempCard == null) {
 			cardButton.setCardType(CardButton.CardType.DEFAULT);
