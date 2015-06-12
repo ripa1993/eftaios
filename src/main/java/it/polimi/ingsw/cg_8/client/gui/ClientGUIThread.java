@@ -144,6 +144,7 @@ public class ClientGUIThread implements Runnable, Observer {
 	 * Shows if the player image has been set or not.
 	 */
 	private boolean playerImageSet;
+	private JLabel turnNumberLabel;
 
 	public ClientGUIThread() {
 		playerImageSet = false;
@@ -319,13 +320,13 @@ public class ClientGUIThread implements Runnable, Observer {
 		panel_1.setOpaque(false);
 		panel_1.setBackground(Color.WHITE);
 		panel_1.setLayout(new BorderLayout(0, 0));
-		panel_1.setBorder(new EmptyBorder(0, 20, 0, 0));
+		panel_1.setBorder(new EmptyBorder(0, 0, 0, 0));
 
 		lblPlayerState = new JLabel();
-		lblPlayerState.setBorder(new EmptyBorder(0, 67, 0, 0));
+		lblPlayerState.setBorder(new EmptyBorder(0, 0, 0, 0));
 		panel_1.add(lblPlayerState, BorderLayout.NORTH);
 		lblPlayerState.setFont(fontTitilliumBoldUpright);
-		lblPlayerState.setHorizontalAlignment(SwingConstants.LEFT);
+		lblPlayerState.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPlayerState.setText("PLAYER STATE");
 		lblPlayerState.setForeground(Color.BLACK);
 
@@ -333,8 +334,24 @@ public class ClientGUIThread implements Runnable, Observer {
 		panel_1.add(labelCurrentState, BorderLayout.CENTER);
 		labelCurrentState.setText("The game hasn't started yet");
 		labelCurrentState.setFont(fontTitilliumSemiboldUpright);
-		labelCurrentState.setHorizontalAlignment(SwingConstants.LEFT);
+		labelCurrentState.setHorizontalAlignment(SwingConstants.CENTER);
 		labelCurrentState.setForeground(Color.BLACK);
+
+		turnNumberLabel = new JLabel("0");
+		turnNumberLabel.setFont(fontTitilliumBoldUpright);
+		try {
+			Image tempImage = ImageIO.read(new File(Resource.IMG_TURN_BG));
+			Image roundImage = tempImage.getScaledInstance(60, -1,
+					Image.SCALE_SMOOTH);
+			turnNumberLabel.setIcon(new ImageIcon(roundImage));
+			rightPanel.repaint();
+		} catch (IOException ex) {
+			logger.error(ex.getMessage());
+		}
+		turnNumberLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+		turnNumberLabel.setBorder(new EmptyBorder(0, 0, 0, 60));
+		panel_3.add(turnNumberLabel, BorderLayout.EAST);
+		turnNumberLabel.setVisible(true);
 
 		panel_2 = new JPanel();
 		panel_2.setOpaque(false);
@@ -780,16 +797,16 @@ public class ClientGUIThread implements Runnable, Observer {
 							JOptionPane.DEFAULT_OPTION,
 							JOptionPane.QUESTION_MESSAGE, null, options,
 							options[0]);
-					logger.debug("Result: "+result);
-					logger.debug("Options: "+options);
-					if (result==0) {
+					logger.debug("Result: " + result);
+					logger.debug("Options: " + options);
+					if (result == 0) {
 						logger.debug("Choose: move");
 						connectionManager.send(new ActionMove(coordinate));
-					} else if (result==1) {
+					} else if (result == 1) {
 						logger.debug("Choose: spotlight");
 						connectionManager.send(new ActionUseCard(
 								new SpotlightCard(), coordinate));
-					} else if (result==2) {
+					} else if (result == 2) {
 						logger.debug("Choose: fake noise");
 						connectionManager.send(new ActionFakeNoise(coordinate));
 					}
@@ -908,6 +925,7 @@ public class ClientGUIThread implements Runnable, Observer {
 				}
 				playerImageSet = true;
 			}
+			turnNumberLabel.setText(stateMessage.getRoundNumber());
 			String state = stateMessage.getPlayerName() + ", "
 					+ stateMessage.getCharacter() + ", State:"
 					+ stateMessage.getState() + ", Position: "
