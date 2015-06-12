@@ -269,8 +269,13 @@ public class Resource {
 	public static final String IMG_HUMAN_OVERLAY = "resources" + File.separatorChar
 			+ "images" + File.separatorChar + "human_item_overlay.png";
 	/**
-	 * Reference to Fermi map image
+	 * alien pink overlay
 	 */
 	public static final String IMG_ALIEN_OVERLAY = "resources" + File.separatorChar
 			+ "images" + File.separatorChar + "alien_item_overlay.png";
+	/**
+	 * turn background/border
+	 */
+	public static final String IMG_TURN_BG = "resources" + File.separatorChar
+			+ "images" + File.separatorChar + "turn_border.png";
 }
