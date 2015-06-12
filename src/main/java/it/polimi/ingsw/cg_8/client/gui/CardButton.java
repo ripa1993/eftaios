@@ -34,6 +34,10 @@ import javax.swing.SwingConstants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JLayeredPane;
+import java.awt.FlowLayout;
+import javax.swing.BoxLayout;
+import java.awt.Color;
 
 /**
  * JButton that allows the player to use an item card.
@@ -47,26 +51,30 @@ public class CardButton extends JPanel {
 	private JLabel cardButtonImage;
 	private JLabel text;
 	private CardType cardType;
-	private CardLayout cardLayout;
 	private JLabel cardButtonOverlay;
 	private Font fontTitilliumSemiboldUpright;
 	/**
 	 * Log4j logger
 	 */
 	private static final Logger logger = LogManager.getLogger(CardButton.class);
-	private JPanel cardButton;
+	private static final int BUTTON_WIDTH = 120;
+	private static final int BUTTON_HEIGHT = 120;
+	private JLayeredPane layeredPane;
+	private Image cardOverlay;
 
 	public CardButton() {
+		setPreferredSize(new Dimension(100, 120));
+		setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 		this.text = new JLabel("No Card");
 		this.cardType = CardType.DEFAULT;
-		this.cardButton = new JPanel();
-		cardButton.setMaximumSize(new Dimension(150, 150));
-		cardButton.setOpaque(false);
+		this.layeredPane = new JLayeredPane();
 		this.cardButtonOverlay = new JLabel();
-		cardButtonOverlay.setBorder(new EmptyBorder(5, 0, 0, 0));
+		cardButtonOverlay.setBackground(Color.CYAN);
 
 		this.cardButtonImage = new JLabel();
+		cardButtonImage.setBackground(Color.GREEN);
 
+		cardButtonImage.setBorder(new EmptyBorder(0, 0, 5, 0));
 		try {
 			fontTitilliumSemiboldUpright = Font.createFont(
 					Font.TRUETYPE_FONT,
@@ -77,37 +85,49 @@ public class CardButton extends JPanel {
 			logger.error(e.getMessage());
 		}
 
+		/**
+		 * Load the default overlay.
+		 */
 		try {
 			Image tempOverlay = ImageIO.read(new File(
 					Resource.IMG_HUMAN_OVERLAY));
-			Image cardOverlay = tempOverlay.getScaledInstance(100, -1,
+			cardOverlay = tempOverlay.getScaledInstance(100, -1,
 					Image.SCALE_SMOOTH);
-			cardButtonOverlay.setIcon(new ImageIcon(cardOverlay));
 
 		} catch (IOException ex) {
 			logger.error(ex.getMessage());
 		}
-
+		/**
+		 * Set the default image.
+		 */
 		this.setImage(Resource.IMG_ITEM);
-
+		cardButtonOverlay.setIcon(new ImageIcon(cardOverlay));
+		cardButtonOverlay.setBounds(0, 0, 124, 106);
+		cardButtonImage.setBounds(0, 0, 124, 106);
 		this.setLayout(new BorderLayout());
-		this.text.setFont(fontTitilliumSemiboldUpright);
 
-		text.setHorizontalAlignment(SwingConstants.CENTER);
+		add(layeredPane, BorderLayout.CENTER);
+		layeredPane.add(cardButtonImage);
+		layeredPane.setLayer(cardButtonImage, 1);
+		layeredPane.add(cardButtonOverlay);
+		layeredPane.setLayer(cardButtonOverlay, 2);
+		cardButtonOverlay.setBorder(new EmptyBorder(0, 0, 5, 0));
 
-		add(cardButton, BorderLayout.NORTH);
-		cardLayout = new CardLayout(0, 0);
-		cardButton.setLayout(cardLayout);
-
-		cardButtonOverlay.setOpaque(false);
-		cardButtonImage.setOpaque(false);
-
-		cardButton.add(cardButtonImage, "cardButtonImage");
-
-		cardButton.add(cardButtonOverlay, "cardButtonOverlay");
-	
 		cardButtonImage.addMouseListener(new MouseAdapter() {
 			int width, height;
+
+			@Override
+			public void mouseEntered(MouseEvent event) {
+				// cardLayout.show(cardButton, "cardButtonOverlay");
+				cardButtonImage.repaint();
+			}
+
+			@Override
+			public void mouseExited(MouseEvent event) {
+				// cardLayout.show(cardButton, "cardButtonImage");
+				cardButtonImage.repaint();
+
+			}
 
 			@Override
 			public void mousePressed(MouseEvent event) {
@@ -125,6 +145,9 @@ public class CardButton extends JPanel {
 			}
 
 		});
+		this.text.setFont(fontTitilliumSemiboldUpright);
+
+		text.setHorizontalAlignment(SwingConstants.CENTER);
 		this.add(text, BorderLayout.SOUTH);
 
 		setOpaque(false);
