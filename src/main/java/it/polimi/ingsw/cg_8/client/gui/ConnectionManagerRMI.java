@@ -59,13 +59,13 @@ public class ConnectionManagerRMI extends ConnectionManager implements
 	@Override
 	public void setup() {
 
-		System.out.println("Contacting the broker...");
+		logger.debug("Contacting the broker...");
 
 		try {
 			this.view = this.initializeRMI();
-			System.out.println("Successfully registered");
+			logger.debug("Successfully registered");
 		} catch (NotBoundException | RemoteException | AlreadyBoundException e) {
-			logger.error("Failed to connect to the RMI Server");
+			logger.error("Failed to connect to the RMI Server: "+e.getMessage());
 		}
 	}
 
@@ -89,7 +89,7 @@ public class ConnectionManagerRMI extends ConnectionManager implements
 
 			view.makeAction(this.clientID, inputLine);
 		} catch (RemoteException e) {
-			System.err.println("[DEBUG] Can't perform the action");
+			logger.debug("Can't perform the action");
 		}
 
 	}
@@ -100,7 +100,7 @@ public class ConnectionManagerRMI extends ConnectionManager implements
 	 */
 	@Override
 	public void publishMessage(ServerResponse message) throws RemoteException {
-		System.out.println(message);
+		logger.debug(message);
 		this.clientData.storeResponse(message);
 		return;
 	}
@@ -112,30 +112,30 @@ public class ConnectionManagerRMI extends ConnectionManager implements
 	 */
 	public ServerGameRoomInterface initializeRMI() throws RemoteException,
 			NotBoundException, AlreadyBoundException {
-		System.out.println("Connecting to the registry...");
+		logger.debug("Connecting to the registry...");
 		Registry registry = LocateRegistry.getRegistry(SERVER_ADDRESS,
 				REGISTRATION_PORT);
-		System.out.println("Connecting to the registration room...");
+		logger.debug("Connecting to the registration room...");
 		ServerRMIRegistrationViewRemote registrationRoom = (ServerRMIRegistrationViewRemote) registry
 				.lookup(registrationRoomName);
 
-		System.out.println("Trying to get a clientID...");
+		logger.debug("Trying to get a clientID...");
 		while (this.clientID == 0) {
 			this.clientID = registrationRoom.getClientId(this.clientID);
 		}
-		System.out.println("Your clientID is " + this.clientID);
+		logger.info("Your clientID is " + this.clientID);
 
-		System.out.println("Trying to send your name to the server...");
+		logger.debug("Trying to send your name to the server...");
 
 		while (nameSet == false) {
 			nameSet = registrationRoom.sendPlayerName(this.playerName);
 		}
-		System.out.println("NAME ACCEPTED");
+		logger.debug("NAME ACCEPTED");
 
 		/**
 		 * The client gets a view to play the game;
 		 */
-		System.out.println("Trying to register...");
+		logger.debug("Trying to register...");
 		
 		return registrationRoom
 				.register((SubscriberInterface) UnicastRemoteObject
