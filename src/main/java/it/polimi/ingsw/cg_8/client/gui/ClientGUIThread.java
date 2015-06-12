@@ -83,8 +83,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-
 import java.awt.Rectangle;
+
 import javax.swing.border.MatteBorder;
 
 /**
@@ -206,7 +206,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		chatTextField = new JTextField();
 		chatTextField.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		chatTextField.setForeground(Color.WHITE);
-		chatTextField.setBackground(Color.BLACK);
+		chatTextField.setBackground(Color.DARK_GRAY);
 		chatPanel2 = new JPanel();
 		chatPanel2.setOpaque(false);
 		chatPanel2.setBackground(Color.WHITE);
@@ -297,7 +297,8 @@ public class ClientGUIThread implements Runnable, Observer {
 		state_panel.setLayout(new BorderLayout(0, 0));
 
 		panel_3 = new JPanel();
-		panel_3.setBorder(new MatteBorder(0, 0, 5, 0, (Color) new Color(100, 100, 100, 100)));
+		panel_3.setBorder(new MatteBorder(0, 0, 5, 0, (Color) new Color(100,
+				100, 100, 100)));
 		panel_3.setBackground(new Color(100, 100, 100, 100));
 		panel_3.setOpaque(true);
 		state_panel.add(panel_3, BorderLayout.CENTER);
@@ -311,14 +312,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		 * Set the default image for the player, changed as soon as he gets an
 		 * in-game character.
 		 */
-		try {
-			Image tempImage = ImageIO.read(new File(
-					"resources//images//player//alien_1.png"));
-			Image cardImage = tempImage.getScaledInstance(60, -1,
-					Image.SCALE_SMOOTH);
-			state_image.setIcon(new ImageIcon(cardImage));
-		} catch (IOException ex) {
-		}
+		setStateImage(Resource.IMG_ITEM);
 
 		panel_1 = new JPanel();
 		panel_3.add(panel_1, BorderLayout.CENTER);
@@ -424,8 +418,8 @@ public class ClientGUIThread implements Runnable, Observer {
 		rightPanel.add(chatInfoPanel, BorderLayout.CENTER);
 		rightPanel.add(commandsPanel, BorderLayout.SOUTH);
 
-		chatTextPane.setAutoscrolls(true);
-		infoTextPane.setAutoscrolls(true);
+		// chatTextPane.setAutoscrolls(true);
+		// infoTextPane.setAutoscrolls(true);
 		chatTextPane.setFont(fontTitilliumSemiboldUpright);
 		infoTextPane.setFont(fontTitilliumSemiboldUpright);
 		chatTextPane.setText("Say hi to the other players!");
@@ -437,6 +431,19 @@ public class ClientGUIThread implements Runnable, Observer {
 		mapPanel.setVisible(true);
 		mainFrame.setVisible(true);
 		mainFrame.setSize(1280, 720);
+	}
+
+	private void setStateImage(String source) {
+		try {
+			Image tempImage = ImageIO.read(new File(source));
+			Image cardImage = tempImage.getScaledInstance(60, -1,
+					Image.SCALE_SMOOTH);
+			state_image.setIcon(new ImageIcon(cardImage));
+			rightPanel.repaint();
+		} catch (IOException ex) {
+			logger.error(ex.getMessage());
+		}
+
 	}
 
 	public void appendChat(String player, String msg) {
@@ -863,28 +870,37 @@ public class ClientGUIThread implements Runnable, Observer {
 
 			if (playerImageSet == false) {
 				double random = Math.random();
+				logger.debug(stateMessage.getCharacter());
 				if (stateMessage.getCharacter().equals("Human")) {
+					logger.debug("I'm a human, so i set my img");
 					if (random < 0.25) {
-
+						setStateImage(Resource.IMG_HUMAN_1);
 					} else if (random < 0.5) {
+						setStateImage(Resource.IMG_HUMAN_2);
 
 					} else if (random < 0.75) {
+						setStateImage(Resource.IMG_HUMAN_3);
 
 					} else {
+						setStateImage(Resource.IMG_HUMAN_4);
 
 					}
 				} else if (stateMessage.getCharacter().equals("Alien")) {
+					logger.debug("I'm an alien, so i set my img");
 					if (random < 0.25) {
+						setStateImage(Resource.IMG_ALIEN_1);
 
 					} else if (random < 0.5) {
+						setStateImage(Resource.IMG_ALIEN_2);
 
 					} else if (random < 0.75) {
+						setStateImage(Resource.IMG_ALIEN_3);
 
 					} else {
+						setStateImage(Resource.IMG_ALIEN_4);
 
 					}
 				}
-
 				playerImageSet = true;
 			}
 			String state = stateMessage.getPlayerName() + ", "
@@ -892,7 +908,8 @@ public class ClientGUIThread implements Runnable, Observer {
 					+ stateMessage.getState() + ", Position: "
 					+ stateMessage.getPosition();
 			labelCurrentState.setText(state);
-			labelCurrentState.repaint();
+			rightPanel.repaint();
+
 		}
 	}
 

@@ -209,4 +209,52 @@ public class Resource {
 	public static final String FONT_MRJONES = "resources" + File.separatorChar
 			+ "fonts" + File.separatorChar + "MrJonesBook.otf";
 
+	/**
+	 * alien 1
+	 */
+	public static final String IMG_ALIEN_1 = "resources" + File.separatorChar
+			+ "images" + File.separatorChar + "player" + File.separatorChar
+			+ "alien_1.png";
+	/**
+	 * alien 2
+	 */
+	public static final String IMG_ALIEN_2 = "resources" + File.separatorChar
+			+ "images" + File.separatorChar + "player" + File.separatorChar
+			+ "alien_2.png";
+	/**
+	 * alien 3
+	 */
+	public static final String IMG_ALIEN_3 = "resources" + File.separatorChar
+			+ "images" + File.separatorChar + "player" + File.separatorChar
+			+ "alien_3.png";
+	/**
+	 * alien 4
+	 */
+	public static final String IMG_ALIEN_4 = "resources" + File.separatorChar
+			+ "images" + File.separatorChar + "player" + File.separatorChar
+			+ "alien_4.png";
+	/**
+	 * human 1
+	 */
+	public static final String IMG_HUMAN_1 = "resources" + File.separatorChar
+			+ "images" + File.separatorChar + "player" + File.separatorChar
+			+ "human_1.png";
+	/**
+	 * human 2
+	 */
+	public static final String IMG_HUMAN_2 = "resources" + File.separatorChar
+			+ "images" + File.separatorChar + "player" + File.separatorChar
+			+ "human_2.png";
+	/**
+	 * human 3
+	 */
+	public static final String IMG_HUMAN_3 = "resources" + File.separatorChar
+			+ "images" + File.separatorChar + "player" + File.separatorChar
+			+ "human_3.png";
+	/**
+	 * human 4
+	 */
+	public static final String IMG_HUMAN_4 = "resources" + File.separatorChar
+			+ "images" + File.separatorChar + "player" + File.separatorChar
+			+ "human_4.png";
 }
