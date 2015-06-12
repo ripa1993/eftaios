@@ -774,18 +774,23 @@ public class ClientGUIThread implements Runnable, Observer {
 						&& coordinate.getY() < NUM_ROW) {
 					Object[] options = { "Movement", "Spotlight",
 							"Do Fake Noise" };
-					Object result = JOptionPane.showOptionDialog(null,
+					int result = JOptionPane.showOptionDialog(null,
 							"This is sector " + coordinate,
 							"What would you like to do?",
 							JOptionPane.DEFAULT_OPTION,
 							JOptionPane.QUESTION_MESSAGE, null, options,
 							options[0]);
-					if (result.equals(options[0])) {
+					logger.debug("Result: "+result);
+					logger.debug("Options: "+options);
+					if (result==0) {
+						logger.debug("Choose: move");
 						connectionManager.send(new ActionMove(coordinate));
-					} else if (result.equals(options[1])) {
+					} else if (result==1) {
+						logger.debug("Choose: spotlight");
 						connectionManager.send(new ActionUseCard(
 								new SpotlightCard(), coordinate));
-					} else if (result.equals(options[2])) {
+					} else if (result==2) {
+						logger.debug("Choose: fake noise");
 						connectionManager.send(new ActionFakeNoise(coordinate));
 					}
 				}
