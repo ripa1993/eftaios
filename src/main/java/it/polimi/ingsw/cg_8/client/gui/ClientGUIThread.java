@@ -501,7 +501,7 @@ public class ClientGUIThread implements Runnable, Observer {
 				if (action != null) {
 					connectionManager.send(action);
 				} else {
-					System.out.println("asdasdadasdad");
+					System.out.println("THIS DOES NOTHING - STOP DOING IT!");
 				}
 			}
 
@@ -886,19 +886,16 @@ public class ClientGUIThread implements Runnable, Observer {
 
 			cardButton1
 					.setCardType(this.analyzeCardType(cardMessage.getCard1()));
-			System.out.println("card1type"
-					+ this.analyzeCardType(cardMessage.getCard1()));
+			
 			cardButton1.repaint();
 			cardButton2
 					.setCardType(this.analyzeCardType(cardMessage.getCard2()));
-			System.out.println("card2type"
-					+ this.analyzeCardType(cardMessage.getCard2()));
+			
 
 			cardButton2.repaint();
 			cardButton3
 					.setCardType(this.analyzeCardType(cardMessage.getCard3()));
-			System.out.println("card3type"
-					+ this.analyzeCardType(cardMessage.getCard3()));
+		
 
 			cardButton3.repaint();
 

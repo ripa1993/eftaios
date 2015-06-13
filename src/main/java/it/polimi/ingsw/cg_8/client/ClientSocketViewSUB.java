@@ -102,9 +102,6 @@ public class ClientSocketViewSUB implements Runnable {
 		try {
 			ServerResponse response = (ServerResponse) input.readObject();
 			System.out.println(response);
-			if (response instanceof ResponseCard) {
-				System.out.println("storing responsecard " + response);
-			}
 			if (clientSocket != null) {
 				clientSocket.getClientData().storeResponse(response);
 			} else {

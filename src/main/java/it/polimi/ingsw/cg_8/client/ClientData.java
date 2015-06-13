@@ -83,7 +83,6 @@ public class ClientData extends Observable {
 		}
 		if (response instanceof ResponseCard) {
 			cards = (ResponseCard) response;
-			System.out.println("responseserverofclientdata" + response);
 			setChanged();
 			notifyObservers("Cards");
 			return;
@@ -124,7 +123,6 @@ public class ClientData extends Observable {
 	 *         response}
 	 */
 	public ResponseCard getCards() {
-		System.out.println("adasdasd" + cards);
 		return cards;
 	}
 

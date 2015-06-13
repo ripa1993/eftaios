@@ -47,8 +47,8 @@ public class ClientSocketViewCS implements Runnable {
 	/**
 	 * Log4j logger
 	 */
-	private static final Logger logger = LogManager.getLogger(ServerSocketPublisherThread.class);
-
+	private static final Logger logger = LogManager
+			.getLogger(ServerSocketPublisherThread.class);
 
 	/**
 	 * 
@@ -97,15 +97,21 @@ public class ClientSocketViewCS implements Runnable {
 			// write id
 			output.writeObject(clientId);
 			output.flush();
-			logger.debug("Sent client id: "+clientId);
-			// write action
-			output.writeObject(action);
-			output.flush();
 			/**
 			 * Useful for testing purposes.
 			 */
-			logger.debug("Write server command: " + action);
-			logger.debug("Waiting server response");
+			// logger.debug("Sent client id: "+clientId);
+			// write action
+			output.writeObject(action);
+			output.flush();
+
+			// Useful for testing purposes.
+
+			//logger.debug("Write server command: " + action);
+
+			// Useful for testing purposes.
+
+			// logger.debug("Waiting server response");
 			try {
 				logger.debug((boolean) input.readObject());
 			} catch (ClassNotFoundException e) {
@@ -118,7 +124,10 @@ public class ClientSocketViewCS implements Runnable {
 		}
 
 		close(requestSocket, output);
-		logger.debug("Socket connection closed.");
+		/**
+		 * Useful for testing purposes.
+		 */
+		// logger.debug("Socket connection closed.");
 	}
 
 	private void close(Socket socket, ObjectOutputStream output) {

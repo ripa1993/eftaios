@@ -103,19 +103,7 @@ public class ServerSocketRRThread implements Runnable {
 								subscriber);
 						nextGame.addClientSocket(newClientId, playerName,
 								publisher);
-						logger.info("Player successfully added to the game");
-						Server.getId2Controller().put(newClientId, nextGame);
-
-						if (nextGame.getNumOfPlayers() == Server.MIN_PLAYERS) {
-							Server.startTimeout();
-						}
-
-						if (nextGame.getNumOfPlayers() == Server.MAX_PLAYERS) {
-							Server.abortTimeout();
-							nextGame.initGame();
-							Server.nullStartingGame();
-							logger.info("Game started");
-						}
+						Server.addClient(newClientId);
 					}
 				} else {
 					// client has already connected to the server, reads player

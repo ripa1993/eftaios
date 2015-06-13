@@ -354,17 +354,21 @@ public class Controller implements Observer {
 					+ model.getCurrentPlayerReference().getName()));
 			this.writeToPlayer(model.getCurrentPlayerReference(),
 					new ResponsePrivate("IT'S YOUR TURN"));
-			this.writeToPlayer(model.getCurrentPlayerReference(),
-					new ResponsePrivate(model.getCurrentPlayerReference()
-							.toString()));
+			/**
+			 * Used for testing
+			 */
+			// this.writeToPlayer(model.getCurrentPlayerReference(),
+			// new ResponsePrivate(model.getCurrentPlayerReference()
+			// .toString()));
+			
 			/**
 			 * Notify every player about their state.
 			 */
-			for (Player p : model.getPlayers()) {
-				this.writeToPlayer(p, new ResponseState(p.getName(), p
-						.getCharacter().toString(), p.getState().toString(), p
-						.getLastPosition().toString(), model.getRoundNumber()));
-			}
+			 for (Player p : model.getPlayers()) {
+			 this.writeToPlayer(p, new ResponseState(p.getName(), p
+			 .getCharacter().toString(), p.getState().toString(), p
+			 .getLastPosition().toString(), model.getRoundNumber()));
+			 }
 			/**
 			 * Communicate to the current player the cards he's holding.
 			 */

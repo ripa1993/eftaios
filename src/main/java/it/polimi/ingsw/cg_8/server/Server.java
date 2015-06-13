@@ -191,6 +191,20 @@ public class Server {
 		logger.debug("New game created: " + gameMapName);
 		return nextGame;
 	}
+	
+	public static void addClient(Integer clientID) {
+		logger.info("Player successfully added to the game");
+		Server.getId2Controller().put(clientID, nextGame);
+		if (nextGame.getNumOfPlayers() == Server.MIN_PLAYERS) {
+			Server.startTimeout();
+		}
+		if (nextGame.getNumOfPlayers() == Server.MAX_PLAYERS) {
+			Server.abortTimeout();
+			nextGame.initGame();
+			Server.nullStartingGame();
+			logger.info("Game started");
+		}
+	}
 
 	/**
 	 * Set the nextGame to null
