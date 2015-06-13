@@ -28,6 +28,11 @@ public class Resource {
 			+ File.separatorChar + "images" + File.separatorChar
 			+ "galilei.png";
 	/**
+	 * Default no map image
+	 */
+	public static final String IMG_MAP_BG = "resources" + File.separatorChar
+			+ "images" + File.separatorChar + "map_bg_def.png";
+	/**
 	 * Reference to default background image
 	 */
 	public static final String IMG_BACKGROUND_PATTERN = "resources"
@@ -119,12 +124,13 @@ public class Resource {
 	 */
 	public static final String SOUND_BONUS = "resources" + File.separatorChar
 			+ "sounds" + File.separatorChar + "bonus.wav";
-	
+
 	/**
 	 * background music
 	 */
-	public static final String SOUND_BACKGROUDN = "resources" + File.separatorChar
-			+ "sounds" + File.separatorChar + "Inside_an_Alien_Spaceship.mp3";
+	public static final String SOUND_BACKGROUDN = "resources"
+			+ File.separatorChar + "sounds" + File.separatorChar
+			+ "Inside_an_Alien_Spaceship.mp3";
 	/**
 	 * Adrenaline card
 	 */

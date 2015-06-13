@@ -15,6 +15,7 @@ import it.polimi.ingsw.cg_8.server.ServerGameRoom;
 import it.polimi.ingsw.cg_8.server.ServerPublisher;
 import it.polimi.ingsw.cg_8.server.ServerSocketPublisherThread;
 import it.polimi.ingsw.cg_8.view.server.ResponseCard;
+import it.polimi.ingsw.cg_8.view.server.ResponseMap;
 import it.polimi.ingsw.cg_8.view.server.ResponseNoise;
 import it.polimi.ingsw.cg_8.view.server.ResponsePrivate;
 import it.polimi.ingsw.cg_8.view.server.ResponseState;
@@ -52,6 +53,10 @@ public class Controller implements Observer {
 	 * Model of this game
 	 */
 	private Model model;
+	/**
+	 * Map name
+	 */
+	private GameMapName mapName;
 	/**
 	 * Rule-Set of this game
 	 */
@@ -104,6 +109,7 @@ public class Controller implements Observer {
 	public Controller(GameMapName mapName, Rules rules) {
 
 		try {
+			this.mapName=mapName;
 			this.model = new Model(mapName);
 			this.rules = rules;
 			this.id2Player = new HashMap<Integer, Player>();
@@ -190,7 +196,7 @@ public class Controller implements Observer {
 		try {
 			this.writeToAll(new ResponsePrivate("Match is starting..."));
 			model.initGame();
-			
+			this.writeToAll(new ResponseMap(mapName));
 			for (Player p : this.model.getPlayers()) {
 				this.writeToPlayer(p, new ResponsePrivate(
 						"You will be playing as:\n" + " "
