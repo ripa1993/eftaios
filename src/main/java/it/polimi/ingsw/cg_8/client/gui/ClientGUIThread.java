@@ -6,7 +6,6 @@ import it.polimi.ingsw.cg_8.client.ResponseMap;
 import it.polimi.ingsw.cg_8.client.gui.CardButton.CardType;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.AdrenalineCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.AttackCard;
-import it.polimi.ingsw.cg_8.model.cards.itemCards.ItemCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.SedativesCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.SpotlightCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.TeleportCard;
@@ -57,7 +56,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
@@ -81,6 +79,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.event.MouseInputAdapter;
+import javax.swing.text.DefaultCaret;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -311,7 +310,7 @@ public class ClientGUIThread implements Runnable, Observer {
 
 		state_image = new JLabel("");
 		panel_3.add(state_image, BorderLayout.WEST);
-		state_image.setBorder(new EmptyBorder(0, 60, 0, 0));
+		state_image.setBorder(new EmptyBorder(0, 60, 5, 0));
 
 		/**
 		 * Set the default image for the player, changed as soon as he gets an
@@ -335,6 +334,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		lblPlayerState.setForeground(Color.BLACK);
 
 		labelCurrentState = new JLabel();
+		labelCurrentState.setBorder(new EmptyBorder(0, 0, 5, 0));
 		panel_1.add(labelCurrentState, BorderLayout.CENTER);
 		labelCurrentState.setText("The game hasn't started yet");
 		labelCurrentState.setFont(fontTitilliumSemiboldUpright);
@@ -353,7 +353,7 @@ public class ClientGUIThread implements Runnable, Observer {
 			logger.error(ex.getMessage());
 		}
 		turnNumberLabel.setHorizontalTextPosition(SwingConstants.CENTER);
-		turnNumberLabel.setBorder(new EmptyBorder(0, 0, 0, 60));
+		turnNumberLabel.setBorder(new EmptyBorder(0, 0, 5, 60));
 		panel_3.add(turnNumberLabel, BorderLayout.EAST);
 		turnNumberLabel.setVisible(true);
 
@@ -378,30 +378,22 @@ public class ClientGUIThread implements Runnable, Observer {
 		panel_2.add(cardPanel, BorderLayout.SOUTH);
 		cardPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
-		// TODO: handle initialization with cycles
-		// cardList = new CardButton[CARD_NUM];
-		//
-		//
-		// // for (int i = 0; i < CARD_NUM; i++) {
-		// // cardList[i] = new CardButton();
-		// // cardList[i].setBackground(Color.WHITE);
-		// // cardList[i].setCardType(CardType.DEFAULT);
-		// // cardPanel.add(cardList[i]);
-		// // cardPanel.repaint();
-		// // }
 		cardButton1 = new CardButton();
 		cardButton1.setBackground(Color.WHITE);
 		cardButton1.setCardType(CardType.DEFAULT);
+		cardButton1.setFocusable(true);
 		cardPanel.add(cardButton1);
 
 		cardButton2 = new CardButton();
 		cardButton2.setBackground(Color.WHITE);
 		cardButton2.setCardType(CardType.DEFAULT);
+		cardButton2.setFocusable(true);
 		cardPanel.add(cardButton2);
 
 		cardButton3 = new CardButton();
 		cardButton3.setBackground(Color.WHITE);
 		cardButton3.setCardType(CardType.DEFAULT);
+		cardButton3.setFocusable(true);
 		cardPanel.add(cardButton3);
 
 		// set up info panel
@@ -412,6 +404,9 @@ public class ClientGUIThread implements Runnable, Observer {
 		infoPanel.add(infoTextTitle, BorderLayout.NORTH);
 		infoPanel.add(infoScroll, BorderLayout.CENTER);
 		infoTextPane.setEditable(false);
+
+		DefaultCaret caretInfo = (DefaultCaret) infoTextPane.getCaret();
+		caretInfo.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 
 		// set up chat panel
 		chatTextTitle = new JLabel();
@@ -430,6 +425,9 @@ public class ClientGUIThread implements Runnable, Observer {
 		chatPanel.add(chatScroll, BorderLayout.CENTER);
 		chatPanel.add(chatTextAndButton, BorderLayout.SOUTH);
 		chatTextPane.setEditable(false);
+
+		DefaultCaret caretChat = (DefaultCaret) chatTextPane.getCaret();
+		caretChat.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 
 		chatInfoPanel.setLayout(new GridLayout(2, 1));
 		chatInfoPanel.add(infoPanel);
@@ -496,17 +494,20 @@ public class ClientGUIThread implements Runnable, Observer {
 
 		logger.debug("Info text pane is" + infoPanel.getSize());
 
-		cardButton1.addMouseListener(new MouseInputAdapter() {
+		cardButton1.getInvisButton().addMouseListener(new MouseInputAdapter() {
 			@Override
-			public void mouseReleased(MouseEvent e) {
+			public void mousePressed(MouseEvent e) {
 				ClientAction action = cardButton1.createAction();
 				if (action != null) {
 					connectionManager.send(action);
+				} else {
+					System.out.println("asdasdadasdad");
 				}
 			}
 
 		});
-		cardButton2.addMouseListener(new MouseInputAdapter() {
+
+		cardButton2.getInvisButton().addMouseListener(new MouseInputAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				ClientAction action = cardButton2.createAction();
@@ -515,7 +516,7 @@ public class ClientGUIThread implements Runnable, Observer {
 				}
 			}
 		});
-		cardButton3.addMouseListener(new MouseInputAdapter() {
+		cardButton3.getInvisButton().addMouseListener(new MouseInputAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				ClientAction action = cardButton3.createAction();
@@ -877,23 +878,33 @@ public class ClientGUIThread implements Runnable, Observer {
 			this.appendInfo("INFO", privateMessage.getMessage());
 		}
 
+		/**
+		 * Update related to card messages.
+		 */
 		else if (arg.equals("Cards")) {
 			ResponseCard cardMessage = clientData.getCards();
-			List<ItemCard> cards = cardMessage.getHand();
-			ItemCard cardArray[] = new ItemCard[CARD_NUM];
-			for (int i = 0; i < cards.size(); i++) {
-				cardArray[i] = cards.get(i);
-			}
-			ItemCard tempCard1 = cardArray[0];
-			this.updateCard(cardButton1, tempCard1);
+
+			cardButton1
+					.setCardType(this.analyzeCardType(cardMessage.getCard1()));
+			System.out.println("card1type"
+					+ this.analyzeCardType(cardMessage.getCard1()));
 			cardButton1.repaint();
-			ItemCard tempCard2 = cardArray[1];
-			this.updateCard(cardButton2, tempCard2);
+			cardButton2
+					.setCardType(this.analyzeCardType(cardMessage.getCard2()));
+			System.out.println("card2type"
+					+ this.analyzeCardType(cardMessage.getCard2()));
+
 			cardButton2.repaint();
-			ItemCard tempCard3 = cardArray[2];
-			this.updateCard(cardButton3, tempCard3);
+			cardButton3
+					.setCardType(this.analyzeCardType(cardMessage.getCard3()));
+			System.out.println("card3type"
+					+ this.analyzeCardType(cardMessage.getCard3()));
+
 			cardButton3.repaint();
 
+			/**
+			 * Update related to state messages
+			 */
 		} else if (arg.equals("State")) {
 			ResponseState stateMessage = clientData.getState();
 
@@ -916,6 +927,10 @@ public class ClientGUIThread implements Runnable, Observer {
 					}
 				} else if (stateMessage.getCharacter().equals("Alien")) {
 					logger.debug("I'm an alien, so i set my img");
+					cardButton1.updateOverlay(Resource.IMG_ALIEN_OVERLAY);
+					cardButton2.updateOverlay(Resource.IMG_ALIEN_OVERLAY);
+					cardButton3.updateOverlay(Resource.IMG_ALIEN_OVERLAY);
+
 					if (random < 0.25) {
 						setStateImage(Resource.IMG_ALIEN_1);
 
@@ -974,22 +989,20 @@ public class ClientGUIThread implements Runnable, Observer {
 				.getScaledInstance(5000, -1, Image.SCALE_SMOOTH)).getImage();
 	}
 
-	private void updateCard(CardButton cardButton, ItemCard tempCard) {
-		if (tempCard instanceof AdrenalineCard) {
-			cardButton.setCardType(CardButton.CardType.ADRENALINE);
-		} else if (tempCard instanceof AttackCard) {
-			cardButton.setCardType(CardButton.CardType.ATTACK);
-		} else if (tempCard instanceof AttackCard) {
-			cardButton.setCardType(CardButton.CardType.DEFENSE);
-		} else if (tempCard instanceof AttackCard) {
-			cardButton.setCardType(CardButton.CardType.SEDATIVES);
-		} else if (tempCard instanceof AttackCard) {
-			cardButton.setCardType(CardButton.CardType.SPOTLIGHT);
-		} else if (tempCard instanceof AttackCard) {
-			cardButton.setCardType(CardButton.CardType.TELEPORT);
-		} else if (tempCard == null) {
-			cardButton.setCardType(CardButton.CardType.DEFAULT);
-		}
+	private CardType analyzeCardType(String card) {
+		if (card.equals("AdrenalineCard")) {
+			return CardType.ADRENALINE;
+		} else if (card.equals("AttackCard")) {
+			return CardType.ATTACK;
+		} else if (card.equals("DefenseCard")) {
+			return CardType.DEFENSE;
+		} else if (card.equals("SedativesCard")) {
+			return CardType.SEDATIVES;
+		} else if (card.equals("SpotlightCard")) {
+			return CardType.SPOTLIGHT;
+		} else if (card.equals("TeleportCard")) {
+			return CardType.TELEPORT;
+		} else
+			return CardType.DEFAULT;
 	}
-
 }

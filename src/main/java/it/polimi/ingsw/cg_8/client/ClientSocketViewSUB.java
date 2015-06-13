@@ -3,6 +3,7 @@ package it.polimi.ingsw.cg_8.client;
 import it.polimi.ingsw.cg_8.client.gui.ConnectionManager;
 import it.polimi.ingsw.cg_8.client.gui.ConnectionManagerSocket;
 import it.polimi.ingsw.cg_8.server.Server;
+import it.polimi.ingsw.cg_8.view.server.ResponseCard;
 import it.polimi.ingsw.cg_8.view.server.ServerResponse;
 
 import java.io.IOException;
@@ -101,6 +102,9 @@ public class ClientSocketViewSUB implements Runnable {
 		try {
 			ServerResponse response = (ServerResponse) input.readObject();
 			System.out.println(response);
+			if (response instanceof ResponseCard) {
+				System.out.println("storing responsecard " + response);
+			}
 			if (clientSocket != null) {
 				clientSocket.getClientData().storeResponse(response);
 			} else {

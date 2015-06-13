@@ -1,5 +1,6 @@
 package it.polimi.ingsw.cg_8.server;
 
+import it.polimi.ingsw.cg_8.view.server.ResponseCard;
 import it.polimi.ingsw.cg_8.view.server.ServerResponse;
 
 import java.io.IOException;
@@ -44,7 +45,9 @@ public class ServerSocketPublisherThread extends ServerPublisher implements Runn
 			try {
 				ServerResponse message = buffer.poll();
 				if (message != null) {
-
+					if (message instanceof ResponseCard) {
+						System.out.println("response card asd" + message);
+					}
 					send(message);
 					logger.debug("Message sent: "+message);
 				} else {

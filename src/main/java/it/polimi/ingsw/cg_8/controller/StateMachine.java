@@ -198,66 +198,20 @@ public class StateMachine {
 				ItemCard card = ((ActionUseCard) a).getItemCard();
 				Coordinate coordinate = ((ActionUseCard) a).getCoordinate();
 				if (card instanceof AdrenalineCard) {
-					if (rules.useItemCardValidator(model, card)) {
-						UseAdrenalineCard.useCard(model);
-						controller.writeToAll(new ResponsePrivate(player
-								.getName() + " has used an Adrenaline Card"));
-						controller.writeToPlayer(player, new ResponseCard(
-								player.getHand().getHeldCards()));
-						return true;
-					}
-					return false;
+					return StateMachine.useAdrenalineCard(card, player, controller);
 				}
-
 				if (card instanceof AttackCard) {
-					if (rules.useItemCardValidator(model, card)) {
-						UseAttackCard.useCard(model);
-						controller.writeToAll(new ResponsePrivate(player
-								.getName() + " has used an Attack Card"));
-						controller.writeToPlayer(player, new ResponseCard(
-								player.getHand().getHeldCards()));
-						return true;
-					}
-					return false;
+					return StateMachine.useAttackCard(card, player, controller);
 				}
 				if (card instanceof TeleportCard) {
-					if (rules.useItemCardValidator(model, card)) {
-						UseTeleportCard.useCard(model);
-						controller.writeToAll(new ResponsePrivate(player
-								.getName() + " has used a Teleport Card"));
-						controller.writeToPlayer(player, new ResponseCard(
-								player.getHand().getHeldCards()));
-						controller.writeToPlayer(player, new ResponseState(
-								player.getName(), player.getCharacter()
-										.toString(), player.getState()
-										.toString(), player.getLastPosition()
-										.toString(), model.getRoundNumber()));
-						return true;
-					}
-					return false;
+					return StateMachine.useTeleportCard(card, player, controller);
 				}
 				if (card instanceof SedativesCard) {
-					if (rules.useItemCardValidator(model, card)) {
-						UseSedativesCard.useCard(model);
-						controller.writeToAll(new ResponsePrivate(player
-								.getName() + " has used a Sedatives Card"));
-						controller.writeToPlayer(player, new ResponseCard(
-								player.getHand().getHeldCards()));
-						model.setTurnPhase(TurnPhase.MOVEMENT_DONE_NOT_DS);
-						return true;
-					}
-					return false;
+					return StateMachine.useSedativesCard(card, player, controller);
 				}
 				if (card instanceof SpotlightCard) {
-					if (rules.useItemCardValidator(model, card)) {
-						UseSpotlightCard.useCard(model, coordinate);
-						controller.writeToAll(new ResponsePrivate(player
-								.getName() + " has used a Spotlight Card"));
-						controller.writeToPlayer(player, new ResponseCard(
-								player.getHand().getHeldCards()));
-						return true;
-					}
-					return false;
+					return StateMachine.useSpotlightCard(card, player, controller,
+							coordinate);
 				}
 
 			}
@@ -288,54 +242,16 @@ public class StateMachine {
 					Coordinate coordinate = ((ActionUseCard) a).getCoordinate();
 
 					if (card instanceof AttackCard) {
-						if (rules.useItemCardValidator(model, card)) {
-							UseAttackCard.useCard(model);
-							controller.writeToAll(new ResponsePrivate(player
-									.getName() + " has used an Attack Card"));
-							controller.writeToPlayer(player, new ResponseCard(
-									player.getHand().getHeldCards()));
-							return true;
-						}
-						return false;
+						return StateMachine.useAttackCard(card, player, controller);
 					}
 					if (card instanceof TeleportCard) {
-						if (rules.useItemCardValidator(model, card)) {
-							UseTeleportCard.useCard(model);
-							controller.writeToAll(new ResponsePrivate(player
-									.getName() + " has used a Teleport Card"));
-							controller.writeToPlayer(player, new ResponseCard(
-									player.getHand().getHeldCards()));
-							controller.writeToPlayer(player, new ResponseState(
-									player.getName(), player.getCharacter()
-											.toString(), player.getState()
-											.toString(), player
-											.getLastPosition().toString(),
-									model.getRoundNumber()));
-							return true;
-						}
-						return false;
+						return StateMachine.useTeleportCard(card, player, controller);
 					}
 					if (card instanceof SedativesCard) {
-						if (rules.useItemCardValidator(model, card)) {
-							UseSedativesCard.useCard(model);
-							controller.writeToAll(new ResponsePrivate(player
-									.getName() + " has used a Sedatives Card"));
-							controller.writeToPlayer(player, new ResponseCard(
-									player.getHand().getHeldCards()));
-							return true;
-						}
-						return false;
+						return StateMachine.useSedativesCard(card, player, controller);
 					}
 					if (card instanceof SpotlightCard) {
-						if (rules.useItemCardValidator(model, card)) {
-							UseSpotlightCard.useCard(model, coordinate);
-							controller.writeToAll(new ResponsePrivate(player
-									.getName() + " has used a Spotlight Card"));
-							controller.writeToPlayer(player, new ResponseCard(
-									player.getHand().getHeldCards()));
-							return true;
-						}
-						return false;
+						return StateMachine.useSpotlightCard(card, player, controller, coordinate);
 					}
 				}
 			}
@@ -371,16 +287,14 @@ public class StateMachine {
 							&& draw.isDiscardedItemCard() == false) {
 						controller.writeToPlayer(player, new ResponsePrivate(
 								"You have drawn a " + draw.getItemCard()));
-						controller.writeToPlayer(player, new ResponseCard(
-								player.getHand().getHeldCards()));
+
 					} else if (draw.getItemCard() != null
 							&& draw.isDiscardedItemCard() == true) {
 						controller.writeToPlayer(player, new ResponsePrivate(
 								"You have drawn " + draw.getItemCard()
 										+ " but your hand is full,"
 										+ " so the card has been discarded."));
-						controller.writeToPlayer(player, new ResponseCard(
-								player.getHand().getHeldCards()));
+
 					} else if (draw.getItemCard() == null
 							&& draw.isEmptyItemDeck()) {
 						controller.writeToPlayer(player, new ResponsePrivate(
@@ -391,8 +305,11 @@ public class StateMachine {
 					}
 
 				} finally {
-					controller.writeToPlayer(player, new ResponsePrivate(player
-							.getHand().getHeldCards().toString()));
+					// controller.writeToPlayer(player, new
+					// ResponsePrivate(player
+					// .getHand().getHeldCards().toString()));
+					controller.writeToPlayer(player, new ResponseCard(player
+							.getHand().getHeldCards()));
 					if (hasToMakeFakeNoise == true) {
 						model.setTurnPhase(TurnPhase.WAITING_FAKE_NOISE);
 						controller.writeToPlayer(player, new ResponsePrivate(
@@ -420,58 +337,16 @@ public class StateMachine {
 					Coordinate coordinate = ((ActionUseCard) a).getCoordinate();
 
 					if (card instanceof AttackCard) {
-						if (rules.useItemCardValidator(model, card)) {
-							UseAttackCard.useCard(model);
-							controller.writeToAll(new ResponsePrivate(player
-									.getName() + " has used a Attack Card"));
-							controller.writeToPlayer(player, new ResponseCard(
-									player.getHand().getHeldCards()));
-
-							return true;
-						}
-						return false;
+						return StateMachine.useAttackCard(card, player, controller);
 					}
 					if (card instanceof TeleportCard) {
-						if (rules.useItemCardValidator(model, card)) {
-							UseTeleportCard.useCard(model);
-							controller.writeToAll(new ResponsePrivate(player
-									.getName() + " has used a Teleport Card"));
-							controller.writeToPlayer(player, new ResponseCard(
-									player.getHand().getHeldCards()));
-							controller.writeToPlayer(player, new ResponseState(
-									player.getName(), player.getCharacter()
-											.toString(), player.getState()
-											.toString(), player
-											.getLastPosition().toString(),
-									model.getRoundNumber()));
-							return true;
-						}
-						return false;
+						return StateMachine.useTeleportCard(card, player, controller);
 					}
 					if (card instanceof SedativesCard) {
-						if (rules.useItemCardValidator(model, card)) {
-							UseSedativesCard.useCard(model);
-							model.setTurnPhase(TurnPhase.MOVEMENT_DONE_NOT_DS);
-							controller.writeToAll(new ResponsePrivate(player
-									.getName() + " has used a Sedatives Card"));
-							controller.writeToPlayer(player, new ResponseCard(
-									player.getHand().getHeldCards()));
-
-							return true;
-						}
-						return false;
+						return StateMachine.useSedativesCard(card, player, controller);
 					}
 					if (card instanceof SpotlightCard) {
-						if (rules.useItemCardValidator(model, card)) {
-							UseSpotlightCard.useCard(model, coordinate);
-							controller.writeToAll(new ResponsePrivate(player
-									.getName() + " has used a Spotlight Card"));
-							controller.writeToPlayer(player, new ResponseCard(
-									player.getHand().getHeldCards()));
-
-							return true;
-						}
-						return false;
+						return StateMachine.useSpotlightCard(card, player, controller, coordinate);
 					}
 				}
 			}
@@ -494,32 +369,10 @@ public class StateMachine {
 				ItemCard card = ((ActionUseCard) a).getItemCard();
 				Coordinate coordinate = ((ActionUseCard) a).getCoordinate();
 				if (card instanceof TeleportCard) {
-					if (rules.useItemCardValidator(model, card)) {
-						UseTeleportCard.useCard(model);
-						controller.writeToAll(new ResponsePrivate(player
-								.getName() + " has used a Teleport Card"));
-						controller.writeToPlayer(player, new ResponseCard(
-								player.getHand().getHeldCards()));
-						controller.writeToPlayer(player, new ResponseState(
-								player.getName(), player.getCharacter()
-										.toString(), player.getState()
-										.toString(), player.getLastPosition()
-										.toString(), model.getRoundNumber()));
-						return true;
-					}
-					return false;
+					return StateMachine.useTeleportCard(card, player, controller);
 				}
 				if (card instanceof SpotlightCard) {
-					if (rules.useItemCardValidator(model, card)) {
-						UseSpotlightCard.useCard(model, coordinate);
-						controller.writeToAll(new ResponsePrivate(player
-								.getName() + " has used a Spotlight Card"));
-						controller.writeToPlayer(player, new ResponseCard(
-								player.getHand().getHeldCards()));
-
-						return true;
-					}
-					return false;
+					return StateMachine.useSpotlightCard(card, player, controller, coordinate);
 				}
 			}
 		}
@@ -556,27 +409,10 @@ public class StateMachine {
 				ItemCard card = ((ActionUseCard) a).getItemCard();
 				Coordinate coordinate = ((ActionUseCard) a).getCoordinate();
 				if (card instanceof TeleportCard) {
-					if (rules.useItemCardValidator(model, card)) {
-						UseTeleportCard.useCard(model);
-						controller.writeToAll(new ResponsePrivate(player
-								.getName() + " has used a Teleport card"));
-						controller.writeToPlayer(player, new ResponseCard(
-								player.getHand().getHeldCards()));
-						return true;
-					}
-					return false;
+					return StateMachine.useTeleportCard(card, player, controller);
 				}
 				if (card instanceof SpotlightCard) {
-					if (rules.useItemCardValidator(model, card)) {
-						UseSpotlightCard.useCard(model, coordinate);
-						controller.writeToAll(new ResponsePrivate(player
-								.getName() + " has used a Spotlight Card"));
-						controller.writeToPlayer(player, new ResponseCard(
-								player.getHand().getHeldCards()));
-
-						return true;
-					}
-					return false;
+					return StateMachine.useSpotlightCard(card, player, controller, coordinate);
 				}
 			}
 		}
@@ -586,9 +422,10 @@ public class StateMachine {
 
 	private static void endTurn(Controller controller, Model model,
 			Player player) {
-		EndTurn.endTurn(model);
 		controller.writeToAll(new ResponsePrivate(player.getName()
 				+ " has finished his turn"));
+		EndTurn.endTurn(model);
+
 		// StateMachine.endTurnMessage(controller, model, player);
 
 	}
@@ -604,12 +441,15 @@ public class StateMachine {
 	private static boolean attackMove(Rules rules, Model model,
 			Controller controller) {
 		if (rules.attackValidator(model) == true) {
+			controller.writeToAll(new ResponsePrivate(model
+					.getCurrentPlayerReference().getName()
+					+ " has attacked in "
+					+ model.getCurrentPlayerReference().getLastPosition()));
 			Attack attack = new Attack(model);
 			attack.makeAttack();
+
 			model.setTurnPhase(TurnPhase.ATTACK_DONE);
-			// controller.writeToAll(new
-			// ResponsePrivate(player.getName()
-			// + " has attacked in " + player.getLastPosition()));
+
 			List<Player> victims = attack.getVictims();
 			for (Player p : victims) {
 				controller.writeToAll(new ResponsePrivate(p.getName()
@@ -632,4 +472,95 @@ public class StateMachine {
 		return false;
 	}
 
+	/**
+	 * Handles the use of an adrenaline card.
+	 */
+	private static boolean useAdrenalineCard(ItemCard card, Player player,
+			Controller controller) {
+		if (controller.getRules().useItemCardValidator(controller.getModel(),
+				card)) {
+			UseAdrenalineCard.useCard(controller.getModel());
+			controller.writeToAll(new ResponsePrivate(player.getName()
+					+ " has used an Adrenaline Card"));
+			controller.writeToPlayer(player, new ResponseCard(player.getHand()
+					.getHeldCards()));
+			return true;
+		}
+		return false;
+
+	}
+
+	/**
+	 * Handles the use of an attack card.
+	 * 
+	 */
+	private static boolean useAttackCard(ItemCard card, Player player,
+			Controller controller) {
+		if (controller.getRules().useItemCardValidator(controller.getModel(),
+				card)) {
+			UseAttackCard.useCard(controller.getModel());
+			controller.writeToAll(new ResponsePrivate(player.getName()
+					+ " has used an Attack Card"));
+			controller.writeToPlayer(player, new ResponseCard(player.getHand()
+					.getHeldCards()));
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Handles the use of a teleport card.
+	 */
+	private static boolean useTeleportCard(ItemCard card, Player player,
+			Controller controller) {
+		if (controller.getRules().useItemCardValidator(controller.getModel(),
+				card)) {
+			UseTeleportCard.useCard(controller.getModel());
+			controller.writeToAll(new ResponsePrivate(player.getName()
+					+ " has used a Teleport Card"));
+			controller.writeToPlayer(player, new ResponseCard(player.getHand()
+					.getHeldCards()));
+			controller.writeToPlayer(player,
+					new ResponseState(player.getName(), player.getCharacter()
+							.toString(), player.getState().toString(), player
+							.getLastPosition().toString(), controller
+							.getModel().getRoundNumber()));
+			return true;
+		}
+		return false;
+
+	}
+
+	/**
+	 * Handles the use of a sedatives card.
+	 */
+	private static boolean useSedativesCard(ItemCard card, Player player,
+			Controller controller) {
+		if (controller.getRules().useItemCardValidator(controller.getModel(),
+				card)) {
+			UseSedativesCard.useCard(controller.getModel());
+			controller.writeToAll(new ResponsePrivate(player.getName()
+					+ " has used a Sedatives Card"));
+			controller.writeToPlayer(player, new ResponseCard(player.getHand()
+					.getHeldCards()));
+			controller.getModel().setTurnPhase(TurnPhase.MOVEMENT_DONE_NOT_DS);
+			return true;
+		}
+		return false;
+	}
+
+	private static boolean useSpotlightCard(ItemCard card, Player player,
+			Controller controller, Coordinate coordinate) {
+		if (controller.getRules().useItemCardValidator(controller.getModel(),
+				card)) {
+			UseSpotlightCard.useCard(controller.getModel(), coordinate);
+			controller.writeToAll(new ResponsePrivate(player.getName()
+					+ " has used a Spotlight Card"));
+			controller.writeToPlayer(player, new ResponseCard(player.getHand()
+					.getHeldCards()));
+
+			return true;
+		}
+		return false;
+	}
 }

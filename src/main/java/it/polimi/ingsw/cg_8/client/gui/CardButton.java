@@ -7,14 +7,14 @@ import it.polimi.ingsw.cg_8.model.cards.itemCards.SedativesCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.SpotlightCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.TeleportCard;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
-import it.polimi.ingsw.cg_8.server.Server;
 import it.polimi.ingsw.cg_8.view.client.ActionParser;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionUseCard;
 import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
 import it.polimi.ingsw.cg_8.view.client.exceptions.NotAValidInput;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
+import java.awt.CardLayout;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Image;
@@ -33,6 +33,12 @@ import javax.swing.SwingConstants;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLayeredPane;
+import java.awt.FlowLayout;
+import javax.swing.BoxLayout;
+import java.awt.Color;
+import javax.swing.JButton;
 
 /**
  * JButton that allows the player to use an item card.
@@ -43,19 +49,38 @@ import org.apache.logging.log4j.Logger;
 public class CardButton extends JPanel {
 
 	private static final long serialVersionUID = -4771580323012024149L;
-	private JLabel cardButton;
+	private JLabel cardButtonImage;
 	private JLabel text;
 	private CardType cardType;
+	private JLabel cardButtonOverlay;
 	private Font fontTitilliumSemiboldUpright;
 	/**
 	 * Log4j logger
 	 */
 	private static final Logger logger = LogManager.getLogger(CardButton.class);
-	public CardButton() {
+	private static final int BUTTON_WIDTH = 120;
+	private static final int BUTTON_HEIGHT = 120;
+	private JLayeredPane layeredPane;
+	private Image cardOverlay;
+	private JButton invisButton;
 
-		this.cardButton = new JLabel();
+	public CardButton() {
+		setPreferredSize(new Dimension(100, 120));
+		setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 		this.text = new JLabel("No Card");
 		this.cardType = CardType.DEFAULT;
+		this.layeredPane = new JLayeredPane();
+		this.cardButtonOverlay = new JLabel();
+		cardButtonOverlay.setBackground(Color.CYAN);
+
+		this.cardButtonImage = new JLabel();
+		cardButtonImage.setBackground(Color.GREEN);
+
+		cardButtonImage.setBorder(new EmptyBorder(0, 0, 5, 0));
+		cardButtonOverlay.setBorder(new EmptyBorder(0, 0, 5, 0));
+		/**
+		 * Load the font.
+		 */
 		try {
 			fontTitilliumSemiboldUpright = Font.createFont(
 					Font.TRUETYPE_FONT,
@@ -66,38 +91,83 @@ public class CardButton extends JPanel {
 			logger.error(e.getMessage());
 		}
 
-		setOpaque(false);
-
-		this.setLayout(new BorderLayout());
-		this.text.setFont(fontTitilliumSemiboldUpright);
-
-		text.setHorizontalAlignment(SwingConstants.CENTER);
-
-		this.add(cardButton, BorderLayout.CENTER);
-		this.add(text, BorderLayout.SOUTH);
+		/**
+		 * Load the default overlay.
+		 */
+		this.setOverlay(Resource.IMG_HUMAN_OVERLAY);
+		/**
+		 * Set the default image.
+		 */
 		this.setImage(Resource.IMG_ITEM);
+		cardButtonOverlay.setIcon(new ImageIcon(cardOverlay));
+		cardButtonOverlay.setBounds(0, 0, 124, 106);
+		cardButtonImage.setBounds(0, 0, 124, 106);
+		this.setLayout(new BorderLayout());
 
-		setOpaque(false);
-		this.setVisible(true);
-		cardButton.addMouseListener(new MouseAdapter() {
+		add(layeredPane, BorderLayout.CENTER);
+		layeredPane.add(cardButtonImage);
+		layeredPane.setLayer(cardButtonImage, 1);
+		layeredPane.add(cardButtonOverlay);
+		layeredPane.setLayer(cardButtonOverlay, 2);
+
+		invisButton = new JButton();
+		invisButton.setVerticalAlignment(SwingConstants.BOTTOM);
+		invisButton.setBounds(0, 0, 124, 106);
+		layeredPane.add(invisButton);
+		layeredPane.setLayer(invisButton, 3);
+		invisButton.setOpaque(false);
+		invisButton.setContentAreaFilled(false);
+		invisButton.setBorderPainted(false);
+
+		/**
+		 * Input handling on the cardButton
+		 */
+		invisButton.addMouseListener(new MouseAdapter() {
 			int width, height;
 
 			@Override
 			public void mouseEntered(MouseEvent event) {
-				width = cardButton.getWidth();
-				height = cardButton.getHeight();
-				cardButton.setSize((int) (1.05 * width),
-						((int) (1.05 * height)));
-				cardButton.repaint();
+
+				cardButtonOverlay.setVisible(true);
+				cardButtonImage.repaint();
 			}
 
 			@Override
 			public void mouseExited(MouseEvent event) {
-				cardButton.setSize(width, height);
-				cardButton.repaint();
+				cardButtonOverlay.setVisible(false);
+				cardButtonImage.repaint();
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent event) {
+				width = cardButtonImage.getWidth();
+				height = cardButtonImage.getHeight();
+				cardButtonImage.setSize((int) (1.05 * width),
+						((int) (1.05 * height)));
+				cardButtonImage.repaint();
+				cardButtonOverlay.setSize((int) (1.05 * width),
+						((int) (1.05 * height)));
+
+				cardButtonOverlay.repaint();
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent event) {
+				cardButtonImage.setSize(width, height);
+				cardButtonImage.repaint();
+				cardButtonOverlay.setSize(width, height);
+				cardButtonOverlay.repaint();
 			}
 
 		});
+		this.text.setFont(fontTitilliumSemiboldUpright);
+		text.setHorizontalAlignment(SwingConstants.CENTER);
+		this.add(text, BorderLayout.SOUTH);
+
+		cardButtonOverlay.setVisible(false);
+		setOpaque(false);
+		this.setVisible(true);
 
 	}
 
@@ -123,62 +193,107 @@ public class CardButton extends JPanel {
 		if (this.cardType.equals(CardType.DEFAULT)) {
 			this.setImage(Resource.IMG_ITEM);
 			this.setText("No Card");
-			this.cardButton
-					.setToolTipText("This is not an empty slot for item card");
+			this.invisButton
+					.setToolTipText("<html>This is an <b>empty slot</b> for item card</html>");
 		} else if (this.cardType.equals(CardType.ADRENALINE)) {
 			this.setImage(Resource.IMG_ADRENALINE);
 			this.setText("Adrenaline");
-			this.cardButton
-					.setToolTipText("<html>This card allows you to move two Sectors this turn.</html>");
+			this.invisButton
+					.setToolTipText("<html>This card allows you to <b>move two Sectors</b> this turn.</html>");
 		} else if (this.cardType.equals(CardType.ATTACK)) {
 			this.setImage(Resource.IMG_ATTACK);
 			this.setText("Attack");
-			this.cardButton
-					.setToolTipText("<html>This card allows you to attack, using the same rules as the Aliens.<br>"
+			this.invisButton
+					.setToolTipText("<html>This card allows you to <b>attack</b>, using the same rules as the Aliens.<br>"
 							+ "Note: the Human character can still move only one Sector.</html>");
 		} else if (this.cardType.equals(CardType.DEFENSE)) {
 			this.setImage(Resource.IMG_DEFENSE);
 			this.setText("Defense");
-			this.cardButton
+			this.invisButton
 					.setToolTipText("<html>Play this card immediately when an Alien attacks you.<br>"
-							+ "You are not affected by the attack.</html>");
+							+ "You are  <b>not affected</b> by the attack.</html>");
 		} else if (this.cardType.equals(CardType.SEDATIVES)) {
 			this.setImage(Resource.IMG_SEDATIVES);
 			this.setText("Sedatives");
-			this.cardButton
-					.setToolTipText("<html>If you play this card you do not draw a Dangerous Sector Card this turn,<br>"
+			this.invisButton
+					.setToolTipText("<html>If you play this card  <b>you do not draw </b> a Dangerous Sector Card this turn,<br>"
 							+ "even if you move into a Dangerous Sector.</html>");
 		} else if (this.cardType.equals(CardType.SPOTLIGHT)) {
 			this.setImage(Resource.IMG_SPOTLIGHT);
 			this.setText("Spotlight");
-			this.cardButton
+			this.invisButton
 					.setToolTipText("<html>When you play this card, name any Sector. Any players (including you)<br>"
-							+ "that are in the named Sector or any of the six adjacent Sectors must immediately<br>"
-							+ "announce their exact location Coordinates. This card affects both Humans and Aliens.<html>");
+							+ "that are in the named Sector or in any of the six adjacent Sectors must immediately<br>"
+							+ " <b>announce their exact location </b> Coordinates. This card affects both Humans and Aliens.<html>");
 		} else if (this.cardType.equals(CardType.TELEPORT)) {
 			this.setImage(Resource.IMG_TELEPORT);
 			this.setText("Teleport");
-			this.cardButton
-					.setToolTipText("<html>This card allows you to move directly to the Human Sector from any part of the ship.<br>"
+			this.invisButton
+					.setToolTipText("<html>This card allows you to  <b>move directly </b> to the Human Sector from any part of the ship.<br>"
 							+ "This is in addition to your normal movement which can happen before or after you use the item.</html>");
 		}
-		this.repaint();
 	}
 
+	/**
+	 * Used to set the card image, according to its type.
+	 * 
+	 * @param pathToImage
+	 *            The path to the image, saved in {@link Resource the resource
+	 *            file}
+	 *
+	 */
 	private void setImage(String pathToImage) {
 		try {
 			Image tempImage = ImageIO.read(new File(pathToImage));
 			Image cardImage = tempImage.getScaledInstance(100, -1,
 					Image.SCALE_SMOOTH);
-			cardButton.setIcon(new ImageIcon(cardImage));
+			cardButtonImage.setIcon(new ImageIcon(cardImage));
 
 		} catch (IOException ex) {
 			logger.error(ex.getMessage());
 		}
 	}
 
+	/**
+	 * Used to set the card overlay, according to the player's character.
+	 * 
+	 * @param pathToImage
+	 *            The path to the image, saved in {@link Resource the resource
+	 *            file}
+	 *
+	 */
+	private void setOverlay(String pathToImage) {
+		try {
+			Image tempOverlay = ImageIO.read(new File(pathToImage));
+			cardOverlay = tempOverlay.getScaledInstance(100, -1,
+					Image.SCALE_SMOOTH);
+
+		} catch (IOException ex) {
+			logger.error(ex.getMessage());
+		}
+	}
+
+	/**
+	 * Used to update the player overlay.
+	 */
+	public void updateOverlay(String pathToImage) {
+		this.setOverlay(pathToImage);
+		this.cardButtonOverlay.setIcon(new ImageIcon(cardOverlay));
+		this.repaint();
+	}
+
 	private void setText(String text) {
 		this.text.setText(text);
+	}
+
+	/**
+	 * Used to access the cardButton and create actions when the button is
+	 * pressed;
+	 * 
+	 * @return
+	 */
+	public JButton getInvisButton() {
+		return invisButton;
 	}
 
 	public ClientAction createAction() {
@@ -214,5 +329,4 @@ public class CardButton extends JPanel {
 		}
 		return null;
 	}
-
 }
