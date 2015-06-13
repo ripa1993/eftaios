@@ -1,5 +1,7 @@
 package it.polimi.ingsw.cg_8.client;
 
+import it.polimi.ingsw.cg_8.model.map.GameMapName;
+
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -15,9 +17,12 @@ import java.util.concurrent.Executors;
 public class Client {
 
 	private String playerName;
+	
+	private GameMapName mapName;
 
 	public Client() {
 		playerName = "Default";
+		mapName = GameMapName.FERMI;
 	}
 
 	public void setPlayerName(String playerName) {
@@ -61,7 +66,7 @@ public class Client {
 				System.out.println("Wrong input");
 			}
 		}
-
+		//TODO: chose map!!!!!!!!!
 	}
 
 	/**
@@ -72,7 +77,7 @@ public class Client {
 	 */
 	private void startRMIThread(Scanner stdin) {
 		ExecutorService executorRMI = Executors.newCachedThreadPool();
-		executorRMI.submit(new ClientRMI(this.playerName, stdin));
+		executorRMI.submit(new ClientRMI(this.playerName, stdin, mapName));
 	}
 
 	/**

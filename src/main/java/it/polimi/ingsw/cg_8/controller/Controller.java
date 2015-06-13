@@ -109,7 +109,7 @@ public class Controller implements Observer {
 	public Controller(GameMapName mapName, Rules rules) {
 
 		try {
-			this.mapName=mapName;
+			this.mapName = mapName;
 			this.model = new Model(mapName);
 			this.rules = rules;
 			this.id2Player = new HashMap<Integer, Player>();
@@ -202,17 +202,26 @@ public class Controller implements Observer {
 						"You will be playing as:\n" + " "
 								+ p.getCharacter().toString()));
 			}
-//			this.writeToAll(new ResponsePrivate("The current player is: "
-//					+ model.getCurrentPlayerReference().getName()));
-//			this.writeToPlayer(model.getCurrentPlayerReference(),
-//					new ResponsePrivate(model.getCurrentPlayerReference()
-//							.toString()));
-//			this.writeToPlayer(model.getCurrentPlayerReference(),
-//					new ResponsePrivate("IT'S YOUR TURN!"));
+			// this.writeToAll(new ResponsePrivate("The current player is: "
+			// + model.getCurrentPlayerReference().getName()));
+			// this.writeToPlayer(model.getCurrentPlayerReference(),
+			// new ResponsePrivate(model.getCurrentPlayerReference()
+			// .toString()));
+			// this.writeToPlayer(model.getCurrentPlayerReference(),
+			// new ResponsePrivate("IT'S YOUR TURN!"));
 		} catch (EmptyDeckException e) {
 			logger.error(e.getMessage());
 		}
 
+	}
+
+	/**
+	 * Used to update the model with the map voted by the players.
+	 * 
+	 * @param chosenMap The most voted map.
+	 */
+	public void setMap(GameMapName chosenMap) {
+		this.model.setMap(chosenMap);
 	}
 
 	/**
@@ -366,25 +375,24 @@ public class Controller implements Observer {
 			// this.writeToPlayer(model.getCurrentPlayerReference(),
 			// new ResponsePrivate(model.getCurrentPlayerReference()
 			// .toString()));
-			
+
 			/**
 			 * Notify every player about their state.
 			 */
-			 for (Player p : model.getPlayers()) {
-			 this.writeToPlayer(p, new ResponseState(p.getName(), p
-			 .getCharacter().toString(), p.getState().toString(), p
-			 .getLastPosition().toString(), model.getRoundNumber()));
-			 }
+			for (Player p : model.getPlayers()) {
+				this.writeToPlayer(p, new ResponseState(p.getName(), p
+						.getCharacter().toString(), p.getState().toString(), p
+						.getLastPosition().toString(), model.getRoundNumber()));
+			}
 			/**
 			 * Communicate to the current player the cards he's holding.
 			 */
 			for (Player p : model.getPlayers()) {
-				ResponseCard response = new ResponseCard(p
-								.getHand().getHeldCards());
-				this.writeToPlayer(p,
-						response);
+				ResponseCard response = new ResponseCard(p.getHand()
+						.getHeldCards());
+				this.writeToPlayer(p, response);
 			}
-			
+
 			logger.info("Timeout started for player "
 					+ ((Player) arg).getName() + ". He has " + (TIMEOUT / 1000)
 					+ "s to complete his turn.");

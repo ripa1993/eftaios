@@ -133,6 +133,11 @@ public class ConnectionManagerRMI extends ConnectionManager implements
 			nameSet = registrationRoom.sendPlayerName(this.playerName);
 		}
 		logger.debug("NAME ACCEPTED");
+		
+		/**
+		 * Communicating the chosen map to the server.
+		 */
+		registrationRoom.sendMapVote(mapName);
 
 		/**
 		 * The client gets a view to play the game;

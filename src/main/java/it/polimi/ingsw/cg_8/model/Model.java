@@ -27,12 +27,16 @@ import it.polimi.ingsw.cg_8.model.player.PlayerState;
 import it.polimi.ingsw.cg_8.model.player.character.InGameCharacter;
 import it.polimi.ingsw.cg_8.model.player.character.alien.Alien;
 import it.polimi.ingsw.cg_8.model.player.character.human.Human;
+import it.polimi.ingsw.cg_8.server.ServerSocketPublisherThread;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
 import java.util.Random;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Contains all the references to game objects: decks, players and map.
@@ -102,6 +106,11 @@ public class Model extends Observable {
 	 * List of all noises during a game
 	 */
 	private final List<Noise> noiseLogger;
+	/**
+	 * Log4j logger
+	 */
+	private static final Logger logger = LogManager
+			.getLogger(ServerSocketPublisherThread.class);
 
 	/**
 	 * Constructor for model class
@@ -110,7 +119,6 @@ public class Model extends Observable {
 	 *            name of the map to be created in the model
 	 * @throws NotAValidMapException
 	 */
-
 	public Model(GameMapName mapName) throws NotAValidMapException {
 		players = new ArrayList<Player>();
 		roundNumber = 0;
@@ -503,5 +511,24 @@ public class Model extends Observable {
 		this.turnPhase = TurnPhase.GAME_END;
 		this.setChanged();
 		this.notifyObservers(this.turnPhase);
+	}
+
+	public void setMap(GameMapName chosenMap) {
+		if (chosenMap == GameMapName.FERMI) {
+			MapCreator mc = new FermiCreator();
+			map = mc.createMap();
+		} else if (chosenMap == GameMapName.GALILEI) {
+			MapCreator mc = new GalileiCreator();
+			map = mc.createMap();
+		} else if (chosenMap == GameMapName.GALVANI) {
+			MapCreator mc = new GalvaniCreator();
+			map = mc.createMap();
+		} else {
+			try {
+				throw new NotAValidMapException(chosenMap + "is not a valid map");
+			} catch (NotAValidMapException e) {
+				logger.error(chosenMap.toString() + "is not a valid map");
+			}
+		}	
 	}
 }

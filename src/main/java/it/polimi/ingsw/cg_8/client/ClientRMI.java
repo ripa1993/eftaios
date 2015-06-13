@@ -1,5 +1,6 @@
 package it.polimi.ingsw.cg_8.client;
 
+import it.polimi.ingsw.cg_8.model.map.GameMapName;
 import it.polimi.ingsw.cg_8.server.ServerGameRoom;
 import it.polimi.ingsw.cg_8.server.ServerGameRoomInterface;
 import it.polimi.ingsw.cg_8.server.ServerRMIRegistrationViewRemote;
@@ -52,12 +53,15 @@ public class ClientRMI implements Runnable, Serializable, SubscriberInterface {
 	private final String registrationRoomName = "registrationRoom";
 
 	private ClientData clientData;
+	
+	private GameMapName mapName;
 
-	public ClientRMI(String playerName, Scanner stdin) {
+	public ClientRMI(String playerName, Scanner stdin, GameMapName mapName) {
 
 		this.playerName = playerName;
 		this.stdin = stdin;
 		this.clientData = new ClientData();
+		this.mapName = mapName;	
 	}
 
 	
@@ -101,6 +105,11 @@ public class ClientRMI implements Runnable, Serializable, SubscriberInterface {
 				nameSet = registrationRoom.sendPlayerName(this.playerName);
 			}
 			System.out.println("NAME ACCEPTED");
+			
+			/**
+			 * Communicating the chosen map to the server.
+			 */
+			registrationRoom.sendMapVote(mapName);
 
 			/**
 			 * The client gets a view to play the game;
