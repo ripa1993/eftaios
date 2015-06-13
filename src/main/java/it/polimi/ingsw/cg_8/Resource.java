@@ -119,6 +119,12 @@ public class Resource {
 	 */
 	public static final String SOUND_BONUS = "resources" + File.separatorChar
 			+ "sounds" + File.separatorChar + "bonus.wav";
+	
+	/**
+	 * background music
+	 */
+	public static final String SOUND_BACKGROUDN = "resources" + File.separatorChar
+			+ "sounds" + File.separatorChar + "Inside_an_Alien_Spaceship.mp3";
 	/**
 	 * Adrenaline card
 	 */

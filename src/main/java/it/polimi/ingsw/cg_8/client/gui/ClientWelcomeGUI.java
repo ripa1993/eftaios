@@ -18,6 +18,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -30,6 +31,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -316,22 +318,29 @@ public class ClientWelcomeGUI implements Runnable {
 					// happens
 					connectionManager = new ConnectionManagerSocket(playerName, GameMapName.GALILEI);
 				}
+				ExecutorService exec = Executors.newCachedThreadPool();
+				BackgroundMusicThread bmt = new BackgroundMusicThread();
+				logger.debug("Background music loaded");
+				exec.submit(bmt);
 				logger.debug("Connection manager created");
 				ClientGUIThread guiThread = new ClientGUIThread();
 				logger.debug("Gui thread created");
 				guiThread.setConnectionManager(connectionManager);
 				guiThread.getConnectionManager().setup();
 				logger.debug("Connection manager setup started");
-				ExecutorService exec = Executors.newCachedThreadPool();
-				exec.submit(guiThread);
+				SwingUtilities.invokeLater(guiThread);
 				logger.debug("Gui thread started, killing welcome frame");
 				main.dispose();
+				logger.debug("Gui welcome killed");
+				
+				
+				
 
 			}
 		});
 	}
 
 	public static void main(String[] args) {
-		(new ClientWelcomeGUI()).run();
+		SwingUtilities.invokeLater(new ClientWelcomeGUI());
 	}
 }
