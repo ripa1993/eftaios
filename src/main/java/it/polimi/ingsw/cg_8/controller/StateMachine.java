@@ -366,22 +366,19 @@ public class StateMachine {
 							new ResponsePrivate("You have drawn a "
 									+ draw.getDangerousSectorCard()));
 					System.out.println(draw.getItemCard());
-					controller.writeToPlayer(player, new ResponseCard(
-							player.getHand().getHeldCards()));
+
 					if (draw.getItemCard() != null
 							&& draw.isDiscardedItemCard() == false) {
 						controller.writeToPlayer(player, new ResponsePrivate(
 								"You have drawn a " + draw.getItemCard()));
-						controller.writeToPlayer(player, new ResponseCard(
-								player.getHand().getHeldCards()));
+
 					} else if (draw.getItemCard() != null
 							&& draw.isDiscardedItemCard() == true) {
 						controller.writeToPlayer(player, new ResponsePrivate(
 								"You have drawn " + draw.getItemCard()
 										+ " but your hand is full,"
 										+ " so the card has been discarded."));
-						controller.writeToPlayer(player, new ResponseCard(
-								player.getHand().getHeldCards()));
+
 					} else if (draw.getItemCard() == null
 							&& draw.isEmptyItemDeck()) {
 						controller.writeToPlayer(player, new ResponsePrivate(
@@ -392,10 +389,10 @@ public class StateMachine {
 					}
 
 				} finally {
-					controller.writeToPlayer(player, new ResponsePrivate(player
-							.getHand().getHeldCards().toString()));
-					controller.writeToPlayer(player, new ResponseCard(
-							player.getHand().getHeldCards()));
+					//controller.writeToPlayer(player, new ResponsePrivate(player
+					//		.getHand().getHeldCards().toString()));
+					controller.writeToPlayer(player, new ResponseCard(player
+							.getHand().getHeldCards()));
 					if (hasToMakeFakeNoise == true) {
 						model.setTurnPhase(TurnPhase.WAITING_FAKE_NOISE);
 						controller.writeToPlayer(player, new ResponsePrivate(
@@ -589,9 +586,10 @@ public class StateMachine {
 
 	private static void endTurn(Controller controller, Model model,
 			Player player) {
-		EndTurn.endTurn(model);
 		controller.writeToAll(new ResponsePrivate(player.getName()
 				+ " has finished his turn"));
+		EndTurn.endTurn(model);
+
 		// StateMachine.endTurnMessage(controller, model, player);
 
 	}
@@ -607,12 +605,14 @@ public class StateMachine {
 	private static boolean attackMove(Rules rules, Model model,
 			Controller controller) {
 		if (rules.attackValidator(model) == true) {
+			controller.writeToAll(new ResponsePrivate(model.getCurrentPlayerReference().getName()
+					+ " has attacked in " + model.getCurrentPlayerReference().getLastPosition()));
 			Attack attack = new Attack(model);
 			attack.makeAttack();
+
+			
 			model.setTurnPhase(TurnPhase.ATTACK_DONE);
-			// controller.writeToAll(new
-			// ResponsePrivate(player.getName()
-			// + " has attacked in " + player.getLastPosition()));
+
 			List<Player> victims = attack.getVictims();
 			for (Player p : victims) {
 				controller.writeToAll(new ResponsePrivate(p.getName()

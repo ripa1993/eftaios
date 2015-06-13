@@ -36,7 +36,7 @@ public class ClientData extends Observable {
 	/**
 	 * List used to store {@link ResponseCard card responses};
 	 */
-	private ResponseCard cards;
+	private List<ResponseCard> cards;
 	/**
 	 * State of the player, during a turn of the match;
 	 */
@@ -46,7 +46,7 @@ public class ClientData extends Observable {
 		chat = new ArrayList<ResponseChat>();
 		noise = new ArrayList<ResponseNoise>();
 		privateMessages = new ArrayList<ResponsePrivate>();
-		cards = null;
+		cards = new ArrayList<ResponseCard>();
 		state = null;
 	}
 
@@ -76,8 +76,8 @@ public class ClientData extends Observable {
 			return;
 		}
 		if (response instanceof ResponseCard) {
-			cards = (ResponseCard) response;
-			System.out.println("responseserver" + response);
+			cards.add((ResponseCard) response);
+			System.out.println("responseserverofclientdata" + response);
 			setChanged();
 			notifyObservers("Cards");
 			return;
@@ -111,7 +111,7 @@ public class ClientData extends Observable {
 	 */
 	public ResponseCard getCards() {
 		System.out.println("adasdasd" + cards);
-		return cards;
+		return cards.get(cards.size() - 1);
 	}
 
 	/**

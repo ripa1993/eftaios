@@ -22,20 +22,23 @@ public class ServerGameRoom extends ServerPublisher implements
 	}
 
 	@Override
-	public void makeAction(int clientId, ClientAction action) throws RemoteException {
+	public void makeAction(int clientId, ClientAction action)
+			throws RemoteException {
 
-		Controller controller = Server.getId2Controller().get(
-				clientId);
-		boolean result = StateMachine.evaluateAction(controller,
-				action, controller.getPlayerById(clientId));
-		System.out.println("[DEBUG]"+result);
-		this.dispatchMessage(new ResponsePrivate(String.valueOf(result)));
+		Controller controller = Server.getId2Controller().get(clientId);
+		boolean result = StateMachine.evaluateAction(controller, action,
+				controller.getPlayerById(clientId));
+		System.out.println("[DEBUG]" + result);
+		/**
+		 * Can be used to print the action result on the client, for debugging
+		 * purposes
+		 */
+		// this.dispatchMessage(new ResponsePrivate(String.valueOf(result)));
 	}
 
-	
 	@Override
 	public void dispatchMessage(ServerResponse message) {
-		
+
 		try {
 			clientRMI.publishMessage(message);
 		} catch (RemoteException e) {

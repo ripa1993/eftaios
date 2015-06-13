@@ -385,17 +385,20 @@ public class ClientGUIThread implements Runnable, Observer {
 		// // }
 		cardButton1 = new CardButton();
 		cardButton1.setBackground(Color.WHITE);
-		cardButton1.setCardType(CardType.ADRENALINE);
+		cardButton1.setCardType(CardType.DEFAULT);
+		cardButton1.setFocusable(true);
 		cardPanel.add(cardButton1);
 
 		cardButton2 = new CardButton();
 		cardButton2.setBackground(Color.WHITE);
-		cardButton2.setCardType(CardType.ATTACK);
+		cardButton2.setCardType(CardType.DEFAULT);
+		cardButton2.setFocusable(true);
 		cardPanel.add(cardButton2);
 
 		cardButton3 = new CardButton();
 		cardButton3.setBackground(Color.WHITE);
-		cardButton3.setCardType(CardType.DEFENSE);
+		cardButton3.setCardType(CardType.DEFAULT);
+		cardButton3.setFocusable(true);
 		cardPanel.add(cardButton3);
 
 		// set up info panel
@@ -495,14 +498,26 @@ public class ClientGUIThread implements Runnable, Observer {
 
 		cardButton1.addMouseListener(new MouseInputAdapter() {
 			@Override
-			public void mouseReleased(MouseEvent e) {
+			public void mousePressed(MouseEvent e) {
 				ClientAction action = cardButton1.createAction();
 				if (action != null) {
 					connectionManager.send(action);
+				} else {
+					System.out.println("asdasdadasdad");
 				}
 			}
 
 		});
+		// cardButton1.addActionListener(new ActionListener() {
+		// @Override
+		// public void actionPerformed(ActionEvent e) {
+		// ClientAction action = cardButton1.createAction();
+		// if (action != null) {
+		// connectionManager.send(action);
+		// }
+		// }
+		//
+		// });
 		cardButton2.addMouseListener(new MouseInputAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -874,10 +889,13 @@ public class ClientGUIThread implements Runnable, Observer {
 			this.appendInfo("INFO", privateMessage.getMessage());
 		}
 
+		/**
+		 * Update related to card messages.
+		 */
 		else if (arg.equals("Cards")) {
 			ResponseCard cardMessage = clientData.getCards();
 			List<ItemCard> cards = cardMessage.getHand();
-			System.out.println("carte" + cards.toString());
+			System.out.println("mycarteGUI" + cards.toString());
 			ItemCard cardArray[] = new ItemCard[CARD_NUM];
 			for (int i = 0; i < cards.size(); i++) {
 				cardArray[i] = cards.get(i);
@@ -896,6 +914,9 @@ public class ClientGUIThread implements Runnable, Observer {
 			this.updateCard(cardButton3, tempCard3);
 			cardButton3.repaint();
 
+			/**
+			 * Update related to state messages
+			 */
 		} else if (arg.equals("State")) {
 			ResponseState stateMessage = clientData.getState();
 

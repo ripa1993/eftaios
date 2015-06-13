@@ -120,7 +120,10 @@ public class ClientRMI implements Runnable, Serializable, SubscriberInterface {
 					System.out.println("CLIENT: read " + inputLine);
 
 					ClientAction action = ActionParser.createEvent(inputLine);
-					System.out.println("Created action " + action.toString());
+					/**
+					 * Useful for testing purposes.
+					 */
+					//System.out.println("Created action " + action.toString());
 					view.makeAction(this.clientId, action);
 					System.out.println("Sent action to server");
 

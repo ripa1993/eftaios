@@ -101,6 +101,9 @@ public class ClientSocketViewCS implements Runnable {
 			// write action
 			output.writeObject(action);
 			output.flush();
+			/**
+			 * Useful for testing purposes.
+			 */
 			logger.debug("Write server command: " + action);
 			logger.debug("Waiting server response");
 			try {

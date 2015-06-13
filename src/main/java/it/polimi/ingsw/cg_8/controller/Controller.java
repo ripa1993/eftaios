@@ -41,7 +41,7 @@ import org.apache.logging.log4j.Logger;
  * game loop, and communicates with both the view and the model.
  * 
  * @author Alberto Parravicini
- * 
+ * @version 1.1
  */
 public class Controller implements Observer {
 	/**
@@ -170,7 +170,7 @@ public class Controller implements Observer {
 	 * @param playerName
 	 *            name of the player
 	 * @param view
-	 *            rmi game room, used by the publisher
+	 *            RMI game room, used by the publisher
 	 * @throws GameAlreadyRunningException
 	 *             if the player is trying to join an already started game
 	 */
@@ -188,20 +188,21 @@ public class Controller implements Observer {
 	 */
 	public void initGame() {
 		try {
-			model.initGame();
 			this.writeToAll(new ResponsePrivate("Match is starting..."));
+			model.initGame();
+			
 			for (Player p : this.model.getPlayers()) {
 				this.writeToPlayer(p, new ResponsePrivate(
 						"You will be playing as:\n" + " "
 								+ p.getCharacter().toString()));
 			}
-			this.writeToAll(new ResponsePrivate("The current player is: "
-					+ model.getCurrentPlayerReference().getName()));
-			this.writeToPlayer(model.getCurrentPlayerReference(),
-					new ResponsePrivate(model.getCurrentPlayerReference()
-							.toString()));
-			this.writeToPlayer(model.getCurrentPlayerReference(),
-					new ResponsePrivate("IT'S YOUR TURN!"));
+//			this.writeToAll(new ResponsePrivate("The current player is: "
+//					+ model.getCurrentPlayerReference().getName()));
+//			this.writeToPlayer(model.getCurrentPlayerReference(),
+//					new ResponsePrivate(model.getCurrentPlayerReference()
+//							.toString()));
+//			this.writeToPlayer(model.getCurrentPlayerReference(),
+//					new ResponsePrivate("IT'S YOUR TURN!"));
 		} catch (EmptyDeckException e) {
 			logger.error(e.getMessage());
 		}
@@ -349,7 +350,7 @@ public class Controller implements Observer {
 			}
 
 			// communicate the new player to clients
-			this.writeToAll(new ResponsePrivate("Next player is: "
+			this.writeToAll(new ResponsePrivate("THE NEXT PLAYER IS: "
 					+ model.getCurrentPlayerReference().getName()));
 			this.writeToPlayer(model.getCurrentPlayerReference(),
 					new ResponsePrivate("IT'S YOUR TURN"));
@@ -370,7 +371,6 @@ public class Controller implements Observer {
 			for (Player p : model.getPlayers()) {
 				ResponseCard response = new ResponseCard(p
 								.getHand().getHeldCards());
-				System.out.println("asdasdasd"+response);
 				this.writeToPlayer(p,
 						response);
 			}

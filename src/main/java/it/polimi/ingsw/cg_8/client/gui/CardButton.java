@@ -61,6 +61,7 @@ public class CardButton extends JPanel {
 	private static final int BUTTON_HEIGHT = 120;
 	private JLayeredPane layeredPane;
 	private Image cardOverlay;
+	
 
 	public CardButton() {
 		setPreferredSize(new Dimension(100, 120));
@@ -137,6 +138,7 @@ public class CardButton extends JPanel {
 				cardButtonImage.repaint();
 				cardButtonOverlay.setSize((int) (1.05 * width),
 						((int) (1.05 * height)));
+				
 				cardButtonOverlay.repaint();
 			}
 
@@ -267,10 +269,19 @@ public class CardButton extends JPanel {
 	public void updateOverlay(String pathToImage) {
 		this.setOverlay(pathToImage);
 		this.cardButtonOverlay.setIcon(new ImageIcon(cardOverlay));
+		this.repaint();
 	}
 
 	private void setText(String text) {
 		this.text.setText(text);
+	}
+
+	public JLabel getCardButtonImage() {
+		return cardButtonImage;
+	}
+
+	public JLabel getCardButtonOverlay() {
+		return cardButtonOverlay;
 	}
 
 	public ClientAction createAction() {
