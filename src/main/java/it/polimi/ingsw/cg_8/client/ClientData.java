@@ -41,13 +41,18 @@ public class ClientData extends Observable {
 	 * State of the player, during a turn of the match;
 	 */
 	private ResponseState state;
-
+	/**
+	 * Map
+	 */
+	private ResponseMap map;
+	
 	public ClientData() {
 		chat = new ArrayList<ResponseChat>();
 		noise = new ArrayList<ResponseNoise>();
 		privateMessages = new ArrayList<ResponsePrivate>();
 		cards = null;
 		state = null;
+		map=null;
 	}
 
 	/**
@@ -85,6 +90,11 @@ public class ClientData extends Observable {
 			setChanged();
 			notifyObservers("State");
 		}
+		if (response instanceof ResponseMap){
+			map = (ResponseMap) response;
+			setChanged();
+			notifyObservers("Map");
+		}
 		return;
 	}
 
@@ -99,7 +109,10 @@ public class ClientData extends Observable {
 	public List<ResponsePrivate> getPrivateMessages() {
 		return privateMessages;
 	}
-
+	
+	public ResponseMap getMap(){
+		return map;
+	}
 	/**
 	 * Used to get the last message sent.
 	 * 

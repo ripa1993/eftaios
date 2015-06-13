@@ -2,6 +2,7 @@ package it.polimi.ingsw.cg_8.client.gui;
 
 import it.polimi.ingsw.cg_8.Resource;
 import it.polimi.ingsw.cg_8.client.ClientData;
+import it.polimi.ingsw.cg_8.client.ResponseMap;
 import it.polimi.ingsw.cg_8.client.gui.CardButton.CardType;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.AdrenalineCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.AttackCard;
@@ -9,6 +10,7 @@ import it.polimi.ingsw.cg_8.model.cards.itemCards.ItemCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.SedativesCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.SpotlightCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.TeleportCard;
+import it.polimi.ingsw.cg_8.model.map.GameMapName;
 import it.polimi.ingsw.cg_8.model.noises.AttackNoise;
 import it.polimi.ingsw.cg_8.model.noises.DefenseNoise;
 import it.polimi.ingsw.cg_8.model.noises.EscapeSectorNoise;
@@ -36,6 +38,7 @@ import it.polimi.ingsw.cg_8.view.server.ResponseState;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -75,14 +78,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.event.MouseInputAdapter;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import java.awt.Dimension;
 
 /**
  * Class that defines the GUI.
@@ -217,6 +218,8 @@ public class ClientGUIThread implements Runnable, Observer {
 		/**
 		 * Which map is loaded.
 		 */
+		// TODO: mettere un background generico al posto della mappa, magari un
+		// punto di domanda a forma di mappa
 		backgroundImageResource = Resource.IMG_FERMI_MAP;
 		backgroundImage = new ImageIcon(backgroundImageResource);
 		backgroundImageScaled = new ImageIcon(backgroundImage.getImage()
@@ -449,8 +452,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		mapPanel.setVisible(true);
 		mainFrame.setVisible(true);
 		mainFrame.setSize(1280, 720);
-		
-		
+
 	}
 
 	private void setStateImage(String source) {
@@ -493,7 +495,7 @@ public class ClientGUIThread implements Runnable, Observer {
 	public void run() {
 
 		logger.debug("Info text pane is" + infoPanel.getSize());
-		
+
 		cardButton1.addMouseListener(new MouseInputAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -938,6 +940,19 @@ public class ClientGUIThread implements Runnable, Observer {
 			labelCurrentState.setText(state);
 			rightPanel.repaint();
 
+		} else if (arg.equals("Map")) {
+			ResponseMap response = clientData.getMap();
+			GameMapName mapName = response.getMapName();
+			if (mapName.equals(GameMapName.FERMI)) {
+				setMapImage(Resource.IMG_FERMI_MAP);
+				logger.debug("Map changed to fermi");
+			} else if (mapName.equals(GameMapName.GALILEI)) {
+				setMapImage(Resource.IMG_GALILEI_MAP);
+				logger.debug("Map changed to galilei");
+			} else if (mapName.equals(GameMapName.GALVANI)) {
+				setMapImage(Resource.IMG_GALVANI_MAP);
+				logger.debug("Map changed to galvani");
+			}
 		}
 	}
 
@@ -951,6 +966,12 @@ public class ClientGUIThread implements Runnable, Observer {
 		} catch (Exception ex) {
 			logger.error(ex.getMessage());
 		}
+	}
+
+	private void setMapImage(String path) {
+		backgroundImage = new ImageIcon(path);
+		backgroundImageScaled = new ImageIcon(backgroundImage.getImage()
+				.getScaledInstance(5000, -1, Image.SCALE_SMOOTH)).getImage();
 	}
 
 	private void updateCard(CardButton cardButton, ItemCard tempCard) {
