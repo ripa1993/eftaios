@@ -191,7 +191,13 @@ public class Server {
 		logger.debug("New game created: " + gameMapName);
 		return nextGame;
 	}
-	
+
+	/**
+	 * Used when adding clients to the game. The method checks if it is time to
+	 * start the timeout or the game.
+	 * 
+	 * @param clientID The ID of the client.
+	 */
 	public static void addClient(Integer clientID) {
 		logger.info("Player successfully added to the game");
 		Server.getId2Controller().put(clientID, nextGame);
