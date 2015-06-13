@@ -2,7 +2,6 @@ package it.polimi.ingsw.cg_8.client.gui;
 
 import it.polimi.ingsw.cg_8.Resource;
 import it.polimi.ingsw.cg_8.client.ClientData;
-import it.polimi.ingsw.cg_8.client.ResponseMap;
 import it.polimi.ingsw.cg_8.client.gui.CardButton.CardType;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.AdrenalineCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.AttackCard;
@@ -30,6 +29,7 @@ import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
 import it.polimi.ingsw.cg_8.view.client.exceptions.NotAValidInput;
 import it.polimi.ingsw.cg_8.view.server.ResponseCard;
 import it.polimi.ingsw.cg_8.view.server.ResponseChat;
+import it.polimi.ingsw.cg_8.view.server.ResponseMap;
 import it.polimi.ingsw.cg_8.view.server.ResponseNoise;
 import it.polimi.ingsw.cg_8.view.server.ResponsePrivate;
 import it.polimi.ingsw.cg_8.view.server.ResponseState;
@@ -128,6 +128,7 @@ public class ClientGUIThread implements Runnable, Observer {
 	private JLabel labelCurrentState;
 	private Font fontTitilliumBoldUpright;
 	private Font fontTitilliumSemiboldUpright;
+	private boolean matchStarted;
 	/**
 	 * Log4j logger
 	 */
@@ -144,6 +145,7 @@ public class ClientGUIThread implements Runnable, Observer {
 	private JLabel turnNumberLabel;
 
 	public ClientGUIThread() {
+		matchStarted = false;
 		playerImageSet = false;
 		try {
 			fontTitilliumBoldUpright = Font.createFont(Font.TRUETYPE_FONT,
@@ -219,7 +221,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		 */
 		// TODO: mettere un background generico al posto della mappa, magari un
 		// punto di domanda a forma di mappa
-		backgroundImageResource = Resource.IMG_FERMI_MAP;
+		backgroundImageResource = Resource.IMG_GALVANI_MAP;
 		backgroundImage = new ImageIcon(backgroundImageResource);
 		backgroundImageScaled = new ImageIcon(backgroundImage.getImage()
 				.getScaledInstance(5000, -1, Image.SCALE_SMOOTH)).getImage();
@@ -497,11 +499,13 @@ public class ClientGUIThread implements Runnable, Observer {
 		cardButton1.getInvisButton().addMouseListener(new MouseInputAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				ClientAction action = cardButton1.createAction();
-				if (action != null) {
-					connectionManager.send(action);
-				} else {
-					System.out.println("asdasdadasdad");
+				if (matchStarted) {
+					ClientAction action = cardButton1.createAction();
+					if (action != null) {
+						connectionManager.send(action);
+					} else {
+						System.out.println("asdasdadasdad");
+					}
 				}
 			}
 
@@ -510,18 +514,22 @@ public class ClientGUIThread implements Runnable, Observer {
 		cardButton2.getInvisButton().addMouseListener(new MouseInputAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				ClientAction action = cardButton2.createAction();
-				if (action != null) {
-					connectionManager.send(action);
+				if (matchStarted) {
+					ClientAction action = cardButton2.createAction();
+					if (action != null) {
+						connectionManager.send(action);
+					}
 				}
 			}
 		});
 		cardButton3.getInvisButton().addMouseListener(new MouseInputAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				ClientAction action = cardButton3.createAction();
-				if (action != null) {
-					connectionManager.send(action);
+				if (matchStarted) {
+					ClientAction action = cardButton3.createAction();
+					if (action != null) {
+						connectionManager.send(action);
+					}
 				}
 			}
 		});
@@ -549,18 +557,20 @@ public class ClientGUIThread implements Runnable, Observer {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String coordinateString = JOptionPane.showInputDialog(
-						"Insert destination coordinate", "Coordinate");
-				if (coordinateString != null) {
-					try {
+				if (matchStarted) {
+					String coordinateString = JOptionPane.showInputDialog(
+							"Insert destination coordinate", "Coordinate");
+					if (coordinateString != null) {
+						try {
 
-						Coordinate coordinate = ActionParser
-								.parseCoordinate(coordinateString);
-						connectionManager.send(new ActionMove(coordinate));
+							Coordinate coordinate = ActionParser
+									.parseCoordinate(coordinateString);
+							connectionManager.send(new ActionMove(coordinate));
 
-					} catch (NotAValidInput e1) {
-						JOptionPane.showMessageDialog(mainFrame,
-								"Not a valid input!");
+						} catch (NotAValidInput e1) {
+							JOptionPane.showMessageDialog(mainFrame,
+									"Not a valid input!");
+						}
 					}
 				}
 			}
@@ -571,16 +581,19 @@ public class ClientGUIThread implements Runnable, Observer {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane optionPane = new JOptionPane(
-						"Do you want to attack?", JOptionPane.QUESTION_MESSAGE,
-						JOptionPane.YES_NO_OPTION);
-				JDialog dialog = optionPane.createDialog("Attack");
-				dialog.setVisible(true);
-				int selection = OptionPaneUtils.getSelection(optionPane);
-				if (selection == JOptionPane.YES_OPTION) {
-					connectionManager.send(new ActionAttack());
-				} else {
-					// do nothing
+				if (matchStarted) {
+					JOptionPane optionPane = new JOptionPane(
+							"Do you want to attack?",
+							JOptionPane.QUESTION_MESSAGE,
+							JOptionPane.YES_NO_OPTION);
+					JDialog dialog = optionPane.createDialog("Attack");
+					dialog.setVisible(true);
+					int selection = OptionPaneUtils.getSelection(optionPane);
+					if (selection == JOptionPane.YES_OPTION) {
+						connectionManager.send(new ActionAttack());
+					} else {
+						// do nothing
+					}
 				}
 			}
 
@@ -590,17 +603,20 @@ public class ClientGUIThread implements Runnable, Observer {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane optionPane = new JOptionPane(
-						"Do you want to draw a dangerous sector card?",
-						JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
-				JDialog dialog = optionPane
-						.createDialog("Draw a dangerous sector card");
-				dialog.setVisible(true);
-				int selection = OptionPaneUtils.getSelection(optionPane);
-				if (selection == JOptionPane.YES_OPTION) {
-					connectionManager.send(new ActionDrawCard());
-				} else {
-					// do nothing
+				if (matchStarted) {
+					JOptionPane optionPane = new JOptionPane(
+							"Do you want to draw a dangerous sector card?",
+							JOptionPane.QUESTION_MESSAGE,
+							JOptionPane.YES_NO_OPTION);
+					JDialog dialog = optionPane
+							.createDialog("Draw a dangerous sector card");
+					dialog.setVisible(true);
+					int selection = OptionPaneUtils.getSelection(optionPane);
+					if (selection == JOptionPane.YES_OPTION) {
+						connectionManager.send(new ActionDrawCard());
+					} else {
+						// do nothing
+					}
 				}
 			}
 
@@ -610,18 +626,21 @@ public class ClientGUIThread implements Runnable, Observer {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String coordinateString = JOptionPane.showInputDialog(
-						"Insert target coordinate", "Coordinate");
-				if (coordinateString != null) {
-					try {
-						Coordinate coordinate = ActionParser
-								.parseCoordinate(coordinateString);
-						// TODO: make fake noise
-						connectionManager.send(new ActionFakeNoise(coordinate));
+				if (matchStarted) {
+					String coordinateString = JOptionPane.showInputDialog(
+							"Insert target coordinate", "Coordinate");
+					if (coordinateString != null) {
+						try {
+							Coordinate coordinate = ActionParser
+									.parseCoordinate(coordinateString);
+							// TODO: make fake noise
+							connectionManager.send(new ActionFakeNoise(
+									coordinate));
 
-					} catch (NotAValidInput e1) {
-						JOptionPane.showMessageDialog(mainFrame,
-								"Not a valid input!");
+						} catch (NotAValidInput e1) {
+							JOptionPane.showMessageDialog(mainFrame,
+									"Not a valid input!");
+						}
 					}
 				}
 			}
@@ -632,16 +651,19 @@ public class ClientGUIThread implements Runnable, Observer {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane optionPane = new JOptionPane(
-						"Do you want to end your turn?",
-						JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
-				JDialog dialog = optionPane.createDialog("End turn");
-				dialog.setVisible(true);
-				int selection = OptionPaneUtils.getSelection(optionPane);
-				if (selection == JOptionPane.YES_OPTION) {
-					connectionManager.send(new ActionEndTurn());
-				} else {
-					// do nothing
+				if (matchStarted) {
+					JOptionPane optionPane = new JOptionPane(
+							"Do you want to end your turn?",
+							JOptionPane.QUESTION_MESSAGE,
+							JOptionPane.YES_NO_OPTION);
+					JDialog dialog = optionPane.createDialog("End turn");
+					dialog.setVisible(true);
+					int selection = OptionPaneUtils.getSelection(optionPane);
+					if (selection == JOptionPane.YES_OPTION) {
+						connectionManager.send(new ActionEndTurn());
+					} else {
+						// do nothing
+					}
 				}
 			}
 
@@ -651,39 +673,43 @@ public class ClientGUIThread implements Runnable, Observer {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String cardList[] = { "Attack", "Adrenaline", "Sedatives",
-						"Spotlight", "Teleport" };
-				String output = (String) JOptionPane.showInputDialog(mainFrame,
-						"Pick a card", "Input", JOptionPane.QUESTION_MESSAGE,
-						null, cardList, "Attack");
-				if (output.equals("Attack")) {
-					connectionManager.send(new ActionUseCard(new AttackCard()));
-				} else if (output.equals("Adrenaline")) {
-					connectionManager.send(new ActionUseCard(
-							new AdrenalineCard()));
-
-				} else if (output.equals("Sedatives")) {
-					connectionManager.send(new ActionUseCard(
-							new SedativesCard()));
-
-				} else if (output.equals("Spotlight")) {
-					String coordinateString = JOptionPane.showInputDialog(
-							"Insert target coordinate", "Coordinate");
-					try {
-						Coordinate coordinate = ActionParser
-								.parseCoordinate(coordinateString);
+				if (matchStarted) {
+					String cardList[] = { "Attack", "Adrenaline", "Sedatives",
+							"Spotlight", "Teleport" };
+					String output = (String) JOptionPane.showInputDialog(
+							mainFrame, "Pick a card", "Input",
+							JOptionPane.QUESTION_MESSAGE, null, cardList,
+							"Attack");
+					if (output.equals("Attack")) {
 						connectionManager.send(new ActionUseCard(
-								new SpotlightCard(), coordinate));
-					} catch (NotAValidInput e1) {
-						JOptionPane.showMessageDialog(mainFrame,
-								"Not a valid input!");
+								new AttackCard()));
+					} else if (output.equals("Adrenaline")) {
+						connectionManager.send(new ActionUseCard(
+								new AdrenalineCard()));
+
+					} else if (output.equals("Sedatives")) {
+						connectionManager.send(new ActionUseCard(
+								new SedativesCard()));
+
+					} else if (output.equals("Spotlight")) {
+						String coordinateString = JOptionPane.showInputDialog(
+								"Insert target coordinate", "Coordinate");
+						try {
+							Coordinate coordinate = ActionParser
+									.parseCoordinate(coordinateString);
+							connectionManager.send(new ActionUseCard(
+									new SpotlightCard(), coordinate));
+						} catch (NotAValidInput e1) {
+							JOptionPane.showMessageDialog(mainFrame,
+									"Not a valid input!");
+						}
+					} else if (output.equals("Teleport")) {
+						connectionManager.send(new ActionUseCard(
+								new TeleportCard()));
+
 					}
-				} else if (output.equals("Teleport")) {
-					connectionManager
-							.send(new ActionUseCard(new TeleportCard()));
 
 				}
-
 			}
 
 		});
@@ -693,9 +719,11 @@ public class ClientGUIThread implements Runnable, Observer {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String message = chatTextField.getText();
-				chatTextField.setText("");
-				connectionManager.send(new ActionChat(message));
+				if (matchStarted) {
+					String message = chatTextField.getText();
+					chatTextField.setText("");
+					connectionManager.send(new ActionChat(message));
+				}
 			}
 
 		});
@@ -709,10 +737,12 @@ public class ClientGUIThread implements Runnable, Observer {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if (KeyEvent.VK_ENTER == e.getKeyCode()) {
-					String message = chatTextField.getText();
-					chatTextField.setText("");
-					connectionManager.send(new ActionChat(message));
+				if (matchStarted) {
+					if (KeyEvent.VK_ENTER == e.getKeyCode()) {
+						String message = chatTextField.getText();
+						chatTextField.setText("");
+						connectionManager.send(new ActionChat(message));
+					}
 				}
 			}
 
@@ -793,33 +823,36 @@ public class ClientGUIThread implements Runnable, Observer {
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				Coordinate coordinate = getCoordinate(e);
-				if (coordinate.getX() >= 0 && coordinate.getY() >= 0
-						&& coordinate.getX() < NUM_COLUMN
-						&& coordinate.getY() < NUM_ROW) {
-					Object[] options = { "Movement", "Spotlight",
-							"Do Fake Noise" };
-					int result = JOptionPane.showOptionDialog(null,
-							"This is sector " + coordinate,
-							"What would you like to do?",
-							JOptionPane.DEFAULT_OPTION,
-							JOptionPane.QUESTION_MESSAGE, null, options,
-							options[0]);
-					logger.debug("Result: " + result);
-					logger.debug("Options: " + options);
-					if (result == 0) {
-						logger.debug("Choose: move");
-						connectionManager.send(new ActionMove(coordinate));
-					} else if (result == 1) {
-						logger.debug("Choose: spotlight");
-						connectionManager.send(new ActionUseCard(
-								new SpotlightCard(), coordinate));
-					} else if (result == 2) {
-						logger.debug("Choose: fake noise");
-						connectionManager.send(new ActionFakeNoise(coordinate));
+				if (matchStarted) {
+					Coordinate coordinate = getCoordinate(e);
+					if (coordinate.getX() >= 0 && coordinate.getY() >= 0
+							&& coordinate.getX() < NUM_COLUMN
+							&& coordinate.getY() < NUM_ROW) {
+						Object[] options = { "Movement", "Spotlight",
+								"Do Fake Noise" };
+						int result = JOptionPane.showOptionDialog(null,
+								"This is sector " + coordinate,
+								"What would you like to do?",
+								JOptionPane.DEFAULT_OPTION,
+								JOptionPane.QUESTION_MESSAGE, null, options,
+								options[0]);
+						logger.debug("Result: " + result);
+						logger.debug("Options: " + options);
+						if (result == 0) {
+							logger.debug("Choose: move");
+							connectionManager.send(new ActionMove(coordinate));
+						} else if (result == 1) {
+							logger.debug("Choose: spotlight");
+							connectionManager.send(new ActionUseCard(
+									new SpotlightCard(), coordinate));
+						} else if (result == 2) {
+							logger.debug("Choose: fake noise");
+							connectionManager.send(new ActionFakeNoise(
+									coordinate));
+						}
 					}
-				}
 
+				}
 			}
 		});
 	}
@@ -968,6 +1001,8 @@ public class ClientGUIThread implements Runnable, Observer {
 				setMapImage(Resource.IMG_GALVANI_MAP);
 				logger.debug("Map changed to galvani");
 			}
+			mapPanel.repaint();
+			matchStarted = true;
 		}
 	}
 

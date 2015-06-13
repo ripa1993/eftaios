@@ -1,9 +1,10 @@
-package it.polimi.ingsw.cg_8.client;
+package it.polimi.ingsw.cg_8.view.server;
+
+import java.io.Serializable;
 
 import it.polimi.ingsw.cg_8.model.map.GameMapName;
-import it.polimi.ingsw.cg_8.view.server.ServerResponse;
 
-public class ResponseMap implements ServerResponse {
+public class ResponseMap implements ServerResponse, Serializable {
 	private GameMapName mapName;
 
 	public ResponseMap(GameMapName mapName) {

@@ -2,6 +2,7 @@ package it.polimi.ingsw.cg_8.client;
 
 import it.polimi.ingsw.cg_8.view.server.ResponseCard;
 import it.polimi.ingsw.cg_8.view.server.ResponseChat;
+import it.polimi.ingsw.cg_8.view.server.ResponseMap;
 import it.polimi.ingsw.cg_8.view.server.ResponseNoise;
 import it.polimi.ingsw.cg_8.view.server.ResponsePrivate;
 import it.polimi.ingsw.cg_8.view.server.ResponseState;
