@@ -82,6 +82,7 @@ import javax.swing.event.MouseInputAdapter;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import java.awt.Dimension;
 
 /**
  * Class that defines the GUI.
@@ -163,6 +164,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		}
 
 		mainFrame = new JFrame("Escape From The Aliens In Outer Space");
+		mainFrame.setMinimumSize(new Dimension(1280, 720));
 		mainFrame.setResizable(true);
 		BufferedImage myImage;
 		contentPane = mainFrame.getContentPane();
@@ -183,6 +185,7 @@ public class ClientGUIThread implements Runnable, Observer {
 				64, 64, 150)));
 		rightPanel.setOpaque(false);
 		infoPanel = new JPanel();
+		infoPanel.setMaximumSize(new Dimension(600, 32767));
 		infoPanel.setOpaque(false);
 		infoPanel.setBackground(Color.WHITE);
 		chatInfoPanel = new JPanel();
@@ -205,6 +208,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		chatTextField.setForeground(Color.WHITE);
 		chatTextField.setBackground(Color.DARK_GRAY);
 		chatPanel2 = new JPanel();
+		chatPanel2.setMaximumSize(new Dimension(600, 32767));
 		chatPanel2.setOpaque(false);
 		chatPanel2.setBackground(Color.WHITE);
 		infoScroll = new JScrollPane(infoTextPane);
@@ -287,6 +291,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		commandsPanel.setVisible(true);
 
 		state_panel = new JPanel();
+		state_panel.setMaximumSize(new Dimension(600, 32767));
 		state_panel.setBorder(new MatteBorder(10, 0, 0, 0, new Color(100, 100,
 				100, 100)));
 		state_panel.setOpaque(false);
@@ -487,8 +492,7 @@ public class ClientGUIThread implements Runnable, Observer {
 	@Override
 	public void run() {
 
-//		BackgroundMusicThread bmt = new BackgroundMusicThread();
-//		SwingUtilities.invokeLater(bmt);
+		logger.debug("Info text pane is" + infoPanel.getSize());
 		
 		cardButton1.addMouseListener(new MouseInputAdapter() {
 			@Override
