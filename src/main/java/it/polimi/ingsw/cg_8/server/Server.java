@@ -12,6 +12,7 @@ import java.rmi.registry.Registry;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
@@ -147,7 +148,7 @@ public class Server {
 			voteCount.put(mapName, 0);
 		}
 	}
-	
+
 	/**
 	 * Add a vote to a certain map
 	 */
@@ -156,21 +157,27 @@ public class Server {
 			voteCount.put(chosenMap, voteCount.get(chosenMap) + 1);
 		}
 	}
-	
-	public static GameMapName voteCount() {
-		Map.Entry<GameMapName, Integer> maxEntry = null;
 
-		for (Map.Entry<GameMapName, Integer> entry : voteCount.entrySet())
-		{
-		    if (maxEntry == null || entry.getValue().compareTo(maxEntry.getValue()) > 0)
-		    {
-		        maxEntry = entry;
-		    }
+	public static GameMapName countVotes() {
+		Map.Entry<GameMapName, Integer> maxEntry = null;
+		GameMapName chosenMap = GameMapName.FERMI;
+
+		for (Map.Entry<GameMapName, Integer> entry : voteCount.entrySet()) {
+			if (maxEntry == null
+					|| entry.getValue().compareTo(maxEntry.getValue()) > 0) {
+				maxEntry = entry;
+				chosenMap = maxEntry.getKey();
+			} else if (maxEntry.getValue() == voteCount.get(GameMapName.FERMI)) {
+				chosenMap = GameMapName.FERMI;
+			} else if (maxEntry.getValue() >= voteCount.get(GameMapName.FERMI)
+					&& maxEntry.getValue() == voteCount
+							.get(GameMapName.GALILEI)) {
+				chosenMap = GameMapName.GALILEI;
+			}
 		}
-		return maxEntry.getKey();
+		return chosenMap;
 	}
-	
-	
+
 	/**
 	 * Creates a new game, replacing the previous reference in nextGame with the
 	 * new one
