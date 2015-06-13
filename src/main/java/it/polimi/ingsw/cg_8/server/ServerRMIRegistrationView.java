@@ -2,6 +2,7 @@ package it.polimi.ingsw.cg_8.server;
 
 import it.polimi.ingsw.cg_8.client.SubscriberInterface;
 import it.polimi.ingsw.cg_8.model.exceptions.GameAlreadyRunningException;
+import it.polimi.ingsw.cg_8.model.map.GameMapName;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
@@ -64,6 +65,17 @@ public class ServerRMIRegistrationView implements
 		return true;
 	}
 
+	/**
+	 * Method used by the client to communicate its chosen map to the server,
+	 * which will process the vote.
+	 */
+	@Override
+	public void sendMapVote(GameMapName chosenMap) throws RemoteException,
+	AlreadyBoundException {
+		logger.debug("Vote given to " + chosenMap);
+		Server.addVote(chosenMap);	
+	}
+	
 	/**
 	 * Creates a {@link ServerGameRoom GameRoom} for the client so that it can
 	 * play the game. Add the client to a client list, so that the server can

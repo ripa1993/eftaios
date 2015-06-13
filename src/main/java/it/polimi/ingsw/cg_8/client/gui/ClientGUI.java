@@ -47,8 +47,9 @@ public class ClientGUI {
 		connectionManager.setPlayerName(name);
 		guiThread.setConnectionManager(connectionManager);
 		
+		// TODO: acquire map 	l'invio mappa deve essere fatto all'interno del setup
 		guiThread.getConnectionManager().setup();
-		// TODO: acquire map
+	
 		
 		ExecutorService exec = Executors.newCachedThreadPool();
 		exec.submit(guiThread);
