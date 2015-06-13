@@ -13,7 +13,7 @@ import java.util.Set;
  * GameMap
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public class MapProxy implements ReachableCoordinatesInterface {
 
@@ -28,7 +28,10 @@ public class MapProxy implements ReachableCoordinatesInterface {
 	 */
 	private final Map<Coordinate, Map<Integer, Set<Coordinate>>> reachableCoordinates;
 
-	// HashMap < StartingCoords, HashMap <Depth, Set<ReachableCoords>>>
+	/**
+	 * HashMap < StartingCoords, HashMap <Depth, Set<ReachableCoords>>>
+	 * @param map related map
+	 */
 	public MapProxy(GameMap map) {
 		reachableCoordinates = new HashMap<Coordinate, Map<Integer, Set<Coordinate>>>();
 		this.map = map;

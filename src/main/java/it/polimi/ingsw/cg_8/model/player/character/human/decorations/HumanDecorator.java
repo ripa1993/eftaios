@@ -1,24 +1,29 @@
 package it.polimi.ingsw.cg_8.model.player.character.human.decorations;
 
 import it.polimi.ingsw.cg_8.model.player.character.human.HumanBehaviour;
+
 /**
- * Implementation of Decorator pattern, used to customise the behaviour of a human
+ * Implementation of Decorator pattern, used to customise the behaviour of a
+ * human
+ * 
  * @author Simone
- *
+ * @version 1.0
  */
 public abstract class HumanDecorator implements HumanBehaviour {
 	/**
 	 * Previous behaviour that is going to be decorated
 	 */
 	protected HumanBehaviour humanBehaviourToBeDecorated;
+
 	/**
 	 * Defualt constructor
-	 * @param humanBehaviourToBeDecorated behaviour to be decorated
+	 * 
+	 * @param humanBehaviourToBeDecorated
+	 *            behaviour to be decorated
 	 */
-	public HumanDecorator (HumanBehaviour humanBehaviourToBeDecorated){
+	public HumanDecorator(HumanBehaviour humanBehaviourToBeDecorated) {
 		this.humanBehaviourToBeDecorated = humanBehaviourToBeDecorated;
 	}
-
 
 	@Override
 	public boolean isAttackAllowed() {
@@ -34,8 +39,9 @@ public abstract class HumanDecorator implements HumanBehaviour {
 	public int getMaxAllowedMovement() {
 		return humanBehaviourToBeDecorated.getMaxAllowedMovement();
 	}
+
 	@Override
-	public boolean hasToDrawSectorCard(){
+	public boolean hasToDrawSectorCard() {
 		return humanBehaviourToBeDecorated.hasToDrawSectorCard();
 	}
 

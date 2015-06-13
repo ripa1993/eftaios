@@ -8,7 +8,7 @@ import it.polimi.ingsw.cg_8.model.player.character.human.Human;
  * an attack
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public class UseDefenseCard extends UseItemCard {
 

@@ -5,6 +5,7 @@ import it.polimi.ingsw.cg_8.model.player.character.human.Human;
 import it.polimi.ingsw.cg_8.model.player.character.human.NormalHuman;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,10 +14,12 @@ import java.util.List;
  * trace of all the players in the game.
  * 
  * @author Simone
- *
+ * @version 1.0
  */
-public class Player {
+public class Player implements Serializable {
 
+
+	private static final long serialVersionUID = -6339404514199154790L;
 	/**
 	 * This player state
 	 */
@@ -28,15 +31,15 @@ public class Player {
 	/**
 	 * This player character
 	 */
-	private InGameCharacter character;
+	private transient InGameCharacter character;
 	/**
 	 * This player list of played rounds
 	 */
-	private final List<Round> rounds;
+	private transient final List<Round> rounds;
 	/**
 	 * This player hand, contains the owned item cards
 	 */
-	private final Hand hand;
+	private transient final Hand hand;
 
 	// a player is created when he joins the game (match still not running)
 	/**
@@ -65,7 +68,7 @@ public class Player {
 	 */
 	public void init(InGameCharacter character, Coordinate startingPosition) {
 		this.character = character;
-		state = PlayerState.ALIVE_WAITING;
+		state = PlayerState.ALIVE;
 		rounds.add(new Round(0, startingPosition));
 	}
 
@@ -135,19 +138,15 @@ public class Player {
 		state = PlayerState.ESCAPED;
 	}
 
-	/**
-	 * Changes the player status from {@link PlayerState#ALIVE_WAITING
+	/*
+	 * /** Changes the player status from {@link PlayerState#ALIVE_WAITING
 	 * ALIVE_WAITING} to {@link PlayerState#ALIVE_PLAYING ALIVE_PLAYING} and
 	 * viceversa
+	 * 
+	 * public void cycleState() { if (state == PlayerState.ALIVE_WAITING) {
+	 * state = PlayerState.ALIVE_PLAYING; resetDecorations(); } else if (state
+	 * == PlayerState.ALIVE_PLAYING) { state = PlayerState.ALIVE_WAITING; } }
 	 */
-	public void cycleState() {
-		if (state == PlayerState.ALIVE_WAITING) {
-			state = PlayerState.ALIVE_PLAYING;
-			resetDecorations();
-		} else if (state == PlayerState.ALIVE_PLAYING) {
-			state = PlayerState.ALIVE_WAITING;
-		}
-	}
 
 	/**
 	 * Restores human character to its original state. It is called
@@ -197,8 +196,9 @@ public class Player {
 
 	@Override
 	public String toString() {
-		return "Player: " + name + "\nCharacter: " + character + " "
-				+"\nPosition: " + getLastPosition() ;
+		return "Player: " + name + ", Character: " + character + " "
+				+ ", State: " + state + ", Position: " + getLastPosition() ;
+
 	}
 
 }

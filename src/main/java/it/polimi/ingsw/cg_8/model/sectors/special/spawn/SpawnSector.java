@@ -6,9 +6,14 @@ import it.polimi.ingsw.cg_8.model.sectors.special.SpecialSector;
  * Spawn sector abstract class
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public abstract class SpawnSector extends SpecialSector {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1851902876364291445L;
 
 	/**
 	 * Default constructor for {@link SpecialSector}

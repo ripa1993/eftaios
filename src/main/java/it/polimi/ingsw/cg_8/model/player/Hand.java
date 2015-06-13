@@ -38,7 +38,6 @@ public class Hand {
 		return heldCards;
 	}
 
-
 	/**
 	 * Returns the card according to the index and removes it from the heldCards
 	 * 
@@ -60,16 +59,22 @@ public class Hand {
 	 * @param item
 	 *            card to be added to hand
 	 * @throws TooManyCardsException
+	 * @return If the card has been added to the player's hand.
 	 */
-	public void addItemCard(ItemCard item) throws TooManyCardsException {
-		if (heldCards.size() < MAX_CARDS) {
+	public boolean addItemCard(ItemCard item) {
+		if (this.heldCards.size() < Hand.MAX_CARDS) {
 			heldCards.add(item);
-		} else {
-			throw new TooManyCardsException(
-					"No more space in hand, you already have "
-							+ heldCards.size() + " cards.");
+			return true;
 		}
+		return false;
+	}
 
+	/**
+	 * 
+	 * @return max number of item cards that a player can hold
+	 */
+	public static int getMaxCards() {
+		return MAX_CARDS;
 	}
 
 	@Override

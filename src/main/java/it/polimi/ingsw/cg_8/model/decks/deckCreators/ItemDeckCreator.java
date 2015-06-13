@@ -7,10 +7,12 @@ import it.polimi.ingsw.cg_8.model.cards.itemCards.SedativesCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.SpotlightCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.TeleportCard;
 import it.polimi.ingsw.cg_8.model.decks.ItemDeck;
+
 /**
  * Creator of character deck
+ * 
  * @author Simone
- *
+ * @version 1.0
  */
 public class ItemDeckCreator extends DeckCreator {
 
@@ -34,10 +36,10 @@ public class ItemDeckCreator extends DeckCreator {
 	 * Max number of SpotlightCard
 	 */
 	private static final int LIGHTS_NUM = 2;
-	
+
 	@Override
 	public ItemDeck createDeck() {
-		
+
 		ItemDeck itemDeck = new ItemDeck();
 		for (int i = 0; i < ATTACK_NUM; i++) {
 			itemDeck.addCard(new AttackCard());
@@ -54,10 +56,10 @@ public class ItemDeckCreator extends DeckCreator {
 		for (int i = 0; i < LIGHTS_NUM; i++) {
 			itemDeck.addCard(new SpotlightCard());
 		}
-		itemDeck.addCard(new DefenseCard()); // There is only one Defense Card in the ItemDeck
-		
+		itemDeck.addCard(new DefenseCard()); // There is only one Defense Card
+												// in the ItemDeck
+
 		return itemDeck;
 	}
-	
-	
+
 }

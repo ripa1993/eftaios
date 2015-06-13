@@ -9,7 +9,7 @@ import it.polimi.ingsw.cg_8.model.player.character.human.Human;
  * distance
  * 
  * @author Simone
- * 
+ * @version 1.0
  */
 public class UseAdrenalineCard extends UseItemCard {
 
@@ -20,11 +20,10 @@ public class UseAdrenalineCard extends UseItemCard {
 	 *            game
 	 */
 	public static void useCard(Model model) {
-		// TODO: change method to getCharacter
-		Player currentPlayer = model.getPlayers().get(model.getCurrentPlayer());
+		Player currentPlayer = model.getCurrentPlayerReference();
 		// Assume that the player is a human by hypothesis
 		Human currentPlayerCharacter = (Human) currentPlayer.getCharacter();
-		
+
 		currentPlayerCharacter.enableAdrenaline();
 
 	}

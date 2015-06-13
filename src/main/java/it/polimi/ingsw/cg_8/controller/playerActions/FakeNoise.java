@@ -1,7 +1,7 @@
 package it.polimi.ingsw.cg_8.controller.playerActions;
 
 import it.polimi.ingsw.cg_8.model.Model;
-import it.polimi.ingsw.cg_8.model.noises.EscapeSectorNoise;
+import it.polimi.ingsw.cg_8.model.noises.MovementNoise;
 import it.polimi.ingsw.cg_8.model.noises.Noise;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 
@@ -10,7 +10,7 @@ import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
  * comunicate a Coordinate in which will happen a fake noise
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public class FakeNoise extends PlayerAction {
 
@@ -23,9 +23,9 @@ public class FakeNoise extends PlayerAction {
 	 *            noise coordinates
 	 */
 	public static void fakeNoise(Model model, Coordinate coordinate) {
-		Noise fakeNoise = new EscapeSectorNoise(model.getRoundNumber(), model
+		Noise fakeNoise = new MovementNoise(model.getRoundNumber(), model
 				.getPlayers().get(model.getCurrentPlayer()), coordinate);
-		model.getNoiseLogger().add(fakeNoise);
+		model.addNoise(fakeNoise);
 	}
 
 }

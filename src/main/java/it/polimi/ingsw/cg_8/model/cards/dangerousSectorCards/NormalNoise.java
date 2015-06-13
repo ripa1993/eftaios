@@ -18,7 +18,6 @@ public class NormalNoise extends DangerousSectorCard implements NoiseCard {
 
 	@Override
 	public String toString() {
-		return "NormalNoise [hasToMakeFakeNoise()=" + hasToMakeFakeNoise()
-				+ ", hasToDrawItem()=" + hasToDrawItem() + "]";
+		return "NormalNoise";
 	}
 }

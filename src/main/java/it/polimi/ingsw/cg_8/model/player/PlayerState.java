@@ -1,18 +1,16 @@
 package it.polimi.ingsw.cg_8.model.player;
+
 /**
  * Allowed player state for a player
+ * 
  * @author Simone
- *
+ * @version 1.0
  */
 public enum PlayerState {
 	/**
-	 * waiting for his turn
+	 * the player is alive, either playing or waiting for his turn
 	 */
-	ALIVE_WAITING,
-	/**
-	 * playing his turn
-	 */
-	ALIVE_PLAYING,
+	ALIVE,
 	/**
 	 * player is dead
 	 */

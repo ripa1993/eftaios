@@ -1,8 +1,10 @@
 package it.polimi.ingsw.cg_8.model.sectors;
+
 /**
  * Types of sector that are available in a map
+ * 
  * @author Simone
- *
+ * @version 1.0
  */
 public enum SectorType {
 	/**

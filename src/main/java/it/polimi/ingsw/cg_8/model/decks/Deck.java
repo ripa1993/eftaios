@@ -12,7 +12,7 @@ import java.util.List;
  * , {@link EscapeHatchDeck} and {@link ItemDeck}
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public abstract class Deck {
 	/**
@@ -48,15 +48,21 @@ public abstract class Deck {
 	 * If the deck is empty and the discard pile contains at least one card,
 	 * reshuffles the discard pile into the deck
 	 * 
+	 * @throws EmptyDeckException
+	 * 
 	 * 
 	 */
-	public void reshuffle() {
+	public void reshuffle() throws EmptyDeckException {
 
 		if (this.isDeckEmpty() == true && this.isUsedCardsEmpty() == false) {
 			for (Card i : this.usedCards) {
 				this.addCard(i);
 			}
 			this.emptyUsedCardList();
+		}
+
+		if (this.isDeckEmpty() == true && this.isUsedCardsEmpty() == true) {
+			throw new EmptyDeckException("Deck is empty");
 		}
 
 	}
@@ -111,10 +117,15 @@ public abstract class Deck {
 		return this.cardList.isEmpty();
 	}
 
-	
+	/**
+	 * 
+	 * @return true, if the discard pile is empty<br>
+	 *         false, if it is not
+	 */
 	protected boolean isUsedCardsDeckEmpty() {
 		return this.usedCards.isEmpty();
 	}
+
 	/**
 	 * Checks if the discard pile is empty
 	 * 
@@ -124,15 +135,19 @@ public abstract class Deck {
 	protected boolean isUsedCardsEmpty() {
 		return this.usedCards.isEmpty();
 	}
+
 	/**
 	 * Getter for deck's list of card
+	 * 
 	 * @return list of card
 	 */
 	public List<Card> getCards() {
 		return this.cardList;
 	}
+
 	/**
 	 * Getter for deck's discard pile
+	 * 
 	 * @return discard pile list of card
 	 */
 	public List<Card> getUsedCards() {

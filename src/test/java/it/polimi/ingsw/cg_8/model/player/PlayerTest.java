@@ -53,7 +53,7 @@ public class PlayerTest {
 
 	@Test
 	public void testGetState() {
-		assertEquals(PlayerState.ALIVE_WAITING, player.getState());
+		assertEquals(PlayerState.ALIVE, player.getState());
 	}
 
 	@Test
@@ -82,19 +82,6 @@ public class PlayerTest {
 	public void testSetEscaped() {
 		player.setEscaped();
 		assertEquals(PlayerState.ESCAPED, player.getState());
-	}
-
-	@Test
-	public void testCycleState() {
-		player.cycleState();
-		assertEquals(PlayerState.ALIVE_PLAYING, player.getState());
-	}
-
-	@Test
-	public void testCycleState2() {
-		player.cycleState();
-		player.cycleState();
-		assertEquals(PlayerState.ALIVE_WAITING, player.getState());
 	}
 
 	@Test

@@ -8,7 +8,7 @@ import it.polimi.ingsw.cg_8.model.cards.characterCards.CharacterCard;
  * {@link alien.Alien Alien} and {@link human.Human Human}
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public abstract class InGameCharacter {
 	/**
@@ -49,18 +49,22 @@ public abstract class InGameCharacter {
 	 *         false, if the player has not to draw a sector card
 	 */
 	public abstract boolean hasToDrawSectorCard();
+
 	/**
 	 * Getter for character card
+	 * 
 	 * @return character card owned by this character
 	 */
 	public CharacterCard getCharacterCard() {
 		return characterCard;
 	}
 
+	/**
+	 * Never used, overridden by its children.
+	 */
 	@Override
 	public String toString() {
 		return "InGameCharacter [characterCard=" + characterCard + "]";
 	}
 
-	
 }

@@ -5,9 +5,14 @@ package it.polimi.ingsw.cg_8.model.sectors.normal;
  * dangerous sector card or attack.
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public class DangerousSector extends NormalSector {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7964533045952694323L;
+
 	/**
 	 * Constructor for dangerous sector
 	 * 

@@ -7,9 +7,14 @@ import it.polimi.ingsw.cg_8.model.sectors.Sector;
  * {@link DangerousSector} and {@link SecureSector}
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public abstract class NormalSector extends Sector {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3925058303611953264L;
+
 	/**
 	 * Default constructor for normal sector
 	 * 

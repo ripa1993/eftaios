@@ -7,9 +7,13 @@ import it.polimi.ingsw.cg_8.model.sectors.special.SpecialSector;
  * to escape and win the game
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public class EscapeHatchSector extends SpecialSector {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4782069866892094554L;
 	/**
 	 * Current behaviour of the escape hatch sector
 	 */
@@ -87,7 +91,7 @@ public class EscapeHatchSector extends SpecialSector {
 
 	@Override
 	public String toString() {
-		return "EH"+number;
+		return "EH" + number;
 	}
 
 }

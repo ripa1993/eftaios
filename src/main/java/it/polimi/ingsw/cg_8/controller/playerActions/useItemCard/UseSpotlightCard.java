@@ -15,7 +15,7 @@ import java.util.Set;
  * Action that uses a spotlight card. It let's
  * 
  * @author Simone
- *
+ * @versino 1.0
  */
 public class UseSpotlightCard extends UseItemCard {
 
@@ -57,7 +57,7 @@ public class UseSpotlightCard extends UseItemCard {
 			Player currentPlayer = it.next();
 			Noise spotlightNoise = new SpotlightNoise(model.getRoundNumber(),
 					currentPlayer, currentPlayer.getLastPosition());
-			model.getNoiseLogger().add(spotlightNoise);
+			model.addNoise(spotlightNoise);
 		}
 	}
 

@@ -18,7 +18,7 @@ import java.util.List;
  * if the player is Human.
  * 
  * @author Alberto Parravicini
- *
+ * @version 1.0
  */
 public class UseItemCardValidator {
 	/**
@@ -37,8 +37,7 @@ public class UseItemCardValidator {
 		if (model.getCurrentPlayerReference().getCharacter() instanceof Alien) {
 			return false;
 		}
-		
-		
+
 		Human player = (Human) model.getCurrentPlayerReference().getCharacter();
 		if (card instanceof AdrenalineCard
 				&& player.getMaxAllowedMovement() == 2) {
@@ -58,7 +57,6 @@ public class UseItemCardValidator {
 			return false;
 		}
 
-		
 		List<ItemCard> heldCards = model.getCurrentPlayerReference().getHand()
 				.getHeldCards();
 		for (ItemCard i : heldCards) {

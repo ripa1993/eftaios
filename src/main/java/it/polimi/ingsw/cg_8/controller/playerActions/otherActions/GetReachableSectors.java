@@ -11,11 +11,13 @@ import java.util.Set;
  * Return the coordinates that can be reached by the player.
  * 
  * @author Alberto Parravicini
- *
+ * @version 1.0
  */
 public class GetReachableSectors extends PlayerAction {
 
 	/**
+	 * Returns the reachable Coordinate for the player in the current game model
+	 * 
 	 * @param model
 	 *            The current state of the game
 	 * @param player
@@ -29,12 +31,22 @@ public class GetReachableSectors extends PlayerAction {
 		return model.getMap().getReachableCoordinates(player.getLastPosition(),
 				maxDistance);
 	}
-	
+
+	/**
+	 * Returns the reachable Coordinate as a string for the player in the
+	 * current game model
+	 * 
+	 * @param model
+	 *            the current state of the game
+	 * @param player
+	 *            the player who performs the action
+	 * @return the reachable coordinates for the player
+	 */
 	public static String printReachableSectors(Model model, Player player) {
 
 		int maxDistance = player.getCharacter().getMaxAllowedMovement();
 
-		return (model.getMap().getReachableCoordinates(player.getLastPosition(),
-				maxDistance)).toString();
+		return (model.getMap().getReachableCoordinates(
+				player.getLastPosition(), maxDistance)).toString();
 	}
 }

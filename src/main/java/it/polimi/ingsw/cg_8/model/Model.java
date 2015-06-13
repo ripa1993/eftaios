@@ -31,15 +31,16 @@ import it.polimi.ingsw.cg_8.model.player.character.human.Human;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Observable;
 import java.util.Random;
 
 /**
  * Contains all the references to game objects: decks, players and map.
  * 
  * @author Simone
- *
+ * @version 1.0
  */
-public class Model {
+public class Model extends Observable {
 	@Override
 	public String toString() {
 		return "Model [players=" + players + ", roundNumber=" + roundNumber
@@ -143,10 +144,11 @@ public class Model {
 	 *            name of the player
 	 * @throws GameAlreadyRunningException
 	 */
-	public void addPlayer(String name) throws GameAlreadyRunningException {
+	public Player addPlayer(String name) throws GameAlreadyRunningException {
 		if (turnPhase == TurnPhase.GAME_SETUP) {
 			Player tempPlayer = new Player(name);
 			players.add(tempPlayer);
+			return tempPlayer;
 		} else {
 			throw new GameAlreadyRunningException(
 					"Game is already running, can't add a new player");
@@ -211,7 +213,7 @@ public class Model {
 		// sets turn phase and round number
 		roundNumber = 1;
 		turnPhase = TurnPhase.TURN_BEGIN;
-		getCurrentPlayerReference().cycleState();
+		// getCurrentPlayerReference().cycleState();
 
 	}
 
@@ -223,26 +225,26 @@ public class Model {
 
 		if (checkGameEndNoEH()) {
 			// no escape hatches left
-			setTurnPhase(TurnPhase.GAME_END);
+			this.setGameOver();
 			return;
 		}
 
 		if (checkGameEndNoPlayers()) {
 			// all player dc'ed or dead or escaped
-			setTurnPhase(TurnPhase.GAME_END);
+			this.setGameOver();
 			return;
 		}
 
 		if (checkGameEndNoHumans()) {
 			// no humans left
-			setTurnPhase(TurnPhase.GAME_END);
+			this.setGameOver();
 			return;
 		}
 
 		int counter = 0;
 
 		for (Player p : players) {
-			if (p.getState() == PlayerState.ALIVE_WAITING) {
+			if (p.getState() == PlayerState.ALIVE) {
 				counter++;
 			}
 		}
@@ -251,30 +253,44 @@ public class Model {
 			if (tempNextPlayer == players.size()) {
 				tempNextPlayer = 0;
 			}
-			
+
 			if (tempNextPlayer == startingPlayerIndex) {
-				roundNumber++;
+				this.roundNumber++;
 			}
 
 			if (checkGameEndRound() == true) {
 				// finished round 39, so game ends
-				this.setTurnPhase(TurnPhase.GAME_END);
+				this.setGameOver();
 				return;
 			}
-
-			if (players.get(tempNextPlayer).getState() == PlayerState.ALIVE_WAITING) {
-				currentPlayerIndex = tempNextPlayer;
+			currentPlayerIndex = tempNextPlayer;
+			if (players.get(currentPlayerIndex).getState() == PlayerState.ALIVE) {
+				setChanged();
+				notifyObservers(getCurrentPlayerReference());
 				return;
 			} else {
 				nextPlayer();
 			}
 		} else {
-			roundNumber++;
+			/**
+			 * If there is only one player alive, and he is Human, he has to
+			 * play.
+			 */
+			for (int i = 0; i < this.getPlayers().size(); i++) {
+				Player p = this.getPlayers().get(i);
+				if (p.getState() == PlayerState.ALIVE) {
+					currentPlayerIndex = i;
+					// p.cycleState();
+				}
+			}
+			this.roundNumber++;
 			if (checkGameEndRound()) {
 				// finished round 39, so game ends
-				setTurnPhase(TurnPhase.GAME_END);
+				this.setGameOver();
 				return;
 			}
+			setChanged();
+			notifyObservers(getCurrentPlayerReference());
 			return;
 		}
 		return;
@@ -299,13 +315,12 @@ public class Model {
 	 * @return true, if game ends<br>
 	 *         false, if not
 	 */
-	public boolean checkGameEndNoHumans() {
+	private boolean checkGameEndNoHumans() {
 		// not all humans dead or escaped
 		int counterHumans = 0;
 		for (Player p : players) {
 			if (p.getCharacter() instanceof Human
-					&& !(p.getState() == PlayerState.DEAD)
-					&& !(p.getState() == PlayerState.ESCAPED)) {
+					&& (p.getState() == PlayerState.ALIVE)) {
 				counterHumans++;
 			}
 		}
@@ -321,12 +336,11 @@ public class Model {
 	 * @return true, if game ends<br>
 	 *         false, if not
 	 */
-	public boolean checkGameEndNoPlayers() {
+	private boolean checkGameEndNoPlayers() {
 		// no one wants to play: all disconnected, dead or escaped
 		int counterPlaying = 0;
 		for (Player p : players) {
-			if ((p.getState() == PlayerState.ALIVE_PLAYING)
-					|| (p.getState() == PlayerState.ALIVE_WAITING)) {
+			if ((p.getState() == PlayerState.ALIVE)) {
 				counterPlaying++;
 			}
 		}
@@ -358,51 +372,136 @@ public class Model {
 		return this.getPlayers().get(this.getCurrentPlayer());
 	}
 
+	/**
+	 * 
+	 * @return list of players in this game
+	 */
 	public List<Player> getPlayers() {
 		return players;
 	}
 
+	/**
+	 * 
+	 * @return current round number
+	 */
 	public int getRoundNumber() {
 		return roundNumber;
 	}
 
+	/**
+	 * 
+	 * @return current player index in getPlayers() list
+	 */
 	public int getCurrentPlayer() {
 		return currentPlayerIndex;
 	}
 
+	/**
+	 * 
+	 * @return starting player index in getPlayers() list
+	 */
 	public int getStartingPlayer() {
 		return startingPlayerIndex;
 	}
 
+	/**
+	 * 
+	 * @return turn phase
+	 */
 	public TurnPhase getTurnPhase() {
 		return turnPhase;
 	}
 
+	/**
+	 * 
+	 * @return character deck for this game
+	 */
 	public Deck getCharacterDeck() {
 		return characterDeck;
 	}
 
+	/**
+	 * 
+	 * @return dangerous sector deck for this game
+	 */
 	public Deck getDangerousSectorDeck() {
 		return dangerousSectorDeck;
 	}
 
+	/**
+	 * 
+	 * @return escape hatch deck for this game
+	 */
 	public Deck getEscapeHatchDeck() {
 		return escapeHatchDeck;
 	}
 
+	/**
+	 * 
+	 * @return item deck for this game
+	 */
 	public Deck getItemDeck() {
 		return itemDeck;
 	}
 
+	/**
+	 * 
+	 * @return game map for this game
+	 */
 	public GameMap getMap() {
 		return map;
 	}
 
+	/**
+	 * 
+	 * @return list of noise for this game
+	 */
 	public List<Noise> getNoiseLogger() {
 		return noiseLogger;
 	}
 
+	/**
+	 * Return the last noise saved in the logger: used to notify players of a
+	 * noise produced by someone else.
+	 * 
+	 * @return The last noise produced in the game.
+	 */
+	public Noise getLastNoiseEntry() {
+		return this.noiseLogger.get(this.noiseLogger.size() - 1);
+	}
+
+	/**
+	 * Adds a nois to getNoiseLogger list of noise and notifies all the
+	 * observers
+	 * 
+	 * @param noise
+	 *            noise to be added
+	 */
+	public void addNoise(Noise noise) {
+		this.noiseLogger.add(noise);
+		this.setChanged();
+		this.notifyObservers(noise);
+	}
+
+	/**
+	 * Changes the turn phase
+	 * 
+	 * @param newTurnPhase
+	 *            new turn phase
+	 */
 	public void setTurnPhase(TurnPhase newTurnPhase) {
 		this.turnPhase = newTurnPhase;
+	}
+
+	/**
+	 * Called by some Actions and by the model itself in order to end the game.
+	 * When this method is called, it notifies the controller that will
+	 * disconnect the still connected players in 10 seconds and send ending game
+	 * messages to those players
+	 */
+	public void setGameOver() {
+		this.turnPhase = TurnPhase.GAME_END;
+		this.setChanged();
+		this.notifyObservers(this.turnPhase);
 	}
 }

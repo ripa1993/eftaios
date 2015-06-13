@@ -5,7 +5,6 @@ import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 import it.polimi.ingsw.cg_8.model.sectors.Sector;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -14,7 +13,7 @@ import java.util.Set;
  * Abstract class that represents a map
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public abstract class GameMap implements ReachableCoordinatesInterface {
 	/**

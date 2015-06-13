@@ -6,6 +6,7 @@ import it.polimi.ingsw.cg_8.model.Model;
 import it.polimi.ingsw.cg_8.model.cards.Card;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.DefenseCard;
 import it.polimi.ingsw.cg_8.model.noises.AttackNoise;
+import it.polimi.ingsw.cg_8.model.noises.DefenseNoise;
 import it.polimi.ingsw.cg_8.model.noises.Noise;
 import it.polimi.ingsw.cg_8.model.player.Hand;
 import it.polimi.ingsw.cg_8.model.player.Player;
@@ -23,7 +24,7 @@ import java.util.List;
  * instantiate this Class and uses its method to validate the attack.
  * 
  * @author Alberto Parravicini
- *
+ * @version 1.0
  */
 
 public class Attack extends PlayerAction {
@@ -44,6 +45,10 @@ public class Attack extends PlayerAction {
 	 * List of players who are killed by the attack
 	 */
 	private List<Player> victims;
+	/**
+	 * List of players who used a defense card.
+	 */
+	private List<Player> survivors;
 
 	/**
 	 * Constructor of the class
@@ -55,6 +60,7 @@ public class Attack extends PlayerAction {
 		this.attacker = model.getCurrentPlayerReference();
 		victims = new ArrayList<Player>();
 		playersInSector = new ArrayList<Player>();
+		survivors = new ArrayList<Player>();
 	}
 
 	/**
@@ -75,10 +81,15 @@ public class Attack extends PlayerAction {
 			 */
 			if (p.getCharacter() instanceof Human) {
 				Hand heldCards = p.getHand();
-				for (Card c : heldCards.getHeldCards() ) {
+				for (Card c : heldCards.getHeldCards()) {
 					if (c instanceof DefenseCard) {
 						UseDefenseCard.useCard(p);
 						heldCards.getHeldCards().remove(c);
+						DefenseNoise defenseNoise = new DefenseNoise(
+								model.getRoundNumber(), p,
+								attacker.getLastPosition());
+						survivors.add(p);
+						model.addNoise(defenseNoise);
 						break;
 					}
 				}
@@ -95,7 +106,7 @@ public class Attack extends PlayerAction {
 		}
 		Noise attackNoise = new AttackNoise(model.getRoundNumber(), attacker,
 				attacker.getLastPosition());
-		model.getNoiseLogger().add(attackNoise);
+		model.addNoise(attackNoise);
 	}
 
 	/**
@@ -108,7 +119,8 @@ public class Attack extends PlayerAction {
 		List<Player> playerList = model.getPlayers();
 		for (Player p : playerList) {
 			if (p.getLastPosition().equals(target)
-					&& p.getState().equals(PlayerState.ALIVE_WAITING)) {
+					&& p.getState().equals(PlayerState.ALIVE)
+					&& !(model.getCurrentPlayerReference().equals(p))) {
 				playersInSector.add(p);
 			}
 		}
@@ -134,4 +146,13 @@ public class Attack extends PlayerAction {
 		return victims;
 	}
 
+	/**
+	 * Get the player who survived to the attack thanks to a defense card.
+	 * Method used to notify the players.
+	 * 
+	 * @return survivors;
+	 */
+	public List<Player> getSurvivor() {
+		return survivors;
+	}
 }
