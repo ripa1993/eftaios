@@ -894,25 +894,32 @@ public class ClientGUIThread implements Runnable, Observer {
 		 */
 		else if (arg.equals("Cards")) {
 			ResponseCard cardMessage = clientData.getCards();
-			List<ItemCard> cards = cardMessage.getHand();
-			System.out.println("mycarteGUI" + cards.toString());
-			ItemCard cardArray[] = new ItemCard[CARD_NUM];
-			for (int i = 0; i < cards.size(); i++) {
-				cardArray[i] = cards.get(i);
-			}
 
-			ItemCard tempCard1 = cardArray[0];
-			this.updateCard(cardButton1, tempCard1);
-			// System.out.println("carta1" +cardArray[0].toString());
+			cardButton1.setCardType(this.analyzeCardType(cardMessage.getCard1()));
+			System.out.println("card1type" + this.analyzeCardType(cardMessage.getCard1()));
 			cardButton1.repaint();
-			ItemCard tempCard2 = cardArray[1];
-			// System.out.println("carta2" +cardArray[1].toString());
-			this.updateCard(cardButton2, tempCard2);
+			cardButton2.setCardType(this.analyzeCardType(cardMessage.getCard2()));
+			System.out.println("card2type" +this.analyzeCardType(cardMessage.getCard2()));
+
 			cardButton2.repaint();
-			ItemCard tempCard3 = cardArray[2];
-			// System.out.println("carta3" +cardArray[2].toString());
-			this.updateCard(cardButton3, tempCard3);
+			cardButton3.setCardType(this.analyzeCardType(cardMessage.getCard3()));
+			System.out.println("card3type" +this.analyzeCardType(cardMessage.getCard3()));
+
 			cardButton3.repaint();
+			// }
+
+			// ItemCard tempCard1 = cardArray[0];
+			// this.updateCard(cardButton1, tempCard1);
+			// // System.out.println("carta1" +cardArray[0].toString());
+			// cardButton1.repaint();
+			// ItemCard tempCard2 = cardArray[1];
+			// // System.out.println("carta2" +cardArray[1].toString());
+			// this.updateCard(cardButton2, tempCard2);
+			// cardButton2.repaint();
+			// ItemCard tempCard3 = cardArray[2];
+			// // System.out.println("carta3" +cardArray[2].toString());
+			// this.updateCard(cardButton3, tempCard3);
+			// cardButton3.repaint();
 
 			/**
 			 * Update related to state messages
@@ -982,22 +989,20 @@ public class ClientGUIThread implements Runnable, Observer {
 		}
 	}
 
-	private void updateCard(CardButton cardButton, ItemCard tempCard) {
-		if (tempCard instanceof AdrenalineCard) {
-			cardButton.setCardType(CardButton.CardType.ADRENALINE);
-		} else if (tempCard instanceof AttackCard) {
-			cardButton.setCardType(CardButton.CardType.ATTACK);
-		} else if (tempCard instanceof DefenseCard) {
-			cardButton.setCardType(CardButton.CardType.DEFENSE);
-		} else if (tempCard instanceof SedativesCard) {
-			cardButton.setCardType(CardButton.CardType.SEDATIVES);
-		} else if (tempCard instanceof SpotlightCard) {
-			cardButton.setCardType(CardButton.CardType.SPOTLIGHT);
-		} else if (tempCard instanceof TeleportCard) {
-			cardButton.setCardType(CardButton.CardType.TELEPORT);
-		} else if (tempCard == null) {
-			cardButton.setCardType(CardButton.CardType.DEFAULT);
-		}
+	private CardType analyzeCardType(String card) {
+		if (card.equals("AdrenalineCard")) {
+			return CardType.ADRENALINE;
+		} else if (card.equals("AttackCard")) {
+			return CardType.ATTACK;
+		} else if (card.equals("DefenseCard")) {
+			return CardType.DEFENSE;
+		} else if (card.equals("SedativesCard")) {
+			return CardType.SEDATIVES;
+		} else if (card.equals("SpotlightCard")) {
+			return CardType.SPOTLIGHT;
+		} else if (card.equals("TeleportCard")) {
+			return CardType.TELEPORT;
+		} else
+			return CardType.DEFAULT;
 	}
-
 }
