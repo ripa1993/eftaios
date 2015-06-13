@@ -63,7 +63,6 @@ public class CardButton extends JPanel {
 	private JLayeredPane layeredPane;
 	private Image cardOverlay;
 	private JButton invisButton;
-	
 
 	public CardButton() {
 		setPreferredSize(new Dimension(100, 120));
@@ -110,7 +109,7 @@ public class CardButton extends JPanel {
 		layeredPane.setLayer(cardButtonImage, 1);
 		layeredPane.add(cardButtonOverlay);
 		layeredPane.setLayer(cardButtonOverlay, 2);
-		
+
 		invisButton = new JButton();
 		invisButton.setVerticalAlignment(SwingConstants.BOTTOM);
 		invisButton.setBounds(0, 0, 124, 106);
@@ -149,7 +148,7 @@ public class CardButton extends JPanel {
 				cardButtonImage.repaint();
 				cardButtonOverlay.setSize((int) (1.05 * width),
 						((int) (1.05 * height)));
-				
+
 				cardButtonOverlay.repaint();
 			}
 
@@ -273,7 +272,7 @@ public class CardButton extends JPanel {
 			logger.error(ex.getMessage());
 		}
 	}
-	
+
 	/**
 	 * Used to update the player overlay.
 	 */
@@ -287,12 +286,14 @@ public class CardButton extends JPanel {
 		this.text.setText(text);
 	}
 
-	public JLabel getCardButtonImage() {
-		return cardButtonImage;
-	}
-
-	public JLabel getCardButtonOverlay() {
-		return cardButtonOverlay;
+	/**
+	 * Used to access the cardButton and create actions when the button is
+	 * pressed;
+	 * 
+	 * @return
+	 */
+	public JButton getInvisButton() {
+		return invisButton;
 	}
 
 	public ClientAction createAction() {

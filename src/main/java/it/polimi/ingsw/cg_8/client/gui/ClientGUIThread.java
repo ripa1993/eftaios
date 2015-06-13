@@ -371,18 +371,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		cardPanel.setBackground(Color.WHITE);
 		panel_2.add(cardPanel, BorderLayout.SOUTH);
 		cardPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-
-		// TODO: handle initialization with cycles
-		// cardList = new CardButton[CARD_NUM];
-		//
-		//
-		// // for (int i = 0; i < CARD_NUM; i++) {
-		// // cardList[i] = new CardButton();
-		// // cardList[i].setBackground(Color.WHITE);
-		// // cardList[i].setCardType(CardType.DEFAULT);
-		// // cardPanel.add(cardList[i]);
-		// // cardPanel.repaint();
-		// // }
+		
 		cardButton1 = new CardButton();
 		cardButton1.setBackground(Color.WHITE);
 		cardButton1.setCardType(CardType.DEFAULT);
@@ -496,7 +485,7 @@ public class ClientGUIThread implements Runnable, Observer {
 	@Override
 	public void run() {
 
-		cardButton1.addMouseListener(new MouseInputAdapter() {
+		cardButton1.getInvisButton().addMouseListener(new MouseInputAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				ClientAction action = cardButton1.createAction();
@@ -508,17 +497,8 @@ public class ClientGUIThread implements Runnable, Observer {
 			}
 
 		});
-		// cardButton1.addActionListener(new ActionListener() {
-		// @Override
-		// public void actionPerformed(ActionEvent e) {
-		// ClientAction action = cardButton1.createAction();
-		// if (action != null) {
-		// connectionManager.send(action);
-		// }
-		// }
-		//
-		// });
-		cardButton2.addMouseListener(new MouseInputAdapter() {
+		
+		cardButton2.getInvisButton().addMouseListener(new MouseInputAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				ClientAction action = cardButton2.createAction();
@@ -527,7 +507,7 @@ public class ClientGUIThread implements Runnable, Observer {
 				}
 			}
 		});
-		cardButton3.addMouseListener(new MouseInputAdapter() {
+		cardButton3.getInvisButton().addMouseListener(new MouseInputAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				ClientAction action = cardButton3.createAction();
