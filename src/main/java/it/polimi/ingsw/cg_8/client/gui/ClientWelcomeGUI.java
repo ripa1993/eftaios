@@ -53,6 +53,9 @@ public class ClientWelcomeGUI implements Runnable {
 	private JRadioButton fermiRadioButton;
 	private JRadioButton rmiRadioButton;
 	private JRadioButton socketRadioButton;
+	private ButtonGroup musicGroup;
+	private JRadioButton noMusicRadioButton;
+	private JRadioButton yesMusicRadioButton;
 	/**
 	 * Log4j logger
 	 */
@@ -98,7 +101,7 @@ public class ClientWelcomeGUI implements Runnable {
 				0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 		gbl_centerPanel.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
 		gbl_centerPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0,
-				0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0,
+				0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
 				0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		centerPanel.setLayout(gbl_centerPanel);
 
@@ -200,25 +203,58 @@ public class ClientWelcomeGUI implements Runnable {
 		galvaniRadioButton.setBackground(Color.WHITE);
 		panel_2.add(galvaniRadioButton);
 
+		JLabel lblEnjoySomeCreepy = new JLabel("ENJOY SOME CREEPY ALIEN MUSIC:");
+		lblEnjoySomeCreepy.setFont(fontTitilliumBoldUpright);
+		lblEnjoySomeCreepy.setForeground(Color.WHITE);
+		lblEnjoySomeCreepy.setBorder(new EmptyBorder(10, 0, 0, 0));
+		GridBagConstraints gbc_lblEnjoySomeCreepy = new GridBagConstraints();
+		gbc_lblEnjoySomeCreepy.insets = new Insets(0, 0, 5, 0);
+		gbc_lblEnjoySomeCreepy.gridx = 0;
+		gbc_lblEnjoySomeCreepy.gridy = 16;
+		centerPanel.add(lblEnjoySomeCreepy, gbc_lblEnjoySomeCreepy);
+
+		JPanel panel_3 = new JPanel();
+		GridBagConstraints gbc_panel_3 = new GridBagConstraints();
+		gbc_panel_3.anchor = GridBagConstraints.NORTH;
+		gbc_panel_3.insets = new Insets(0, 0, 5, 0);
+		gbc_panel_3.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panel_3.gridx = 0;
+		gbc_panel_3.gridy = 17;
+		centerPanel.add(panel_3, gbc_panel_3);
+		panel_3.setLayout(new GridLayout(1, 2, 0, 0));
+
+		yesMusicRadioButton = new JRadioButton("Sure");
+		yesMusicRadioButton.setBackground(Color.WHITE);
+		yesMusicRadioButton.setSelected(true);
+		panel_3.add(yesMusicRadioButton);
+
+		noMusicRadioButton = new JRadioButton("Nope");
+		noMusicRadioButton.setBackground(Color.WHITE);
+		panel_3.add(noMusicRadioButton);
+
 		connectionGroup = new ButtonGroup();
 		mapGroup = new ButtonGroup();
+		musicGroup = new ButtonGroup();
 		connectionGroup.add(rmiRadioButton);
 		connectionGroup.add(socketRadioButton);
 		mapGroup.add(fermiRadioButton);
 		mapGroup.add(galileiRadioButton);
 		mapGroup.add(galvaniRadioButton);
-		
-				playButton = new JButton("PLAY");
-				playButton.setBackground(Color.WHITE);
-				GridBagConstraints gbc_btnPlay = new GridBagConstraints();
-				gbc_btnPlay.insets = new Insets(0, 0, 5, 0);
-				gbc_btnPlay.gridx = 0;
-				gbc_btnPlay.gridy = 16;
-				centerPanel.add(playButton, gbc_btnPlay);
+		musicGroup.add(yesMusicRadioButton);
+		musicGroup.add(noMusicRadioButton);
+
+		playButton = new JButton("PLAY");
+		playButton.setBackground(Color.WHITE);
+		GridBagConstraints gbc_btnPlay = new GridBagConstraints();
+		gbc_btnPlay.insets = new Insets(0, 0, 5, 0);
+		gbc_btnPlay.gridx = 0;
+		gbc_btnPlay.gridy = 19;
+		centerPanel.add(playButton, gbc_btnPlay);
 
 		westPanelImage = new ImageIcon(Resource.IMG_ART_HUMAN);
 		westPanelImageScaled = new ImageIcon(westPanelImage.getImage()
 				.getScaledInstance(5000, -1, Image.SCALE_SMOOTH)).getImage();
+
 		JPanel westPanel = new JPanel() {
 			@Override
 			public void paintComponent(Graphics g) {
@@ -300,29 +336,43 @@ public class ClientWelcomeGUI implements Runnable {
 				String playerName = playerTextField.getText();
 				if (rmiRadioButton.isSelected()
 						&& fermiRadioButton.isSelected()) {
-					connectionManager = new ConnectionManagerRMI(playerName, GameMapName.FERMI);
+					connectionManager = new ConnectionManagerRMI(playerName,
+							GameMapName.FERMI);
 				} else if (rmiRadioButton.isSelected()
 						&& galvaniRadioButton.isSelected()) {
-					connectionManager = new ConnectionManagerRMI(playerName, GameMapName.GALVANI);
+					connectionManager = new ConnectionManagerRMI(playerName,
+							GameMapName.GALVANI);
 				} else if (rmiRadioButton.isSelected()
 						&& galileiRadioButton.isSelected()) {
-					connectionManager = new ConnectionManagerRMI(playerName, GameMapName.GALILEI);
+					connectionManager = new ConnectionManagerRMI(playerName,
+							GameMapName.GALILEI);
 				} else if (socketRadioButton.isSelected()
 						&& fermiRadioButton.isSelected()) {
-					connectionManager = new ConnectionManagerSocket(playerName, GameMapName.FERMI);
+					connectionManager = new ConnectionManagerSocket(playerName,
+							GameMapName.FERMI);
 				} else if (socketRadioButton.isSelected()
 						&& galvaniRadioButton.isSelected()) {
-					connectionManager = new ConnectionManagerSocket(playerName, GameMapName.GALVANI);
+					connectionManager = new ConnectionManagerSocket(playerName,
+							GameMapName.GALVANI);
 				} else {
 					// socket and galilei is the default if some weird bug
 					// happens
-					connectionManager = new ConnectionManagerSocket(playerName, GameMapName.GALILEI);
+					connectionManager = new ConnectionManagerSocket(playerName,
+							GameMapName.GALILEI);
 				}
-				ExecutorService exec = Executors.newCachedThreadPool();
-				BackgroundMusicThread bmt = new BackgroundMusicThread();
-				logger.debug("Background music loaded");
-				exec.submit(bmt);
 				logger.debug("Connection manager created");
+
+				logger.debug("Checking if the user wants some music");
+				if (yesMusicRadioButton.isSelected()) {
+					logger.debug("Yes");
+					ExecutorService exec = Executors.newCachedThreadPool();
+					BackgroundMusicThread bmt = new BackgroundMusicThread();
+					logger.debug("Background music loaded");
+					exec.submit(bmt);
+
+				} else {
+					logger.debug("No");
+				}
 				ClientGUIThread guiThread = new ClientGUIThread();
 				logger.debug("Gui thread created");
 				guiThread.setConnectionManager(connectionManager);
@@ -332,9 +382,6 @@ public class ClientWelcomeGUI implements Runnable {
 				logger.debug("Gui thread started, killing welcome frame");
 				main.dispose();
 				logger.debug("Gui welcome killed");
-				
-				
-				
 
 			}
 		});
