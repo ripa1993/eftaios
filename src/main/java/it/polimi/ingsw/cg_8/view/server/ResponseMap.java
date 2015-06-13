@@ -1,7 +1,6 @@
-package it.polimi.ingsw.cg_8.client;
+package it.polimi.ingsw.cg_8.view.server;
 
 import it.polimi.ingsw.cg_8.model.map.GameMapName;
-import it.polimi.ingsw.cg_8.view.server.ServerResponse;
 
 public class ResponseMap implements ServerResponse {
 	private GameMapName mapName;

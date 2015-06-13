@@ -2,7 +2,6 @@ package it.polimi.ingsw.cg_8.client.gui;
 
 import it.polimi.ingsw.cg_8.Resource;
 import it.polimi.ingsw.cg_8.client.ClientData;
-import it.polimi.ingsw.cg_8.client.ResponseMap;
 import it.polimi.ingsw.cg_8.client.gui.CardButton.CardType;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.AdrenalineCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.AttackCard;
@@ -30,6 +29,7 @@ import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
 import it.polimi.ingsw.cg_8.view.client.exceptions.NotAValidInput;
 import it.polimi.ingsw.cg_8.view.server.ResponseCard;
 import it.polimi.ingsw.cg_8.view.server.ResponseChat;
+import it.polimi.ingsw.cg_8.view.server.ResponseMap;
 import it.polimi.ingsw.cg_8.view.server.ResponseNoise;
 import it.polimi.ingsw.cg_8.view.server.ResponsePrivate;
 import it.polimi.ingsw.cg_8.view.server.ResponseState;

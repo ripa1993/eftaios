@@ -10,6 +10,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -83,12 +84,25 @@ public class Server {
 	private static final Logger logger = LogManager.getLogger(Server.class);
 
 	/**
+	 * Hashmap that counts the votes given to every map by the players, used to
+	 * determine which map will be used n the game.
+	 */
+	private static Map<GameMapName, Integer> voteCount;
+
+	/**
 	 * The constructor creates an RMI registry on port 7777.
 	 * 
 	 * @throws RemoteException
 	 */
 	public Server() throws RemoteException {
 		nextGame = null;
+		voteCount = new HashMap<GameMapName, Integer>();
+		/**
+		 * When the server is created, every map has no votes.
+		 */
+		for (GameMapName mapName : GameMapName.values()) {
+			voteCount.put(mapName, 0);
+		}
 		timer = new Timer();
 		this.registry = LocateRegistry.createRegistry(7777);
 
@@ -125,6 +139,38 @@ public class Server {
 		return nextGame;
 	}
 
+	/**
+	 * Reset the values of the votes, at the start of the game.
+	 */
+	public synchronized static void resetVotes() {
+		for (GameMapName mapName : GameMapName.values()) {
+			voteCount.put(mapName, 0);
+		}
+	}
+	
+	/**
+	 * Add a vote to a certain map
+	 */
+	public static void addVote(GameMapName chosenMap) {
+		if (voteCount.containsKey(chosenMap)) {
+			voteCount.put(chosenMap, voteCount.get(chosenMap) + 1);
+		}
+	}
+	
+	public static GameMapName voteCount() {
+		Map.Entry<GameMapName, Integer> maxEntry = null;
+
+		for (Map.Entry<GameMapName, Integer> entry : voteCount.entrySet())
+		{
+		    if (maxEntry == null || entry.getValue().compareTo(maxEntry.getValue()) > 0)
+		    {
+		        maxEntry = entry;
+		    }
+		}
+		return maxEntry.getKey();
+	}
+	
+	
 	/**
 	 * Creates a new game, replacing the previous reference in nextGame with the
 	 * new one
