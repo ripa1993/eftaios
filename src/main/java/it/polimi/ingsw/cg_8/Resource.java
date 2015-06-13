@@ -260,22 +260,44 @@ public class Resource {
 	/**
 	 * human 4
 	 */
-	public static final String IMG_UNKNOWN_CHAR = "resources" + File.separatorChar
-			+ "images" + File.separatorChar + "player" + File.separatorChar
-			+ "unknown_char.png";
+	public static final String IMG_UNKNOWN_CHAR = "resources"
+			+ File.separatorChar + "images" + File.separatorChar + "player"
+			+ File.separatorChar + "unknown_char.png";
 	/**
 	 * human blue overlay
 	 */
-	public static final String IMG_HUMAN_OVERLAY = "resources" + File.separatorChar
-			+ "images" + File.separatorChar + "human_item_overlay.png";
+	public static final String IMG_HUMAN_OVERLAY = "resources"
+			+ File.separatorChar + "images" + File.separatorChar
+			+ "human_item_overlay.png";
 	/**
 	 * alien pink overlay
 	 */
-	public static final String IMG_ALIEN_OVERLAY = "resources" + File.separatorChar
-			+ "images" + File.separatorChar + "alien_item_overlay.png";
+	public static final String IMG_ALIEN_OVERLAY = "resources"
+			+ File.separatorChar + "images" + File.separatorChar
+			+ "alien_item_overlay.png";
 	/**
 	 * turn background/border
 	 */
 	public static final String IMG_TURN_BG = "resources" + File.separatorChar
 			+ "images" + File.separatorChar + "turn_border.png";
+	/**
+	 * title
+	 */
+	public static final String IMG_ART_TITLE = "resources" + File.separatorChar
+			+ "images" + File.separatorChar + "title.png";
+	/**
+	 * art human
+	 */
+	public static final String IMG_ART_HUMAN = "resources" + File.separatorChar
+			+ "images" + File.separatorChar + "art_human.png";
+	/**
+	 * art map
+	 */
+	public static final String IMG_ART_MAP = "resources" + File.separatorChar
+			+ "images" + File.separatorChar + "art_map.png";
+	/**
+	 * art alien
+	 */
+	public static final String IMG_ART_ALIEN = "resources" + File.separatorChar
+			+ "images" + File.separatorChar + "art_alien.png";
 }
