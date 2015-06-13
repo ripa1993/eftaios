@@ -32,6 +32,7 @@ import javax.swing.SwingConstants;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import javax.swing.border.EmptyBorder;
 
 public class ClientWelcomeGUI implements Runnable {
 	private JFrame main;
@@ -93,12 +94,12 @@ public class ClientWelcomeGUI implements Runnable {
 				0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 		gbl_centerPanel.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
 		gbl_centerPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0,
-				0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+				0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0,
 				0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		centerPanel.setLayout(gbl_centerPanel);
 
 		JLabel logoLabel = new JLabel();
-		logoLabel.setBorder(null);
+		logoLabel.setBorder(new EmptyBorder(25, 0, 35, 0));
 		logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		logoLabel.setIcon(new ImageIcon(Resource.IMG_ART_TITLE));
 		GridBagConstraints gbc_logoLabel = new GridBagConstraints();
@@ -119,6 +120,9 @@ public class ClientWelcomeGUI implements Runnable {
 		centerPanel.add(playerLabel, gbc_lblName);
 
 		playerTextField = new JTextField();
+		playerTextField.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		playerTextField.setHorizontalAlignment(SwingConstants.CENTER);
+		playerTextField.setBackground(Color.WHITE);
 		playerTextField.setText("Player");
 		GridBagConstraints gbc_txtAsd = new GridBagConstraints();
 		gbc_txtAsd.insets = new Insets(0, 0, 5, 0);
@@ -130,6 +134,7 @@ public class ClientWelcomeGUI implements Runnable {
 
 		JLabel connectionTypeLabel = new JLabel(
 				"SELECT YOUR PREFERRED CONNECTION METHOD:");
+		connectionTypeLabel.setBorder(new EmptyBorder(10, 0, 0, 0));
 		connectionTypeLabel.setFont(fontTitilliumBoldUpright);
 		connectionTypeLabel.setForeground(Color.WHITE);
 		GridBagConstraints gbc_lblConnectionType = new GridBagConstraints();
@@ -150,13 +155,16 @@ public class ClientWelcomeGUI implements Runnable {
 		panel_1.setLayout(new GridLayout(1, 2, 0, 0));
 
 		rmiRadioButton = new JRadioButton("RMI");
+		rmiRadioButton.setBackground(Color.WHITE);
 		rmiRadioButton.setSelected(true);
 		panel_1.add(rmiRadioButton);
 
 		socketRadioButton = new JRadioButton("Socket");
+		socketRadioButton.setBackground(Color.WHITE);
 		panel_1.add(socketRadioButton);
 
 		JLabel mapSelectLabel = new JLabel("SELECT YOUR PREFERRED MAP:");
+		mapSelectLabel.setBorder(new EmptyBorder(10, 0, 0, 0));
 		mapSelectLabel.setFont(fontTitilliumBoldUpright);
 		mapSelectLabel.setForeground(Color.WHITE);
 		GridBagConstraints gbc_lblPreferredMap = new GridBagConstraints();
@@ -176,20 +184,17 @@ public class ClientWelcomeGUI implements Runnable {
 		panel_2.setLayout(new GridLayout(0, 3, 0, 0));
 
 		fermiRadioButton = new JRadioButton("Fermi");
+		fermiRadioButton.setBackground(Color.WHITE);
 		fermiRadioButton.setSelected(true);
 		panel_2.add(fermiRadioButton);
 
 		galileiRadioButton = new JRadioButton("Galilei");
+		galileiRadioButton.setBackground(Color.WHITE);
 		panel_2.add(galileiRadioButton);
 
 		galvaniRadioButton = new JRadioButton("Galvani");
+		galvaniRadioButton.setBackground(Color.WHITE);
 		panel_2.add(galvaniRadioButton);
-
-		playButton = new JButton("PLAY");
-		GridBagConstraints gbc_btnPlay = new GridBagConstraints();
-		gbc_btnPlay.gridx = 0;
-		gbc_btnPlay.gridy = 21;
-		centerPanel.add(playButton, gbc_btnPlay);
 
 		connectionGroup = new ButtonGroup();
 		mapGroup = new ButtonGroup();
@@ -198,6 +203,14 @@ public class ClientWelcomeGUI implements Runnable {
 		mapGroup.add(fermiRadioButton);
 		mapGroup.add(galileiRadioButton);
 		mapGroup.add(galvaniRadioButton);
+		
+				playButton = new JButton("PLAY");
+				playButton.setBackground(Color.WHITE);
+				GridBagConstraints gbc_btnPlay = new GridBagConstraints();
+				gbc_btnPlay.insets = new Insets(0, 0, 5, 0);
+				gbc_btnPlay.gridx = 0;
+				gbc_btnPlay.gridy = 16;
+				centerPanel.add(playButton, gbc_btnPlay);
 
 		westPanelImage = new ImageIcon(Resource.IMG_ART_HUMAN);
 		westPanelImageScaled = new ImageIcon(westPanelImage.getImage()
