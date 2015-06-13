@@ -1,6 +1,7 @@
 package it.polimi.ingsw.cg_8.client.gui;
 
 import it.polimi.ingsw.cg_8.client.ClientData;
+import it.polimi.ingsw.cg_8.model.map.GameMapName;
 import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
 
 import java.io.Serializable;
@@ -33,7 +34,7 @@ public abstract class ConnectionManager implements Serializable {
 	 */
 	protected ClientData clientData;
 
-	public ConnectionManager(String playerName) {
+	public ConnectionManager(String playerName, GameMapName mapName) {
 		this.playerName = playerName;
 		nameSet = false;
 		clientID = 0;

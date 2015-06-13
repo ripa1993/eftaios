@@ -3,8 +3,10 @@ package it.polimi.ingsw.cg_8.client.gui;
 
 import it.polimi.ingsw.cg_8.client.ClientData;
 import it.polimi.ingsw.cg_8.client.SubscriberInterface;
-import it.polimi.ingsw.cg_8.server.Server;
+import it.polimi.ingsw.cg_8.model.map.GameMapName;
+import it.polimi.ingsw.cg_8.server.ServerGameRoom;
 import it.polimi.ingsw.cg_8.server.ServerGameRoomInterface;
+import it.polimi.ingsw.cg_8.server.ServerRMIRegistrationView;
 import it.polimi.ingsw.cg_8.server.ServerRMIRegistrationViewRemote;
 import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
 import it.polimi.ingsw.cg_8.view.server.ServerResponse;
@@ -49,8 +51,8 @@ public class ConnectionManagerRMI extends ConnectionManager implements
 	 * The constructor is the same as the parent class.
 	 * @param playerName
 	 */
-	public ConnectionManagerRMI(String playerName) {
-		super(playerName);
+	public ConnectionManagerRMI(String playerName, GameMapName mapName) {
+		super(playerName, mapName);
 	}
 
 	/**

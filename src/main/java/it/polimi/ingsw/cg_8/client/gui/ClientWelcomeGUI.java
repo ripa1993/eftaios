@@ -1,6 +1,7 @@
 package it.polimi.ingsw.cg_8.client.gui;
 
 import it.polimi.ingsw.cg_8.Resource;
+import it.polimi.ingsw.cg_8.model.map.GameMapName;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -32,6 +33,7 @@ import javax.swing.SwingConstants;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import javax.swing.border.EmptyBorder;
 
 public class ClientWelcomeGUI implements Runnable {
@@ -296,23 +298,23 @@ public class ClientWelcomeGUI implements Runnable {
 				String playerName = playerTextField.getText();
 				if (rmiRadioButton.isSelected()
 						&& fermiRadioButton.isSelected()) {
-					connectionManager = new ConnectionManagerRMI(playerName);
+					connectionManager = new ConnectionManagerRMI(playerName, GameMapName.FERMI);
 				} else if (rmiRadioButton.isSelected()
 						&& galvaniRadioButton.isSelected()) {
-					connectionManager = new ConnectionManagerRMI(playerName);
+					connectionManager = new ConnectionManagerRMI(playerName, GameMapName.GALVANI);
 				} else if (rmiRadioButton.isSelected()
 						&& galileiRadioButton.isSelected()) {
-					connectionManager = new ConnectionManagerRMI(playerName);
+					connectionManager = new ConnectionManagerRMI(playerName, GameMapName.GALILEI);
 				} else if (socketRadioButton.isSelected()
 						&& fermiRadioButton.isSelected()) {
-					connectionManager = new ConnectionManagerSocket(playerName);
+					connectionManager = new ConnectionManagerSocket(playerName, GameMapName.FERMI);
 				} else if (socketRadioButton.isSelected()
 						&& galvaniRadioButton.isSelected()) {
-					connectionManager = new ConnectionManagerSocket(playerName);
+					connectionManager = new ConnectionManagerSocket(playerName, GameMapName.GALVANI);
 				} else {
 					// socket and galilei is the default if some weird bug
 					// happens
-					connectionManager = new ConnectionManagerSocket(playerName);
+					connectionManager = new ConnectionManagerSocket(playerName, GameMapName.GALILEI);
 				}
 				logger.debug("Connection manager created");
 				ClientGUIThread guiThread = new ClientGUIThread();

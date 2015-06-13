@@ -2,13 +2,12 @@ package it.polimi.ingsw.cg_8.client.gui;
 
 import it.polimi.ingsw.cg_8.client.ClientSocketViewCS;
 import it.polimi.ingsw.cg_8.client.ClientSocketViewSUB;
-import it.polimi.ingsw.cg_8.server.Server;
+import it.polimi.ingsw.cg_8.model.map.GameMapName;
 import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.concurrent.ExecutorService;
@@ -49,8 +48,8 @@ public class ConnectionManagerSocket extends ConnectionManager {
 	private static final Logger logger = LogManager
 			.getLogger(ConnectionManagerSocket.class);
 
-	public ConnectionManagerSocket(String playerName) {
-		super(playerName);
+	public ConnectionManagerSocket(String playerName, GameMapName mapName) {
+		super(playerName, mapName);
 		executor = Executors.newCachedThreadPool();
 	}
 

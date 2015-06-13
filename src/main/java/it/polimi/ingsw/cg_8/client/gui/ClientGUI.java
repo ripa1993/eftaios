@@ -1,5 +1,7 @@
 package it.polimi.ingsw.cg_8.client.gui;
 
+import it.polimi.ingsw.cg_8.model.map.GameMapName;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -36,10 +38,10 @@ public class ClientGUI {
 		}
 		
 		if (connection == 0) {
-			connectionManager = new ConnectionManagerRMI(playerName);
+			connectionManager = new ConnectionManagerRMI(playerName, GameMapName.FERMI);
 
 		} else {
-			connectionManager = new ConnectionManagerSocket(playerName);
+			connectionManager = new ConnectionManagerSocket(playerName, GameMapName.FERMI);
 		}
 	
 		connectionManager.setPlayerName(name);
