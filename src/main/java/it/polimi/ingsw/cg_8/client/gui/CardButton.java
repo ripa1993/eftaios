@@ -38,6 +38,7 @@ import javax.swing.JLayeredPane;
 import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
 import java.awt.Color;
+import javax.swing.JButton;
 
 /**
  * JButton that allows the player to use an item card.
@@ -61,6 +62,7 @@ public class CardButton extends JPanel {
 	private static final int BUTTON_HEIGHT = 120;
 	private JLayeredPane layeredPane;
 	private Image cardOverlay;
+	private JButton invisButton;
 	
 
 	public CardButton() {
@@ -108,11 +110,20 @@ public class CardButton extends JPanel {
 		layeredPane.setLayer(cardButtonImage, 1);
 		layeredPane.add(cardButtonOverlay);
 		layeredPane.setLayer(cardButtonOverlay, 2);
+		
+		invisButton = new JButton();
+		invisButton.setVerticalAlignment(SwingConstants.BOTTOM);
+		invisButton.setBounds(0, 0, 124, 106);
+		layeredPane.add(invisButton);
+		layeredPane.setLayer(invisButton, 3);
+		invisButton.setOpaque(false);
+		invisButton.setContentAreaFilled(false);
+		invisButton.setBorderPainted(false);
 
 		/**
 		 * Input handling on the cardButton
 		 */
-		cardButtonImage.addMouseListener(new MouseAdapter() {
+		invisButton.addMouseListener(new MouseAdapter() {
 			int width, height;
 
 			@Override
@@ -183,42 +194,42 @@ public class CardButton extends JPanel {
 		if (this.cardType.equals(CardType.DEFAULT)) {
 			this.setImage(Resource.IMG_ITEM);
 			this.setText("No Card");
-			this.cardButtonImage
+			this.invisButton
 					.setToolTipText("<html>This is an <b>empty slot</b> for item card</html>");
 		} else if (this.cardType.equals(CardType.ADRENALINE)) {
 			this.setImage(Resource.IMG_ADRENALINE);
 			this.setText("Adrenaline");
-			this.cardButtonImage
+			this.invisButton
 					.setToolTipText("<html>This card allows you to <b>move two Sectors</b> this turn.</html>");
 		} else if (this.cardType.equals(CardType.ATTACK)) {
 			this.setImage(Resource.IMG_ATTACK);
 			this.setText("Attack");
-			this.cardButtonImage
+			this.invisButton
 					.setToolTipText("<html>This card allows you to <b>attack</b>, using the same rules as the Aliens.<br>"
 							+ "Note: the Human character can still move only one Sector.</html>");
 		} else if (this.cardType.equals(CardType.DEFENSE)) {
 			this.setImage(Resource.IMG_DEFENSE);
 			this.setText("Defense");
-			this.cardButtonImage
+			this.invisButton
 					.setToolTipText("<html>Play this card immediately when an Alien attacks you.<br>"
 							+ "You are  <b>not affected</b> by the attack.</html>");
 		} else if (this.cardType.equals(CardType.SEDATIVES)) {
 			this.setImage(Resource.IMG_SEDATIVES);
 			this.setText("Sedatives");
-			this.cardButtonImage
+			this.invisButton
 					.setToolTipText("<html>If you play this card  <b>you do not draw </b> a Dangerous Sector Card this turn,<br>"
 							+ "even if you move into a Dangerous Sector.</html>");
 		} else if (this.cardType.equals(CardType.SPOTLIGHT)) {
 			this.setImage(Resource.IMG_SPOTLIGHT);
 			this.setText("Spotlight");
-			this.cardButtonImage
+			this.invisButton
 					.setToolTipText("<html>When you play this card, name any Sector. Any players (including you)<br>"
 							+ "that are in the named Sector or in any of the six adjacent Sectors must immediately<br>"
 							+ " <b>announce their exact location </b> Coordinates. This card affects both Humans and Aliens.<html>");
 		} else if (this.cardType.equals(CardType.TELEPORT)) {
 			this.setImage(Resource.IMG_TELEPORT);
 			this.setText("Teleport");
-			this.cardButtonImage
+			this.invisButton
 					.setToolTipText("<html>This card allows you to  <b>move directly </b> to the Human Sector from any part of the ship.<br>"
 							+ "This is in addition to your normal movement which can happen before or after you use the item.</html>");
 		}

@@ -906,20 +906,7 @@ public class ClientGUIThread implements Runnable, Observer {
 			System.out.println("card3type" +this.analyzeCardType(cardMessage.getCard3()));
 
 			cardButton3.repaint();
-			// }
-
-			// ItemCard tempCard1 = cardArray[0];
-			// this.updateCard(cardButton1, tempCard1);
-			// // System.out.println("carta1" +cardArray[0].toString());
-			// cardButton1.repaint();
-			// ItemCard tempCard2 = cardArray[1];
-			// // System.out.println("carta2" +cardArray[1].toString());
-			// this.updateCard(cardButton2, tempCard2);
-			// cardButton2.repaint();
-			// ItemCard tempCard3 = cardArray[2];
-			// // System.out.println("carta3" +cardArray[2].toString());
-			// this.updateCard(cardButton3, tempCard3);
-			// cardButton3.repaint();
+	
 
 			/**
 			 * Update related to state messages
