@@ -101,7 +101,7 @@ public class ClientGUIThread implements Runnable, Observer {
 	 */
 	private static final int CARD_NUM = 3;
 	private JFrame mainFrame;
-	Container contentPane;
+	private Container contentPane;
 
 	private JPanel chatPanel, chatPanel2, rightPanel, infoPanel, commandsPanel,
 			chatInfoPanel;
