@@ -221,7 +221,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		 */
 		// TODO: mettere un background generico al posto della mappa, magari un
 		// punto di domanda a forma di mappa
-		backgroundImageResource = Resource.IMG_GALVANI_MAP;
+		backgroundImageResource = Resource.IMG_MAP_BG;
 		backgroundImage = new ImageIcon(backgroundImageResource);
 		backgroundImageScaled = new ImageIcon(backgroundImage.getImage()
 				.getScaledInstance(5000, -1, Image.SCALE_SMOOTH)).getImage();
@@ -444,7 +444,8 @@ public class ClientGUIThread implements Runnable, Observer {
 		chatTextPane.setFont(fontTitilliumSemiboldUpright);
 		infoTextPane.setFont(fontTitilliumSemiboldUpright);
 		chatTextPane.setText("Say hi to the other players!");
-		infoTextPane.setText("Welcome to a new EFTAIOS game!");
+		infoTextPane.setText("Welcome to a new EFTAIOS game!"
+				+ "\nThe map will appear when the game starts.");
 
 		chatPanel2.setVisible(true);
 		chatPanel.setVisible(true);
@@ -504,7 +505,7 @@ public class ClientGUIThread implements Runnable, Observer {
 					if (action != null) {
 						connectionManager.send(action);
 					} else {
-						System.out.println("asdasdadasdad");
+						logger.debug("Action is passive or not an action");
 					}
 				}
 			}
@@ -518,6 +519,8 @@ public class ClientGUIThread implements Runnable, Observer {
 					ClientAction action = cardButton2.createAction();
 					if (action != null) {
 						connectionManager.send(action);
+					} else {
+						logger.debug("Action is passive or not an action");
 					}
 				}
 			}
@@ -529,6 +532,8 @@ public class ClientGUIThread implements Runnable, Observer {
 					ClientAction action = cardButton3.createAction();
 					if (action != null) {
 						connectionManager.send(action);
+					} else {
+						logger.debug("Action is passive or not an action");
 					}
 				}
 			}
