@@ -81,7 +81,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.event.MouseInputAdapter;
-import javax.swing.text.DefaultCaret;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -204,11 +203,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		useItemCardButton = new JButton("Use Item Card");
 		chatButton = new JButton("Send");
 		chatTextPane = new JTextPane();
-		DefaultCaret caretChat = (DefaultCaret) chatTextPane.getCaret();
-		caretChat.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		infoTextPane = new JTextPane();
-		DefaultCaret caretInfo = (DefaultCaret) infoTextPane.getCaret();
-		caretInfo.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		chatTextField = new JTextField();
 		chatTextField.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		chatTextField.setForeground(Color.WHITE);
