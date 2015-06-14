@@ -130,7 +130,7 @@ public class BetterCLI implements Runnable, Observer {
 	public void run() {
 		setup();
 		while (!disconnect) {
-			System.out.println("> Write a command:");
+			System.out.println(">Write a command:");
 			String inputLine = input.nextLine();
 			try {
 				ClientAction action = ActionParser.createEvent(inputLine);
