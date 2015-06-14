@@ -90,7 +90,34 @@ import org.apache.logging.log4j.Logger;
  * @version 1.1
  */
 public class ClientGUIThread implements Runnable, Observer {
-
+	/**
+	 * Attack text
+	 */
+	private static final String ATTACK_TEXT = "Attack";
+	/**
+	 * Adrenaline text
+	 */
+	private static final String ADRENALINE_TEXT = "Adrenaline";
+	/**
+	 * Sedatives text
+	 */
+	private static final String SEDATIVES_TEXT = "Sedatives";
+	/**
+	 * Teleport text
+	 */
+	private static final String TELEPORT_TEXT = "Teleport";
+	/**
+	 * Coordinate text
+	 */
+	private static final String COORDINATE_TEXT = "Coordinate";
+	/**
+	 * Not a valid input text
+	 */
+	private static final String NOT_VALID_INPUT_TEXT = "Not a valid input!";
+	/**
+	 * Spotlight text
+	 */
+	private static final String SPOTLIGHT_TEXT = "Spotlight";
 	/**
 	 * The server messages are stored here.
 	 */
@@ -231,7 +258,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		commandsPanel.setBackground(Color.WHITE);
 		commandsPanel.setOpaque(false);
 		moveButton = new JButton("Movement");
-		attackButton = new JButton("Attack");
+		attackButton = new JButton(ATTACK_TEXT);
 		drawButton = new JButton("Draw");
 		endTurnButton = new JButton("End Turn");
 		fakeNoiseButton = new JButton("Do Fake Noise");
@@ -628,7 +655,7 @@ public class ClientGUIThread implements Runnable, Observer {
 			public void actionPerformed(ActionEvent e) {
 				if (matchStarted) {
 					String coordinateString = JOptionPane.showInputDialog(
-							"Insert destination coordinate", "Coordinate");
+							"Insert destination coordinate", COORDINATE_TEXT);
 					if (coordinateString != null) {
 						try {
 
@@ -639,7 +666,7 @@ public class ClientGUIThread implements Runnable, Observer {
 						} catch (NotAValidInput e1) {
 							LOGGER.error(e1.getMessage(), e1);
 							JOptionPane.showMessageDialog(mainFrame,
-									"Not a valid input!");
+									NOT_VALID_INPUT_TEXT);
 						}
 					}
 				}
@@ -656,7 +683,7 @@ public class ClientGUIThread implements Runnable, Observer {
 							"Do you want to attack?",
 							JOptionPane.QUESTION_MESSAGE,
 							JOptionPane.YES_NO_OPTION);
-					JDialog dialog = optionPane.createDialog("Attack");
+					JDialog dialog = optionPane.createDialog(ATTACK_TEXT);
 					dialog.setVisible(true);
 					int selection = ((Integer) optionPane.getValue())
 							.intValue();
@@ -700,7 +727,7 @@ public class ClientGUIThread implements Runnable, Observer {
 			public void actionPerformed(ActionEvent e) {
 				if (matchStarted) {
 					String coordinateString = JOptionPane.showInputDialog(
-							"Insert target coordinate", "Coordinate");
+							"Insert target coordinate", COORDINATE_TEXT);
 					if (coordinateString != null) {
 						try {
 							Coordinate coordinate = ActionParser
@@ -711,7 +738,7 @@ public class ClientGUIThread implements Runnable, Observer {
 						} catch (NotAValidInput e1) {
 							LOGGER.error(e1.getMessage(), e1);
 							JOptionPane.showMessageDialog(mainFrame,
-									"Not a valid input!");
+									NOT_VALID_INPUT_TEXT);
 						}
 					}
 				}
@@ -747,26 +774,26 @@ public class ClientGUIThread implements Runnable, Observer {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (matchStarted) {
-					String[] cardList = { "Attack", "Adrenaline", "Sedatives",
-							"Spotlight", "Teleport" };
+					String[] cardList = { ATTACK_TEXT, ADRENALINE_TEXT,
+							SEDATIVES_TEXT, SPOTLIGHT_TEXT, TELEPORT_TEXT };
 					String output = (String) JOptionPane.showInputDialog(
 							mainFrame, "Pick a card", "Input",
 							JOptionPane.QUESTION_MESSAGE, null, cardList,
-							"Attack");
-					if ("Attack".equals(output)) {
+							ATTACK_TEXT);
+					if (ATTACK_TEXT.equals(output)) {
 						connectionManager.send(new ActionUseCard(
 								new AttackCard()));
-					} else if ("Adrenaline".equals(output)) {
+					} else if (ADRENALINE_TEXT.equals(output)) {
 						connectionManager.send(new ActionUseCard(
 								new AdrenalineCard()));
 
-					} else if ("Sedatives".equals(output)) {
+					} else if (SEDATIVES_TEXT.equals(output)) {
 						connectionManager.send(new ActionUseCard(
 								new SedativesCard()));
 
-					} else if ("Spotlight".equals(output)) {
+					} else if (SPOTLIGHT_TEXT.equals(output)) {
 						String coordinateString = JOptionPane.showInputDialog(
-								"Insert target coordinate", "Coordinate");
+								"Insert target coordinate", COORDINATE_TEXT);
 						try {
 							Coordinate coordinate = ActionParser
 									.parseCoordinate(coordinateString);
@@ -775,9 +802,9 @@ public class ClientGUIThread implements Runnable, Observer {
 						} catch (NotAValidInput e1) {
 							LOGGER.error(e1.getMessage(), e1);
 							JOptionPane.showMessageDialog(mainFrame,
-									"Not a valid input!");
+									NOT_VALID_INPUT_TEXT);
 						}
-					} else if ("Teleport".equals(output)) {
+					} else if (TELEPORT_TEXT.equals(output)) {
 						connectionManager.send(new ActionUseCard(
 								new TeleportCard()));
 
@@ -901,7 +928,7 @@ public class ClientGUIThread implements Runnable, Observer {
 					if (coordinate.getX() >= 0 && coordinate.getY() >= 0
 							&& coordinate.getX() < NUM_COLUMN
 							&& coordinate.getY() < NUM_ROW) {
-						Object[] options = { "Movement", "Spotlight",
+						Object[] options = { "Movement", SPOTLIGHT_TEXT,
 								"Do Fake Noise" };
 						int result = JOptionPane.showOptionDialog(null,
 								"This is sector " + coordinate,

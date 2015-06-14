@@ -44,7 +44,10 @@ import org.apache.logging.log4j.Logger;
  * @version 1.0
  */
 public class Model extends Observable {
-
+	/**
+	 * Not a valid map text
+	 */
+	private static final String NOT_VALID_MAP = "is not a valid map";
 	/**
 	 * List of players in the current game
 	 */
@@ -129,7 +132,7 @@ public class Model extends Observable {
 			MapCreator mc = new GalvaniCreator();
 			map = mc.createMap();
 		} else {
-			throw new NotAValidMapException(mapName + "is not a valid map");
+			throw new NotAValidMapException(mapName + NOT_VALID_MAP);
 		}
 
 	}
@@ -518,10 +521,9 @@ public class Model extends Observable {
 			map = mc.createMap();
 		} else {
 			try {
-				throw new NotAValidMapException(chosenMap
-						+ "is not a valid map");
+				throw new NotAValidMapException(chosenMap + NOT_VALID_MAP);
 			} catch (NotAValidMapException e) {
-				LOGGER.error(chosenMap.toString() + "is not a valid map", e);
+				LOGGER.error(chosenMap.toString() + NOT_VALID_MAP, e);
 			}
 		}
 	}
