@@ -136,7 +136,7 @@ public class ConnectionManagerSocket extends ConnectionManager {
 				output.writeObject(this.playerName);
 				output.flush();
 				String serverAnswer = (String) input.readObject();
-				if (serverAnswer.equals("NAME ACCEPTED")) {
+				if ("NAME ACCEPTED".equals(serverAnswer)) {
 					nameSet = true;
 					LOGGER.debug("Name accepted");
 				}
