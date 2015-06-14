@@ -5,10 +5,21 @@ import java.awt.Image;
 
 import javax.swing.JComponent;
 
+/**
+ * Panel whom background is filled with a repeated image (pattern)
+ * 
+ * @author Simone
+ * @version 1.0
+ */
 public class BackgroundPanel extends JComponent {
-
+	/**
+	 * Background image
+	 */
 	private Image image;
-
+	/**
+	 * Constructor
+	 * @param image background image
+	 */
 	public BackgroundPanel(Image image) {
 		this.image = image;
 	}
@@ -16,7 +27,7 @@ public class BackgroundPanel extends JComponent {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-
+		// fills background repeating the image
 		int iw = image.getWidth(this);
 		int ih = image.getHeight(this);
 		if (iw > 0 && ih > 0) {

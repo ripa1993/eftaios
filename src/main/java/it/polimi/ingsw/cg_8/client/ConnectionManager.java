@@ -14,7 +14,9 @@ import java.io.Serializable;
  * @version 1.0
  */
 public abstract class ConnectionManager implements Serializable {
-
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = -1347635297531821083L;
 	/**
 	 * The name used to identify the player.
@@ -36,7 +38,7 @@ public abstract class ConnectionManager implements Serializable {
 	 * The chosen map.
 	 */
 	protected GameMapName mapName;
-	
+
 	/**
 	 * The constructor sets the player name and the chosen map, ready to be sent
 	 * to the server.
@@ -52,12 +54,12 @@ public abstract class ConnectionManager implements Serializable {
 		this.mapName = mapName;
 	}
 
-	public ConnectionManager() {
-		nameSet = false;
-		clientID = 0;
-		clientData = new ClientData();
-	}
-
+	/**
+	 * Changes the player name
+	 * 
+	 * @param name
+	 *            player name
+	 */
 	public void setPlayerName(String name) {
 		this.playerName = name;
 	}
@@ -68,10 +70,21 @@ public abstract class ConnectionManager implements Serializable {
 	 */
 	public abstract void setup();
 
+	/**
+	 * Changes the client id
+	 * 
+	 * @param clientID
+	 *            client id
+	 */
 	public void setclientID(int clientID) {
 		this.clientID = clientID;
 	}
 
+	/**
+	 * Used to get the client id
+	 * 
+	 * @return the cliend id
+	 */
 	public int getclientID() {
 		return this.clientID;
 	}
@@ -85,10 +98,21 @@ public abstract class ConnectionManager implements Serializable {
 	 */
 	public abstract void send(ClientAction inputLine);
 
+	/**
+	 * Used to get the client data
+	 * 
+	 * @return the client data
+	 */
 	public ClientData getClientData() {
 		return clientData;
 	}
 
+	/**
+	 * Changes the client data
+	 * 
+	 * @param clientData
+	 *            new client data
+	 */
 	public void setClientData(ClientData clientData) {
 		this.clientData = clientData;
 	}

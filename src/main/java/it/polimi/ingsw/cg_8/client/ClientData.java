@@ -51,6 +51,9 @@ public class ClientData extends Observable {
 	 */
 	private boolean lastAck;
 
+	/**
+	 * Constructor, creates an empty collection of datas
+	 */
 	public ClientData() {
 		chat = new ArrayList<ResponseChat>();
 		noise = new ArrayList<ResponseNoise>();
@@ -58,6 +61,7 @@ public class ClientData extends Observable {
 		cards = null;
 		state = null;
 		map = null;
+		lastAck = false;
 	}
 
 	/**
@@ -105,18 +109,38 @@ public class ClientData extends Observable {
 		return;
 	}
 
+	/**
+	 * Used to get the list of chat message.
+	 * 
+	 * @return list of ResponseChat received from the server
+	 */
 	public List<ResponseChat> getChat() {
 		return chat;
 	}
 
+	/**
+	 * Used to get the list of noise message.
+	 * 
+	 * @return list of ResponseNoise received from the server
+	 */
 	public List<ResponseNoise> getNoise() {
 		return noise;
 	}
 
+	/**
+	 * Used to get the list of private message.
+	 * 
+	 * @return list of ResponsePrivate received from the server
+	 */
 	public List<ResponsePrivate> getPrivateMessages() {
 		return privateMessages;
 	}
 
+	/**
+	 * Used to get the last ResponseMap received
+	 * 
+	 * @return ResponseMap received from the server
+	 */
 	public ResponseMap getMap() {
 		return map;
 	}
@@ -169,12 +193,23 @@ public class ClientData extends Observable {
 
 	}
 
+	/**
+	 * Used to store the last ack received from the server
+	 * 
+	 * @param serverResponse
+	 *            ack received
+	 */
 	public void storeAck(boolean serverResponse) {
 		lastAck = serverResponse;
 		setChanged();
 		notifyObservers("Ack");
 	}
 
+	/**
+	 * Used to get the last ack received from the server
+	 * 
+	 * @return a string that tells if the ack was true or false
+	 */
 	public String getAck() {
 		if (lastAck) {
 			return "Your action has been accepted by the server";

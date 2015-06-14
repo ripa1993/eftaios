@@ -22,6 +22,16 @@ import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Main class for client command line interface. It uses a console to receive
+ * user inputs. The user can choose a username, a connection method between rmi
+ * and socket and send a vote to the server for the map choiche (fermi, galvani
+ * and galilei)
+ * 
+ * @author Simone
+ * @version 1.0
+ *
+ */
 public class MainCLI implements Runnable, Observer {
 	/**
 	 * Client data, used to store server messages
@@ -56,6 +66,11 @@ public class MainCLI implements Runnable, Observer {
 		input = new Scanner(System.in);
 	}
 
+	/**
+	 * Method that handles the game setup, it asks the user the playername, the
+	 * connection method and the preferred map. Then creates a connection with
+	 * the server.
+	 */
 	private void setup() {
 		/**
 		 * Player name
@@ -96,7 +111,7 @@ public class MainCLI implements Runnable, Observer {
 		logger.debug("Method set: " + chosenMethod);
 		// get chosen map
 		do {
-			System.out.println(">Choose your favorite map:");
+			System.out.println(">Vote your favorite map:");
 			System.out.println("(1) Fermi");
 			System.out.println("(2) Galvani");
 			System.out.println("(3) Galilei");
@@ -173,11 +188,11 @@ public class MainCLI implements Runnable, Observer {
 			logger.debug("New Update: STATE");
 			// new state update
 			ResponseState stateMessage = clientData.getState();
-			System.out.println("[STATE] Player: " + stateMessage.getPlayerName()
-					+ ", Character: " + stateMessage.getCharacter());
-			System.out.println(", State: "
-					+ stateMessage.getState() + ", Position: "
-					+ stateMessage.getPosition());
+			System.out.println("[STATE] Player: "
+					+ stateMessage.getPlayerName() + ", Character: "
+					+ stateMessage.getCharacter());
+			System.out.println(", State: " + stateMessage.getState()
+					+ ", Position: " + stateMessage.getPosition());
 		} else if (arg.equals("Map")) {
 			logger.debug("New Update: MAP");
 			// new map update, happens only on game start.
@@ -194,6 +209,12 @@ public class MainCLI implements Runnable, Observer {
 
 	}
 
+	/**
+	 * CLI launcher
+	 * 
+	 * @param args
+	 *            parameters
+	 */
 	public static void main(String[] args) {
 		(new MainCLI()).run();
 	}

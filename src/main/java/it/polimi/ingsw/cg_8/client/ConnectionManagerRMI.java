@@ -1,6 +1,5 @@
 package it.polimi.ingsw.cg_8.client;
 
-
 import it.polimi.ingsw.cg_8.model.map.GameMapName;
 import it.polimi.ingsw.cg_8.server.ServerGameRoom;
 import it.polimi.ingsw.cg_8.server.ServerGameRoomInterface;
@@ -21,9 +20,17 @@ import java.rmi.server.UnicastRemoteObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Class used to handle the RMI connection between server and client gui or cli
+ * 
+ * @author Simone
+ * @version 1.0
+ */
 public class ConnectionManagerRMI extends ConnectionManager implements
 		Serializable, SubscriberInterface {
-
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 9162555998546617215L;
 
 	/**
@@ -45,10 +52,16 @@ public class ConnectionManagerRMI extends ConnectionManager implements
 	/**
 	 * Log4j logger
 	 */
-	private static final Logger logger = LogManager.getLogger(ConnectionManagerRMI.class);
+	private static final Logger logger = LogManager
+			.getLogger(ConnectionManagerRMI.class);
+
 	/**
 	 * The constructor is the same as the parent class.
+	 * 
 	 * @param playerName
+	 *            player name
+	 * @param mapName
+	 *            map name
 	 */
 	public ConnectionManagerRMI(String playerName, GameMapName mapName) {
 		super(playerName, mapName);
@@ -66,7 +79,8 @@ public class ConnectionManagerRMI extends ConnectionManager implements
 			this.view = this.initializeRMI();
 			logger.debug("Successfully registered");
 		} catch (NotBoundException | RemoteException | AlreadyBoundException e) {
-			logger.error("Failed to connect to the RMI Server: "+e.getMessage());
+			logger.error("Failed to connect to the RMI Server: "
+					+ e.getMessage());
 		}
 	}
 
@@ -133,7 +147,7 @@ public class ConnectionManagerRMI extends ConnectionManager implements
 			nameSet = registrationRoom.sendPlayerName(this.playerName);
 		}
 		logger.debug("NAME ACCEPTED");
-		
+
 		/**
 		 * Communicating the chosen map to the server.
 		 */
@@ -144,7 +158,7 @@ public class ConnectionManagerRMI extends ConnectionManager implements
 		 * The client gets a view to play the game;
 		 */
 		logger.debug("Trying to register...");
-		
+
 		return registrationRoom
 				.register((SubscriberInterface) UnicastRemoteObject
 						.exportObject(this, 0));

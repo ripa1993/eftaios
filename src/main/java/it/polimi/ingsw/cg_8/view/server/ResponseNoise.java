@@ -9,7 +9,7 @@ import java.io.Serializable;
  * Server response used in order to comunicate Noises to the clients
  * 
  * @author Simone
- *
+ * @version 1.0
  */
 public class ResponseNoise implements Serializable, ServerResponse {
 
