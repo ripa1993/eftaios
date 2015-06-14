@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.apache.logging.log4j.LogManager;
@@ -33,7 +34,7 @@ public class ServerSocketPublisherThread extends ServerPublisher implements
 	 * The buffer where the messages are stored, before being sent to the
 	 * player.
 	 */
-	private ConcurrentLinkedQueue<ServerResponse> buffer;
+	private Queue<ServerResponse> buffer;
 	/**
 	 * Log4j logger
 	 */
