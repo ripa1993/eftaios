@@ -42,9 +42,12 @@ public class ClientSocketViewSUB implements Runnable {
 	/**
 	 * Log4j logger
 	 */
-	private static final Logger logger = LogManager.getLogger(ClientSocketViewSUB.class);
+	private static final Logger logger = LogManager
+			.getLogger(ClientSocketViewSUB.class);
+
 	/**
 	 * Used in the CLI
+	 * 
 	 * @param serverIP
 	 * @param serverPubPort
 	 * @param clientSocket
@@ -63,6 +66,7 @@ public class ClientSocketViewSUB implements Runnable {
 
 	/**
 	 * Used in the GUI
+	 * 
 	 * @param serverIP
 	 * @param serverPubPort
 	 * @param connectionManager
@@ -85,8 +89,7 @@ public class ClientSocketViewSUB implements Runnable {
 	 */
 	@Override
 	public void run() {
-		System.out.println("Successfully subscribed.");
-		// TODO: add timer to waste fewer resources?
+		logger.info("Successfully subscribed.");
 		while (true) {
 
 			this.receive();
@@ -101,9 +104,9 @@ public class ClientSocketViewSUB implements Runnable {
 
 		try {
 			ServerResponse response = (ServerResponse) input.readObject();
-			System.out.println(response);
+			logger.debug(response);
 			if (response instanceof ResponseCard) {
-				System.out.println("storing responsecard " + response);
+				logger.debug("storing responsecard " + response);
 			}
 			if (clientSocket != null) {
 				clientSocket.getClientData().storeResponse(response);
