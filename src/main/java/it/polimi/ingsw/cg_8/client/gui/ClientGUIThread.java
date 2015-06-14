@@ -809,10 +809,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		// send chat message when enter is pressed
 		chatTextField.addKeyListener(new KeyListener() {
 
-			@Override
-			public void keyTyped(KeyEvent e) {
 
-			}
 
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -826,10 +823,16 @@ public class ClientGUIThread implements Runnable, Observer {
 			}
 
 			@Override
-			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
-
+			public void keyTyped(KeyEvent e) {
+				return;
 			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				return;
+			}
+
+
 
 		});
 
