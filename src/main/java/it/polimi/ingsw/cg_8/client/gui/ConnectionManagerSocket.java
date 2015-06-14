@@ -82,7 +82,7 @@ public class ConnectionManagerSocket extends ConnectionManager {
 	public void send(ClientAction inputLine) {
 		logger.debug("Sending action...");
 		ClientSocketViewCS socketCS = new ClientSocketViewCS(SERVER_ADDRESS,
-				SOCKET_PORT_CLIENTSERVER, inputLine, clientID);
+				SOCKET_PORT_CLIENTSERVER, inputLine, clientID, clientData);
 		executor.submit(socketCS);
 
 	}

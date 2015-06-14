@@ -4,6 +4,7 @@ import it.polimi.ingsw.cg_8.server.ServerSocketPublisherThread;
 import it.polimi.ingsw.cg_8.view.client.ActionParser;
 import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
 import it.polimi.ingsw.cg_8.view.client.exceptions.NotAValidInput;
+import it.polimi.ingsw.cg_8.view.server.ResponsePrivate;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -45,6 +46,10 @@ public class ClientSocketViewCS implements Runnable {
 	 */
 	private int clientId;
 	/**
+	 * This player client data
+	 */
+	private ClientData clientData;
+	/**
 	 * Log4j logger
 	 */
 	private static final Logger logger = LogManager
@@ -59,7 +64,8 @@ public class ClientSocketViewCS implements Runnable {
 	 * @throws NotAValidInput
 	 */
 	public ClientSocketViewCS(String serverIP, int serverResponsePort,
-			String inputLine, int clientId) throws NotAValidInput {
+			String inputLine, int clientId, ClientData clientData)
+			throws NotAValidInput {
 		try {
 			// TODO: server must close connection if no input from client in 10
 			// sec
@@ -69,6 +75,7 @@ public class ClientSocketViewCS implements Runnable {
 			this.output = new ObjectOutputStream(
 					requestSocket.getOutputStream());
 			this.input = new ObjectInputStream(requestSocket.getInputStream());
+			this.clientData = clientData;
 
 		} catch (IOException e) {
 			logger.error("Failed to establish a connection with the server");
@@ -76,7 +83,7 @@ public class ClientSocketViewCS implements Runnable {
 	}
 
 	public ClientSocketViewCS(String serverIP, int serverResponsePort,
-			ClientAction input, int clientId) {
+			ClientAction input, int clientId, ClientData clientData) {
 
 		try {
 			this.clientId = clientId;
@@ -85,6 +92,7 @@ public class ClientSocketViewCS implements Runnable {
 			this.output = new ObjectOutputStream(
 					requestSocket.getOutputStream());
 			this.input = new ObjectInputStream(requestSocket.getInputStream());
+			this.clientData = clientData;
 		} catch (IOException e) {
 			logger.error("Failed to establish a connection with the server");
 		}
@@ -97,6 +105,7 @@ public class ClientSocketViewCS implements Runnable {
 			// write id
 			output.writeObject(clientId);
 			output.flush();
+
 			/**
 			 * Useful for testing purposes.
 			 */
@@ -113,7 +122,9 @@ public class ClientSocketViewCS implements Runnable {
 
 			// logger.debug("Waiting server response");
 			try {
-				logger.debug((boolean) input.readObject());
+				boolean serverResponse = (boolean) input.readObject();
+				clientData.storeAck(serverResponse);
+				logger.debug("Server response is: " + serverResponse);
 			} catch (ClassNotFoundException e) {
 				logger.error(e.getMessage());
 			}

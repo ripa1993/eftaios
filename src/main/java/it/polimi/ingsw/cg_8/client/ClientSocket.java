@@ -127,7 +127,7 @@ public class ClientSocket implements Runnable {
 					//System.out.println("CLIENT: read "+ inputLine);
 
 					executor.submit(new ClientSocketViewCS(SERVER_ADDRESS,
-							SOCKET_PORT_CLIENTSERVER, inputLine, clientID));
+							SOCKET_PORT_CLIENTSERVER, inputLine, clientID, clientData));
 
 				} catch (NotAValidInput e) {
 					System.out.println(e.getMessage());

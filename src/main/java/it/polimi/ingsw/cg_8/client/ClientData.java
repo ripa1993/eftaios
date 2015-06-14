@@ -46,14 +46,18 @@ public class ClientData extends Observable {
 	 * Map
 	 */
 	private ResponseMap map;
-	
+	/**
+	 * Server last command ack or nack
+	 */
+	private boolean lastAck;
+
 	public ClientData() {
 		chat = new ArrayList<ResponseChat>();
 		noise = new ArrayList<ResponseNoise>();
 		privateMessages = new ArrayList<ResponsePrivate>();
 		cards = null;
 		state = null;
-		map=null;
+		map = null;
 	}
 
 	/**
@@ -86,14 +90,14 @@ public class ClientData extends Observable {
 			setChanged();
 			notifyObservers("Cards");
 			return;
-			}
+		}
 		if (response instanceof ResponseState) {
 			state = (ResponseState) response;
 			setChanged();
 			notifyObservers("State");
 			return;
 		}
-		if (response instanceof ResponseMap){
+		if (response instanceof ResponseMap) {
 			map = (ResponseMap) response;
 			setChanged();
 			notifyObservers("Map");
@@ -112,15 +116,16 @@ public class ClientData extends Observable {
 	public List<ResponsePrivate> getPrivateMessages() {
 		return privateMessages;
 	}
-	
-	public ResponseMap getMap(){
+
+	public ResponseMap getMap() {
 		return map;
 	}
+
 	/**
 	 * Used to get the last message sent.
 	 * 
-	 * @return cards the cards held by the player, stored in {@link ResponseCard card
-	 *         response}
+	 * @return cards the cards held by the player, stored in
+	 *         {@link ResponseCard card response}
 	 */
 	public ResponseCard getCards() {
 		return cards;
@@ -162,6 +167,20 @@ public class ClientData extends Observable {
 	public ResponsePrivate getLastPrivate() {
 		return privateMessages.get(privateMessages.size() - 1);
 
+	}
+
+	public void storeAck(boolean serverResponse) {
+		lastAck = serverResponse;
+		setChanged();
+		notifyObservers("Ack");
+	}
+
+	public String getAck() {
+		if (lastAck) {
+			return "Your action has been accepted by the server";
+		} else {
+			return "Your action has been refused by the server";
+		}
 	}
 
 }

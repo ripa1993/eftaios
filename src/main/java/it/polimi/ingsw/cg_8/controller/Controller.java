@@ -199,8 +199,7 @@ public class Controller implements Observer {
 			this.writeToAll(new ResponseMap(mapName));
 			for (Player p : this.model.getPlayers()) {
 				this.writeToPlayer(p, new ResponsePrivate(
-						"You will be playing as:\n" + " "
-								+ p.getCharacter().toString()));
+						"You will be playing as: " + p.getCharacter()));
 			}
 			// this.writeToAll(new ResponsePrivate("The current player is: "
 			// + model.getCurrentPlayerReference().getName()));
@@ -218,7 +217,8 @@ public class Controller implements Observer {
 	/**
 	 * Used to update the model with the map voted by the players.
 	 * 
-	 * @param chosenMap The most voted map.
+	 * @param chosenMap
+	 *            The most voted map.
 	 */
 	public void setMap(GameMapName chosenMap) {
 		this.model.setMap(chosenMap);
@@ -335,7 +335,7 @@ public class Controller implements Observer {
 				} else if (p.getState().equals(PlayerState.DISCONNECTED)) {
 					this.writeToAll(new ResponsePrivate(
 							p.getName()
-									+ " left the game prematurely. \n\tNobody will miss him."));
+									+ " left the game prematurely. Nobody will miss him."));
 				}
 			}
 			/**
@@ -365,7 +365,7 @@ public class Controller implements Observer {
 			}
 
 			// communicate the new player to clients
-			this.writeToAll(new ResponsePrivate("THE NEXT PLAYER IS: "
+			this.writeToAll(new ResponsePrivate("Next player is: "
 					+ model.getCurrentPlayerReference().getName()));
 			this.writeToPlayer(model.getCurrentPlayerReference(),
 					new ResponsePrivate("IT'S YOUR TURN"));
@@ -375,7 +375,6 @@ public class Controller implements Observer {
 			// this.writeToPlayer(model.getCurrentPlayerReference(),
 			// new ResponsePrivate(model.getCurrentPlayerReference()
 			// .toString()));
-
 			/**
 			 * Notify every player about their state.
 			 */

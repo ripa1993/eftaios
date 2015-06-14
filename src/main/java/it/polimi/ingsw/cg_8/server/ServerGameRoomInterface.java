@@ -8,7 +8,7 @@ import java.rmi.RemoteException;
 public interface ServerGameRoomInterface extends Remote {
 
 	
-	public void makeAction(int clientId, ClientAction action) throws RemoteException;
+	public boolean makeAction(int clientId, ClientAction action) throws RemoteException;
 	
 	
 }
