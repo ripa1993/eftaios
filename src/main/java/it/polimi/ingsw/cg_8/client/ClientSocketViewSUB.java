@@ -1,7 +1,5 @@
 package it.polimi.ingsw.cg_8.client;
 
-import it.polimi.ingsw.cg_8.server.Server;
-import it.polimi.ingsw.cg_8.view.server.ResponseCard;
 import it.polimi.ingsw.cg_8.view.server.ServerResponse;
 
 import java.io.IOException;

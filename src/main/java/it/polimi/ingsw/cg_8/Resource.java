@@ -1,7 +1,6 @@
 package it.polimi.ingsw.cg_8;
 
 import java.io.File;
-import java.io.InputStream;
 
 /**
  * Container for references to resource files

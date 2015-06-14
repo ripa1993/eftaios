@@ -1,10 +1,6 @@
 package it.polimi.ingsw.cg_8.client;
 
-import it.polimi.ingsw.cg_8.server.ServerSocketPublisherThread;
-import it.polimi.ingsw.cg_8.view.client.ActionParser;
 import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
-import it.polimi.ingsw.cg_8.view.client.exceptions.NotAValidInput;
-import it.polimi.ingsw.cg_8.view.server.ResponsePrivate;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

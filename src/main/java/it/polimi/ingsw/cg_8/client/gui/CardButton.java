@@ -13,7 +13,7 @@ import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
 import it.polimi.ingsw.cg_8.view.client.exceptions.NotAValidInput;
 
 import java.awt.BorderLayout;
-import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -26,19 +26,16 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLayeredPane;
-import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
-import java.awt.Color;
-import javax.swing.JButton;
 
 /**
  * JButton that allows the player to use an item card.

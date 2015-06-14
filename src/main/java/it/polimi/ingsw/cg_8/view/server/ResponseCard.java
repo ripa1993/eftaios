@@ -3,7 +3,6 @@ package it.polimi.ingsw.cg_8.view.server;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.ItemCard;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

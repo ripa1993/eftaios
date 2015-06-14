@@ -123,8 +123,6 @@ public class Controller implements Observer {
 		} catch (NotAValidMapException e) {
 			LOGGER.error(e.getMessage(), e);
 		}
-		// TODO: ServerSocketPublisherThread should extend ServerPublisherThread
-		// (also RMI do the same)
 	}
 
 	/**

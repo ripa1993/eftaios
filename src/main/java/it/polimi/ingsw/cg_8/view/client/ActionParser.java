@@ -16,7 +16,6 @@ import it.polimi.ingsw.cg_8.view.client.actions.ActionGetAvailableAction;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionGetHand;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionGetReachableCoordinates;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionMove;
-import it.polimi.ingsw.cg_8.view.client.actions.ActionSetName;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionUseCard;
 import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
 import it.polimi.ingsw.cg_8.view.client.exceptions.NotAValidInput;
