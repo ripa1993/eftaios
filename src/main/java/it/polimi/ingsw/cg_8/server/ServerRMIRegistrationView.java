@@ -31,6 +31,10 @@ public class ServerRMIRegistrationView implements
 	 */
 	private ServerRMI serverRMI;
 
+	/**
+	 * The server RMI is used to register the player.
+	 * @param server
+	 */
 	public ServerRMIRegistrationView(ServerRMI server) {
 		this.serverRMI = server;
 	}
@@ -38,6 +42,8 @@ public class ServerRMIRegistrationView implements
 	/**
 	 * The client gets a new clientId, if it doesn't already have one. The
 	 * method is called at the beginning of the registration process.
+	 * @param clientId
+	 * @return clientId The new clientId
 	 */
 	@Override
 	public int getClientId(int clientId) throws RemoteException,
@@ -56,6 +62,8 @@ public class ServerRMIRegistrationView implements
 	/**
 	 * Method used by the client to communicate its name to the server, before
 	 * the start of the game.
+	 * @param playerName
+	 * @return If the name was accepted.
 	 */
 	@Override
 	public boolean sendPlayerName(String name) throws RemoteException,
@@ -68,6 +76,7 @@ public class ServerRMIRegistrationView implements
 	/**
 	 * Method used by the client to communicate its chosen map to the server,
 	 * which will process the vote.
+	 * @param chosenMap The map chosen by the player.
 	 */
 	@Override
 	public void sendMapVote(GameMapName chosenMap) throws RemoteException,
@@ -80,6 +89,8 @@ public class ServerRMIRegistrationView implements
 	 * Creates a {@link ServerGameRoom GameRoom} for the client so that it can
 	 * play the game. Add the client to a client list, so that the server can
 	 * identify it.
+	 * @param client A reference to the client which is registering.
+	 * @return view A GameRoom usable by the player.
 	 */
 	@Override
 	public ServerGameRoomInterface register(SubscriberInterface client)

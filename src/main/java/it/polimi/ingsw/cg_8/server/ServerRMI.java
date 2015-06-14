@@ -14,6 +14,7 @@ import org.apache.logging.log4j.Logger;
 
 /**
  * The class that handles th registration of the RMI clients.
+ * 
  * @author Alberto Parravicini
  * @version 1.0
  */
@@ -28,10 +29,16 @@ public class ServerRMI implements Runnable {
 	 */
 	private static final Logger logger = LogManager.getLogger(ServerRMI.class);
 
+	/**
+	 * Passing the server is needed to bind the registration room.
+	 * 
+	 * @param server
+	 */
 	public ServerRMI(Server server) {
 		this.server = server;
 	}
 
+	@Override
 	public void run() {
 
 		ServerRMIRegistrationViewRemote gameRegistration = new ServerRMIRegistrationView(
@@ -48,14 +55,11 @@ public class ServerRMI implements Runnable {
 		}
 	}
 
-	public Server getServer() {
-		return server;
-	}
-
 	/**
 	 * Add a client to the game, check if the game has to start.
+	 * 
 	 * @param client
-	 * @param view 
+	 * @param view
 	 * @throws GameAlreadyRunningException
 	 * @throws RemoteException
 	 */

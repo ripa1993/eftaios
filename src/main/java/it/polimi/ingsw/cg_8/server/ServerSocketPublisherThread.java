@@ -19,15 +19,31 @@ import org.apache.logging.log4j.Logger;
  * @author Simone
  *
  */
-public class ServerSocketPublisherThread extends ServerPublisher implements Runnable {
+public class ServerSocketPublisherThread extends ServerPublisher implements
+		Runnable {
+	/**
+	 * The socket of the player.
+	 */
 	private Socket subscriber;
+	/**
+	 * The output stream.
+	 */
 	private ObjectOutputStream output;
+	/**
+	 * The buffer where the messages are stored, before being sent to the
+	 * player.
+	 */
 	private ConcurrentLinkedQueue<ServerResponse> buffer;
 	/**
 	 * Log4j logger
 	 */
-	private static final Logger logger = LogManager.getLogger(ServerSocketPublisherThread.class);
+	private static final Logger logger = LogManager
+			.getLogger(ServerSocketPublisherThread.class);
 
+	/**
+	 * Creates a publisher for the current subscriber.
+	 * @param subscriber
+	 */
 	public ServerSocketPublisherThread(Socket subscriber) {
 		this.subscriber = subscriber;
 		this.buffer = new ConcurrentLinkedQueue<ServerResponse>();
@@ -49,7 +65,7 @@ public class ServerSocketPublisherThread extends ServerPublisher implements Runn
 						System.out.println("response card asd" + message);
 					}
 					send(message);
-					logger.debug("Message sent: "+message);
+					logger.debug("Message sent: " + message);
 				} else {
 					try {
 						synchronized (buffer) {
@@ -65,6 +81,10 @@ public class ServerSocketPublisherThread extends ServerPublisher implements Runn
 		}
 	}
 
+	/**
+	 * Add a message to the buffer.
+	 * @param message The message sent by the server.
+	 */
 	@Override
 	public void dispatchMessage(ServerResponse message) {
 		buffer.add(message);
@@ -72,8 +92,15 @@ public class ServerSocketPublisherThread extends ServerPublisher implements Runn
 			buffer.notify();
 		}
 	}
-
-	private void send(ServerResponse message) throws IOException, SocketException {
+	
+	/**
+	 * Send a message to the player.
+	 * @param message
+	 * @throws IOException
+	 * @throws SocketException
+	 */
+	private void send(ServerResponse message) throws IOException,
+			SocketException {
 		output.writeObject(message);
 		output.flush();
 	}
