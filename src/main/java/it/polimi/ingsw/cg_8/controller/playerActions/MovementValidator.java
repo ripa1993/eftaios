@@ -52,10 +52,7 @@ public class MovementValidator {
 
 		if (checkMovement(player, startingSector, destination) == true) {
 			boolean contains = allowedCoordinates.contains(destination);
-			if (contains) {
-				return true;
-			} else
-				return false;
+			return contains;
 		} else {
 			return false;
 		}
