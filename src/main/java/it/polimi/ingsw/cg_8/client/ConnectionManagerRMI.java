@@ -6,7 +6,6 @@ import it.polimi.ingsw.cg_8.server.ServerGameRoomInterface;
 import it.polimi.ingsw.cg_8.server.ServerRMIRegistrationView;
 import it.polimi.ingsw.cg_8.server.ServerRMIRegistrationViewRemote;
 import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
-import it.polimi.ingsw.cg_8.view.server.ResponsePrivate;
 import it.polimi.ingsw.cg_8.view.server.ServerResponse;
 
 import java.io.Serializable;
@@ -36,15 +35,15 @@ public class ConnectionManagerRMI extends ConnectionManager implements
 	/**
 	 * The server IP address.
 	 */
-	private final static String SERVER_ADDRESS = "localhost";
+	private static final String SERVER_ADDRESS = "localhost";
 	/**
 	 * The server port used by the client to register.
 	 */
-	private final static int REGISTRATION_PORT = 7777;
+	private static final int REGISTRATION_PORT = 7777;
 	/**
 	 * The name used to identify the {@link ServerRMIRegistrationView}
 	 */
-	private final static String REGISTRATION_ROOM_NAME = "registrationRoom";
+	private static final String REGISTRATION_ROOM_NAME = "registrationRoom";
 	/**
 	 * GameRoom used by RMI.
 	 */

@@ -29,15 +29,15 @@ public class ConnectionManagerSocket extends ConnectionManager {
 	/**
 	 * The server IP address.
 	 */
-	private final static String SERVER_ADDRESS = "localhost";
+	private static final String SERVER_ADDRESS = "localhost";
 	/**
 	 * The server port used for the Receive/Response communication.
 	 */
-	private final static int SOCKET_PORT_CLIENTSERVER = 29998;
+	private static final int SOCKET_PORT_CLIENTSERVER = 29998;
 	/**
 	 * The server port used for the Publisher/Subscriber communication.
 	 */
-	private final static int SOCKET_PORT_PUBSUB = 29999;
+	private static final int SOCKET_PORT_PUBSUB = 29999;
 	/**
 	 * Thread executor service
 	 */
@@ -125,7 +125,7 @@ public class ConnectionManagerSocket extends ConnectionManager {
 				this.setclientID((int) clientIDRequested);
 				LOGGER.info("Your ID is: " + this.getclientID());
 			} catch (IOException | ClassNotFoundException e) {
-				LOGGER.error(e.getMessage(),e);
+				LOGGER.error(e.getMessage(), e);
 			}
 		} while (this.getclientID() == 0);
 
@@ -152,9 +152,9 @@ public class ConnectionManagerSocket extends ConnectionManager {
 				}
 
 			} catch (IOException e) {
-				LOGGER.error(e.getMessage(),e);
+				LOGGER.error(e.getMessage(), e);
 			} catch (ClassNotFoundException e) {
-				LOGGER.error(e.getMessage(),e);
+				LOGGER.error(e.getMessage(), e);
 			}
 		} while (!nameSet || !mapSet);
 
@@ -168,7 +168,7 @@ public class ConnectionManagerSocket extends ConnectionManager {
 		try {
 			socket.close();
 		} catch (IOException e) {
-			LOGGER.error(e.getMessage(),e);
+			LOGGER.error(e.getMessage(), e);
 		} finally {
 			socket = null;
 			output = null;

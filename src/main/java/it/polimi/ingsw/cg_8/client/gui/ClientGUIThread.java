@@ -828,8 +828,8 @@ public class ClientGUIThread implements Runnable, Observer {
 		});
 
 		mapPanel.addMouseListener(new MouseInputAdapter() {
-			private final static int NUM_COLUMN = 23;
-			private final static int NUM_ROW = 29;
+			private static final int NUM_COLUMN = 23;
+			private static final int NUM_ROW = 29;
 
 			private Coordinate getCoordinate(MouseEvent e) {
 				// result coordinates
