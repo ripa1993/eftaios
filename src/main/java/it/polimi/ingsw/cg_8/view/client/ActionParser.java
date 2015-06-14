@@ -56,11 +56,12 @@ public class ActionParser {
 			throws NotAValidInput {
 		char[] inputArray = input.toUpperCase().toCharArray();
 
-		if (inputArray[0] < 65 || inputArray[0] > 87 || inputArray[1] < 48
-				|| inputArray[1] > 49 || inputArray[2] < 48
-				|| inputArray[2] > 57) {
+		if (inputArray[0] < 65 || inputArray[0] > 87 || inputArray[1] < 48) {
 			// first letter is not in [A,W], first number not in [0,1] and
 			// second number not in [0,9]
+			throw new NotAValidInput("Not a valid coordinate");
+		} else if (inputArray[1] > 49 || inputArray[2] < 48
+				|| inputArray[2] > 57) {
 			throw new NotAValidInput("Not a valid coordinate");
 		}
 
