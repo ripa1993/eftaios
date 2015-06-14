@@ -924,18 +924,18 @@ public class ClientGUIThread implements Runnable, Observer {
 
 			cardButton1
 					.setCardType(this.analyzeCardType(cardMessage.getCard1()));
-			System.out.println("card1type"
+			logger.debug("card1type"
 					+ this.analyzeCardType(cardMessage.getCard1()));
 			cardButton1.repaint();
 			cardButton2
 					.setCardType(this.analyzeCardType(cardMessage.getCard2()));
-			System.out.println("card2type"
+			logger.debug("card2type"
 					+ this.analyzeCardType(cardMessage.getCard2()));
 
 			cardButton2.repaint();
 			cardButton3
 					.setCardType(this.analyzeCardType(cardMessage.getCard3()));
-			System.out.println("card3type"
+			logger.debug("card3type"
 					+ this.analyzeCardType(cardMessage.getCard3()));
 
 			cardButton3.repaint();
@@ -1008,6 +1008,8 @@ public class ClientGUIThread implements Runnable, Observer {
 			}
 			mapPanel.repaint();
 			matchStarted = true;
+		} else if (arg.equals("Ack")) {
+			appendInfo("ACK", clientData.getAck());
 		}
 	}
 

@@ -109,7 +109,7 @@ public class Controller implements Observer {
 	public Controller(GameMapName mapName, Rules rules) {
 
 		try {
-			this.mapName=mapName;
+			this.mapName = mapName;
 			this.model = new Model(mapName);
 			this.rules = rules;
 			this.id2Player = new HashMap<Integer, Player>();
@@ -199,16 +199,15 @@ public class Controller implements Observer {
 			this.writeToAll(new ResponseMap(mapName));
 			for (Player p : this.model.getPlayers()) {
 				this.writeToPlayer(p, new ResponsePrivate(
-						"You will be playing as:\n" + " "
-								+ p.getCharacter().toString()));
+						"You will be playing as: " + p.getCharacter()));
 			}
-//			this.writeToAll(new ResponsePrivate("The current player is: "
-//					+ model.getCurrentPlayerReference().getName()));
-//			this.writeToPlayer(model.getCurrentPlayerReference(),
-//					new ResponsePrivate(model.getCurrentPlayerReference()
-//							.toString()));
-//			this.writeToPlayer(model.getCurrentPlayerReference(),
-//					new ResponsePrivate("IT'S YOUR TURN!"));
+			// this.writeToAll(new ResponsePrivate("The current player is: "
+			// + model.getCurrentPlayerReference().getName()));
+			// this.writeToPlayer(model.getCurrentPlayerReference(),
+			// new ResponsePrivate(model.getCurrentPlayerReference()
+			// .toString()));
+			// this.writeToPlayer(model.getCurrentPlayerReference(),
+			// new ResponsePrivate("IT'S YOUR TURN!"));
 		} catch (EmptyDeckException e) {
 			logger.error(e.getMessage());
 		}
@@ -326,7 +325,7 @@ public class Controller implements Observer {
 				} else if (p.getState().equals(PlayerState.DISCONNECTED)) {
 					this.writeToAll(new ResponsePrivate(
 							p.getName()
-									+ " left the game prematurely. \n\tNobody will miss him."));
+									+ " left the game prematurely. Nobody will miss him."));
 				}
 			}
 			/**
@@ -356,10 +355,10 @@ public class Controller implements Observer {
 			}
 
 			// communicate the new player to clients
-			this.writeToAll(new ResponsePrivate("THE NEXT PLAYER IS: "
+			this.writeToAll(new ResponsePrivate("Next player is: "
 					+ model.getCurrentPlayerReference().getName()));
 			this.writeToPlayer(model.getCurrentPlayerReference(),
-					new ResponsePrivate("IT'S YOUR TURN"));
+					new ResponsePrivate("Hey! It's your turn"));
 			this.writeToPlayer(model.getCurrentPlayerReference(),
 					new ResponsePrivate(model.getCurrentPlayerReference()
 							.toString()));
@@ -375,12 +374,11 @@ public class Controller implements Observer {
 			 * Communicate to the current player the cards he's holding.
 			 */
 			for (Player p : model.getPlayers()) {
-				ResponseCard response = new ResponseCard(p
-								.getHand().getHeldCards());
-				this.writeToPlayer(p,
-						response);
+				ResponseCard response = new ResponseCard(p.getHand()
+						.getHeldCards());
+				this.writeToPlayer(p, response);
 			}
-			
+
 			logger.info("Timeout started for player "
 					+ ((Player) arg).getName() + ". He has " + (TIMEOUT / 1000)
 					+ "s to complete his turn.");
