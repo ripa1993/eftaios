@@ -161,7 +161,7 @@ public class StateMachine {
 									.getState().toString(), player
 									.getLastPosition().toString(), model
 									.getRoundNumber()));
-					if (currentPlayer.getCharacter().hasToDrawSectorCard() == false) {
+					if (!currentPlayer.getCharacter().hasToDrawSectorCard()) {
 						model.setTurnPhase(TurnPhase.MOVEMENT_DONE_NOT_DS);
 
 					} else {
@@ -279,12 +279,12 @@ public class StateMachine {
 					LOGGER.debug(draw.getItemCard());
 
 					if (draw.getItemCard() != null
-							&& draw.isDiscardedItemCard() == false) {
+							&& !draw.isDiscardedItemCard()) {
 						controller.writeToPlayer(player, new ResponsePrivate(
 								"You have drawn a " + draw.getItemCard()));
 
 					} else if (draw.getItemCard() != null
-							&& draw.isDiscardedItemCard() == true) {
+							&& draw.isDiscardedItemCard()) {
 						controller.writeToPlayer(player, new ResponsePrivate(
 								"You have drawn " + draw.getItemCard()
 										+ " but your hand is full,"
@@ -302,7 +302,7 @@ public class StateMachine {
 				} finally {
 					controller.writeToPlayer(player, new ResponseCard(player
 							.getHand().getHeldCards()));
-					if (hasToMakeFakeNoise == true) {
+					if (hasToMakeFakeNoise) {
 						model.setTurnPhase(TurnPhase.WAITING_FAKE_NOISE);
 						controller.writeToPlayer(player, new ResponsePrivate(
 								"Make a noise on a coordinate of your choice"));
@@ -443,7 +443,7 @@ public class StateMachine {
 	 */
 	private static boolean attackMove(Rules rules, Model model,
 			Controller controller) {
-		if (rules.attackValidator(model) == true) {
+		if (rules.attackValidator(model)) {
 			controller.writeToAll(new ResponsePrivate(model
 					.getCurrentPlayerReference().getName()
 					+ " has attacked in "

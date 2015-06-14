@@ -27,7 +27,6 @@ import it.polimi.ingsw.cg_8.model.player.PlayerState;
 import it.polimi.ingsw.cg_8.model.player.character.InGameCharacter;
 import it.polimi.ingsw.cg_8.model.player.character.alien.Alien;
 import it.polimi.ingsw.cg_8.model.player.character.human.Human;
-import it.polimi.ingsw.cg_8.server.ServerSocketPublisherThread;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -255,7 +254,7 @@ public class Model extends Observable {
 				this.roundNumber++;
 			}
 
-			if (checkGameEndRound() == true) {
+			if (checkGameEndRound()) {
 				// finished round 39, so game ends
 				this.setGameOver();
 				return;

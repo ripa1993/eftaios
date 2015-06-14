@@ -143,7 +143,7 @@ public class ConnectionManagerRMI extends ConnectionManager implements
 
 		LOGGER.debug("Trying to send your name to the server...");
 
-		while (nameSet == false) {
+		while (!nameSet) {
 			nameSet = registrationRoom.sendPlayerName(this.playerName);
 		}
 		LOGGER.debug("NAME ACCEPTED");

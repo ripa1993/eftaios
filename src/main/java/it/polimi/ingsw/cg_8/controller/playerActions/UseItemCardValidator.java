@@ -43,11 +43,11 @@ public class UseItemCardValidator {
 				&& player.getMaxAllowedMovement() == 2) {
 			return false;
 		}
-		if (card instanceof AttackCard && player.isAttackAllowed() == true) {
+		if (card instanceof AttackCard && player.isAttackAllowed()) {
 			return false;
 		}
 		if (card instanceof SedativesCard
-				&& player.hasToDrawSectorCard() == false) {
+				&& !player.hasToDrawSectorCard()) {
 			return false;
 		}
 		Sector playerPosition = model.getMap().getSectors()

@@ -303,11 +303,11 @@ public class Controller implements Observer {
 			List<Player> playerList = this.model.getPlayers();
 
 			this.writeToAll(new ResponsePrivate("GAME OVER"));
-			if (this.model.checkGameEndRound() == true) {
+			if (this.model.checkGameEndRound()) {
 				this.writeToAll(new ResponsePrivate(
 						"The game reached its conclusion"));
 			}
-			if (this.model.checkGameEndNoEH() == true) {
+			if (this.model.checkGameEndNoEH()) {
 				this.writeToAll(new ResponsePrivate(
 						"There are no Escape Hatches left to use"));
 			}

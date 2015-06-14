@@ -50,7 +50,7 @@ public class MovementValidator {
 		Set<Coordinate> allowedCoordinates = setAllowedCoordinates(gameMap,
 				startingSector, maxDistance);
 
-		if (checkMovement(player, startingSector, destination) == true) {
+		if (checkMovement(player, startingSector, destination)) {
 			boolean contains = allowedCoordinates.contains(destination);
 			return contains;
 		} else {

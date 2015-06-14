@@ -54,14 +54,14 @@ public abstract class Deck {
 	 */
 	public void reshuffle() throws EmptyDeckException {
 
-		if (this.isDeckEmpty() == true && this.isUsedCardsEmpty() == false) {
+		if (this.isDeckEmpty() && !this.isUsedCardsEmpty()) {
 			for (Card i : this.usedCards) {
 				this.addCard(i);
 			}
 			this.emptyUsedCardList();
 		}
 
-		if (this.isDeckEmpty() == true && this.isUsedCardsEmpty() == true) {
+		if (this.isDeckEmpty() && this.isUsedCardsEmpty()) {
 			throw new EmptyDeckException("Deck is empty");
 		}
 
@@ -101,7 +101,7 @@ public abstract class Deck {
 	 * @throws EmptyDeckException
 	 */
 	public Card drawCard() throws EmptyDeckException {
-		if (isDeckEmpty() == false) {
+		if (!isDeckEmpty()) {
 			return cardList.remove(0);
 		} else
 			throw new EmptyDeckException("The deck is empty");

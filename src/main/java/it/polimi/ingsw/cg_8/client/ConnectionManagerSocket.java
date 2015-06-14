@@ -156,7 +156,7 @@ public class ConnectionManagerSocket extends ConnectionManager {
 			} catch (ClassNotFoundException e) {
 				LOGGER.error(e.getMessage(),e);
 			}
-		} while (nameSet == false || mapSet == false);
+		} while (!nameSet || !mapSet);
 
 		this.close(socket, output);
 	}

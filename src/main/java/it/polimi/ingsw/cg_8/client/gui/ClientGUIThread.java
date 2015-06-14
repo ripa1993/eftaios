@@ -37,13 +37,11 @@ import it.polimi.ingsw.cg_8.view.server.ResponseState;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics;
-import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -806,8 +804,6 @@ public class ClientGUIThread implements Runnable, Observer {
 		// send chat message when enter is pressed
 		chatTextField.addKeyListener(new KeyListener() {
 
-
-
 			@Override
 			public void keyPressed(KeyEvent e) {
 
@@ -828,8 +824,6 @@ public class ClientGUIThread implements Runnable, Observer {
 			public void keyReleased(KeyEvent e) {
 				return;
 			}
-
-
 
 		});
 
@@ -1020,7 +1014,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		} else if ("State".equals(arg)) {
 			ResponseState stateMessage = clientData.getState();
 
-			if (playerImageSet == false) {
+			if (!playerImageSet) {
 				double random = Math.random();
 				LOGGER.debug(stateMessage.getCharacter());
 				if ("Human".equals(stateMessage.getCharacter())) {
