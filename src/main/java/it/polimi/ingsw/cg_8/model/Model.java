@@ -27,7 +27,6 @@ import it.polimi.ingsw.cg_8.model.player.PlayerState;
 import it.polimi.ingsw.cg_8.model.player.character.InGameCharacter;
 import it.polimi.ingsw.cg_8.model.player.character.alien.Alien;
 import it.polimi.ingsw.cg_8.model.player.character.human.Human;
-import it.polimi.ingsw.cg_8.server.ServerSocketPublisherThread;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -45,7 +44,10 @@ import org.apache.logging.log4j.Logger;
  * @version 1.0
  */
 public class Model extends Observable {
-
+	/**
+	 * Not a valid map text
+	 */
+	private static final String NOT_VALID_MAP = "is not a valid map";
 	/**
 	 * List of players in the current game
 	 */
@@ -54,7 +56,7 @@ public class Model extends Observable {
 	 * The maximum number of turn allowed in the game; if this number is
 	 * reached, the game ends with a draw.
 	 */
-	private final static int MAX_ROUND_NUMBER = 39;
+	private static final int MAX_ROUND_NUMBER = 39;
 	/**
 	 * Number of current round. It is increased when all the players have played
 	 * it.
@@ -130,7 +132,7 @@ public class Model extends Observable {
 			MapCreator mc = new GalvaniCreator();
 			map = mc.createMap();
 		} else {
-			throw new NotAValidMapException(mapName + "is not a valid map");
+			throw new NotAValidMapException(mapName + NOT_VALID_MAP);
 		}
 
 	}
@@ -255,7 +257,7 @@ public class Model extends Observable {
 				this.roundNumber++;
 			}
 
-			if (checkGameEndRound() == true) {
+			if (checkGameEndRound()) {
 				// finished round 39, so game ends
 				this.setGameOver();
 				return;
@@ -336,7 +338,7 @@ public class Model extends Observable {
 		// no one wants to play: all disconnected, dead or escaped
 		int counterPlaying = 0;
 		for (Player p : players) {
-			if ((p.getState() == PlayerState.ALIVE)) {
+			if (p.getState() == PlayerState.ALIVE) {
 				counterPlaying++;
 			}
 		}
@@ -519,10 +521,9 @@ public class Model extends Observable {
 			map = mc.createMap();
 		} else {
 			try {
-				throw new NotAValidMapException(chosenMap
-						+ "is not a valid map");
+				throw new NotAValidMapException(chosenMap + NOT_VALID_MAP);
 			} catch (NotAValidMapException e) {
-				LOGGER.error(chosenMap.toString() + "is not a valid map");
+				LOGGER.error(chosenMap.toString() + NOT_VALID_MAP, e);
 			}
 		}
 	}

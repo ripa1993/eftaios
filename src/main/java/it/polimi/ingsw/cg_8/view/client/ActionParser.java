@@ -16,7 +16,6 @@ import it.polimi.ingsw.cg_8.view.client.actions.ActionGetAvailableAction;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionGetHand;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionGetReachableCoordinates;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionMove;
-import it.polimi.ingsw.cg_8.view.client.actions.ActionSetName;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionUseCard;
 import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
 import it.polimi.ingsw.cg_8.view.client.exceptions.NotAValidInput;
@@ -45,6 +44,15 @@ import java.util.StringTokenizer;
  */
 public class ActionParser {
 	/**
+	 * Not a valid coordinate text
+	 */
+	private static final String NOT_VALID_COORD_TEXT = "Not a valid coordinate";
+	/**
+	 * Not a valid command text
+	 */
+	private static final String NOT_VALID_COMMAND_TEXT = "Not a valid command";
+
+	/**
 	 * Convert input string to coordinate
 	 * 
 	 * @param input
@@ -56,12 +64,13 @@ public class ActionParser {
 			throws NotAValidInput {
 		char[] inputArray = input.toUpperCase().toCharArray();
 
-		if (inputArray[0] < 65 || inputArray[0] > 87 || inputArray[1] < 48
-				|| inputArray[1] > 49 || inputArray[2] < 48
-				|| inputArray[2] > 57) {
+		if (inputArray[0] < 65 || inputArray[0] > 87 || inputArray[1] < 48) {
 			// first letter is not in [A,W], first number not in [0,1] and
 			// second number not in [0,9]
-			throw new NotAValidInput("Not a valid coordinate");
+			throw new NotAValidInput(NOT_VALID_COORD_TEXT);
+		} else if (inputArray[1] > 49 || inputArray[2] < 48
+				|| inputArray[2] > 57) {
+			throw new NotAValidInput(NOT_VALID_COORD_TEXT);
 		}
 
 		int x, y;
@@ -109,17 +118,17 @@ public class ActionParser {
 			}
 			String coordinate = st.nextToken();
 			if (!(coordinate.length() == 3)) {
-				throw new NotAValidInput("Not a valid coordinate");
+				throw new NotAValidInput(NOT_VALID_COORD_TEXT);
 			}
 			Coordinate parsedCoordinate = parseCoordinate(coordinate);
 			if (st.hasMoreTokens()) {
-				throw new NotAValidInput("Not a valid command");
+				throw new NotAValidInput(NOT_VALID_COMMAND_TEXT);
 			}
 			return new ActionMove(parsedCoordinate);
 
 		} else if ("ATTACK".equals(action)) {
 			if (st.hasMoreTokens()) {
-				throw new NotAValidInput("Not a valid command");
+				throw new NotAValidInput(NOT_VALID_COMMAND_TEXT);
 			}
 			return new ActionAttack();
 
@@ -134,7 +143,7 @@ public class ActionParser {
 				} else {
 					Coordinate target = parseCoordinate(st.nextToken());
 					if (st.hasMoreTokens()) {
-						throw new NotAValidInput("Not a valid command");
+						throw new NotAValidInput(NOT_VALID_COMMAND_TEXT);
 					} else {
 						return new ActionUseCard(new SpotlightCard(), target);
 					}
@@ -142,7 +151,7 @@ public class ActionParser {
 
 			}
 			if (st.hasMoreTokens()) {
-				throw new NotAValidInput("Not a valid command");
+				throw new NotAValidInput(NOT_VALID_COMMAND_TEXT);
 			}
 			if ("ATTACK".equals(card)) {
 				return new ActionUseCard(new AttackCard());
@@ -166,47 +175,47 @@ public class ActionParser {
 			if (st.hasMoreTokens()) {
 				coordinate = st.nextToken();
 			} else {
-				throw new NotAValidInput("Not a valid command");
+				throw new NotAValidInput(NOT_VALID_COMMAND_TEXT);
 			}
 			if (st.hasMoreTokens()) {
-				throw new NotAValidInput("Not a valid command");
+				throw new NotAValidInput(NOT_VALID_COMMAND_TEXT);
 			}
 			Coordinate parsedCoordinate = parseCoordinate(coordinate);
 			return new ActionFakeNoise(parsedCoordinate);
 
 		} else if ("END".equals(action)) {
 			if (st.hasMoreTokens()) {
-				throw new NotAValidInput("Not a valid command");
+				throw new NotAValidInput(NOT_VALID_COMMAND_TEXT);
 			}
 			return new ActionEndTurn();
 
 		} else if ("DRAW".equals(action)) {
 			if (st.hasMoreTokens()) {
-				throw new NotAValidInput("Not a valid command");
+				throw new NotAValidInput(NOT_VALID_COMMAND_TEXT);
 			}
 			return new ActionDrawCard();
 		} else if ("ACTIONS".equals(action)) {
 			if (st.hasMoreTokens()) {
-				throw new NotAValidInput("Not a valid command");
+				throw new NotAValidInput(NOT_VALID_COMMAND_TEXT);
 			}
 			return new ActionGetAvailableAction();
 		} else if ("COORDINATES".equals(action)) {
 			if (st.hasMoreTokens()) {
-				throw new NotAValidInput("Not a valid command");
+				throw new NotAValidInput(NOT_VALID_COMMAND_TEXT);
 			}
 			return new ActionGetReachableCoordinates();
 		} else if ("CARDS".equals(action)) {
 			if (st.hasMoreTokens()) {
-				throw new NotAValidInput("Not a valid command");
+				throw new NotAValidInput(NOT_VALID_COMMAND_TEXT);
 			}
 			return new ActionGetHand();
 		} else if ("DISCONNECT".equals(action)) {
 			if (st.hasMoreTokens()) {
-				throw new NotAValidInput("Not a valid command");
+				throw new NotAValidInput(NOT_VALID_COMMAND_TEXT);
 			}
 			return new ActionDisconnect();
 		} else {
-			throw new NotAValidInput("Not a valid command");
+			throw new NotAValidInput(NOT_VALID_COMMAND_TEXT);
 		}
 	}
 }

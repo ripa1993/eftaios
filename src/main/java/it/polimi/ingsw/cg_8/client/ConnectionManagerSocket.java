@@ -29,15 +29,15 @@ public class ConnectionManagerSocket extends ConnectionManager {
 	/**
 	 * The server IP address.
 	 */
-	private final static String SERVER_ADDRESS = "127.0.0.1";
+	private static final String SERVER_ADDRESS = "localhost";
 	/**
 	 * The server port used for the Receive/Response communication.
 	 */
-	private final static int SOCKET_PORT_CLIENTSERVER = 29998;
+	private static final int SOCKET_PORT_CLIENTSERVER = 29998;
 	/**
 	 * The server port used for the Publisher/Subscriber communication.
 	 */
-	private final static int SOCKET_PORT_PUBSUB = 29999;
+	private static final int SOCKET_PORT_PUBSUB = 29999;
 	/**
 	 * Thread executor service
 	 */
@@ -83,7 +83,7 @@ public class ConnectionManagerSocket extends ConnectionManager {
 			LOGGER.debug("Subscriber back to main thread");
 		} catch (IOException e) {
 			LOGGER.error("Cannot connect to socket server (" + SERVER_ADDRESS
-					+ ":" + SOCKET_PORT_CLIENTSERVER + ")");
+					+ ":" + SOCKET_PORT_CLIENTSERVER + ")", e);
 		}
 
 	}
@@ -106,7 +106,7 @@ public class ConnectionManagerSocket extends ConnectionManager {
 	 * @throws UnknownHostException
 	 * @throws IOException
 	 */
-	public void initializeSocket() throws UnknownHostException, IOException {
+	public void initializeSocket() throws IOException {
 		Socket socket = new Socket(SERVER_ADDRESS, SOCKET_PORT_CLIENTSERVER);
 		LOGGER.debug("Connected to server " + SERVER_ADDRESS + " on port "
 				+ SOCKET_PORT_CLIENTSERVER);
@@ -125,7 +125,7 @@ public class ConnectionManagerSocket extends ConnectionManager {
 				this.setclientID((int) clientIDRequested);
 				LOGGER.info("Your ID is: " + this.getclientID());
 			} catch (IOException | ClassNotFoundException e) {
-				LOGGER.error(e.getMessage());
+				LOGGER.error(e.getMessage(), e);
 			}
 		} while (this.getclientID() == 0);
 
@@ -152,11 +152,11 @@ public class ConnectionManagerSocket extends ConnectionManager {
 				}
 
 			} catch (IOException e) {
-				LOGGER.error(e.getMessage());
+				LOGGER.error(e.getMessage(), e);
 			} catch (ClassNotFoundException e) {
-				LOGGER.error(e.getMessage());
+				LOGGER.error(e.getMessage(), e);
 			}
-		} while (nameSet == false || mapSet == false);
+		} while (!nameSet || !mapSet);
 
 		this.close(socket, output);
 	}
@@ -168,7 +168,7 @@ public class ConnectionManagerSocket extends ConnectionManager {
 		try {
 			socket.close();
 		} catch (IOException e) {
-			LOGGER.error(e.getMessage());
+			LOGGER.error(e.getMessage(), e);
 		} finally {
 			socket = null;
 			output = null;

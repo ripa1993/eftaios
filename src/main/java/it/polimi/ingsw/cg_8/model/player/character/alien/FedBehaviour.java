@@ -10,7 +10,7 @@ public class FedBehaviour implements AlienBehaviour {
 	/**
 	 * Max allowed distance
 	 */
-	private final static int DISTANCE = 3;
+	private static final int DISTANCE = 3;
 
 	@Override
 	public int getMaxMovementDistance() {

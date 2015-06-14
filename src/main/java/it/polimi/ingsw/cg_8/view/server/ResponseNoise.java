@@ -1,7 +1,6 @@
 package it.polimi.ingsw.cg_8.view.server;
 
 import it.polimi.ingsw.cg_8.model.noises.Noise;
-import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 
 import java.io.Serializable;
 

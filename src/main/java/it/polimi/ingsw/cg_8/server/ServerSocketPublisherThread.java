@@ -23,10 +23,6 @@ import org.apache.logging.log4j.Logger;
 public class ServerSocketPublisherThread extends ServerPublisher implements
 		Runnable {
 	/**
-	 * The socket of the player.
-	 */
-	private Socket subscriber;
-	/**
 	 * The output stream.
 	 */
 	private ObjectOutputStream output;
@@ -43,15 +39,15 @@ public class ServerSocketPublisherThread extends ServerPublisher implements
 
 	/**
 	 * Creates a publisher for the current subscriber.
+	 * 
 	 * @param subscriber
 	 */
 	public ServerSocketPublisherThread(Socket subscriber) {
-		this.subscriber = subscriber;
 		this.buffer = new ConcurrentLinkedQueue<ServerResponse>();
 		try {
 			this.output = new ObjectOutputStream(subscriber.getOutputStream());
 		} catch (IOException e) {
-			LOGGER.error("Cannot open object output stream");
+			LOGGER.error("Cannot open object output stream", e);
 		}
 		LOGGER.debug("Publisher thread created");
 	}
@@ -68,23 +64,25 @@ public class ServerSocketPublisherThread extends ServerPublisher implements
 					send(message);
 					LOGGER.debug("Message sent: " + message);
 				} else {
-					try {
-						synchronized (buffer) {
-							buffer.wait();
-						}
-					} catch (InterruptedException e) {
-						LOGGER.error(e.getMessage());
+
+					synchronized (buffer) {
+						buffer.wait();
 					}
 				}
+
 			} catch (IOException e1) {
-				LOGGER.error("Cannot write object to output");
+				LOGGER.error("Cannot write object to output", e1);
+			} catch (InterruptedException e) {
+				LOGGER.error(e.getMessage(), e);
 			}
 		}
 	}
 
 	/**
 	 * Add a message to the buffer.
-	 * @param message The message sent by the server.
+	 * 
+	 * @param message
+	 *            The message sent by the server.
 	 */
 	@Override
 	public void dispatchMessage(ServerResponse message) {
@@ -93,15 +91,15 @@ public class ServerSocketPublisherThread extends ServerPublisher implements
 			buffer.notify();
 		}
 	}
-	
+
 	/**
 	 * Send a message to the player.
+	 * 
 	 * @param message
 	 * @throws IOException
 	 * @throws SocketException
 	 */
-	private void send(ServerResponse message) throws IOException,
-			SocketException {
+	private void send(ServerResponse message) throws IOException {
 		output.writeObject(message);
 		output.flush();
 	}

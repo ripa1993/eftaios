@@ -9,16 +9,18 @@ package it.polimi.ingsw.cg_8.model.exceptions;
  */
 public class GameAlreadyRunningException extends Exception {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1854502117873075957L;
+
+	/**
 	 * Creates an exception with message
-	 * @param string message
+	 * 
+	 * @param string
+	 *            message
 	 */
 	public GameAlreadyRunningException(String string) {
 		super(string);
 	}
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1854502117873075957L;
 
 }

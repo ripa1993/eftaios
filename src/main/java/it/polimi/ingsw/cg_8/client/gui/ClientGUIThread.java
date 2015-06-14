@@ -37,13 +37,11 @@ import it.polimi.ingsw.cg_8.view.server.ResponseState;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics;
-import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -92,7 +90,34 @@ import org.apache.logging.log4j.Logger;
  * @version 1.1
  */
 public class ClientGUIThread implements Runnable, Observer {
-
+	/**
+	 * Attack text
+	 */
+	private static final String ATTACK_TEXT = "Attack";
+	/**
+	 * Adrenaline text
+	 */
+	private static final String ADRENALINE_TEXT = "Adrenaline";
+	/**
+	 * Sedatives text
+	 */
+	private static final String SEDATIVES_TEXT = "Sedatives";
+	/**
+	 * Teleport text
+	 */
+	private static final String TELEPORT_TEXT = "Teleport";
+	/**
+	 * Coordinate text
+	 */
+	private static final String COORDINATE_TEXT = "Coordinate";
+	/**
+	 * Not a valid input text
+	 */
+	private static final String NOT_VALID_INPUT_TEXT = "Not a valid input!";
+	/**
+	 * Spotlight text
+	 */
+	private static final String SPOTLIGHT_TEXT = "Spotlight";
 	/**
 	 * The server messages are stored here.
 	 */
@@ -105,10 +130,6 @@ public class ClientGUIThread implements Runnable, Observer {
 	 * Main frame
 	 */
 	private JFrame mainFrame;
-	/**
-	 * Content pane
-	 */
-	private Container contentPane;
 	/**
 	 * JPanels used in the gui
 	 */
@@ -193,7 +214,7 @@ public class ClientGUIThread implements Runnable, Observer {
 					new FileInputStream(Resource.FONT_TITILLIUM_BOLD_UPRIGHT))
 					.deriveFont((float) 30);
 		} catch (FontFormatException | IOException e) {
-			LOGGER.error(e.getMessage());
+			LOGGER.error(e.getMessage(), e);
 		}
 
 		try {
@@ -203,20 +224,19 @@ public class ClientGUIThread implements Runnable, Observer {
 							Resource.FONT_TITILLIUM_SEMIBOLD_UPRIGHT))
 					.deriveFont((float) 20);
 		} catch (FontFormatException | IOException e) {
-			LOGGER.error(e.getMessage());
+			LOGGER.error(e.getMessage(), e);
 		}
 
 		mainFrame = new JFrame("Escape From The Aliens In Outer Space");
 		mainFrame.setMinimumSize(new Dimension(1280, 720));
 		mainFrame.setResizable(true);
 		BufferedImage myImage;
-		contentPane = mainFrame.getContentPane();
 		try {
 			myImage = ImageIO.read(new File(Resource.IMG_BACKGROUND_PATTERN));
 
 			mainFrame.setContentPane(new BackgroundPanel(myImage));
 		} catch (IOException e) {
-			LOGGER.error(e.getMessage());
+			LOGGER.error(e.getMessage(), e);
 		}
 		mainFrame.getContentPane().setBackground(Color.PINK);
 		mainFrame.setBackground(new Color(255, 255, 255));
@@ -238,7 +258,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		commandsPanel.setBackground(Color.WHITE);
 		commandsPanel.setOpaque(false);
 		moveButton = new JButton("Movement");
-		attackButton = new JButton("Attack");
+		attackButton = new JButton(ATTACK_TEXT);
 		drawButton = new JButton("Draw");
 		endTurnButton = new JButton("End Turn");
 		fakeNoiseButton = new JButton("Do Fake Noise");
@@ -392,7 +412,7 @@ public class ClientGUIThread implements Runnable, Observer {
 			turnNumberLabel.setIcon(new ImageIcon(roundImage));
 			rightPanel.repaint();
 		} catch (IOException ex) {
-			LOGGER.error(ex.getMessage());
+			LOGGER.error(ex.getMessage(), ex);
 		}
 		turnNumberLabel.setHorizontalTextPosition(SwingConstants.CENTER);
 		turnNumberLabel.setBorder(new EmptyBorder(0, 0, 5, 60));
@@ -507,7 +527,7 @@ public class ClientGUIThread implements Runnable, Observer {
 			stateImage.setIcon(new ImageIcon(cardImage));
 			rightPanel.repaint();
 		} catch (IOException ex) {
-			LOGGER.error(ex.getMessage());
+			LOGGER.error(ex.getMessage(), ex);
 		}
 
 	}
@@ -622,7 +642,7 @@ public class ClientGUIThread implements Runnable, Observer {
 						connectionManager.send(new ActionDisconnect());
 					} catch (NullPointerException ex) {
 						// if server is down
-						LOGGER.error("Server is down");
+						LOGGER.error("Server is down", ex);
 					}
 					System.exit(0);
 				}
@@ -635,7 +655,7 @@ public class ClientGUIThread implements Runnable, Observer {
 			public void actionPerformed(ActionEvent e) {
 				if (matchStarted) {
 					String coordinateString = JOptionPane.showInputDialog(
-							"Insert destination coordinate", "Coordinate");
+							"Insert destination coordinate", COORDINATE_TEXT);
 					if (coordinateString != null) {
 						try {
 
@@ -644,8 +664,9 @@ public class ClientGUIThread implements Runnable, Observer {
 							connectionManager.send(new ActionMove(coordinate));
 
 						} catch (NotAValidInput e1) {
+							LOGGER.error(e1.getMessage(), e1);
 							JOptionPane.showMessageDialog(mainFrame,
-									"Not a valid input!");
+									NOT_VALID_INPUT_TEXT);
 						}
 					}
 				}
@@ -662,7 +683,7 @@ public class ClientGUIThread implements Runnable, Observer {
 							"Do you want to attack?",
 							JOptionPane.QUESTION_MESSAGE,
 							JOptionPane.YES_NO_OPTION);
-					JDialog dialog = optionPane.createDialog("Attack");
+					JDialog dialog = optionPane.createDialog(ATTACK_TEXT);
 					dialog.setVisible(true);
 					int selection = ((Integer) optionPane.getValue())
 							.intValue();
@@ -706,18 +727,18 @@ public class ClientGUIThread implements Runnable, Observer {
 			public void actionPerformed(ActionEvent e) {
 				if (matchStarted) {
 					String coordinateString = JOptionPane.showInputDialog(
-							"Insert target coordinate", "Coordinate");
+							"Insert target coordinate", COORDINATE_TEXT);
 					if (coordinateString != null) {
 						try {
 							Coordinate coordinate = ActionParser
 									.parseCoordinate(coordinateString);
-							// TODO: make fake noise
 							connectionManager.send(new ActionFakeNoise(
 									coordinate));
 
 						} catch (NotAValidInput e1) {
+							LOGGER.error(e1.getMessage(), e1);
 							JOptionPane.showMessageDialog(mainFrame,
-									"Not a valid input!");
+									NOT_VALID_INPUT_TEXT);
 						}
 					}
 				}
@@ -753,36 +774,37 @@ public class ClientGUIThread implements Runnable, Observer {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (matchStarted) {
-					String cardList[] = { "Attack", "Adrenaline", "Sedatives",
-							"Spotlight", "Teleport" };
+					String[] cardList = { ATTACK_TEXT, ADRENALINE_TEXT,
+							SEDATIVES_TEXT, SPOTLIGHT_TEXT, TELEPORT_TEXT };
 					String output = (String) JOptionPane.showInputDialog(
 							mainFrame, "Pick a card", "Input",
 							JOptionPane.QUESTION_MESSAGE, null, cardList,
-							"Attack");
-					if ("Attack".equals(output)) {
+							ATTACK_TEXT);
+					if (ATTACK_TEXT.equals(output)) {
 						connectionManager.send(new ActionUseCard(
 								new AttackCard()));
-					} else if ("Adrenaline".equals(output)) {
+					} else if (ADRENALINE_TEXT.equals(output)) {
 						connectionManager.send(new ActionUseCard(
 								new AdrenalineCard()));
 
-					} else if ("Sedatives".equals(output)) {
+					} else if (SEDATIVES_TEXT.equals(output)) {
 						connectionManager.send(new ActionUseCard(
 								new SedativesCard()));
 
-					} else if ("Spotlight".equals(output)) {
+					} else if (SPOTLIGHT_TEXT.equals(output)) {
 						String coordinateString = JOptionPane.showInputDialog(
-								"Insert target coordinate", "Coordinate");
+								"Insert target coordinate", COORDINATE_TEXT);
 						try {
 							Coordinate coordinate = ActionParser
 									.parseCoordinate(coordinateString);
 							connectionManager.send(new ActionUseCard(
 									new SpotlightCard(), coordinate));
 						} catch (NotAValidInput e1) {
+							LOGGER.error(e1.getMessage(), e1);
 							JOptionPane.showMessageDialog(mainFrame,
-									"Not a valid input!");
+									NOT_VALID_INPUT_TEXT);
 						}
-					} else if ("Teleport".equals(output)) {
+					} else if (TELEPORT_TEXT.equals(output)) {
 						connectionManager.send(new ActionUseCard(
 								new TeleportCard()));
 
@@ -809,8 +831,6 @@ public class ClientGUIThread implements Runnable, Observer {
 		// send chat message when enter is pressed
 		chatTextField.addKeyListener(new KeyListener() {
 
-
-
 			@Override
 			public void keyPressed(KeyEvent e) {
 
@@ -832,13 +852,11 @@ public class ClientGUIThread implements Runnable, Observer {
 				return;
 			}
 
-
-
 		});
 
 		mapPanel.addMouseListener(new MouseInputAdapter() {
-			private final static int NUM_COLUMN = 23;
-			private final static int NUM_ROW = 29;
+			private static final int NUM_COLUMN = 23;
+			private static final int NUM_ROW = 29;
 
 			private Coordinate getCoordinate(MouseEvent e) {
 				// result coordinates
@@ -910,7 +928,7 @@ public class ClientGUIThread implements Runnable, Observer {
 					if (coordinate.getX() >= 0 && coordinate.getY() >= 0
 							&& coordinate.getX() < NUM_COLUMN
 							&& coordinate.getY() < NUM_ROW) {
-						Object[] options = { "Movement", "Spotlight",
+						Object[] options = { "Movement", SPOTLIGHT_TEXT,
 								"Do Fake Noise" };
 						int result = JOptionPane.showOptionDialog(null,
 								"This is sector " + coordinate,
@@ -1023,7 +1041,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		} else if ("State".equals(arg)) {
 			ResponseState stateMessage = clientData.getState();
 
-			if (playerImageSet == false) {
+			if (!playerImageSet) {
 				double random = Math.random();
 				LOGGER.debug(stateMessage.getCharacter());
 				if ("Human".equals(stateMessage.getCharacter())) {
@@ -1104,7 +1122,7 @@ public class ClientGUIThread implements Runnable, Observer {
 			clip.open(audioInputStream);
 			clip.start();
 		} catch (Exception ex) {
-			LOGGER.error(ex.getMessage());
+			LOGGER.error(ex.getMessage(), ex);
 		}
 	}
 

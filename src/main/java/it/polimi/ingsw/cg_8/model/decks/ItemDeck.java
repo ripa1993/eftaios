@@ -13,7 +13,7 @@ public class ItemDeck extends Deck {
 
 	@Override
 	public Card drawCard() throws EmptyDeckException {
-		if (isDeckEmpty() == true) {
+		if (isDeckEmpty()) {
 			this.reshuffle();
 		}
 		return this.getCards().remove(0);

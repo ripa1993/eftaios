@@ -8,7 +8,6 @@ import it.polimi.ingsw.cg_8.controller.playerActions.Movement;
 import it.polimi.ingsw.cg_8.controller.playerActions.otherActions.Disconnect;
 import it.polimi.ingsw.cg_8.controller.playerActions.otherActions.GetAllowedActions;
 import it.polimi.ingsw.cg_8.controller.playerActions.otherActions.GetReachableSectors;
-import it.polimi.ingsw.cg_8.controller.playerActions.otherActions.SetPlayerName;
 import it.polimi.ingsw.cg_8.controller.playerActions.useItemCard.UseAdrenalineCard;
 import it.polimi.ingsw.cg_8.controller.playerActions.useItemCard.UseAttackCard;
 import it.polimi.ingsw.cg_8.controller.playerActions.useItemCard.UseSedativesCard;
@@ -22,13 +21,11 @@ import it.polimi.ingsw.cg_8.model.cards.itemCards.ItemCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.SedativesCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.SpotlightCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.TeleportCard;
-import it.polimi.ingsw.cg_8.model.exceptions.GameAlreadyRunningException;
 import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.player.PlayerState;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 import it.polimi.ingsw.cg_8.model.sectors.Sector;
 import it.polimi.ingsw.cg_8.model.sectors.normal.DangerousSector;
-import it.polimi.ingsw.cg_8.server.ServerSocketPublisherThread;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionAttack;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionChat;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionDisconnect;
@@ -39,7 +36,6 @@ import it.polimi.ingsw.cg_8.view.client.actions.ActionGetAvailableAction;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionGetHand;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionGetReachableCoordinates;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionMove;
-import it.polimi.ingsw.cg_8.view.client.actions.ActionSetName;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionUseCard;
 import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
 import it.polimi.ingsw.cg_8.view.server.ResponseCard;
@@ -165,7 +161,7 @@ public class StateMachine {
 									.getState().toString(), player
 									.getLastPosition().toString(), model
 									.getRoundNumber()));
-					if (currentPlayer.getCharacter().hasToDrawSectorCard() == false) {
+					if (!currentPlayer.getCharacter().hasToDrawSectorCard()) {
 						model.setTurnPhase(TurnPhase.MOVEMENT_DONE_NOT_DS);
 
 					} else {
@@ -283,12 +279,12 @@ public class StateMachine {
 					LOGGER.debug(draw.getItemCard());
 
 					if (draw.getItemCard() != null
-							&& draw.isDiscardedItemCard() == false) {
+							&& !draw.isDiscardedItemCard()) {
 						controller.writeToPlayer(player, new ResponsePrivate(
 								"You have drawn a " + draw.getItemCard()));
 
 					} else if (draw.getItemCard() != null
-							&& draw.isDiscardedItemCard() == true) {
+							&& draw.isDiscardedItemCard()) {
 						controller.writeToPlayer(player, new ResponsePrivate(
 								"You have drawn " + draw.getItemCard()
 										+ " but your hand is full,"
@@ -306,7 +302,7 @@ public class StateMachine {
 				} finally {
 					controller.writeToPlayer(player, new ResponseCard(player
 							.getHand().getHeldCards()));
-					if (hasToMakeFakeNoise == true) {
+					if (hasToMakeFakeNoise) {
 						model.setTurnPhase(TurnPhase.WAITING_FAKE_NOISE);
 						controller.writeToPlayer(player, new ResponsePrivate(
 								"Make a noise on a coordinate of your choice"));
@@ -447,7 +443,7 @@ public class StateMachine {
 	 */
 	private static boolean attackMove(Rules rules, Model model,
 			Controller controller) {
-		if (rules.attackValidator(model) == true) {
+		if (rules.attackValidator(model)) {
 			controller.writeToAll(new ResponsePrivate(model
 					.getCurrentPlayerReference().getName()
 					+ " has attacked in "

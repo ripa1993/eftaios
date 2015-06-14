@@ -10,7 +10,7 @@ public class NormalBehaviour implements AlienBehaviour {
 	/**
 	 * Max allowed distance
 	 */
-	private final static int DISTANCE = 2;
+	private static final int DISTANCE = 2;
 
 	@Override
 	public int getMaxMovementDistance() {

@@ -51,7 +51,7 @@ public class ServerRMI implements Runnable {
 			server.getRegistry().bind(Server.getName(), gameRemoteRegistration);
 			LOGGER.info("RMI successfully started");
 		} catch (RemoteException | AlreadyBoundException e) {
-			LOGGER.error("Cannot start an RMI registry");
+			LOGGER.error("Cannot start an RMI registry", e);
 		}
 	}
 

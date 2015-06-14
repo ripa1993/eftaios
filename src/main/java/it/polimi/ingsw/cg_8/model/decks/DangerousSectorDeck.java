@@ -1,11 +1,10 @@
 package it.polimi.ingsw.cg_8.model.decks;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import it.polimi.ingsw.cg_8.model.cards.Card;
 import it.polimi.ingsw.cg_8.model.exceptions.EmptyDeckException;
-import it.polimi.ingsw.cg_8.server.ServerSocketPublisherThread;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Dangerous sector deck
@@ -22,12 +21,12 @@ public class DangerousSectorDeck extends Deck {
 
 	@Override
 	public Card drawCard() {
-		if (isDeckEmpty() == true) {
+		if (isDeckEmpty()) {
 			try {
 				this.reshuffle();
 			} catch (EmptyDeckException e) {
 				// never happens
-				LOGGER.error(e.getMessage());
+				LOGGER.error(e.getMessage(), e);
 			}
 		}
 		return this.getCards().remove(0);

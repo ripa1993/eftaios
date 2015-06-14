@@ -94,7 +94,7 @@ public class Attack implements PlayerAction {
 					}
 				}
 			}
-			if (p.getCharacter().isDefendAllowed() == false) {
+			if (!p.getCharacter().isDefendAllowed()) {
 				this.killPlayer(p);
 				if (attacker.getCharacter() instanceof Alien
 						&& p.getCharacter() instanceof Human) {

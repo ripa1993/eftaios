@@ -1,10 +1,6 @@
 package it.polimi.ingsw.cg_8.client;
 
-import it.polimi.ingsw.cg_8.server.ServerSocketPublisherThread;
-import it.polimi.ingsw.cg_8.view.client.ActionParser;
 import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
-import it.polimi.ingsw.cg_8.view.client.exceptions.NotAValidInput;
-import it.polimi.ingsw.cg_8.view.server.ResponsePrivate;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -85,7 +81,7 @@ public class ClientSocketViewCS implements Runnable {
 			this.input = new ObjectInputStream(requestSocket.getInputStream());
 			this.clientData = clientData;
 		} catch (IOException e) {
-			LOGGER.error("Failed to establish a connection with the server");
+			LOGGER.error("Failed to establish a connection with the server", e);
 		}
 
 	}
@@ -112,16 +108,15 @@ public class ClientSocketViewCS implements Runnable {
 			// Useful for testing purposes.
 
 			LOGGER.debug("Waiting server response");
-			try {
-				boolean serverResponse = (boolean) input.readObject();
-				clientData.storeAck(serverResponse);
-				LOGGER.debug("Server response is: " + serverResponse);
-			} catch (ClassNotFoundException e) {
-				LOGGER.error(e.getMessage());
-			}
+
+			boolean serverResponse = (boolean) input.readObject();
+			clientData.storeAck(serverResponse);
+			LOGGER.debug("Server response is: " + serverResponse);
 
 		} catch (IOException e) {
-			LOGGER.error("Failed to send your request to the server");
+			LOGGER.error("Failed to send your request to the server", e);
+		} catch (ClassNotFoundException e) {
+			LOGGER.error(e.getMessage(), e);
 		}
 
 		close(requestSocket, output);
@@ -140,7 +135,7 @@ public class ClientSocketViewCS implements Runnable {
 		try {
 			socket.close();
 		} catch (IOException e) {
-			LOGGER.error(e.getMessage());
+			LOGGER.error(e.getMessage(), e);
 		} finally {
 			socket = null;
 			output = null;

@@ -8,6 +8,11 @@ package it.polimi.ingsw.cg_8.model.exceptions;
  */
 public class NotAValidCoordinateException extends Exception {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -362337127919174038L;
+
+	/**
 	 * Creates an exception with message
 	 * @param string message
 	 */
@@ -15,9 +20,5 @@ public class NotAValidCoordinateException extends Exception {
 		super(string);
 	}
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -362337127919174038L;
-
+	
 }

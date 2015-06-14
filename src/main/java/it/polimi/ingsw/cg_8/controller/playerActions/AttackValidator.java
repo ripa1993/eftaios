@@ -26,9 +26,9 @@ public class AttackValidator {
 		boolean validAttack = false;
 		Sector playerPosition = model.getMap().getSectors()
 				.get(attacker.getLastPosition());
-		if (attacker.getCharacter().isAttackAllowed() == true
-				&& ((playerPosition instanceof SpawnSector) == false)
-				&& ((playerPosition instanceof EscapeHatchSector) == false)) {
+		if (attacker.getCharacter().isAttackAllowed()
+				&& !(playerPosition instanceof SpawnSector)
+				&& !(playerPosition instanceof EscapeHatchSector)) {
 			validAttack = true;
 		}
 		return validAttack;

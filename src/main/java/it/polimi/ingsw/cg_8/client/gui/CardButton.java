@@ -13,7 +13,7 @@ import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
 import it.polimi.ingsw.cg_8.view.client.exceptions.NotAValidInput;
 
 import java.awt.BorderLayout;
-import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -26,19 +26,16 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLayeredPane;
-import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
-import java.awt.Color;
-import javax.swing.JButton;
 
 /**
  * JButton that allows the player to use an item card.
@@ -132,7 +129,7 @@ public class CardButton extends JPanel {
 							Resource.FONT_TITILLIUM_SEMIBOLD_UPRIGHT))
 					.deriveFont((float) 20);
 		} catch (FontFormatException | IOException e) {
-			LOGGER.error(e.getMessage());
+			LOGGER.error(e.getMessage(), e);
 		}
 
 		/**
@@ -194,10 +191,10 @@ public class CardButton extends JPanel {
 				width = cardButtonImage.getWidth();
 				height = cardButtonImage.getHeight();
 				cardButtonImage.setSize((int) (1.05 * width),
-						((int) (1.05 * height)));
+						(int) (1.05 * height));
 				cardButtonImage.repaint();
 				cardButtonOverlay.setSize((int) (1.05 * width),
-						((int) (1.05 * height)));
+						(int) (1.05 * height));
 
 				cardButtonOverlay.repaint();
 			}
@@ -316,7 +313,7 @@ public class CardButton extends JPanel {
 			cardButtonImage.setIcon(new ImageIcon(cardImage));
 
 		} catch (IOException ex) {
-			LOGGER.error(ex.getMessage());
+			LOGGER.error(ex.getMessage(), ex);
 		}
 	}
 
@@ -335,7 +332,7 @@ public class CardButton extends JPanel {
 					Image.SCALE_SMOOTH);
 
 		} catch (IOException ex) {
-			LOGGER.error(ex.getMessage());
+			LOGGER.error(ex.getMessage(), ex);
 		}
 	}
 
@@ -397,6 +394,7 @@ public class CardButton extends JPanel {
 						.parseCoordinate(coordinateString);
 				return new ActionUseCard(new SpotlightCard(), coordinate);
 			} catch (NotAValidInput e1) {
+				LOGGER.error(e1.getMessage(), e1);
 				JOptionPane
 						.showMessageDialog(getParent(), "Not a valid input!");
 				return null;

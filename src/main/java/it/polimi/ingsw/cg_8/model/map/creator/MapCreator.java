@@ -277,7 +277,7 @@ public abstract class MapCreator {
 	 * 
 	 * @return complete map
 	 */
-	abstract public GameMap createMap();
+	public abstract GameMap createMap();
 
 	@Override
 	public String toString() {

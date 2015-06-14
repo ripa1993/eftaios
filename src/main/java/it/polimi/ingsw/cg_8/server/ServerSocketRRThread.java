@@ -149,11 +149,11 @@ public class ServerSocketRRThread implements Runnable {
 				}
 
 			} catch (IOException e) {
-				LOGGER.error("Cannot connect to the client");
+				LOGGER.error("Cannot connect to the client",e);
 			} catch (ClassNotFoundException e) {
-				LOGGER.error("Cannot read from the input stream");
+				LOGGER.error("Cannot read from the input stream",e);
 			} catch (GameAlreadyRunningException e) {
-				LOGGER.error("Game already running, can't add the player to this game");
+				LOGGER.error("Game already running, can't add the player to this game",e);
 			}
 		}
 	}

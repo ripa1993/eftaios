@@ -6,7 +6,6 @@ import it.polimi.ingsw.cg_8.server.ServerGameRoomInterface;
 import it.polimi.ingsw.cg_8.server.ServerRMIRegistrationView;
 import it.polimi.ingsw.cg_8.server.ServerRMIRegistrationViewRemote;
 import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
-import it.polimi.ingsw.cg_8.view.server.ResponsePrivate;
 import it.polimi.ingsw.cg_8.view.server.ServerResponse;
 
 import java.io.Serializable;
@@ -36,15 +35,15 @@ public class ConnectionManagerRMI extends ConnectionManager implements
 	/**
 	 * The server IP address.
 	 */
-	private final static String SERVER_ADDRESS = "127.0.0.1";
+	private static final String SERVER_ADDRESS = "localhost";
 	/**
 	 * The server port used by the client to register.
 	 */
-	private final static int REGISTRATION_PORT = 7777;
+	private static final int REGISTRATION_PORT = 7777;
 	/**
 	 * The name used to identify the {@link ServerRMIRegistrationView}
 	 */
-	private final static String REGISTRATION_ROOM_NAME = "registrationRoom";
+	private static final String REGISTRATION_ROOM_NAME = "registrationRoom";
 	/**
 	 * GameRoom used by RMI.
 	 */
@@ -79,8 +78,8 @@ public class ConnectionManagerRMI extends ConnectionManager implements
 			this.view = this.initializeRMI();
 			LOGGER.debug("Successfully registered");
 		} catch (NotBoundException | RemoteException | AlreadyBoundException e) {
-			LOGGER.error("Failed to connect to the RMI Server: "
-					+ e.getMessage());
+			LOGGER.error(
+					"Failed to connect to the RMI Server: " + e.getMessage(), e);
 		}
 	}
 
@@ -105,7 +104,7 @@ public class ConnectionManagerRMI extends ConnectionManager implements
 			boolean serverResponse = view.makeAction(this.clientID, inputLine);
 			clientData.storeAck(serverResponse);
 		} catch (RemoteException e) {
-			LOGGER.debug("Can't perform the action");
+			LOGGER.error("Can't perform the action", e);
 		}
 
 	}
@@ -143,7 +142,7 @@ public class ConnectionManagerRMI extends ConnectionManager implements
 
 		LOGGER.debug("Trying to send your name to the server...");
 
-		while (nameSet == false) {
+		while (!nameSet) {
 			nameSet = registrationRoom.sendPlayerName(this.playerName);
 		}
 		LOGGER.debug("NAME ACCEPTED");

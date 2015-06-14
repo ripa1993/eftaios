@@ -46,7 +46,7 @@ public class Hand {
 	 * @return item card requested
 	 * @throws IllegalArgumentException
 	 */
-	public ItemCard getCard(int item) throws IllegalArgumentException {
+	public ItemCard getCard(int item) {
 		if (item < 0 || item > heldCards.size()) {
 			throw new IllegalArgumentException();
 		}

@@ -21,7 +21,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -35,11 +34,10 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.border.EmptyBorder;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import javax.swing.border.EmptyBorder;
 
 /**
  * Main class for client graphic user interface. It uses a swing frame to
@@ -112,7 +110,7 @@ public class MainGUI implements Runnable {
 					new FileInputStream(Resource.FONT_TITILLIUM_BOLD_UPRIGHT))
 					.deriveFont((float) 20);
 		} catch (FontFormatException | IOException e) {
-			LOGGER.error(e.getMessage());
+			LOGGER.error(e.getMessage(), e);
 		}
 
 		main.setBackground(Color.BLACK);

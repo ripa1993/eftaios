@@ -89,13 +89,13 @@ public class DrawDangerousSectorCard implements PlayerAction {
 			 * This exception never occurs, the deck is always re-shuffled when
 			 * empty.
 			 */
-			LOGGER.error(e.getMessage());
+			LOGGER.error(e.getMessage(), e);
 		}
 
 		if (dangerousSectorCard instanceof NoiseCard) {
 
 			// what kind of noise?
-			if (((NoiseCard) dangerousSectorCard).hasToMakeFakeNoise() == false) {
+			if (!((NoiseCard) dangerousSectorCard).hasToMakeFakeNoise()) {
 				Noise movementNoise = new MovementNoise(model.getRoundNumber(),
 						player, player.getLastPosition());
 				model.addNoise(movementNoise);
@@ -108,7 +108,7 @@ public class DrawDangerousSectorCard implements PlayerAction {
 			}
 
 			// draw an object
-			if (((NoiseCard) dangerousSectorCard).hasToDrawItem() == true) {
+			if (((NoiseCard) dangerousSectorCard).hasToDrawItem()) {
 
 				try {
 					itemCard = (ItemCard) model.getItemDeck().drawCard();
@@ -119,12 +119,12 @@ public class DrawDangerousSectorCard implements PlayerAction {
 					discardedItemCard = !(player.getHand()
 							.addItemCard(itemCard));
 
-					if (discardedItemCard == true) {
+					if (discardedItemCard) {
 						model.getItemDeck().addUsedCard(itemCard);
 					}
 
 				} catch (EmptyDeckException e) {
-					LOGGER.error(e.getMessage());
+					LOGGER.error(e.getMessage(), e);
 					this.emptyItemDeck = true;
 					this.itemCard = null;
 					return hasToMakeFakeNoise;

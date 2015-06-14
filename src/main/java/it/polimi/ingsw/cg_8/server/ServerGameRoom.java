@@ -11,6 +11,7 @@ import java.rmi.server.UnicastRemoteObject;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 /**
  * Class containing the methods used by the client to the server, and
  * vice-versa.
@@ -28,8 +29,9 @@ public class ServerGameRoom extends ServerPublisher implements
 	/**
 	 * Log4j logger
 	 */
-	private static final Logger LOGGER = LogManager.getLogger(ServerGameRoom.class);
-	
+	private static final Logger LOGGER = LogManager
+			.getLogger(ServerGameRoom.class);
+
 	/**
 	 * The class has to be exported to be used by the client.
 	 * 
@@ -79,7 +81,7 @@ public class ServerGameRoom extends ServerPublisher implements
 		try {
 			clientRMI.publishMessage(message);
 		} catch (RemoteException e) {
-			LOGGER.error(e.getMessage());
+			LOGGER.error(e.getMessage(), e);
 		}
 	}
 }

@@ -121,10 +121,8 @@ public class Controller implements Observer {
 			firstRun = true;
 			taskCompleted = true;
 		} catch (NotAValidMapException e) {
-			LOGGER.error(e.getMessage());
+			LOGGER.error(e.getMessage(), e);
 		}
-		// TODO: ServerSocketPublisherThread should extend ServerPublisherThread
-		// (also RMI do the same)
 	}
 
 	/**
@@ -201,9 +199,9 @@ public class Controller implements Observer {
 				this.writeToPlayer(p, new ResponsePrivate(
 						"You will be playing as: " + p.getCharacter()));
 			}
-			
+
 		} catch (EmptyDeckException e) {
-			LOGGER.error(e.getMessage());
+			LOGGER.error(e.getMessage(), e);
 		}
 
 	}
@@ -303,11 +301,11 @@ public class Controller implements Observer {
 			List<Player> playerList = this.model.getPlayers();
 
 			this.writeToAll(new ResponsePrivate("GAME OVER"));
-			if (this.model.checkGameEndRound() == true) {
+			if (this.model.checkGameEndRound()) {
 				this.writeToAll(new ResponsePrivate(
 						"The game reached its conclusion"));
 			}
-			if (this.model.checkGameEndNoEH() == true) {
+			if (this.model.checkGameEndNoEH()) {
 				this.writeToAll(new ResponsePrivate(
 						"There are no Escape Hatches left to use"));
 			}

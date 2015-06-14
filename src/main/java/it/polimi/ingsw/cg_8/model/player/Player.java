@@ -18,7 +18,6 @@ import java.util.List;
  */
 public class Player implements Serializable {
 
-
 	private static final long serialVersionUID = -6339404514199154790L;
 	/**
 	 * This player state
@@ -35,11 +34,11 @@ public class Player implements Serializable {
 	/**
 	 * This player list of played rounds
 	 */
-	private transient final List<Round> rounds;
+	private final transient List<Round> rounds;
 	/**
 	 * This player hand, contains the owned item cards
 	 */
-	private transient final Hand hand;
+	private final transient Hand hand;
 
 	// a player is created when he joins the game (match still not running)
 	/**
@@ -138,8 +137,6 @@ public class Player implements Serializable {
 		state = PlayerState.ESCAPED;
 	}
 
-
-
 	/**
 	 * Restores human character to its original state. It is called
 	 * automatically at the begin of a player's turn
@@ -189,7 +186,7 @@ public class Player implements Serializable {
 	@Override
 	public String toString() {
 		return "Player: " + name + ", Character: " + character + " "
-				+ ", State: " + state + ", Position: " + getLastPosition() ;
+				+ ", State: " + state + ", Position: " + getLastPosition();
 
 	}
 

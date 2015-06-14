@@ -39,19 +39,19 @@ public class Server {
 	/**
 	 * Socket port for Request-Response server
 	 */
-	private final static int SERVER_SOCKET_RR_PORT = 29998;
+	private static final int SERVER_SOCKET_RR_PORT = 29998;
 	/**
 	 * Socket port for Publisher-Subscriber server
 	 */
-	private final static int SERVER_SOCKET_PS_PORT = 29999;
+	private static final int SERVER_SOCKET_PS_PORT = 29999;
 	/**
 	 * Minimum number of players required to start a game
 	 */
-	public final static int MIN_PLAYERS = 2;
+	public static final int MIN_PLAYERS = 2;
 	/**
 	 * Maximum number of players per game
 	 */
-	public final static int MAX_PLAYERS = 8;
+	public static final int MAX_PLAYERS = 8;
 	/**
 	 * Association between players and the game they are playing.
 	 */
@@ -76,7 +76,7 @@ public class Server {
 	 * Milliseconds after which the game is automatically started when 2 player
 	 * join the game
 	 */
-	private final static int TIMEOUT = 5000;
+	private static final int TIMEOUT = 5000;
 	/**
 	 * Log4j logger
 	 */
@@ -141,7 +141,7 @@ public class Server {
 	/**
 	 * Reset the values of the votes, at the start of the game.
 	 */
-	public synchronized static void resetVotes() {
+	public static synchronized void resetVotes() {
 		for (GameMapName mapName : GameMapName.values()) {
 			voteCount.put(mapName, 0);
 		}
@@ -242,7 +242,7 @@ public class Server {
 					SERVER_SOCKET_RR_PORT, SERVER_SOCKET_PS_PORT));
 		} catch (IOException e) {
 			LOGGER.error("Cannot start server socket CS on port: "
-					+ SERVER_SOCKET_RR_PORT);
+					+ SERVER_SOCKET_RR_PORT, e);
 		}
 	}
 
@@ -307,9 +307,12 @@ public class Server {
 		timer.cancel();
 		LOGGER.info("Timeout aborted");
 	}
+
 	/**
 	 * Server launcher
-	 * @param args arguments
+	 * 
+	 * @param args
+	 *            arguments
 	 * @throws RemoteException
 	 * @throws AlreadyBoundException
 	 */

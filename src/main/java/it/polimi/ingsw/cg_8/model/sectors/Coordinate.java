@@ -93,12 +93,13 @@ public class Coordinate implements Serializable {
 
 	@Override
 	public String toString() {
+		char letter = (char) (this.x + 65);
+		String number = String.valueOf(this.y + 1);
 		if (this.y >= 9) {
-			return String.valueOf((char) (this.x + 65))
-					+ String.valueOf(this.y + 1);
+			return letter + number;
 		} else {
-			return String.valueOf((char) (this.x + 65)) + "0"
-					+ String.valueOf(this.y + 1);
+			return letter + "0" + number;
 		}
 	}
+
 }
