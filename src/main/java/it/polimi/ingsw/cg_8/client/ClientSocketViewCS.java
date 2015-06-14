@@ -140,6 +140,7 @@ public class ClientSocketViewCS implements Runnable {
 		try {
 			socket.close();
 		} catch (IOException e) {
+			LOGGER.error(e.getMessage());
 		} finally {
 			socket = null;
 			output = null;
