@@ -97,7 +97,7 @@ public class Controller implements Observer {
 	/**
 	 * Log4j logger
 	 */
-	private static final Logger logger = LogManager
+	private static final Logger LOGGER = LogManager
 			.getLogger(ServerSocketPublisherThread.class);
 
 	/**
@@ -121,7 +121,7 @@ public class Controller implements Observer {
 			firstRun = true;
 			taskCompleted = true;
 		} catch (NotAValidMapException e) {
-			logger.error(e.getMessage());
+			LOGGER.error(e.getMessage());
 		}
 		// TODO: ServerSocketPublisherThread should extend ServerPublisherThread
 		// (also RMI do the same)
@@ -209,7 +209,7 @@ public class Controller implements Observer {
 			// this.writeToPlayer(model.getCurrentPlayerReference(),
 			// new ResponsePrivate("IT'S YOUR TURN!"));
 		} catch (EmptyDeckException e) {
-			logger.error(e.getMessage());
+			LOGGER.error(e.getMessage());
 		}
 
 	}
@@ -345,7 +345,7 @@ public class Controller implements Observer {
 			try {
 				TimeUnit.SECONDS.sleep(10);
 			} catch (InterruptedException e) {
-				logger.error("Can't sleep at the end of the game");
+				LOGGER.error("Can't sleep at the end of the game");
 			}
 			for (Player p : playerList) {
 				Disconnect.disconnect(p);
@@ -393,7 +393,7 @@ public class Controller implements Observer {
 				this.writeToPlayer(p, response);
 			}
 
-			logger.info("Timeout started for player "
+			LOGGER.info("Timeout started for player "
 					+ ((Player) arg).getName() + ". He has " + (TIMEOUT / 1000)
 					+ "s to complete his turn.");
 			this.writeToAll(new ResponsePrivate("Timeout started for player "
@@ -407,7 +407,7 @@ public class Controller implements Observer {
 				@Override
 				public void run() {
 					synchronized (this) {
-						logger.info("Time is over, disconnecting player "
+						LOGGER.info("Time is over, disconnecting player "
 								+ playerName);
 						writeToAll(new ResponsePrivate(
 								"Time is over, disconnecting player "

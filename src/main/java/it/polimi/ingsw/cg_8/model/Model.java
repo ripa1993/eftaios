@@ -100,8 +100,7 @@ public class Model extends Observable {
 	/**
 	 * Log4j logger
 	 */
-	private static final Logger logger = LogManager
-			.getLogger(ServerSocketPublisherThread.class);
+	private static final Logger LOGGER = LogManager.getLogger(Model.class);
 
 	/**
 	 * Constructor for model class
@@ -525,7 +524,7 @@ public class Model extends Observable {
 				throw new NotAValidMapException(chosenMap
 						+ "is not a valid map");
 			} catch (NotAValidMapException e) {
-				logger.error(chosenMap.toString() + "is not a valid map");
+				LOGGER.error(chosenMap.toString() + "is not a valid map");
 			}
 		}
 	}

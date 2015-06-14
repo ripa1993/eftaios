@@ -96,7 +96,7 @@ public class MainGUI implements Runnable {
 	/**
 	 * Log4j logger
 	 */
-	private static final Logger logger = LogManager.getLogger(MainGUI.class);
+	private static final Logger LOGGER = LogManager.getLogger(MainGUI.class);
 
 	/**
 	 * Constructors, create a frame with images on the left and right side. Game
@@ -112,7 +112,7 @@ public class MainGUI implements Runnable {
 					new FileInputStream(Resource.FONT_TITILLIUM_BOLD_UPRIGHT))
 					.deriveFont((float) 20);
 		} catch (FontFormatException | IOException e) {
-			logger.error(e.getMessage());
+			LOGGER.error(e.getMessage());
 		}
 
 		main.setBackground(Color.BLACK);
@@ -373,7 +373,7 @@ public class MainGUI implements Runnable {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				logger.debug("Pressed play");
+				LOGGER.debug("Pressed play");
 				ConnectionManager connectionManager;
 				String playerName = playerTextField.getText();
 				if (rmiRadioButton.isSelected()
@@ -402,28 +402,28 @@ public class MainGUI implements Runnable {
 					connectionManager = new ConnectionManagerSocket(playerName,
 							GameMapName.GALILEI);
 				}
-				logger.debug("Connection manager created");
+				LOGGER.debug("Connection manager created");
 
-				logger.debug("Checking if the user wants some music");
+				LOGGER.debug("Checking if the user wants some music");
 				if (yesMusicRadioButton.isSelected()) {
-					logger.debug("Yes");
+					LOGGER.debug("Yes");
 					ExecutorService exec = Executors.newCachedThreadPool();
 					BackgroundMusicThread bmt = new BackgroundMusicThread();
-					logger.debug("Background music loaded");
+					LOGGER.debug("Background music loaded");
 					exec.submit(bmt);
 
 				} else {
-					logger.debug("No");
+					LOGGER.debug("No");
 				}
 				ClientGUIThread guiThread = new ClientGUIThread();
-				logger.debug("Gui thread created");
+				LOGGER.debug("Gui thread created");
 				guiThread.setConnectionManager(connectionManager);
 				guiThread.getConnectionManager().setup();
-				logger.debug("Connection manager setup started");
+				LOGGER.debug("Connection manager setup started");
 				SwingUtilities.invokeLater(guiThread);
-				logger.debug("Gui thread started, killing welcome frame");
+				LOGGER.debug("Gui thread started, killing welcome frame");
 				main.dispose();
-				logger.debug("Gui welcome killed");
+				LOGGER.debug("Gui welcome killed");
 
 			}
 		});

@@ -35,7 +35,7 @@ public class ClientSocketViewSUB implements Runnable {
 	/**
 	 * Log4j logger
 	 */
-	private static final Logger logger = LogManager
+	private static final Logger LOGGER = LogManager
 			.getLogger(ClientSocketViewSUB.class);
 
 	/**
@@ -52,7 +52,7 @@ public class ClientSocketViewSUB implements Runnable {
 			this.input = new ObjectInputStream(subSocket.getInputStream());
 			this.connectionManager = connectionManager;
 		} catch (IOException e) {
-			logger.error(e.getMessage());
+			LOGGER.error(e.getMessage());
 		}
 	}
 
@@ -62,7 +62,7 @@ public class ClientSocketViewSUB implements Runnable {
 	 */
 	@Override
 	public void run() {
-		logger.info("Successfully subscribed.");
+		LOGGER.info("Successfully subscribed.");
 		while (true) {
 
 			this.receive();
@@ -78,13 +78,13 @@ public class ClientSocketViewSUB implements Runnable {
 		try {
 			ServerResponse response = (ServerResponse) input.readObject();
 
-			logger.debug(response);
+			LOGGER.debug(response);
 
 			connectionManager.getClientData().storeResponse(response);
 
 			return;
 		} catch (IOException | ClassNotFoundException e) {
-			logger.error(e.getMessage());
+			LOGGER.error(e.getMessage());
 		}
 	}
 

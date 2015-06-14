@@ -27,7 +27,7 @@ public class ServerRMI implements Runnable {
 	/**
 	 * Log4j logger
 	 */
-	private static final Logger logger = LogManager.getLogger(ServerRMI.class);
+	private static final Logger LOGGER = LogManager.getLogger(ServerRMI.class);
 
 	/**
 	 * Passing the server is needed to bind the registration room.
@@ -46,12 +46,12 @@ public class ServerRMI implements Runnable {
 		try {
 			ServerRMIRegistrationViewRemote gameRemoteRegistration = (ServerRMIRegistrationViewRemote) UnicastRemoteObject
 					.exportObject(gameRegistration, 0);
-			logger.info("Binding server implementation to registry...");
+			LOGGER.info("Binding server implementation to registry...");
 
 			server.getRegistry().bind(Server.getName(), gameRemoteRegistration);
-			logger.info("RMI successfully started");
+			LOGGER.info("RMI successfully started");
 		} catch (RemoteException | AlreadyBoundException e) {
-			logger.error("Cannot start an RMI registry");
+			LOGGER.error("Cannot start an RMI registry");
 		}
 	}
 

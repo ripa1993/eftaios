@@ -167,7 +167,7 @@ public class ClientGUIThread implements Runnable, Observer {
 	/**
 	 * Log4j logger
 	 */
-	private static final Logger logger = LogManager
+	private static final Logger LOGGER = LogManager
 			.getLogger(ClientGUIThread.class);
 	/**
 	 * Shows if the player image has been set or not.
@@ -193,7 +193,7 @@ public class ClientGUIThread implements Runnable, Observer {
 					new FileInputStream(Resource.FONT_TITILLIUM_BOLD_UPRIGHT))
 					.deriveFont((float) 30);
 		} catch (FontFormatException | IOException e) {
-			logger.error(e.getMessage());
+			LOGGER.error(e.getMessage());
 		}
 
 		try {
@@ -203,7 +203,7 @@ public class ClientGUIThread implements Runnable, Observer {
 							Resource.FONT_TITILLIUM_SEMIBOLD_UPRIGHT))
 					.deriveFont((float) 20);
 		} catch (FontFormatException | IOException e) {
-			logger.error(e.getMessage());
+			LOGGER.error(e.getMessage());
 		}
 
 		mainFrame = new JFrame("Escape From The Aliens In Outer Space");
@@ -216,7 +216,7 @@ public class ClientGUIThread implements Runnable, Observer {
 
 			mainFrame.setContentPane(new BackgroundPanel(myImage));
 		} catch (IOException e) {
-			logger.error(e.getMessage());
+			LOGGER.error(e.getMessage());
 		}
 		mainFrame.getContentPane().setBackground(Color.PINK);
 		mainFrame.setBackground(new Color(255, 255, 255));
@@ -392,7 +392,7 @@ public class ClientGUIThread implements Runnable, Observer {
 			turnNumberLabel.setIcon(new ImageIcon(roundImage));
 			rightPanel.repaint();
 		} catch (IOException ex) {
-			logger.error(ex.getMessage());
+			LOGGER.error(ex.getMessage());
 		}
 		turnNumberLabel.setHorizontalTextPosition(SwingConstants.CENTER);
 		turnNumberLabel.setBorder(new EmptyBorder(0, 0, 5, 60));
@@ -510,7 +510,7 @@ public class ClientGUIThread implements Runnable, Observer {
 			state_image.setIcon(new ImageIcon(cardImage));
 			rightPanel.repaint();
 		} catch (IOException ex) {
-			logger.error(ex.getMessage());
+			LOGGER.error(ex.getMessage());
 		}
 
 	}
@@ -568,7 +568,7 @@ public class ClientGUIThread implements Runnable, Observer {
 	@Override
 	public void run() {
 
-		logger.debug("Info text pane is" + infoPanel.getSize());
+		LOGGER.debug("Info text pane is" + infoPanel.getSize());
 
 		cardButton1.getInvisButton().addMouseListener(new MouseInputAdapter() {
 			@Override
@@ -579,7 +579,7 @@ public class ClientGUIThread implements Runnable, Observer {
 					if (action != null) {
 						connectionManager.send(action);
 					} else {
-						logger.debug("THIS DOES NOTHING - STOP DOING IT!");
+						LOGGER.debug("THIS DOES NOTHING - STOP DOING IT!");
 					}
 				}
 			}
@@ -594,7 +594,7 @@ public class ClientGUIThread implements Runnable, Observer {
 					if (action != null) {
 						connectionManager.send(action);
 					} else {
-						logger.debug("Action is passive or not an action");
+						LOGGER.debug("Action is passive or not an action");
 					}
 				}
 			}
@@ -607,7 +607,7 @@ public class ClientGUIThread implements Runnable, Observer {
 					if (action != null) {
 						connectionManager.send(action);
 					} else {
-						logger.debug("Action is passive or not an action");
+						LOGGER.debug("Action is passive or not an action");
 					}
 				}
 			}
@@ -915,17 +915,17 @@ public class ClientGUIThread implements Runnable, Observer {
 								JOptionPane.DEFAULT_OPTION,
 								JOptionPane.QUESTION_MESSAGE, null, options,
 								options[0]);
-						logger.debug("Result: " + result);
-						logger.debug("Options: " + options);
+						LOGGER.debug("Result: " + result);
+						LOGGER.debug("Options: " + options);
 						if (result == 0) {
-							logger.debug("Choose: move");
+							LOGGER.debug("Choose: move");
 							connectionManager.send(new ActionMove(coordinate));
 						} else if (result == 1) {
-							logger.debug("Choose: spotlight");
+							LOGGER.debug("Choose: spotlight");
 							connectionManager.send(new ActionUseCard(
 									new SpotlightCard(), coordinate));
 						} else if (result == 2) {
-							logger.debug("Choose: fake noise");
+							LOGGER.debug("Choose: fake noise");
 							connectionManager.send(new ActionFakeNoise(
 									coordinate));
 						}
@@ -998,19 +998,19 @@ public class ClientGUIThread implements Runnable, Observer {
 
 			cardButton1
 					.setCardType(this.analyzeCardType(cardMessage.getCard1()));
-			logger.debug("Card1 Type"
+			LOGGER.debug("Card1 Type"
 					+ this.analyzeCardType(cardMessage.getCard1()));
 			cardButton1.repaint();
 
 			cardButton2
 					.setCardType(this.analyzeCardType(cardMessage.getCard2()));
-			logger.debug("Card2 Type"
+			LOGGER.debug("Card2 Type"
 					+ this.analyzeCardType(cardMessage.getCard2()));
 			cardButton2.repaint();
 
 			cardButton3
 					.setCardType(this.analyzeCardType(cardMessage.getCard3()));
-			logger.debug("Card3 Type"
+			LOGGER.debug("Card3 Type"
 					+ this.analyzeCardType(cardMessage.getCard3()));
 			cardButton3.repaint();
 
@@ -1022,9 +1022,9 @@ public class ClientGUIThread implements Runnable, Observer {
 
 			if (playerImageSet == false) {
 				double random = Math.random();
-				logger.debug(stateMessage.getCharacter());
+				LOGGER.debug(stateMessage.getCharacter());
 				if (stateMessage.getCharacter().equals("Human")) {
-					logger.debug("I'm a human, so i set my img");
+					LOGGER.debug("I'm a human, so i set my img");
 					if (random < 0.25) {
 						setStateImage(Resource.IMG_HUMAN_1);
 					} else if (random < 0.5) {
@@ -1038,7 +1038,7 @@ public class ClientGUIThread implements Runnable, Observer {
 
 					}
 				} else if (stateMessage.getCharacter().equals("Alien")) {
-					logger.debug("I'm an alien, so i set my img");
+					LOGGER.debug("I'm an alien, so i set my img");
 					cardButton1.updateOverlay(Resource.IMG_ALIEN_OVERLAY);
 					cardButton2.updateOverlay(Resource.IMG_ALIEN_OVERLAY);
 					cardButton3.updateOverlay(Resource.IMG_ALIEN_OVERLAY);
@@ -1072,13 +1072,13 @@ public class ClientGUIThread implements Runnable, Observer {
 			GameMapName mapName = response.getMapName();
 			if (mapName.equals(GameMapName.FERMI)) {
 				setMapImage(Resource.IMG_FERMI_MAP);
-				logger.debug("Map changed to fermi");
+				LOGGER.debug("Map changed to fermi");
 			} else if (mapName.equals(GameMapName.GALILEI)) {
 				setMapImage(Resource.IMG_GALILEI_MAP);
-				logger.debug("Map changed to galilei");
+				LOGGER.debug("Map changed to galilei");
 			} else if (mapName.equals(GameMapName.GALVANI)) {
 				setMapImage(Resource.IMG_GALVANI_MAP);
-				logger.debug("Map changed to galvani");
+				LOGGER.debug("Map changed to galvani");
 			}
 			mapPanel.repaint();
 			matchStarted = true;
@@ -1101,7 +1101,7 @@ public class ClientGUIThread implements Runnable, Observer {
 			clip.open(audioInputStream);
 			clip.start();
 		} catch (Exception ex) {
-			logger.error(ex.getMessage());
+			LOGGER.error(ex.getMessage());
 		}
 	}
 

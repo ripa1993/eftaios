@@ -49,7 +49,7 @@ public class ConnectionManagerSocket extends ConnectionManager {
 	/**
 	 * Log4j logger
 	 */
-	private static final Logger logger = LogManager
+	private static final Logger LOGGER = LogManager
 			.getLogger(ConnectionManagerSocket.class);
 
 	/**
@@ -80,9 +80,9 @@ public class ConnectionManagerSocket extends ConnectionManager {
 			 */
 			executor.submit(new ClientSocketViewSUB(SERVER_ADDRESS,
 					SOCKET_PORT_PUBSUB, this));
-			logger.debug("Subscriber back to main thread");
+			LOGGER.debug("Subscriber back to main thread");
 		} catch (IOException e) {
-			logger.error("Cannot connect to socket server (" + SERVER_ADDRESS
+			LOGGER.error("Cannot connect to socket server (" + SERVER_ADDRESS
 					+ ":" + SOCKET_PORT_CLIENTSERVER + ")");
 		}
 
@@ -93,7 +93,7 @@ public class ConnectionManagerSocket extends ConnectionManager {
 	 */
 	@Override
 	public void send(ClientAction inputLine) {
-		logger.debug("Sending action...");
+		LOGGER.debug("Sending action...");
 		ClientSocketViewCS socketCS = new ClientSocketViewCS(SERVER_ADDRESS,
 				SOCKET_PORT_CLIENTSERVER, inputLine, clientID, clientData);
 		executor.submit(socketCS);
@@ -108,7 +108,7 @@ public class ConnectionManagerSocket extends ConnectionManager {
 	 */
 	public void initializeSocket() throws UnknownHostException, IOException {
 		Socket socket = new Socket(SERVER_ADDRESS, SOCKET_PORT_CLIENTSERVER);
-		logger.debug("Connected to server " + SERVER_ADDRESS + " on port "
+		LOGGER.debug("Connected to server " + SERVER_ADDRESS + " on port "
 				+ SOCKET_PORT_CLIENTSERVER);
 
 		ObjectOutputStream output = new ObjectOutputStream(
@@ -117,44 +117,44 @@ public class ConnectionManagerSocket extends ConnectionManager {
 
 		do {
 			try {
-				logger.info("Your ID is not set.");
+				LOGGER.info("Your ID is not set.");
 				output.writeObject(new Integer(this.getclientID()));
 				output.flush();
 				Integer clientIDRequested = (Integer) input.readObject();
-				logger.info("New ID received");
+				LOGGER.info("New ID received");
 				this.setclientID((int) clientIDRequested);
-				logger.info("Your ID is: " + this.getclientID());
+				LOGGER.info("Your ID is: " + this.getclientID());
 			} catch (IOException | ClassNotFoundException e) {
-				logger.error(e.getMessage());
+				LOGGER.error(e.getMessage());
 			}
 		} while (this.getclientID() == 0);
 
 		do {
 			try {
 
-				logger.debug("Sending your User-Name to the server...");
+				LOGGER.debug("Sending your User-Name to the server...");
 				output.writeObject(this.playerName);
 				output.flush();
 				String serverAnswer = (String) input.readObject();
 				if (serverAnswer.equals("NAME ACCEPTED")) {
 					nameSet = true;
-					logger.debug("Name accepted");
+					LOGGER.debug("Name accepted");
 				}
 
-				logger.debug("Sending your chosen map to the server...");
+				LOGGER.debug("Sending your chosen map to the server...");
 				output.writeObject(this.mapName);
 				output.flush();
 				String serverMapAnswer = (String) input.readObject();
 				if (serverMapAnswer.equals("MAP CHOSEN: "
 						+ this.mapName.toString())) {
 					mapSet = true;
-					logger.debug("Map accepted");
+					LOGGER.debug("Map accepted");
 				}
 
 			} catch (IOException e) {
-				logger.error(e.getMessage());
+				LOGGER.error(e.getMessage());
 			} catch (ClassNotFoundException e) {
-				logger.error(e.getMessage());
+				LOGGER.error(e.getMessage());
 			}
 		} while (nameSet == false || mapSet == false);
 
@@ -168,7 +168,7 @@ public class ConnectionManagerSocket extends ConnectionManager {
 		try {
 			socket.close();
 		} catch (IOException e) {
-			logger.error(e.getMessage());
+			LOGGER.error(e.getMessage());
 		} finally {
 			socket = null;
 			output = null;

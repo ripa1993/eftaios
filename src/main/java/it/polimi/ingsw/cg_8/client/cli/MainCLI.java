@@ -46,7 +46,7 @@ public class MainCLI implements Runnable, Observer {
 	/**
 	 * Log4j logger
 	 */
-	private static final Logger logger = LogManager.getLogger(MainCLI.class);
+	private static final Logger LOGGER = LogManager.getLogger(MainCLI.class);
 	/**
 	 * System in scanner
 	 */
@@ -99,7 +99,7 @@ public class MainCLI implements Runnable, Observer {
 			System.out.println(">Insert your player name:");
 			playerName = input.nextLine();
 		} while (playerName.equals(""));
-		logger.debug("Name set: " + playerName);
+		LOGGER.debug("Name set: " + playerName);
 		// get connection method
 		do {
 			System.out.println(">Choose connection method:");
@@ -110,7 +110,7 @@ public class MainCLI implements Runnable, Observer {
 				methodSet = true;
 			}
 		} while (!methodSet);
-		logger.debug("Method set: " + chosenMethod);
+		LOGGER.debug("Method set: " + chosenMethod);
 		// get chosen map
 		do {
 			System.out.println(">Vote your favorite map:");
@@ -129,21 +129,21 @@ public class MainCLI implements Runnable, Observer {
 				mapSet = true;
 			}
 		} while (!mapSet);
-		logger.debug("Map set: " + chosenMap);
+		LOGGER.debug("Map set: " + chosenMap);
 		// name, connection and map set. now create connection
 		if (chosenMethod.equals("1")) {
 			connectionManager = new ConnectionManagerRMI(playerName, chosenMap);
-			logger.debug("RMI connection manager created");
+			LOGGER.debug("RMI connection manager created");
 		} else {
 			connectionManager = new ConnectionManagerSocket(playerName,
 					chosenMap);
-			logger.debug("Socket connection manager created");
+			LOGGER.debug("Socket connection manager created");
 		}
 		clientData = connectionManager.getClientData();
 		clientData.addObserver(this);
-		logger.debug("Observer added to clientData");
+		LOGGER.debug("Observer added to clientData");
 		connectionManager.setup();
-		logger.debug("Connection manager setup");
+		LOGGER.debug("Connection manager setup");
 	}
 
 	@Override
@@ -164,30 +164,30 @@ public class MainCLI implements Runnable, Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		if (arg.equals("Chat")) {
-			logger.debug("New Update: CHAT");
+			LOGGER.debug("New Update: CHAT");
 			// new chat message
 			ResponseChat chat = clientData.getLastChat();
 			System.out.println("[CHAT] " + chat.getPlayerName() + ": "
 					+ chat.getMessage());
 		} else if (arg.equals("Noise")) {
-			logger.debug("New Update: NOISE");
+			LOGGER.debug("New Update: NOISE");
 			// new noise
 			ResponseNoise noise = clientData.getLastNoise();
 			System.out.println("[NOISE] " + noise.toString());
 		} else if (arg.equals("Private")) {
-			logger.debug("New Update: PRIVATE");
+			LOGGER.debug("New Update: PRIVATE");
 			// new private message
 			ResponsePrivate privateMessage = clientData.getLastPrivate();
 			System.out.println("[INFO] " + privateMessage.getMessage());
 		} else if (arg.equals("Cards")) {
-			logger.debug("New Update: CARDS");
+			LOGGER.debug("New Update: CARDS");
 			// new card update
 			ResponseCard cardMessage = clientData.getCards();
 			System.out.println("[HAND] Your cards: " + cardMessage.getCard1()
 					+ ", " + cardMessage.getCard2() + " and "
 					+ cardMessage.getCard3());
 		} else if (arg.equals("State")) {
-			logger.debug("New Update: STATE");
+			LOGGER.debug("New Update: STATE");
 			// new state update
 			ResponseState stateMessage = clientData.getState();
 			System.out.println("[STATE] Player: "
@@ -196,7 +196,7 @@ public class MainCLI implements Runnable, Observer {
 			System.out.println(", State: " + stateMessage.getState()
 					+ ", Position: " + stateMessage.getPosition());
 		} else if (arg.equals("Map")) {
-			logger.debug("New Update: MAP");
+			LOGGER.debug("New Update: MAP");
 			// new map update, happens only on game start.
 			// CLI player is supposed to know the map, so no map "art" is
 			// printed
@@ -205,7 +205,7 @@ public class MainCLI implements Runnable, Observer {
 					+ response.getMapName());
 			matchStarted = true;
 		} else if (arg.equals("Ack")) {
-			logger.debug("New Update: ACK");
+			LOGGER.debug("New Update: ACK");
 			System.out.println("[ACK] " + clientData.getAck());
 		}
 

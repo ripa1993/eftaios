@@ -74,7 +74,7 @@ public class CardButton extends JPanel {
 	/**
 	 * Log4j logger
 	 */
-	private static final Logger logger = LogManager.getLogger(CardButton.class);
+	private static final Logger LOGGER = LogManager.getLogger(CardButton.class);
 	/**
 	 * Button width, fixed
 	 */
@@ -132,7 +132,7 @@ public class CardButton extends JPanel {
 							Resource.FONT_TITILLIUM_SEMIBOLD_UPRIGHT))
 					.deriveFont((float) 20);
 		} catch (FontFormatException | IOException e) {
-			logger.error(e.getMessage());
+			LOGGER.error(e.getMessage());
 		}
 
 		/**
@@ -316,7 +316,7 @@ public class CardButton extends JPanel {
 			cardButtonImage.setIcon(new ImageIcon(cardImage));
 
 		} catch (IOException ex) {
-			logger.error(ex.getMessage());
+			LOGGER.error(ex.getMessage());
 		}
 	}
 
@@ -335,7 +335,7 @@ public class CardButton extends JPanel {
 					Image.SCALE_SMOOTH);
 
 		} catch (IOException ex) {
-			logger.error(ex.getMessage());
+			LOGGER.error(ex.getMessage());
 		}
 	}
 
