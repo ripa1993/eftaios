@@ -155,6 +155,7 @@ public class Server {
 			voteCount.put(chosenMap, voteCount.get(chosenMap) + 1);
 		}
 	}
+
 	/**
 	 * Count the votes given to each map by the players, and return the most
 	 * voted map. In case of a draw, maps are returned with a precise hierarchy
@@ -273,6 +274,9 @@ public class Server {
 		return registry;
 	}
 
+	/**
+	 * Starts a timeout to handle the game start after the timeout is over
+	 */
 	public static void startTimeout() {
 		timer = new Timer();
 		timerTask = new TimerTask() {
@@ -294,6 +298,7 @@ public class Server {
 		timer.schedule(timerTask, TIMEOUT);
 		logger.info("Timeout started");
 	}
+
 	/**
 	 * Cancel the timer if the maximum number of players is reached before the
 	 * end of the allocated time.
