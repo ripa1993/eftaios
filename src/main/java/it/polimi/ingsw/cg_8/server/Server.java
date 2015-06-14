@@ -307,7 +307,12 @@ public class Server {
 		timer.cancel();
 		logger.info("Timeout aborted");
 	}
-
+	/**
+	 * Server launcher
+	 * @param args arguments
+	 * @throws RemoteException
+	 * @throws AlreadyBoundException
+	 */
 	public static void main(String[] args) throws RemoteException,
 			AlreadyBoundException {
 		logger.info("Starting server main");
