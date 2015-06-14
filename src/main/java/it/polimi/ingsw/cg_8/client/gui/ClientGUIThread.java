@@ -113,7 +113,7 @@ public class ClientGUIThread implements Runnable, Observer {
 	 * JPanels used in the gui
 	 */
 	private JPanel chatPanel, chatPanel2, rightPanel, infoPanel, commandsPanel,
-			chatInfoPanel, state_panel, panel1, panel2, panel3, cardPanel;
+			chatInfoPanel, statePanel, panel1, panel2, panel3, cardPanel;
 	/**
 	 * JLayered pane used in the map panel
 	 */
@@ -334,20 +334,20 @@ public class ClientGUIThread implements Runnable, Observer {
 		commandsPanel.add(endTurnButton);
 		commandsPanel.setVisible(true);
 
-		state_panel = new JPanel();
-		state_panel.setMaximumSize(new Dimension(600, 32767));
-		state_panel.setBorder(new MatteBorder(10, 0, 0, 0, new Color(100, 100,
+		statePanel = new JPanel();
+		statePanel.setMaximumSize(new Dimension(600, 32767));
+		statePanel.setBorder(new MatteBorder(10, 0, 0, 0, new Color(100, 100,
 				100, 100)));
-		state_panel.setOpaque(false);
-		rightPanel.add(state_panel, BorderLayout.NORTH);
-		state_panel.setLayout(new BorderLayout(0, 0));
+		statePanel.setOpaque(false);
+		rightPanel.add(statePanel, BorderLayout.NORTH);
+		statePanel.setLayout(new BorderLayout(0, 0));
 
 		panel3 = new JPanel();
 		panel3.setBorder(new MatteBorder(0, 0, 5, 0, (Color) new Color(100,
 				100, 100, 100)));
 		panel3.setBackground(new Color(100, 100, 100, 100));
 		panel3.setOpaque(true);
-		state_panel.add(panel3, BorderLayout.CENTER);
+		statePanel.add(panel3, BorderLayout.CENTER);
 		panel3.setLayout(new BorderLayout(0, 0));
 
 		stateImage = new JLabel("");
@@ -403,7 +403,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		panel2.setOpaque(false);
 		panel2.setBackground(Color.WHITE);
 		panel2.setBorder(new EmptyBorder(10, 0, 0, 0));
-		state_panel.add(panel2, BorderLayout.SOUTH);
+		statePanel.add(panel2, BorderLayout.SOUTH);
 		panel2.setLayout(new BorderLayout(0, 0));
 
 		lblItemCards = new JLabel();
