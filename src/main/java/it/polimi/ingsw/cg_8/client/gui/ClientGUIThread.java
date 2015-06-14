@@ -625,7 +625,7 @@ public class ClientGUIThread implements Runnable, Observer {
 						connectionManager.send(new ActionDisconnect());
 					} catch (NullPointerException ex) {
 						// if server is down
-						System.err.println("Server is down");
+						LOGGER.error("Server is down");
 					}
 					System.exit(0);
 				}
