@@ -31,11 +31,6 @@ public class ClientSocketViewSUB implements Runnable {
 	 */
 	private ObjectInputStream input;
 	/**
-	 * Reference to the {@link ClientSocket}, used to get the client
-	 * information.
-	 */
-	private ClientSocket clientSocket;
-	/**
 	 * Used to store messages in {@link ClientData}.
 	 */
 	private ConnectionManager connectionManager;
@@ -46,26 +41,7 @@ public class ClientSocketViewSUB implements Runnable {
 			.getLogger(ClientSocketViewSUB.class);
 
 	/**
-	 * Used in the CLI
-	 * 
-	 * @param serverIP
-	 * @param serverPubPort
-	 * @param clientSocket
-	 */
-	public ClientSocketViewSUB(String serverIP, int serverPubPort,
-			ClientSocket clientSocket) {
-		try {
-			this.subSocket = new Socket(serverIP, serverPubPort);
-			this.input = new ObjectInputStream(subSocket.getInputStream());
-			this.clientSocket = clientSocket;
-			this.connectionManager = null;
-		} catch (IOException e) {
-			logger.error(e.getMessage());
-		}
-	}
-
-	/**
-	 * Used in the GUI
+	 * Used in the GUI and CLI
 	 * 
 	 * @param serverIP
 	 * @param serverPubPort
@@ -76,7 +52,6 @@ public class ClientSocketViewSUB implements Runnable {
 		try {
 			this.subSocket = new Socket(serverIP, serverPubPort);
 			this.input = new ObjectInputStream(subSocket.getInputStream());
-			this.clientSocket = null;
 			this.connectionManager = connectionManager;
 		} catch (IOException e) {
 			logger.error(e.getMessage());
@@ -106,12 +81,9 @@ public class ClientSocketViewSUB implements Runnable {
 			ServerResponse response = (ServerResponse) input.readObject();
 
 			logger.debug(response);
-		
-			if (clientSocket != null) {
-				clientSocket.getClientData().storeResponse(response);
-			} else {
-				connectionManager.getClientData().storeResponse(response);
-			}
+
+			connectionManager.getClientData().storeResponse(response);
+
 			return;
 		} catch (IOException | ClassNotFoundException e) {
 			logger.error(e.getMessage());
