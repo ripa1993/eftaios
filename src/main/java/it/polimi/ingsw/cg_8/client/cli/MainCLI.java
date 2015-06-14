@@ -18,6 +18,8 @@ import it.polimi.ingsw.cg_8.view.server.ResponseState;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -216,6 +218,7 @@ public class MainCLI implements Runnable, Observer {
 	 *            parameters
 	 */
 	public static void main(String[] args) {
-		(new MainCLI()).run();
+		ExecutorService exec = Executors.newCachedThreadPool();
+		exec.submit(new MainCLI());
 	}
 }
