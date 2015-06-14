@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import it.polimi.ingsw.cg_8.model.cards.Card;
+import it.polimi.ingsw.cg_8.model.cards.characterCards.AlienCard;
 import it.polimi.ingsw.cg_8.model.cards.characterCards.CharacterCard;
 import it.polimi.ingsw.cg_8.model.decks.deckCreators.CharacterDeckCreator;
 import it.polimi.ingsw.cg_8.model.exceptions.EmptyDeckException;
@@ -42,6 +43,22 @@ public class CharacterDeckTest {
 		} else
 			check = false;
 		assertTrue(check);
+	}
+
+	@Test
+	public void equalsTestReflex() {
+		assertTrue(charDeck.equals(charDeck));
+	}
+
+	@Test
+	public void equalsNull() {
+		assertFalse(charDeck.equals(null));
+	}
+
+	@Test
+	public void equalsNotUsedCard() {
+		charDeck.addUsedCard(new AlienCard("asd", "asd", "asd"));
+		assertFalse(charDeck.equals(charDeck2));
 	}
 
 	@Test
@@ -105,15 +122,14 @@ public class CharacterDeckTest {
 		discardPile.add(charDeck.drawCard());
 		discardPile.add(charDeck.drawCard());
 
-		
 		Iterator<Card> i = discardPile.iterator();
-		while(i.hasNext()){
+		while (i.hasNext()) {
 			Card currCard = i.next();
 			charDeck.addUsedCard(currCard);
 		}
-		
+
 		charDeck.reshuffle();
-		
+
 		System.out.println(charDeck);
 		System.out.println(charDeck2);
 		assertTrue(charDeck.equals(charDeck2));
