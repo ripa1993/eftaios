@@ -97,49 +97,94 @@ public class ClientGUIThread implements Runnable, Observer {
 	 * The server messages are stored here.
 	 */
 	private ClientData clientData;
-
+	/**
+	 * Connection manager used to handle communication with the server
+	 */
+	private ConnectionManager connectionManager;
+	/**
+	 * Main frame
+	 */
 	private JFrame mainFrame;
+	/**
+	 * Content pane
+	 */
 	private Container contentPane;
-
+	/**
+	 * JPanels used in the gui
+	 */
 	private JPanel chatPanel, chatPanel2, rightPanel, infoPanel, commandsPanel,
-			chatInfoPanel;
+			chatInfoPanel, state_panel, panel_1, panel_2, panel_3, cardPanel;
+	/**
+	 * JLayered pane used in the map panel
+	 */
 	private JLayeredPane mapPanel;
+	/**
+	 * JButton used in the gui
+	 */
 	private JButton moveButton, attackButton, drawButton, endTurnButton,
 			fakeNoiseButton, useItemCardButton, chatButton;
+	/**
+	 * JTextPane used in the gui
+	 */
 	private JTextPane chatTextPane, infoTextPane;
+	/**
+	 * JTextField used to get player chat messages
+	 */
 	private JTextField chatTextField;
-	private JLabel infoTextTitle, chatTextTitle;
+	/**
+	 * JLabel used in the gui
+	 */
+	private JLabel infoTextTitle, chatTextTitle, lblPlayerState, lblItemCards,
+			labelCurrentState, state_image, turnNumberLabel;
+	/**
+	 * JScrollPane used to add a scroll to the chat and info text pane
+	 */
 	private JScrollPane chatScroll, infoScroll;
-	private ConnectionManager connectionManager;
+	/**
+	 * Background image resource
+	 */
 	private String backgroundImageResource;
+	/**
+	 * Map image, scalable
+	 */
 	private Image backgroundImageScaled;
+	/**
+	 * Map image
+	 */
 	private ImageIcon backgroundImage;
-	private JPanel state_panel;
-	private JPanel panel_1;
-	private JPanel panel_2;
-	private JLabel lblPlayerState;
-	private CardButton cardButton1;
-	private CardButton cardButton2;
-	private CardButton cardButton3;
-	private JLabel lblItemCards;
-	private JPanel cardPanel;
-	private JLabel labelCurrentState;
-	private Font fontTitilliumBoldUpright;
-	private Font fontTitilliumSemiboldUpright;
+	/**
+	 * CardButton used to display player item cards
+	 */
+	private CardButton cardButton1, cardButton2, cardButton3;
+	/**
+	 * GUI's custom fonts
+	 */
+	private Font fontTitilliumBoldUpright, fontTitilliumSemiboldUpright;
+	/**
+	 * Flag that show if the match has started
+	 */
 	private boolean matchStarted;
 	/**
 	 * Log4j logger
 	 */
 	private static final Logger logger = LogManager
 			.getLogger(ClientGUIThread.class);
-	private JPanel panel_3;
-	private JLabel state_image;
 	/**
 	 * Shows if the player image has been set or not.
 	 */
 	private boolean playerImageSet;
-	private JLabel turnNumberLabel;
 
+	/**
+	 * Constructor, create the main frame for the gui. Instead of the map shows
+	 * a temp image that changes when the game starts and the server
+	 * communicates the game map. Player can click on the sectors on the left
+	 * and a popup show the available sector specific actions (move, spotlight,
+	 * fake noise). On the right, the player can see its state and round number,
+	 * the item cards in his hand (clickable), a text pane where he can see
+	 * infos about the match, a text pane where he can see chat message and
+	 * write his own. On the right bottom there are the clickable action button,
+	 * that in case show a popup when clicked
+	 */
 	public ClientGUIThread() {
 		matchStarted = false;
 		playerImageSet = false;
@@ -451,6 +496,12 @@ public class ClientGUIThread implements Runnable, Observer {
 
 	}
 
+	/**
+	 * Changes the player image, when the game is started
+	 * 
+	 * @param source
+	 *            path to the image
+	 */
 	private void setStateImage(String source) {
 		try {
 			Image tempImage = ImageIO.read(new File(source));
@@ -464,18 +515,42 @@ public class ClientGUIThread implements Runnable, Observer {
 
 	}
 
+	/**
+	 * Adds a new line to the chat text pane. It saves the previous content and
+	 * append the new line
+	 * 
+	 * @param player
+	 *            sender
+	 * @param msg
+	 *            message
+	 */
 	public void appendChat(String player, String msg) {
 		String newMsg = chatTextPane.getText();
 		newMsg += "\n" + player + ": " + msg;
 		chatTextPane.setText(newMsg);
 	}
 
+	/**
+	 * Adds a new line to the info text pane. It saves the previous content and
+	 * append the new line
+	 * 
+	 * @param type
+	 *            type of the message
+	 * @param msg
+	 *            message
+	 */
 	public void appendInfo(String type, String msg) {
 		String newMsg = infoTextPane.getText();
 		newMsg += "\n[" + type + "] " + msg;
 		infoTextPane.setText(newMsg);
 	}
 
+	/**
+	 * Adds a connection manager (previously created) to the gui thread
+	 * 
+	 * @param connectionManager
+	 *            rmi or socket connection manager
+	 */
 	public void setConnectionManager(ConnectionManager connectionManager) {
 		this.connectionManager = connectionManager;
 		this.clientData = connectionManager.getClientData();
@@ -483,6 +558,9 @@ public class ClientGUIThread implements Runnable, Observer {
 
 	}
 
+	/**
+	 * @return this gui connection manager
+	 */
 	public ConnectionManager getConnectionManager() {
 		return this.connectionManager;
 	}
@@ -589,7 +667,7 @@ public class ClientGUIThread implements Runnable, Observer {
 							JOptionPane.YES_NO_OPTION);
 					JDialog dialog = optionPane.createDialog("Attack");
 					dialog.setVisible(true);
-					int selection = OptionPaneUtils.getSelection(optionPane);
+					int selection = ((Integer) optionPane.getValue()).intValue();
 					if (selection == JOptionPane.YES_OPTION) {
 						connectionManager.send(new ActionAttack());
 					} else {
@@ -612,7 +690,7 @@ public class ClientGUIThread implements Runnable, Observer {
 					JDialog dialog = optionPane
 							.createDialog("Draw a dangerous sector card");
 					dialog.setVisible(true);
-					int selection = OptionPaneUtils.getSelection(optionPane);
+					int selection = ((Integer) optionPane.getValue()).intValue();
 					if (selection == JOptionPane.YES_OPTION) {
 						connectionManager.send(new ActionDrawCard());
 					} else {
@@ -659,7 +737,7 @@ public class ClientGUIThread implements Runnable, Observer {
 							JOptionPane.YES_NO_OPTION);
 					JDialog dialog = optionPane.createDialog("End turn");
 					dialog.setVisible(true);
-					int selection = OptionPaneUtils.getSelection(optionPane);
+					int selection = ((Integer) optionPane.getValue()).intValue();
 					if (selection == JOptionPane.YES_OPTION) {
 						connectionManager.send(new ActionEndTurn());
 					} else {
@@ -919,16 +997,17 @@ public class ClientGUIThread implements Runnable, Observer {
 			ResponseCard cardMessage = clientData.getCards();
 
 			cardButton1
-					.setCardType(this.analyzeCardType(cardMessage.getCard1()));					
-			logger.debug("Card1 Type" + this.analyzeCardType(cardMessage.getCard1()));
+					.setCardType(this.analyzeCardType(cardMessage.getCard1()));
+			logger.debug("Card1 Type"
+					+ this.analyzeCardType(cardMessage.getCard1()));
 			cardButton1.repaint();
-			
+
 			cardButton2
 					.setCardType(this.analyzeCardType(cardMessage.getCard2()));
 			logger.debug("Card2 Type"
 					+ this.analyzeCardType(cardMessage.getCard2()));
 			cardButton2.repaint();
-			
+
 			cardButton3
 					.setCardType(this.analyzeCardType(cardMessage.getCard3()));
 			logger.debug("Card3 Type"
@@ -1008,6 +1087,12 @@ public class ClientGUIThread implements Runnable, Observer {
 		}
 	}
 
+	/**
+	 * Plays a .wav sound, used by chat messages and noises
+	 * 
+	 * @param filePath
+	 *            path to the .wav file
+	 */
 	private void playSound(String filePath) {
 		try {
 			AudioInputStream audioInputStream = AudioSystem
@@ -1020,12 +1105,25 @@ public class ClientGUIThread implements Runnable, Observer {
 		}
 	}
 
+	/**
+	 * Changes the map image, used when the server sends a ResponseMap message
+	 * 
+	 * @param path
+	 *            path to image file
+	 */
 	private void setMapImage(String path) {
 		backgroundImage = new ImageIcon(path);
 		backgroundImageScaled = new ImageIcon(backgroundImage.getImage()
 				.getScaledInstance(5000, -1, Image.SCALE_SMOOTH)).getImage();
 	}
 
+	/**
+	 * Reads a string and returns a value in the CardType enumeration
+	 * 
+	 * @param card
+	 *            string that identifies a card type
+	 * @return the correnct CardType value
+	 */
 	private CardType analyzeCardType(String card) {
 		if (card.equals("AdrenalineCard")) {
 			return CardType.ADRENALINE;

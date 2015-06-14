@@ -41,30 +41,69 @@ import org.apache.logging.log4j.Logger;
 
 import javax.swing.border.EmptyBorder;
 
+/**
+ * Main class for client graphic user interface. It uses a swing frame to
+ * receive user inputs. The user can choose a username, a connection method
+ * between rmi and socket, a vote for the map choiche (fermi, galvani and
+ * galilei) and if the background music is enabled
+ * 
+ * @author Simone
+ * @version 1.0
+ */
 public class MainGUI implements Runnable {
+	/**
+	 * Main JFrame
+	 */
 	private JFrame main;
+	/**
+	 * Left ImageIcon
+	 */
 	private ImageIcon westPanelImage;
+	/**
+	 * Left Image, scalable
+	 */
 	private Image westPanelImageScaled;
+	/**
+	 * Right Image, scalable
+	 */
 	private Image eastPanelImageScaled;
+	/**
+	 * Right ImageIcon
+	 */
 	private ImageIcon eastPanelImage;
+	/**
+	 * Player name text field
+	 */
 	private JTextField playerTextField;
-	private ButtonGroup connectionGroup, mapGroup;
+	/**
+	 * ButtonGroup, used to distinguish groups of radio buttons
+	 */
+	private ButtonGroup connectionGroup, mapGroup, musicGroup;
+	/**
+	 * Play button, starts the game
+	 */
 	private JButton playButton;
+	/**
+	 * Font used by the JLabels
+	 */
 	private Font fontTitilliumBoldUpright;
-	private JRadioButton galvaniRadioButton;
-	private JRadioButton galileiRadioButton;
-	private JRadioButton fermiRadioButton;
-	private JRadioButton rmiRadioButton;
-	private JRadioButton socketRadioButton;
-	private ButtonGroup musicGroup;
-	private JRadioButton noMusicRadioButton;
-	private JRadioButton yesMusicRadioButton;
+	/**
+	 * RadioButtons used during the setup phase
+	 */
+	private JRadioButton galvaniRadioButton, galileiRadioButton,
+			fermiRadioButton, socketRadioButton, rmiRadioButton,
+			yesMusicRadioButton, noMusicRadioButton;
 	/**
 	 * Log4j logger
 	 */
-	private static final Logger logger = LogManager
-			.getLogger(MainGUI.class);
+	private static final Logger logger = LogManager.getLogger(MainGUI.class);
 
+	/**
+	 * Constructors, create a frame with images on the left and right side. Game
+	 * logo is placed in the top center. Player can choose username, connection
+	 * method, favourite map and background music. Then can press play to start
+	 * the game
+	 */
 	public MainGUI() {
 		main = new JFrame("Escape from the aliens in outer space");
 
@@ -390,6 +429,12 @@ public class MainGUI implements Runnable {
 		});
 	}
 
+	/**
+	 * GUI launcher
+	 * 
+	 * @param args
+	 *            parameters
+	 */
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new MainGUI());
 	}

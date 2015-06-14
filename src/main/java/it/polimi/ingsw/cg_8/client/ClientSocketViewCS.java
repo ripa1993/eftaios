@@ -57,31 +57,22 @@ public class ClientSocketViewCS implements Runnable {
 
 	/**
 	 * 
+	 * Constructor that creates a thread that will connect to the server with a
+	 * socket connection and will send the input ClientAction, the server will
+	 * answer with a boolean value to distinguish if the action has been
+	 * validated or not
+	 * 
 	 * @param serverIP
-	 *            The IP of the server.
+	 *            the ip of the server socket
 	 * @param serverResponsePort
-	 *            The port used by the server to listen to incoming connections.
-	 * @throws NotAValidInput
+	 *            the port of the server socket
+	 * @param input
+	 *            the ClientAction that will be sent to the server
+	 * @param clientId
+	 *            the id of the sender
+	 * @param clientData
+	 *            location where the ack will be saved
 	 */
-	public ClientSocketViewCS(String serverIP, int serverResponsePort,
-			String inputLine, int clientId, ClientData clientData)
-			throws NotAValidInput {
-		try {
-			// TODO: server must close connection if no input from client in 10
-			// sec
-			this.clientId = clientId;
-			this.action = ActionParser.createEvent(inputLine);
-			this.requestSocket = new Socket(serverIP, serverResponsePort);
-			this.output = new ObjectOutputStream(
-					requestSocket.getOutputStream());
-			this.input = new ObjectInputStream(requestSocket.getInputStream());
-			this.clientData = clientData;
-
-		} catch (IOException e) {
-			logger.error("Failed to establish a connection with the server");
-		}
-	}
-
 	public ClientSocketViewCS(String serverIP, int serverResponsePort,
 			ClientAction input, int clientId, ClientData clientData) {
 
@@ -109,18 +100,18 @@ public class ClientSocketViewCS implements Runnable {
 			/**
 			 * Useful for testing purposes.
 			 */
-			// logger.debug("Sent client id: "+clientId);
+			logger.debug("Sent client id: " + clientId);
 			// write action
 			output.writeObject(action);
 			output.flush();
 
 			// Useful for testing purposes.
 
-			//logger.debug("Write server command: " + action);
+			logger.debug("Write server command: " + action);
 
 			// Useful for testing purposes.
 
-			// logger.debug("Waiting server response");
+			logger.debug("Waiting server response");
 			try {
 				boolean serverResponse = (boolean) input.readObject();
 				clientData.storeAck(serverResponse);
@@ -128,19 +119,23 @@ public class ClientSocketViewCS implements Runnable {
 			} catch (ClassNotFoundException e) {
 				logger.error(e.getMessage());
 			}
-			// Aspetto un messaggio ResponsePrivate di conferma dal server.
 
 		} catch (IOException e) {
 			logger.error("Failed to send your request to the server");
 		}
 
 		close(requestSocket, output);
-		/**
-		 * Useful for testing purposes.
-		 */
-		// logger.debug("Socket connection closed.");
+		logger.debug("Socket connection closed.");
 	}
 
+	/**
+	 * Closes the socket connection, resetting the object streams
+	 * 
+	 * @param socket
+	 *            socket to be closed
+	 * @param output
+	 *            ouput object stream, used to send objects to the server
+	 */
 	private void close(Socket socket, ObjectOutputStream output) {
 		try {
 			socket.close();
