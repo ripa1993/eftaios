@@ -6,6 +6,7 @@ import it.polimi.ingsw.cg_8.controller.Controller;
 import it.polimi.ingsw.cg_8.controller.DefaultRules;
 import it.polimi.ingsw.cg_8.controller.Rules;
 import it.polimi.ingsw.cg_8.controller.StateMachine;
+import it.polimi.ingsw.cg_8.controller.playerActions.otherActions.GetAllowedActions;
 import it.polimi.ingsw.cg_8.model.TurnPhase;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.AdrenalineCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.AttackCard;
@@ -21,7 +22,9 @@ import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionAttack;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionChat;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionDisconnect;
+import it.polimi.ingsw.cg_8.view.client.actions.ActionDrawCard;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionEndTurn;
+import it.polimi.ingsw.cg_8.view.client.actions.ActionFakeNoise;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionGetAvailableAction;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionGetReachableCoordinates;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionMove;
@@ -392,7 +395,6 @@ public class StateMachineTest {
 
 		assertTrue(currPlayer.getLastPosition().equals(new Coordinate(11, 9)));
 	}
-	
 
 	@Test
 	public void endTurnTest() {
@@ -440,9 +442,275 @@ public class StateMachineTest {
 				currPlayer);
 		assertFalse(result);
 	}
+
+	@Test
+	public void getHandTest() {
+		boolean result = StateMachine.evaluateAction(controller,
+				new ActionGetAvailableAction(), controller.getModel()
+						.getCurrentPlayerReference());
+		assertTrue(result);
+	}
+
+	@Test
+	public void notCurrentPlayerTest() {
+		Player oldPlayer = controller.getModel().getCurrentPlayerReference();
+		EndTurn.endTurn(controller.getModel());
+		boolean result = StateMachine.evaluateAction(controller,
+				new ActionMove(new Coordinate(1, 1)), oldPlayer);
+		assertFalse(result);
+	}
+
+	@Test
+	public void teleportTest() {
+		while (controller.getModel().getCurrentPlayerReference().getCharacter() instanceof Alien) {
+			EndTurn.endTurn(controller.getModel());
+		}
+		controller.getModel().setTurnPhase(TurnPhase.TURN_BEGIN);
+		controller.getModel().getCurrentPlayerReference()
+				.setPosition(new Coordinate(1, 1));
+		controller.getModel().getCurrentPlayerReference().getHand()
+				.addItemCard(new TeleportCard());
+		boolean result = StateMachine.evaluateAction(controller,
+				new ActionUseCard(new TeleportCard()), controller.getModel()
+						.getCurrentPlayerReference());
+		assertTrue(result);
+	}
+
+	@Test
+	public void attackTest() {
+		while (controller.getModel().getCurrentPlayerReference().getCharacter() instanceof Alien) {
+			EndTurn.endTurn(controller.getModel());
+		}
+		controller.getModel().getCurrentPlayerReference()
+				.setPosition(new Coordinate(1, 1));
+		controller.getModel().getCurrentPlayerReference().getHand()
+				.addItemCard(new AttackCard());
+		controller.getModel().setTurnPhase(TurnPhase.MOVEMENT_DONE_NOT_DS);
+		boolean result = StateMachine.evaluateAction(controller,
+				new ActionUseCard(new AttackCard()), controller.getModel()
+						.getCurrentPlayerReference());
+		assertTrue(result);
+	}
+
+	@Test
+	public void attackTestDS() {
+		while (controller.getModel().getCurrentPlayerReference().getCharacter() instanceof Human) {
+			EndTurn.endTurn(controller.getModel());
+		}
+		controller.getModel().getCurrentPlayerReference()
+				.setPosition(new Coordinate(1, 1));
+		controller.getModel().setTurnPhase(TurnPhase.MOVEMENT_DONE_DS);
+		boolean result = StateMachine.evaluateAction(controller,
+				new ActionAttack(), controller.getModel()
+						.getCurrentPlayerReference());
+		assertTrue(result);
+	}
+
+	@Test
+	public void attackDrawCardDS() {
+		while (controller.getModel().getCurrentPlayerReference().getCharacter() instanceof Human) {
+			EndTurn.endTurn(controller.getModel());
+		}
+		controller.getModel().getCurrentPlayerReference()
+				.setPosition(new Coordinate(1, 1));
+		controller.getModel().setTurnPhase(TurnPhase.MOVEMENT_DONE_DS);
+		boolean result = StateMachine.evaluateAction(controller,
+				new ActionDrawCard(), controller.getModel()
+						.getCurrentPlayerReference());
+		assertTrue(result);
+	}
+
+	@Test
+	public void attackUseCardDSAlien() {
+		while (controller.getModel().getCurrentPlayerReference().getCharacter() instanceof Human) {
+			EndTurn.endTurn(controller.getModel());
+		}
+		controller.getModel().getCurrentPlayerReference()
+				.setPosition(new Coordinate(1, 1));
+		controller.getModel().setTurnPhase(TurnPhase.MOVEMENT_DONE_DS);
+		boolean result = StateMachine.evaluateAction(controller,
+				new ActionUseCard(new TeleportCard()), controller.getModel()
+						.getCurrentPlayerReference());
+		assertFalse(result);
+	}
+
+	@Test
+	public void attackUseCardTeleportDS() {
+		while (controller.getModel().getCurrentPlayerReference().getCharacter() instanceof Alien) {
+			EndTurn.endTurn(controller.getModel());
+		}
+		controller.getModel().getCurrentPlayerReference()
+				.setPosition(new Coordinate(1, 1));
+		controller.getModel().getCurrentPlayerReference().getHand()
+				.addItemCard(new TeleportCard());
+		controller.getModel().setTurnPhase(TurnPhase.MOVEMENT_DONE_DS);
+		boolean result = StateMachine.evaluateAction(controller,
+				new ActionUseCard(new TeleportCard()), controller.getModel()
+						.getCurrentPlayerReference());
+		assertTrue(result);
+	}
+
+	@Test
+	public void attackUseCardSpotlightDS() {
+		while (controller.getModel().getCurrentPlayerReference().getCharacter() instanceof Alien) {
+			EndTurn.endTurn(controller.getModel());
+		}
+		controller.getModel().getCurrentPlayerReference()
+				.setPosition(new Coordinate(1, 1));
+		controller.getModel().getCurrentPlayerReference().getHand()
+				.addItemCard(new SpotlightCard());
+		controller.getModel().setTurnPhase(TurnPhase.MOVEMENT_DONE_DS);
+		boolean result = StateMachine.evaluateAction(controller,
+				new ActionUseCard(new SpotlightCard(), new Coordinate(6, 6)),
+				controller.getModel().getCurrentPlayerReference());
+		assertTrue(result);
+	}
+
+	@Test
+	public void attackUseCardSedativesDS() {
+		while (controller.getModel().getCurrentPlayerReference().getCharacter() instanceof Alien) {
+			EndTurn.endTurn(controller.getModel());
+		}
+		controller.getModel().getCurrentPlayerReference()
+				.setPosition(new Coordinate(1, 1));
+		controller.getModel().getCurrentPlayerReference().getHand()
+				.addItemCard(new SedativesCard());
+		controller.getModel().setTurnPhase(TurnPhase.MOVEMENT_DONE_DS);
+		boolean result = StateMachine.evaluateAction(controller,
+				new ActionUseCard(new SedativesCard()), controller.getModel()
+						.getCurrentPlayerReference());
+		assertTrue(result);
+	}
+
+	@Test
+	public void attackUseCardAttackDS() {
+		while (controller.getModel().getCurrentPlayerReference().getCharacter() instanceof Alien) {
+			EndTurn.endTurn(controller.getModel());
+		}
+		controller.getModel().getCurrentPlayerReference()
+				.setPosition(new Coordinate(1, 1));
+		controller.getModel().getCurrentPlayerReference().getHand()
+				.addItemCard(new AttackCard());
+		controller.getModel().setTurnPhase(TurnPhase.MOVEMENT_DONE_DS);
+		boolean result = StateMachine.evaluateAction(controller,
+				new ActionUseCard(new AttackCard()), controller.getModel()
+						.getCurrentPlayerReference());
+		assertTrue(result);
+	}
+
+	@Test
+	public void endTurnAttackPhase() {
+		while (controller.getModel().getCurrentPlayerReference().getCharacter() instanceof Alien) {
+			EndTurn.endTurn(controller.getModel());
+		}
+		controller.getModel().getCurrentPlayerReference()
+				.setPosition(new Coordinate(1, 1));
+		controller.getModel().getCurrentPlayerReference().getHand()
+				.addItemCard(new AttackCard());
+		controller.getModel().setTurnPhase(TurnPhase.ATTACK_DONE);
+		boolean result = StateMachine.evaluateAction(controller,
+				new ActionEndTurn(), controller.getModel()
+						.getCurrentPlayerReference());
+		assertTrue(result);
+	}
+
+	@Test
+	public void attackUseCardTeleportAtk() {
+		while (controller.getModel().getCurrentPlayerReference().getCharacter() instanceof Alien) {
+			EndTurn.endTurn(controller.getModel());
+		}
+		controller.getModel().getCurrentPlayerReference()
+				.setPosition(new Coordinate(1, 1));
+		controller.getModel().getCurrentPlayerReference().getHand()
+				.addItemCard(new TeleportCard());
+		controller.getModel().setTurnPhase(TurnPhase.ATTACK_DONE);
+		boolean result = StateMachine.evaluateAction(controller,
+				new ActionUseCard(new TeleportCard()), controller.getModel()
+						.getCurrentPlayerReference());
+		assertTrue(result);
+	}
+
+	@Test
+	public void attackUseCardSpotlightAtk() {
+		while (controller.getModel().getCurrentPlayerReference().getCharacter() instanceof Alien) {
+			EndTurn.endTurn(controller.getModel());
+		}
+		controller.getModel().getCurrentPlayerReference()
+				.setPosition(new Coordinate(1, 1));
+		controller.getModel().getCurrentPlayerReference().getHand()
+				.addItemCard(new SpotlightCard());
+		controller.getModel().setTurnPhase(TurnPhase.ATTACK_DONE);
+		boolean result = StateMachine.evaluateAction(controller,
+				new ActionUseCard(new SpotlightCard(), new Coordinate(6, 6)),
+				controller.getModel().getCurrentPlayerReference());
+		assertTrue(result);
+	}
+
+
+	@Test
+	public void waitingFakeNoiseTest() {
+		while (controller.getModel().getCurrentPlayerReference().getCharacter() instanceof Alien) {
+			EndTurn.endTurn(controller.getModel());
+		}
+		controller.getModel().getCurrentPlayerReference()
+				.setPosition(new Coordinate(1, 1));
+		controller.getModel().getCurrentPlayerReference().getHand()
+				.addItemCard(new SpotlightCard());
+		controller.getModel().setTurnPhase(TurnPhase.WAITING_FAKE_NOISE);
+		boolean result = StateMachine.evaluateAction(controller,
+				new ActionFakeNoise(new Coordinate(9, 9)), controller
+						.getModel().getCurrentPlayerReference());
+		assertTrue(result);
+	}
+
+
+	@Test
+	public void endTurnDrawnCard() {
+		while (controller.getModel().getCurrentPlayerReference().getCharacter() instanceof Alien) {
+			EndTurn.endTurn(controller.getModel());
+		}
+		controller.getModel().getCurrentPlayerReference()
+				.setPosition(new Coordinate(1, 1));
+		controller.getModel().getCurrentPlayerReference().getHand()
+				.addItemCard(new SpotlightCard());
+		controller.getModel().setTurnPhase(TurnPhase.DRAWN_CARD);
+		boolean result = StateMachine.evaluateAction(controller,
+				new ActionEndTurn(),
+				controller.getModel().getCurrentPlayerReference());
+		assertTrue(result);
+	}
 	
 	@Test
-	public void setNameTest(){
-		controller.getModel().setTurnPhase(TurnPhase.GAME_SETUP);
+	public void useCardTeleportDrawnCard() {
+		while (controller.getModel().getCurrentPlayerReference().getCharacter() instanceof Alien) {
+			EndTurn.endTurn(controller.getModel());
+		}
+		controller.getModel().getCurrentPlayerReference()
+				.setPosition(new Coordinate(1, 1));
+		controller.getModel().getCurrentPlayerReference().getHand()
+				.addItemCard(new TeleportCard());
+		controller.getModel().setTurnPhase(TurnPhase.DRAWN_CARD);
+		boolean result = StateMachine.evaluateAction(controller,
+				new ActionUseCard(new TeleportCard()), controller.getModel()
+						.getCurrentPlayerReference());
+		assertTrue(result);
 	}
+
+	@Test
+	public void useCardSpotlightDrawnCard() {
+		while (controller.getModel().getCurrentPlayerReference().getCharacter() instanceof Alien) {
+			EndTurn.endTurn(controller.getModel());
+		}
+		controller.getModel().getCurrentPlayerReference()
+				.setPosition(new Coordinate(1, 1));
+		controller.getModel().getCurrentPlayerReference().getHand()
+				.addItemCard(new SpotlightCard());
+		controller.getModel().setTurnPhase(TurnPhase.DRAWN_CARD);
+		boolean result = StateMachine.evaluateAction(controller,
+				new ActionUseCard(new SpotlightCard(), new Coordinate(6, 6)),
+				controller.getModel().getCurrentPlayerReference());
+		assertTrue(result);
+	}
+	
+	
 }
