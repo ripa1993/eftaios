@@ -106,7 +106,7 @@ public class ConnectionManagerSocket extends ConnectionManager {
 	 * @throws UnknownHostException
 	 * @throws IOException
 	 */
-	public void initializeSocket() throws UnknownHostException, IOException {
+	public void initializeSocket() throws IOException {
 		Socket socket = new Socket(SERVER_ADDRESS, SOCKET_PORT_CLIENTSERVER);
 		LOGGER.debug("Connected to server " + SERVER_ADDRESS + " on port "
 				+ SOCKET_PORT_CLIENTSERVER);

@@ -99,8 +99,7 @@ public class ServerSocketPublisherThread extends ServerPublisher implements
 	 * @throws IOException
 	 * @throws SocketException
 	 */
-	private void send(ServerResponse message) throws IOException,
-			SocketException {
+	private void send(ServerResponse message) throws IOException {
 		output.writeObject(message);
 		output.flush();
 	}
