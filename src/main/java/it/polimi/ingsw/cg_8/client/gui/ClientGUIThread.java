@@ -747,7 +747,7 @@ public class ClientGUIThread implements Runnable, Observer {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (matchStarted) {
-					String cardList[] = { "Attack", "Adrenaline", "Sedatives",
+					String[] cardList = { "Attack", "Adrenaline", "Sedatives",
 							"Spotlight", "Teleport" };
 					String output = (String) JOptionPane.showInputDialog(
 							mainFrame, "Pick a card", "Input",

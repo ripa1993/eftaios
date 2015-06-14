@@ -81,7 +81,7 @@ public class ResponseCard implements ServerResponse, Serializable {
 	 *            list of item card in player's hand
 	 */
 	private String[] convertToString(List<ItemCard> hand) {
-		String cardArray[] = new String[CARD_NUM];
+		String[] cardArray = new String[CARD_NUM];
 
 		for (int i = 0; i < hand.size(); i++) {
 			cardArray[i] = hand.get(i).toString();
