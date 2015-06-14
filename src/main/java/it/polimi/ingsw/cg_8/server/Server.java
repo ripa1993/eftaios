@@ -156,6 +156,11 @@ public class Server {
 		}
 	}
 
+	/**
+	 * Analyzes the votes and decides which map will be played
+	 * 
+	 * @return map name
+	 */
 	public static GameMapName countVotes() {
 		Map.Entry<GameMapName, Integer> maxEntry = null;
 		GameMapName chosenMap = GameMapName.FERMI;
@@ -266,6 +271,9 @@ public class Server {
 		return registry;
 	}
 
+	/**
+	 * Starts a timeout to handle the game start after the timeout is over
+	 */
 	public static void startTimeout() {
 		timer = new Timer();
 		timerTask = new TimerTask() {

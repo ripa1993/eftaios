@@ -45,15 +45,6 @@ import org.apache.logging.log4j.Logger;
  * @version 1.0
  */
 public class Model extends Observable {
-	@Override
-	public String toString() {
-		return "Model [players=" + players + ", roundNumber=" + roundNumber
-				+ ", currentPlayer=" + currentPlayerIndex + ", startingPlayer="
-				+ startingPlayerIndex + ", turnPhase=" + turnPhase
-				+ ", characterDeck=" + characterDeck + ", dangerousSectorDeck="
-				+ dangerousSectorDeck + ", escapeHatchDeck=" + escapeHatchDeck
-				+ ", itemDeck=" + itemDeck + ", map=" + map + "]";
-	}
 
 	/**
 	 * List of players in the current game
@@ -513,6 +504,12 @@ public class Model extends Observable {
 		this.notifyObservers(this.turnPhase);
 	}
 
+	/**
+	 * Changes the map
+	 * 
+	 * @param chosenMap
+	 *            chosen map that will be created
+	 */
 	public void setMap(GameMapName chosenMap) {
 		if (chosenMap == GameMapName.FERMI) {
 			MapCreator mc = new FermiCreator();
@@ -525,10 +522,22 @@ public class Model extends Observable {
 			map = mc.createMap();
 		} else {
 			try {
-				throw new NotAValidMapException(chosenMap + "is not a valid map");
+				throw new NotAValidMapException(chosenMap
+						+ "is not a valid map");
 			} catch (NotAValidMapException e) {
 				logger.error(chosenMap.toString() + "is not a valid map");
 			}
-		}	
+		}
 	}
+
+	@Override
+	public String toString() {
+		return "Model [players=" + players + ", roundNumber=" + roundNumber
+				+ ", currentPlayer=" + currentPlayerIndex + ", startingPlayer="
+				+ startingPlayerIndex + ", turnPhase=" + turnPhase
+				+ ", characterDeck=" + characterDeck + ", dangerousSectorDeck="
+				+ dangerousSectorDeck + ", escapeHatchDeck=" + escapeHatchDeck
+				+ ", itemDeck=" + itemDeck + ", map=" + map + "]";
+	}
+
 }
