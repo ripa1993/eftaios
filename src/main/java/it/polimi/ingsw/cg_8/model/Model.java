@@ -211,7 +211,6 @@ public class Model extends Observable {
 		// sets turn phase and round number
 		roundNumber = 1;
 		turnPhase = TurnPhase.TURN_BEGIN;
-		// getCurrentPlayerReference().cycleState();
 
 	}
 
@@ -278,7 +277,6 @@ public class Model extends Observable {
 				Player p = this.getPlayers().get(i);
 				if (p.getState() == PlayerState.ALIVE) {
 					currentPlayerIndex = i;
-					// p.cycleState();
 				}
 			}
 			this.roundNumber++;

@@ -138,15 +138,7 @@ public class Player implements Serializable {
 		state = PlayerState.ESCAPED;
 	}
 
-	/*
-	 * /** Changes the player status from {@link PlayerState#ALIVE_WAITING
-	 * ALIVE_WAITING} to {@link PlayerState#ALIVE_PLAYING ALIVE_PLAYING} and
-	 * viceversa
-	 * 
-	 * public void cycleState() { if (state == PlayerState.ALIVE_WAITING) {
-	 * state = PlayerState.ALIVE_PLAYING; resetDecorations(); } else if (state
-	 * == PlayerState.ALIVE_PLAYING) { state = PlayerState.ALIVE_WAITING; } }
-	 */
+
 
 	/**
 	 * Restores human character to its original state. It is called

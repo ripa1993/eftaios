@@ -64,7 +64,6 @@ public class ServerGameRoom extends ServerPublisher implements
 		 * Can be used to print the action result on the client, for debugging
 		 * purposes
 		 */
-		// this.dispatchMessage(new ResponsePrivate(String.valueOf(result)));
 		return result;
 	}
 

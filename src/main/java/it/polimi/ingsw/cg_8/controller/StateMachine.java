@@ -305,9 +305,6 @@ public class StateMachine {
 					}
 
 				} finally {
-					// controller.writeToPlayer(player, new
-					// ResponsePrivate(player
-					// .getHand().getHeldCards().toString()));
 					controller.writeToPlayer(player, new ResponseCard(player
 							.getHand().getHeldCards()));
 					if (hasToMakeFakeNoise == true) {
@@ -445,7 +442,6 @@ public class StateMachine {
 				+ " has finished his turn"));
 		EndTurn.endTurn(model);
 
-		// StateMachine.endTurnMessage(controller, model, player);
 
 	}
 

@@ -361,7 +361,6 @@ public class MainGUI implements Runnable {
 		eastPanel.setOpaque(false);
 		panel.add(eastPanel, BorderLayout.EAST);
 
-		// main.pack();
 		main.setVisible(true);
 		main.setSize(1280, 720);
 	}

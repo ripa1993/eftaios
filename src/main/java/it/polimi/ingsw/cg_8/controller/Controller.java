@@ -201,13 +201,7 @@ public class Controller implements Observer {
 				this.writeToPlayer(p, new ResponsePrivate(
 						"You will be playing as: " + p.getCharacter()));
 			}
-			// this.writeToAll(new ResponsePrivate("The current player is: "
-			// + model.getCurrentPlayerReference().getName()));
-			// this.writeToPlayer(model.getCurrentPlayerReference(),
-			// new ResponsePrivate(model.getCurrentPlayerReference()
-			// .toString()));
-			// this.writeToPlayer(model.getCurrentPlayerReference(),
-			// new ResponsePrivate("IT'S YOUR TURN!"));
+			
 		} catch (EmptyDeckException e) {
 			LOGGER.error(e.getMessage());
 		}
@@ -370,12 +364,6 @@ public class Controller implements Observer {
 					+ model.getCurrentPlayerReference().getName()));
 			this.writeToPlayer(model.getCurrentPlayerReference(),
 					new ResponsePrivate("IT'S YOUR TURN"));
-			/**
-			 * Used for testing
-			 */
-			// this.writeToPlayer(model.getCurrentPlayerReference(),
-			// new ResponsePrivate(model.getCurrentPlayerReference()
-			// .toString()));
 			/**
 			 * Notify every player about their state.
 			 */

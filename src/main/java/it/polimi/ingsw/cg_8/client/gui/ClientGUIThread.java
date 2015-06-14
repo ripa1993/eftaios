@@ -475,12 +475,9 @@ public class ClientGUIThread implements Runnable, Observer {
 		chatInfoPanel.add(infoPanel);
 		chatInfoPanel.add(chatPanel2);
 		chatPanel2.add(chatPanel, BorderLayout.CENTER);
-		// chatPanel2.add(chatButton, BorderLayout.SOUTH);
 		rightPanel.add(chatInfoPanel, BorderLayout.CENTER);
 		rightPanel.add(commandsPanel, BorderLayout.SOUTH);
 
-		// chatTextPane.setAutoscrolls(true);
-		// infoTextPane.setAutoscrolls(true);
 		chatTextPane.setFont(fontTitilliumSemiboldUpright);
 		infoTextPane.setFont(fontTitilliumSemiboldUpright);
 		chatTextPane.setText("Say hi to the other players!");
