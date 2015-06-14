@@ -36,7 +36,9 @@ public class ServerSocketRRThread implements Runnable {
 	/**
 	 * Log4j logger
 	 */
-	private static final Logger LOGGER = LogManager.getLogger(ServerSocketRRThread.class);
+	private static final Logger LOGGER = LogManager
+			.getLogger(ServerSocketRRThread.class);
+
 	/**
 	 * It starts both RR and PS server on the given ports
 	 * 
@@ -54,7 +56,7 @@ public class ServerSocketRRThread implements Runnable {
 				+ serverSocketRRPort);
 		serverPS = new ServerSocket(serverSocketPSPort);
 		LOGGER.info("Server socket (publisher-subscribe) running on port: "
-						+ serverSocketPSPort);
+				+ serverSocketPSPort);
 
 	}
 
@@ -87,27 +89,27 @@ public class ServerSocketRRThread implements Runnable {
 
 					// read player name and confirm
 					String playerName = (String) input.readObject();
-					LOGGER.debug("Name accepted: "
-							+ playerName);
+					LOGGER.debug("Name accepted: " + playerName);
 					output.writeObject(new String("NAME ACCEPTED"));
 					output.flush();
 
 					GameMapName chosenMap = (GameMapName) input.readObject();
 					LOGGER.debug("Map received: " + chosenMap.toString());
-					if (chosenMap instanceof GameMapName) {
-							LOGGER.debug("Vote given to " + chosenMap);
-							Server.addVote(chosenMap);
-							output.writeObject(new String("MAP CHOSEN: " + chosenMap.toString()));
-							output.flush();
-					}
+
+					LOGGER.debug("Vote given to " + chosenMap);
+					Server.addVote(chosenMap);
+					output.writeObject(new String("MAP CHOSEN: "
+							+ chosenMap.toString()));
+					output.flush();
+
 					// get reference to the starting game
-					
+
 					Controller nextGame = Server.getStartingGame();
 					if (Server.getStartingGame() == null) {
 						nextGame = Server.createNewGame(GameMapName.FERMI);
 					}
 					synchronized (Server.getStartingGame()) {
-						
+
 						// add player to the game
 						Socket subscriber = serverPS.accept();
 						ServerSocketPublisherThread publisher = new ServerSocketPublisherThread(
@@ -121,11 +123,13 @@ public class ServerSocketRRThread implements Runnable {
 					// action
 					LOGGER.debug("ClientId already assigned");
 					ClientAction action = (ClientAction) input.readObject();
-					LOGGER.debug("Received client action: "+action);
+					LOGGER.debug("Received client action: " + action);
 					Controller controller = Server.getId2Controller().get(
 							clientId);
-					LOGGER.debug("Client is assigned to controller: "+controller);
-					LOGGER.debug("Client is player: "+controller.getPlayerById(clientId));
+					LOGGER.debug("Client is assigned to controller: "
+							+ controller);
+					LOGGER.debug("Client is player: "
+							+ controller.getPlayerById(clientId));
 
 					boolean result = StateMachine.evaluateAction(controller,
 							action, controller.getPlayerById(clientId));
