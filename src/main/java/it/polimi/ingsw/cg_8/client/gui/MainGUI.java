@@ -127,58 +127,58 @@ public class MainGUI implements Runnable {
 
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.BLACK);
-		GridBagConstraints gbc_panel = new GridBagConstraints();
-		gbc_panel.fill = GridBagConstraints.BOTH;
-		gbc_panel.gridx = 0;
-		gbc_panel.gridy = 0;
-		main.getContentPane().add(panel, gbc_panel);
+		GridBagConstraints gbcPanel = new GridBagConstraints();
+		gbcPanel.fill = GridBagConstraints.BOTH;
+		gbcPanel.gridx = 0;
+		gbcPanel.gridy = 0;
+		main.getContentPane().add(panel, gbcPanel);
 		panel.setLayout(new BorderLayout(0, 0));
 
 		JPanel centerPanel = new JPanel();
 		centerPanel.setOpaque(false);
 		panel.add(centerPanel, BorderLayout.CENTER);
-		GridBagLayout gbl_centerPanel = new GridBagLayout();
-		gbl_centerPanel.columnWidths = new int[] { 474, 0 };
-		gbl_centerPanel.rowHeights = new int[] { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		GridBagLayout gblCenterPanel = new GridBagLayout();
+		gblCenterPanel.columnWidths = new int[] { 474, 0 };
+		gblCenterPanel.rowHeights = new int[] { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 				0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-		gbl_centerPanel.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
-		gbl_centerPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0,
+		gblCenterPanel.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
+		gblCenterPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0,
 				0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
 				0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
-		centerPanel.setLayout(gbl_centerPanel);
+		centerPanel.setLayout(gblCenterPanel);
 
 		JLabel logoLabel = new JLabel();
 		logoLabel.setBorder(new EmptyBorder(25, 0, 35, 0));
 		logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		logoLabel.setIcon(new ImageIcon(Resource.IMG_ART_TITLE));
-		GridBagConstraints gbc_logoLabel = new GridBagConstraints();
-		gbc_logoLabel.insets = new Insets(0, 0, 5, 0);
-		gbc_logoLabel.anchor = GridBagConstraints.NORTH;
-		gbc_logoLabel.fill = GridBagConstraints.HORIZONTAL;
-		gbc_logoLabel.gridx = 0;
-		gbc_logoLabel.gridy = 0;
-		centerPanel.add(logoLabel, gbc_logoLabel);
+		GridBagConstraints gbcLogoLabel = new GridBagConstraints();
+		gbcLogoLabel.insets = new Insets(0, 0, 5, 0);
+		gbcLogoLabel.anchor = GridBagConstraints.NORTH;
+		gbcLogoLabel.fill = GridBagConstraints.HORIZONTAL;
+		gbcLogoLabel.gridx = 0;
+		gbcLogoLabel.gridy = 0;
+		centerPanel.add(logoLabel, gbcLogoLabel);
 
 		JLabel playerLabel = new JLabel("INSERT YOUR CHARACTER NAME:");
 		playerLabel.setFont(fontTitilliumBoldUpright);
 		playerLabel.setForeground(Color.WHITE);
-		GridBagConstraints gbc_lblName = new GridBagConstraints();
-		gbc_lblName.insets = new Insets(0, 0, 5, 0);
-		gbc_lblName.gridx = 0;
-		gbc_lblName.gridy = 7;
-		centerPanel.add(playerLabel, gbc_lblName);
+		GridBagConstraints gbcLblName = new GridBagConstraints();
+		gbcLblName.insets = new Insets(0, 0, 5, 0);
+		gbcLblName.gridx = 0;
+		gbcLblName.gridy = 7;
+		centerPanel.add(playerLabel, gbcLblName);
 
 		playerTextField = new JTextField();
 		playerTextField.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		playerTextField.setHorizontalAlignment(SwingConstants.CENTER);
 		playerTextField.setBackground(Color.WHITE);
 		playerTextField.setText("Player");
-		GridBagConstraints gbc_txtAsd = new GridBagConstraints();
-		gbc_txtAsd.insets = new Insets(0, 0, 5, 0);
-		gbc_txtAsd.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtAsd.gridx = 0;
-		gbc_txtAsd.gridy = 8;
-		centerPanel.add(playerTextField, gbc_txtAsd);
+		GridBagConstraints gbcTxtAsd = new GridBagConstraints();
+		gbcTxtAsd.insets = new Insets(0, 0, 5, 0);
+		gbcTxtAsd.fill = GridBagConstraints.HORIZONTAL;
+		gbcTxtAsd.gridx = 0;
+		gbcTxtAsd.gridy = 8;
+		centerPanel.add(playerTextField, gbcTxtAsd);
 		playerTextField.setColumns(10);
 
 		JLabel connectionTypeLabel = new JLabel(
@@ -186,93 +186,93 @@ public class MainGUI implements Runnable {
 		connectionTypeLabel.setBorder(new EmptyBorder(10, 0, 0, 0));
 		connectionTypeLabel.setFont(fontTitilliumBoldUpright);
 		connectionTypeLabel.setForeground(Color.WHITE);
-		GridBagConstraints gbc_lblConnectionType = new GridBagConstraints();
-		gbc_lblConnectionType.insets = new Insets(0, 0, 5, 0);
-		gbc_lblConnectionType.gridx = 0;
-		gbc_lblConnectionType.gridy = 10;
-		centerPanel.add(connectionTypeLabel, gbc_lblConnectionType);
+		GridBagConstraints gbcLblConnectionType = new GridBagConstraints();
+		gbcLblConnectionType.insets = new Insets(0, 0, 5, 0);
+		gbcLblConnectionType.gridx = 0;
+		gbcLblConnectionType.gridy = 10;
+		centerPanel.add(connectionTypeLabel, gbcLblConnectionType);
 
-		JPanel panel_1 = new JPanel();
-		panel_1.setOpaque(false);
-		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
-		gbc_panel_1.anchor = GridBagConstraints.NORTH;
-		gbc_panel_1.insets = new Insets(0, 0, 5, 0);
-		gbc_panel_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_panel_1.gridx = 0;
-		gbc_panel_1.gridy = 11;
-		centerPanel.add(panel_1, gbc_panel_1);
-		panel_1.setLayout(new GridLayout(1, 2, 0, 0));
+		JPanel panel1 = new JPanel();
+		panel1.setOpaque(false);
+		GridBagConstraints gbcPanel1 = new GridBagConstraints();
+		gbcPanel1.anchor = GridBagConstraints.NORTH;
+		gbcPanel1.insets = new Insets(0, 0, 5, 0);
+		gbcPanel1.fill = GridBagConstraints.HORIZONTAL;
+		gbcPanel1.gridx = 0;
+		gbcPanel1.gridy = 11;
+		centerPanel.add(panel1, gbcPanel1);
+		panel1.setLayout(new GridLayout(1, 2, 0, 0));
 
 		rmiRadioButton = new JRadioButton("RMI");
 		rmiRadioButton.setBackground(Color.WHITE);
 		rmiRadioButton.setSelected(true);
-		panel_1.add(rmiRadioButton);
+		panel1.add(rmiRadioButton);
 
 		socketRadioButton = new JRadioButton("Socket");
 		socketRadioButton.setBackground(Color.WHITE);
-		panel_1.add(socketRadioButton);
+		panel1.add(socketRadioButton);
 
 		JLabel mapSelectLabel = new JLabel("SELECT YOUR PREFERRED MAP:");
 		mapSelectLabel.setBorder(new EmptyBorder(10, 0, 0, 0));
 		mapSelectLabel.setFont(fontTitilliumBoldUpright);
 		mapSelectLabel.setForeground(Color.WHITE);
-		GridBagConstraints gbc_lblPreferredMap = new GridBagConstraints();
-		gbc_lblPreferredMap.insets = new Insets(0, 0, 5, 0);
-		gbc_lblPreferredMap.gridx = 0;
-		gbc_lblPreferredMap.gridy = 13;
-		centerPanel.add(mapSelectLabel, gbc_lblPreferredMap);
+		GridBagConstraints gbcLblPreferredMap = new GridBagConstraints();
+		gbcLblPreferredMap.insets = new Insets(0, 0, 5, 0);
+		gbcLblPreferredMap.gridx = 0;
+		gbcLblPreferredMap.gridy = 13;
+		centerPanel.add(mapSelectLabel, gbcLblPreferredMap);
 
-		JPanel panel_2 = new JPanel();
-		GridBagConstraints gbc_panel_2 = new GridBagConstraints();
-		gbc_panel_2.insets = new Insets(0, 0, 5, 0);
-		gbc_panel_2.anchor = GridBagConstraints.NORTH;
-		gbc_panel_2.fill = GridBagConstraints.HORIZONTAL;
-		gbc_panel_2.gridx = 0;
-		gbc_panel_2.gridy = 14;
-		centerPanel.add(panel_2, gbc_panel_2);
-		panel_2.setLayout(new GridLayout(0, 3, 0, 0));
+		JPanel panel2 = new JPanel();
+		GridBagConstraints gbcPanel2 = new GridBagConstraints();
+		gbcPanel2.insets = new Insets(0, 0, 5, 0);
+		gbcPanel2.anchor = GridBagConstraints.NORTH;
+		gbcPanel2.fill = GridBagConstraints.HORIZONTAL;
+		gbcPanel2.gridx = 0;
+		gbcPanel2.gridy = 14;
+		centerPanel.add(panel2, gbcPanel2);
+		panel2.setLayout(new GridLayout(0, 3, 0, 0));
 
 		fermiRadioButton = new JRadioButton("Fermi");
 		fermiRadioButton.setBackground(Color.WHITE);
 		fermiRadioButton.setSelected(true);
-		panel_2.add(fermiRadioButton);
+		panel2.add(fermiRadioButton);
 
 		galileiRadioButton = new JRadioButton("Galilei");
 		galileiRadioButton.setBackground(Color.WHITE);
-		panel_2.add(galileiRadioButton);
+		panel2.add(galileiRadioButton);
 
 		galvaniRadioButton = new JRadioButton("Galvani");
 		galvaniRadioButton.setBackground(Color.WHITE);
-		panel_2.add(galvaniRadioButton);
+		panel2.add(galvaniRadioButton);
 
 		JLabel lblEnjoySomeCreepy = new JLabel("ENJOY SOME CREEPY ALIEN MUSIC:");
 		lblEnjoySomeCreepy.setFont(fontTitilliumBoldUpright);
 		lblEnjoySomeCreepy.setForeground(Color.WHITE);
 		lblEnjoySomeCreepy.setBorder(new EmptyBorder(10, 0, 0, 0));
-		GridBagConstraints gbc_lblEnjoySomeCreepy = new GridBagConstraints();
-		gbc_lblEnjoySomeCreepy.insets = new Insets(0, 0, 5, 0);
-		gbc_lblEnjoySomeCreepy.gridx = 0;
-		gbc_lblEnjoySomeCreepy.gridy = 16;
-		centerPanel.add(lblEnjoySomeCreepy, gbc_lblEnjoySomeCreepy);
+		GridBagConstraints gbcLblEnjoySomeCreepy = new GridBagConstraints();
+		gbcLblEnjoySomeCreepy.insets = new Insets(0, 0, 5, 0);
+		gbcLblEnjoySomeCreepy.gridx = 0;
+		gbcLblEnjoySomeCreepy.gridy = 16;
+		centerPanel.add(lblEnjoySomeCreepy, gbcLblEnjoySomeCreepy);
 
-		JPanel panel_3 = new JPanel();
-		GridBagConstraints gbc_panel_3 = new GridBagConstraints();
-		gbc_panel_3.anchor = GridBagConstraints.NORTH;
-		gbc_panel_3.insets = new Insets(0, 0, 5, 0);
-		gbc_panel_3.fill = GridBagConstraints.HORIZONTAL;
-		gbc_panel_3.gridx = 0;
-		gbc_panel_3.gridy = 17;
-		centerPanel.add(panel_3, gbc_panel_3);
-		panel_3.setLayout(new GridLayout(1, 2, 0, 0));
+		JPanel panel3 = new JPanel();
+		GridBagConstraints gbcPanel3 = new GridBagConstraints();
+		gbcPanel3.anchor = GridBagConstraints.NORTH;
+		gbcPanel3.insets = new Insets(0, 0, 5, 0);
+		gbcPanel3.fill = GridBagConstraints.HORIZONTAL;
+		gbcPanel3.gridx = 0;
+		gbcPanel3.gridy = 17;
+		centerPanel.add(panel3, gbcPanel3);
+		panel3.setLayout(new GridLayout(1, 2, 0, 0));
 
 		yesMusicRadioButton = new JRadioButton("Sure");
 		yesMusicRadioButton.setBackground(Color.WHITE);
 		yesMusicRadioButton.setSelected(true);
-		panel_3.add(yesMusicRadioButton);
+		panel3.add(yesMusicRadioButton);
 
 		noMusicRadioButton = new JRadioButton("Nope");
 		noMusicRadioButton.setBackground(Color.WHITE);
-		panel_3.add(noMusicRadioButton);
+		panel3.add(noMusicRadioButton);
 
 		connectionGroup = new ButtonGroup();
 		mapGroup = new ButtonGroup();
@@ -287,11 +287,11 @@ public class MainGUI implements Runnable {
 
 		playButton = new JButton("PLAY");
 		playButton.setBackground(Color.WHITE);
-		GridBagConstraints gbc_btnPlay = new GridBagConstraints();
-		gbc_btnPlay.insets = new Insets(0, 0, 5, 0);
-		gbc_btnPlay.gridx = 0;
-		gbc_btnPlay.gridy = 19;
-		centerPanel.add(playButton, gbc_btnPlay);
+		GridBagConstraints gbcBtnPlay = new GridBagConstraints();
+		gbcBtnPlay.insets = new Insets(0, 0, 5, 0);
+		gbcBtnPlay.gridx = 0;
+		gbcBtnPlay.gridy = 19;
+		centerPanel.add(playButton, gbcBtnPlay);
 
 		westPanelImage = new ImageIcon(Resource.IMG_ART_HUMAN);
 		westPanelImageScaled = new ImageIcon(westPanelImage.getImage()
