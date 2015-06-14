@@ -13,9 +13,13 @@ import javax.swing.JComponent;
  */
 public class BackgroundPanel extends JComponent {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6584972078310524163L;
+	/**
 	 * Background image
 	 */
-	private Image image;
+	private transient Image image;
 	/**
 	 * Constructor
 	 * @param image background image

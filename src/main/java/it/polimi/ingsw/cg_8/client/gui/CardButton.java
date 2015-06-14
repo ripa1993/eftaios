@@ -91,7 +91,7 @@ public class CardButton extends JPanel {
 	/**
 	 * Semi-opaque image that overlays the button image
 	 */
-	private Image cardOverlay;
+	private transient Image cardOverlay;
 	/**
 	 * Invisible button placed on top op this button
 	 */

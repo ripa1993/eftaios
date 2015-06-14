@@ -41,7 +41,7 @@ public class ConnectionManagerSocket extends ConnectionManager {
 	/**
 	 * Thread executor service
 	 */
-	private ExecutorService executor;
+	private transient ExecutorService executor;
 	/**
 	 * Flag for when the map has been chosen by the player.
 	 */

@@ -44,11 +44,11 @@ public class ConnectionManagerRMI extends ConnectionManager implements
 	/**
 	 * The name used to identify the {@link ServerRMIRegistrationView}
 	 */
-	private final static String registrationRoomName = "registrationRoom";
+	private final static String REGISTRATION_ROOM_NAME = "registrationRoom";
 	/**
 	 * GameRoom used by RMI.
 	 */
-	private ServerGameRoomInterface view;
+	private transient ServerGameRoomInterface view;
 	/**
 	 * Log4j logger
 	 */
@@ -133,7 +133,7 @@ public class ConnectionManagerRMI extends ConnectionManager implements
 				REGISTRATION_PORT);
 		LOGGER.debug("Connecting to the registration room...");
 		ServerRMIRegistrationViewRemote registrationRoom = (ServerRMIRegistrationViewRemote) registry
-				.lookup(registrationRoomName);
+				.lookup(REGISTRATION_ROOM_NAME);
 
 		LOGGER.debug("Trying to get a clientID...");
 		while (this.clientID == 0) {
