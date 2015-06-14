@@ -194,10 +194,10 @@ public class CardButton extends JPanel {
 				width = cardButtonImage.getWidth();
 				height = cardButtonImage.getHeight();
 				cardButtonImage.setSize((int) (1.05 * width),
-						((int) (1.05 * height)));
+						(int) (1.05 * height));
 				cardButtonImage.repaint();
 				cardButtonOverlay.setSize((int) (1.05 * width),
-						((int) (1.05 * height)));
+						(int) (1.05 * height));
 
 				cardButtonOverlay.repaint();
 			}

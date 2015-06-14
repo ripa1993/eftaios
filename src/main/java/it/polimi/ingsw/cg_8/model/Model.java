@@ -336,7 +336,7 @@ public class Model extends Observable {
 		// no one wants to play: all disconnected, dead or escaped
 		int counterPlaying = 0;
 		for (Player p : players) {
-			if ((p.getState() == PlayerState.ALIVE)) {
+			if (p.getState() == PlayerState.ALIVE) {
 				counterPlaying++;
 			}
 		}
