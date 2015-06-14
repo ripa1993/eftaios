@@ -12,7 +12,7 @@ import java.util.List;
  * @author Alberto Parravicini
  * @version 1.0
  */
-public class GetCards extends PlayerAction {
+public class GetCards implements PlayerAction {
 
 	/**
 	 * This method gives the hand of the player as a list of ItemCard

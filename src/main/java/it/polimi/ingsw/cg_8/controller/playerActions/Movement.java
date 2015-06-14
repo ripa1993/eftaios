@@ -26,7 +26,7 @@ import org.apache.logging.log4j.Logger;
  * @version 1.0
  */
 
-public class Movement extends PlayerAction {
+public class Movement implements PlayerAction {
 
 	/**
 	 * The player who is moving

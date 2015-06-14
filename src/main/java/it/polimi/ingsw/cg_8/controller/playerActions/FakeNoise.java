@@ -12,7 +12,7 @@ import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
  * @author Simone
  * @version 1.0
  */
-public class FakeNoise extends PlayerAction {
+public class FakeNoise implements PlayerAction {
 
 	/**
 	 * Static method that adds a fake noise to the noise logger

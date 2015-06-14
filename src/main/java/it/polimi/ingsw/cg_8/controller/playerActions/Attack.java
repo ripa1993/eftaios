@@ -27,7 +27,7 @@ import java.util.List;
  * @version 1.0
  */
 
-public class Attack extends PlayerAction {
+public class Attack implements PlayerAction {
 
 	/**
 	 * Current state of the game

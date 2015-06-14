@@ -10,7 +10,7 @@ import it.polimi.ingsw.cg_8.model.player.PlayerState;
  * @author Alberto Parravicini
  * @version 1.0
  */
-public class EndTurn extends PlayerAction {
+public class EndTurn implements PlayerAction {
 
 	/**
 	 * Change the current player status to {@link PlayerState#ALIVE_WAITING};

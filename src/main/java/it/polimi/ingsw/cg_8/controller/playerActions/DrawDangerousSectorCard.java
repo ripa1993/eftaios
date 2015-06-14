@@ -22,7 +22,7 @@ import org.apache.logging.log4j.Logger;
  * @author Alberto Parravicini
  * @version 1.0
  */
-public class DrawDangerousSectorCard extends PlayerAction {
+public class DrawDangerousSectorCard implements PlayerAction {
 	/**
 	 * The current state of the game.
 	 */

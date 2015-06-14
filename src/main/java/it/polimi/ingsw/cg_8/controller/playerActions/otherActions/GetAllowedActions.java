@@ -9,7 +9,7 @@ import it.polimi.ingsw.cg_8.model.player.Player;
  * @author Simone
  * @version 1.0
  */
-public class GetAllowedActions extends PlayerAction {
+public class GetAllowedActions implements PlayerAction {
 	/**
 	 * List of all recognized commands
 	 * 
