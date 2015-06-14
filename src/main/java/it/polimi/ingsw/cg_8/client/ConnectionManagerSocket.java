@@ -159,6 +159,9 @@ public class ConnectionManagerSocket extends ConnectionManager {
 		} while (!nameSet || !mapSet);
 
 		this.close(socket, output);
+		// delete references
+		socket = null;
+		output = null;
 	}
 
 	/**
@@ -169,9 +172,6 @@ public class ConnectionManagerSocket extends ConnectionManager {
 			socket.close();
 		} catch (IOException e) {
 			LOGGER.error(e.getMessage(), e);
-		} finally {
-			socket = null;
-			output = null;
 		}
 	}
 }

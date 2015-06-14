@@ -120,6 +120,9 @@ public class ClientSocketViewCS implements Runnable {
 		}
 
 		close(requestSocket, output);
+		// delete references
+		requestSocket = null;
+		output = null;
 		LOGGER.debug("Socket connection closed.");
 	}
 
@@ -136,9 +139,6 @@ public class ClientSocketViewCS implements Runnable {
 			socket.close();
 		} catch (IOException e) {
 			LOGGER.error(e.getMessage(), e);
-		} finally {
-			socket = null;
-			output = null;
 		}
 	}
 
