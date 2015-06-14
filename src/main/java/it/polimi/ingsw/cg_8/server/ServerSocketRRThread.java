@@ -33,7 +33,6 @@ public class ServerSocketRRThread implements Runnable {
 	 * Publisher-Subscriber socket server
 	 */
 	private ServerSocket serverPS;
-
 	/**
 	 * Log4j logger
 	 */
@@ -89,6 +88,14 @@ public class ServerSocketRRThread implements Runnable {
 					output.writeObject(new String("NAME ACCEPTED"));
 					output.flush();
 
+					GameMapName chosenMap = (GameMapName) input.readObject();
+					logger.debug("Map received: " + chosenMap.toString());
+					if (chosenMap instanceof GameMapName) {
+							logger.debug("Vote given to " + chosenMap);
+							Server.addVote(chosenMap);
+							output.writeObject(new String("MAP CHOSEN: " + chosenMap.toString()));
+							output.flush();
+					}
 					// get reference to the starting game
 					
 					Controller nextGame = Server.getStartingGame();

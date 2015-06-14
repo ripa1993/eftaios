@@ -43,6 +43,10 @@ public class ConnectionManagerSocket extends ConnectionManager {
 	 */
 	private ExecutorService executor;
 	/**
+	 * Flag for when the map has been chosen by the player.
+	 */
+	private boolean mapSet;
+	/**
 	 * Log4j logger
 	 */
 	private static final Logger logger = LogManager
@@ -51,6 +55,7 @@ public class ConnectionManagerSocket extends ConnectionManager {
 	public ConnectionManagerSocket(String playerName, GameMapName mapName) {
 		super(playerName, mapName);
 		executor = Executors.newCachedThreadPool();
+		mapSet = false;
 	}
 
 	/**
@@ -95,8 +100,8 @@ public class ConnectionManagerSocket extends ConnectionManager {
 	 */
 	public void initializeSocket() throws UnknownHostException, IOException {
 		Socket socket = new Socket(SERVER_ADDRESS, SOCKET_PORT_CLIENTSERVER);
-		logger.debug("Connected to server " + SERVER_ADDRESS
-				+ " on port " + SOCKET_PORT_CLIENTSERVER);
+		logger.debug("Connected to server " + SERVER_ADDRESS + " on port "
+				+ SOCKET_PORT_CLIENTSERVER);
 
 		ObjectOutputStream output = new ObjectOutputStream(
 				socket.getOutputStream());
@@ -122,19 +127,29 @@ public class ConnectionManagerSocket extends ConnectionManager {
 				logger.debug("Sending your User-Name to the server...");
 				output.writeObject(this.playerName);
 				output.flush();
-
 				String serverAnswer = (String) input.readObject();
 				if (serverAnswer.equals("NAME ACCEPTED")) {
 					nameSet = true;
 					logger.debug("Name accepted");
 				}
-			} catch (IOException | ClassNotFoundException e) {
+				
+				logger.debug("Sending your chosen map to the server...");
+				output.writeObject(this.mapName);
+				output.flush();
+				String serverMapAnswer = (String) input.readObject();
+				if (serverMapAnswer.equals("MAP CHOSEN: " + this.mapName.toString())) {
+					mapSet = true;
+					logger.debug("Map accepted");
+				}
+				
+			} catch (IOException e) {
+				logger.error(e.getMessage());
+			} catch (ClassNotFoundException e) {			
 				logger.error(e.getMessage());
 			}
-		} while (nameSet == false);
+		} while (nameSet == false || mapSet == false);
 
 		this.close(socket, output);
-
 	}
 
 	/**

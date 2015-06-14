@@ -22,7 +22,7 @@ public class ServerRMI implements Runnable {
 	 * Log4j logger
 	 */
 	private static final Logger logger = LogManager.getLogger(ServerRMI.class);
-	
+
 	public ServerRMI(Server server) {
 		this.server = server;
 	}
@@ -60,6 +60,9 @@ public class ServerRMI implements Runnable {
 			nextGame.addClientRMI(client.getClientId(), client.getPlayerName(),
 					view);
 
+			/**
+			 * Check if the game has to start.
+			 */
 			Server.addClient(client.getClientId());
 		}
 	}

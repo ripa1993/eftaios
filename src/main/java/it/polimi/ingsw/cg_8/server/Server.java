@@ -10,9 +10,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
@@ -53,7 +51,7 @@ public class Server {
 	/**
 	 * Maximum number of players per game
 	 */
-	public final static int MAX_PLAYERS = 8;
+	public final static int MAX_PLAYERS = 3;
 	/**
 	 * Association between players and the game they are playing.
 	 */
@@ -193,10 +191,12 @@ public class Server {
 	}
 
 	/**
-	 * Used when adding clients to the game. The method checks if it is time to
-	 * start the timeout or the game.
+	 * Used by {@link ServerRMI} and {@link ServerSocketRRThread} when adding
+	 * clients to the game. The method checks if it is time to start the timeout
+	 * or the game.
 	 * 
-	 * @param clientID The ID of the client.
+	 * @param clientID
+	 *            The ID of the client.
 	 */
 	public static void addClient(Integer clientID) {
 		logger.info("Player successfully added to the game");
@@ -206,11 +206,10 @@ public class Server {
 		}
 		if (nextGame.getNumOfPlayers() == Server.MAX_PLAYERS) {
 			Server.abortTimeout();
-			//TODO: handles votes, update map
+			// TODO: handles votes, update map
 			GameMapName chosenMap = Server.countVotes();
 			nextGame.setMap(chosenMap);
-			
-			
+
 			nextGame.initGame();
 			Server.nullStartingGame();
 			logger.info("Game started");
@@ -275,7 +274,7 @@ public class Server {
 			public void run() {
 
 				synchronized (nextGame) {
-					//TODO: handles votes, update map
+					// TODO: handles votes, update map
 					GameMapName chosenMap = Server.countVotes();
 					nextGame.setMap(chosenMap);
 					nextGame.initGame();

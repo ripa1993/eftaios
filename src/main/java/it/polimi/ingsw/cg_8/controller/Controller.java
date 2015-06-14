@@ -222,6 +222,7 @@ public class Controller implements Observer {
 	 */
 	public void setMap(GameMapName chosenMap) {
 		this.model.setMap(chosenMap);
+		this.mapName = chosenMap;
 	}
 
 	/**

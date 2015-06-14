@@ -139,6 +139,7 @@ public class ConnectionManagerRMI extends ConnectionManager implements
 		/**
 		 * Communicating the chosen map to the server.
 		 */
+		logger.debug("Sending your chosen map to the server...");
 		registrationRoom.sendMapVote(mapName);
 
 		/**
