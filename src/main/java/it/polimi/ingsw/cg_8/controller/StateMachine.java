@@ -64,7 +64,7 @@ public class StateMachine {
 	/**
 	 * Log4j logger
 	 */
-	private static final Logger logger = LogManager
+	private static final Logger LOGGER = LogManager
 			.getLogger(StateMachine.class);
 
 	/**
@@ -280,7 +280,7 @@ public class StateMachine {
 							player,
 							new ResponsePrivate("You have drawn a "
 									+ draw.getDangerousSectorCard()));
-					logger.debug(draw.getItemCard());
+					LOGGER.debug(draw.getItemCard());
 
 					if (draw.getItemCard() != null
 							&& draw.isDiscardedItemCard() == false) {
@@ -315,7 +315,7 @@ public class StateMachine {
 						try {
 							TimeUnit.SECONDS.sleep(1);
 						} catch (InterruptedException e) {
-							logger.error("Failed to sleep");
+							LOGGER.error("Failed to sleep");
 						}
 						controller.writeToAll(new ResponsePrivate(player
 								.getName()
