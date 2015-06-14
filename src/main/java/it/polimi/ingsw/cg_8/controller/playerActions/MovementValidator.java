@@ -51,7 +51,8 @@ public class MovementValidator {
 				startingSector, maxDistance);
 
 		if (checkMovement(player, startingSector, destination) == true) {
-			if (allowedCoordinates.contains(destination)) {
+			boolean contains = allowedCoordinates.contains(destination);
+			if (contains) {
 				return true;
 			} else
 				return false;
