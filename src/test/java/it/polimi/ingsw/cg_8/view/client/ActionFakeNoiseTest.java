@@ -35,5 +35,10 @@ public class ActionFakeNoiseTest {
 		String input = "NOISE B01 nope";
 		ClientAction action = ActionParser.createEvent(input);
 	}
+	@Test(expected = NotAValidInput.class)
+	public void testException4() throws NotAValidInput {
+		String input = "NOISE";
+		ClientAction action = ActionParser.createEvent(input);
+	}
 
 }

@@ -97,5 +97,16 @@ public class ActionUseCardTest {
 		String input = "USE TELEPORT nonvalid";
 		ClientAction action = ActionParser.createEvent(input);
 	}
+	
+	@Test(expected = NotAValidInput.class)
+	public void testExceptionNoCard() throws NotAValidInput {
+		String input = "USE";
+		ClientAction action = ActionParser.createEvent(input);
+	}
+	@Test(expected = NotAValidInput.class)
+	public void testExceptionUnknownCard() throws NotAValidInput {
+		String input = "USE Kebab";
+		ClientAction action = ActionParser.createEvent(input);
+	}
 
 }

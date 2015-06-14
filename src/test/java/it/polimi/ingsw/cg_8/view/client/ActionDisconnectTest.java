@@ -22,4 +22,9 @@ public class ActionDisconnectTest {
 		ClientAction action = ActionParser.createEvent(input);
 	}
 
+	@Test(expected = NotAValidInput.class)
+	public void testNotACommand() throws NotAValidInput {
+		String input = "CIAO";
+		ClientAction action = ActionParser.createEvent(input);
+	}
 }

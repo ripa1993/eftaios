@@ -35,5 +35,11 @@ public class ActionMoveTest {
 		String input = "MOVE B01 nope";
 		ClientAction action = ActionParser.createEvent(input);
 	}
+	
+	@Test(expected = NotAValidInput.class)
+	public void testException4() throws NotAValidInput {
+		String input = "MOVE";
+		ClientAction action = ActionParser.createEvent(input);
+	}
 
 }

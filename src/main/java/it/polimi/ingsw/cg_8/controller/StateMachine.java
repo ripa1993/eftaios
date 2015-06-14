@@ -103,25 +103,8 @@ public class StateMachine {
 
 			controller.writeToAll(new ResponsePrivate(player.getName()
 					+ " has been disconnected."));
-			// StateMachine.endTurnMessage(controller, model, currentPlayer);
 			return true;
 		}
-
-		if (turnPhase == TurnPhase.GAME_SETUP) {
-			if (a instanceof ActionSetName) {
-				String name = ((ActionSetName) a).getName();
-				try {
-					SetPlayerName.setPlayerName(name, model);
-				} catch (GameAlreadyRunningException e) {
-					// TODO: never happens if we handle concurrency in the right
-					// way
-				}
-				return true;
-			}
-			return false;
-		}
-
-		// TODO: rimuovere i system out
 
 		if (!(model.getTurnPhase() == TurnPhase.GAME_SETUP)
 				|| !(model.getTurnPhase() == TurnPhase.GAME_END)) {

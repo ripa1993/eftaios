@@ -15,4 +15,11 @@ public class ActionChatTest {
 		ClientAction action = ActionParser.createEvent(input);
 		assertEquals(((ActionChat)action).getMessage(), "this is my message");
 	}
+	
+	@Test(expected = NotAValidInput.class)
+	public void testWrong() throws NotAValidInput{
+		String input = "SAY";
+		ClientAction action = ActionParser.createEvent(input);
+
+	}
 }
