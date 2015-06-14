@@ -119,7 +119,10 @@ public class ClientSocketViewCS implements Runnable {
 			LOGGER.error(e.getMessage(), e);
 		}
 
-		close(requestSocket, output);
+		close(requestSocket);
+		// delete references
+		requestSocket = null;
+		output = null;
 		LOGGER.debug("Socket connection closed.");
 	}
 
@@ -131,14 +134,11 @@ public class ClientSocketViewCS implements Runnable {
 	 * @param output
 	 *            ouput object stream, used to send objects to the server
 	 */
-	private void close(Socket socket, ObjectOutputStream output) {
+	private void close(Socket socket) {
 		try {
 			socket.close();
 		} catch (IOException e) {
 			LOGGER.error(e.getMessage(), e);
-		} finally {
-			socket = null;
-			output = null;
 		}
 	}
 

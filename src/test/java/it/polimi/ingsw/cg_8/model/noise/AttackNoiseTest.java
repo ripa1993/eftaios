@@ -42,4 +42,11 @@ public class AttackNoiseTest {
 		assertEquals(player, noise.getPlayer());
 	}
 
+	@Test
+	public void testToString() {
+		assertEquals("Attack noise: " + " Turn: " + "1" + " Player: " + "Test"
+				+ " Coordinate: " + "B02" + " Character: " + "Alien",
+				noise.toString());
+	}
+
 }
