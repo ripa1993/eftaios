@@ -22,7 +22,7 @@ import org.apache.logging.log4j.Logger;
  * @author Alberto Parravicini
  * @version 1.0
  */
-public class DrawDangerousSectorCard extends PlayerAction {
+public class DrawDangerousSectorCard implements PlayerAction {
 	/**
 	 * The current state of the game.
 	 */
@@ -46,7 +46,7 @@ public class DrawDangerousSectorCard extends PlayerAction {
 	/**
 	 * Log4j logger
 	 */
-	private static final Logger logger = LogManager
+	private static final Logger LOGGER = LogManager
 			.getLogger(DrawDangerousSectorCard.class);
 
 	/**
@@ -89,7 +89,7 @@ public class DrawDangerousSectorCard extends PlayerAction {
 			 * This exception never occurs, the deck is always re-shuffled when
 			 * empty.
 			 */
-			logger.error(e.getMessage());
+			LOGGER.error(e.getMessage());
 		}
 
 		if (dangerousSectorCard instanceof NoiseCard) {
@@ -124,7 +124,7 @@ public class DrawDangerousSectorCard extends PlayerAction {
 					}
 
 				} catch (EmptyDeckException e) {
-					logger.error(e.getMessage());
+					LOGGER.error(e.getMessage());
 					this.emptyItemDeck = true;
 					this.itemCard = null;
 					return hasToMakeFakeNoise;

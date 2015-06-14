@@ -54,7 +54,7 @@ public class Model extends Observable {
 	 * The maximum number of turn allowed in the game; if this number is
 	 * reached, the game ends with a draw.
 	 */
-	private final int MAX_ROUND_NUMBER = 39;
+	private final static int MAX_ROUND_NUMBER = 39;
 	/**
 	 * Number of current round. It is increased when all the players have played
 	 * it.
@@ -100,8 +100,7 @@ public class Model extends Observable {
 	/**
 	 * Log4j logger
 	 */
-	private static final Logger logger = LogManager
-			.getLogger(ServerSocketPublisherThread.class);
+	private static final Logger LOGGER = LogManager.getLogger(Model.class);
 
 	/**
 	 * Constructor for model class
@@ -212,7 +211,6 @@ public class Model extends Observable {
 		// sets turn phase and round number
 		roundNumber = 1;
 		turnPhase = TurnPhase.TURN_BEGIN;
-		// getCurrentPlayerReference().cycleState();
 
 	}
 
@@ -279,7 +277,6 @@ public class Model extends Observable {
 				Player p = this.getPlayers().get(i);
 				if (p.getState() == PlayerState.ALIVE) {
 					currentPlayerIndex = i;
-					// p.cycleState();
 				}
 			}
 			this.roundNumber++;
@@ -525,7 +522,7 @@ public class Model extends Observable {
 				throw new NotAValidMapException(chosenMap
 						+ "is not a valid map");
 			} catch (NotAValidMapException e) {
-				logger.error(chosenMap.toString() + "is not a valid map");
+				LOGGER.error(chosenMap.toString() + "is not a valid map");
 			}
 		}
 	}

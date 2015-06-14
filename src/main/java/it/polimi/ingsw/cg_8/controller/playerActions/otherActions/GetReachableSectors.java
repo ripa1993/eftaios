@@ -13,7 +13,7 @@ import java.util.Set;
  * @author Alberto Parravicini
  * @version 1.0
  */
-public class GetReachableSectors extends PlayerAction {
+public class GetReachableSectors implements PlayerAction {
 
 	/**
 	 * Returns the reachable Coordinate for the player in the current game model

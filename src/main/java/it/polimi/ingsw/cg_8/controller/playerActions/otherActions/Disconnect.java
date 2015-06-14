@@ -10,7 +10,7 @@ import it.polimi.ingsw.cg_8.model.player.PlayerState;
  * @author Alberto Parravicini
  * @version 1.0
  */
-public class Disconnect extends PlayerAction {
+public class Disconnect implements PlayerAction {
 	/**
 	 * Disconnect the player.
 	 * @param player The player who wants to leave the game.

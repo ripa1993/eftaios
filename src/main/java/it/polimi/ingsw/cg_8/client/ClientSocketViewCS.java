@@ -52,8 +52,8 @@ public class ClientSocketViewCS implements Runnable {
 	/**
 	 * Log4j logger
 	 */
-	private static final Logger logger = LogManager
-			.getLogger(ServerSocketPublisherThread.class);
+	private static final Logger LOGGER = LogManager
+			.getLogger(ClientSocketViewCS.class);
 
 	/**
 	 * 
@@ -85,7 +85,7 @@ public class ClientSocketViewCS implements Runnable {
 			this.input = new ObjectInputStream(requestSocket.getInputStream());
 			this.clientData = clientData;
 		} catch (IOException e) {
-			logger.error("Failed to establish a connection with the server");
+			LOGGER.error("Failed to establish a connection with the server");
 		}
 
 	}
@@ -100,32 +100,32 @@ public class ClientSocketViewCS implements Runnable {
 			/**
 			 * Useful for testing purposes.
 			 */
-			logger.debug("Sent client id: " + clientId);
+			LOGGER.debug("Sent client id: " + clientId);
 			// write action
 			output.writeObject(action);
 			output.flush();
 
 			// Useful for testing purposes.
 
-			logger.debug("Write server command: " + action);
+			LOGGER.debug("Write server command: " + action);
 
 			// Useful for testing purposes.
 
-			logger.debug("Waiting server response");
+			LOGGER.debug("Waiting server response");
 			try {
 				boolean serverResponse = (boolean) input.readObject();
 				clientData.storeAck(serverResponse);
-				logger.debug("Server response is: " + serverResponse);
+				LOGGER.debug("Server response is: " + serverResponse);
 			} catch (ClassNotFoundException e) {
-				logger.error(e.getMessage());
+				LOGGER.error(e.getMessage());
 			}
 
 		} catch (IOException e) {
-			logger.error("Failed to send your request to the server");
+			LOGGER.error("Failed to send your request to the server");
 		}
 
 		close(requestSocket, output);
-		logger.debug("Socket connection closed.");
+		LOGGER.debug("Socket connection closed.");
 	}
 
 	/**
@@ -140,6 +140,7 @@ public class ClientSocketViewCS implements Runnable {
 		try {
 			socket.close();
 		} catch (IOException e) {
+			LOGGER.error(e.getMessage());
 		} finally {
 			socket = null;
 			output = null;

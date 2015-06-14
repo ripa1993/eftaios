@@ -22,7 +22,7 @@ public class ServerRMIRegistrationView implements
 	/**
 	 * Log4j logger
 	 */
-	private static final Logger logger = LogManager
+	private static final Logger LOGGER = LogManager
 			.getLogger(ServerRMIRegistrationView.class);
 
 	/**
@@ -48,14 +48,14 @@ public class ServerRMIRegistrationView implements
 	@Override
 	public int getClientId(int clientId) throws RemoteException,
 			AlreadyBoundException {
-		logger.info("ClientId is: " + clientId);
+		LOGGER.info("ClientId is: " + clientId);
 		if (clientId == 0) {
 			Integer newClientId = Server.getClientId();
-			logger.info("Assigning new ClientId: " + newClientId);
+			LOGGER.info("Assigning new ClientId: " + newClientId);
 			Server.increaseClientId();
 			return newClientId;
 		}
-		logger.debug("ClientId already assigned");
+		LOGGER.debug("ClientId already assigned");
 		return clientId;
 	}
 
@@ -69,7 +69,7 @@ public class ServerRMIRegistrationView implements
 	public boolean sendPlayerName(String name) throws RemoteException,
 			AlreadyBoundException {
 
-		logger.debug("Name accepted: " + name);
+		LOGGER.debug("Name accepted: " + name);
 		return true;
 	}
 
@@ -81,7 +81,7 @@ public class ServerRMIRegistrationView implements
 	@Override
 	public void sendMapVote(GameMapName chosenMap) throws RemoteException,
 	AlreadyBoundException {
-		logger.debug("Vote given to " + chosenMap);
+		LOGGER.debug("Vote given to " + chosenMap);
 		Server.addVote(chosenMap);	
 	}
 	
@@ -100,7 +100,7 @@ public class ServerRMIRegistrationView implements
 		try {
 			serverRMI.addRMIClient(client, view);
 		} catch (GameAlreadyRunningException e) {
-			logger.error("Game already running, can't add the player to this game");
+			LOGGER.error("Game already running, can't add the player to this game");
 		}
 		return view;
 

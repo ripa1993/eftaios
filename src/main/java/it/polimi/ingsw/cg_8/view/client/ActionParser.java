@@ -92,7 +92,7 @@ public class ActionParser {
 
 		String action = st.nextToken().toUpperCase();
 
-		if (action.equals("SAY")) {
+		if ("SAY".equals(action)) {
 			if (!st.hasMoreTokens()) {
 				throw new NotAValidInput("Nothing to say!");
 			} else {
@@ -103,7 +103,7 @@ public class ActionParser {
 				return new ActionChat(message);
 			}
 
-		} else if (action.equals("MOVE")) {
+		} else if ("MOVE".equals(action)) {
 			if (!st.hasMoreTokens()) {
 				throw new NotAValidInput("Missing coordinate");
 			}
@@ -117,18 +117,18 @@ public class ActionParser {
 			}
 			return new ActionMove(parsedCoordinate);
 
-		} else if (action.equals("ATTACK")) {
+		} else if ("ATTACK".equals(action)) {
 			if (st.hasMoreTokens()) {
 				throw new NotAValidInput("Not a valid command");
 			}
 			return new ActionAttack();
 
-		} else if (action.equals("USE")) {
+		} else if ("USE".equals(action)) {
 			if (!st.hasMoreTokens()) {
 				throw new NotAValidInput("Missing card type");
 			}
 			String card = st.nextToken();
-			if (card.equals("SPOTLIGHT")) {
+			if ("SPOTLIGHT".equals(card)) {
 				if (!st.hasMoreTokens()) {
 					throw new NotAValidInput("Missing coordinate");
 				} else {
@@ -144,24 +144,24 @@ public class ActionParser {
 			if (st.hasMoreTokens()) {
 				throw new NotAValidInput("Not a valid command");
 			}
-			if (card.equals("ATTACK")) {
+			if ("ATTACK".equals(card)) {
 				return new ActionUseCard(new AttackCard());
 			}
-			if (card.equals("ADRENALINE")) {
+			if ("ADRENALINE".equals(card)) {
 				return new ActionUseCard(new AdrenalineCard());
 			}
-			if (card.equals("DEFENSE")) {
+			if ("DEFENSE".equals(card)) {
 				throw new NotAValidInput("DEFENSE is a passive item card");
 			}
-			if (card.equals("SEDATIVES")) {
+			if ("SEDATIVES".equals(card)) {
 				return new ActionUseCard(new SedativesCard());
 			}
-			if (card.equals("TELEPORT")) {
+			if ("TELEPORT".equals(card)) {
 				return new ActionUseCard(new TeleportCard());
 			}
 			throw new NotAValidInput("Not a valid card");
 
-		} else if (action.equals("NOISE")) {
+		} else if ("NOISE".equals(action)) {
 			String coordinate;
 			if (st.hasMoreTokens()) {
 				coordinate = st.nextToken();
@@ -174,33 +174,33 @@ public class ActionParser {
 			Coordinate parsedCoordinate = parseCoordinate(coordinate);
 			return new ActionFakeNoise(parsedCoordinate);
 
-		} else if (action.equals("END")) {
+		} else if ("END".equals(action)) {
 			if (st.hasMoreTokens()) {
 				throw new NotAValidInput("Not a valid command");
 			}
 			return new ActionEndTurn();
 
-		} else if (action.equals("DRAW")) {
+		} else if ("DRAW".equals(action)) {
 			if (st.hasMoreTokens()) {
 				throw new NotAValidInput("Not a valid command");
 			}
 			return new ActionDrawCard();
-		} else if (action.equals("ACTIONS")) {
+		} else if ("ACTIONS".equals(action)) {
 			if (st.hasMoreTokens()) {
 				throw new NotAValidInput("Not a valid command");
 			}
 			return new ActionGetAvailableAction();
-		} else if (action.equals("COORDINATES")) {
+		} else if ("COORDINATES".equals(action)) {
 			if (st.hasMoreTokens()) {
 				throw new NotAValidInput("Not a valid command");
 			}
 			return new ActionGetReachableCoordinates();
-		} else if (action.equals("CARDS")) {
+		} else if ("CARDS".equals(action)) {
 			if (st.hasMoreTokens()) {
 				throw new NotAValidInput("Not a valid command");
 			}
 			return new ActionGetHand();
-		} else if (action.equals("DISCONNECT")) {
+		} else if ("DISCONNECT".equals(action)) {
 			if (st.hasMoreTokens()) {
 				throw new NotAValidInput("Not a valid command");
 			}

@@ -28,7 +28,7 @@ public class ServerGameRoom extends ServerPublisher implements
 	/**
 	 * Log4j logger
 	 */
-	private static final Logger logger = LogManager.getLogger(ServerGameRoom.class);
+	private static final Logger LOGGER = LogManager.getLogger(ServerGameRoom.class);
 	
 	/**
 	 * The class has to be exported to be used by the client.
@@ -59,12 +59,11 @@ public class ServerGameRoom extends ServerPublisher implements
 		Controller controller = Server.getId2Controller().get(clientId);
 		boolean result = StateMachine.evaluateAction(controller, action,
 				controller.getPlayerById(clientId));
-		logger.debug(result);
+		LOGGER.debug(result);
 		/**
 		 * Can be used to print the action result on the client, for debugging
 		 * purposes
 		 */
-		// this.dispatchMessage(new ResponsePrivate(String.valueOf(result)));
 		return result;
 	}
 
@@ -80,7 +79,7 @@ public class ServerGameRoom extends ServerPublisher implements
 		try {
 			clientRMI.publishMessage(message);
 		} catch (RemoteException e) {
-			System.err.println(e.getMessage());
+			LOGGER.error(e.getMessage());
 		}
 	}
 }

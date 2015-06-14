@@ -9,7 +9,7 @@ import it.polimi.ingsw.cg_8.model.player.Player;
  * @author Simone
  * @version 1.0
  */
-public class GetAllowedActions extends PlayerAction {
+public class GetAllowedActions implements PlayerAction {
 	/**
 	 * List of all recognized commands
 	 * 
@@ -17,7 +17,7 @@ public class GetAllowedActions extends PlayerAction {
 	 *            requesting player
 	 * @return list of all recognized commands
 	 */
-	public static String printActions(Player player) {
+	public static String printActions() {
 		String actions = "List of supported commands:\n"
 				+ "SAY message - sends a chat message to all the other players\n"
 				+ "CARDS - gives a list of your item cards\n"

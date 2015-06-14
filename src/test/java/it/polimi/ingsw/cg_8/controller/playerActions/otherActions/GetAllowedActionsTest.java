@@ -20,7 +20,7 @@ public class GetAllowedActionsTest {
 				+ "NOISE coordinate - does a fake noise in the target coordinate\n"
 				+ "END - ends your turn\n"
 				+ "DISCONNECT - disconnect from the server";
-		assertEquals(actions, GetAllowedActions.printActions(null));
+		assertEquals(actions, GetAllowedActions.printActions());
 	}
 
 }

@@ -33,7 +33,7 @@ public abstract class ConnectionManager implements Serializable {
 	/**
 	 * Used to store the messages sent by the server.
 	 */
-	protected ClientData clientData;
+	protected transient ClientData clientData;
 	/**
 	 * The chosen map.
 	 */

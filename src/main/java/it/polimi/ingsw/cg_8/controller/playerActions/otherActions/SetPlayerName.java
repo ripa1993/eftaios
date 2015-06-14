@@ -10,7 +10,7 @@ import it.polimi.ingsw.cg_8.model.exceptions.GameAlreadyRunningException;
  * @author Alberto Parravicini
  * @version 1.0
  */
-public class SetPlayerName extends PlayerAction {
+public class SetPlayerName implements PlayerAction {
 
 	/**
 	 * Set the player name

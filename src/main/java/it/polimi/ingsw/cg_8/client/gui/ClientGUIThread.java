@@ -113,7 +113,7 @@ public class ClientGUIThread implements Runnable, Observer {
 	 * JPanels used in the gui
 	 */
 	private JPanel chatPanel, chatPanel2, rightPanel, infoPanel, commandsPanel,
-			chatInfoPanel, state_panel, panel_1, panel_2, panel_3, cardPanel;
+			chatInfoPanel, statePanel, panel1, panel2, panel3, cardPanel;
 	/**
 	 * JLayered pane used in the map panel
 	 */
@@ -135,7 +135,7 @@ public class ClientGUIThread implements Runnable, Observer {
 	 * JLabel used in the gui
 	 */
 	private JLabel infoTextTitle, chatTextTitle, lblPlayerState, lblItemCards,
-			labelCurrentState, state_image, turnNumberLabel;
+			labelCurrentState, stateImage, turnNumberLabel;
 	/**
 	 * JScrollPane used to add a scroll to the chat and info text pane
 	 */
@@ -167,7 +167,7 @@ public class ClientGUIThread implements Runnable, Observer {
 	/**
 	 * Log4j logger
 	 */
-	private static final Logger logger = LogManager
+	private static final Logger LOGGER = LogManager
 			.getLogger(ClientGUIThread.class);
 	/**
 	 * Shows if the player image has been set or not.
@@ -193,7 +193,7 @@ public class ClientGUIThread implements Runnable, Observer {
 					new FileInputStream(Resource.FONT_TITILLIUM_BOLD_UPRIGHT))
 					.deriveFont((float) 30);
 		} catch (FontFormatException | IOException e) {
-			logger.error(e.getMessage());
+			LOGGER.error(e.getMessage());
 		}
 
 		try {
@@ -203,7 +203,7 @@ public class ClientGUIThread implements Runnable, Observer {
 							Resource.FONT_TITILLIUM_SEMIBOLD_UPRIGHT))
 					.deriveFont((float) 20);
 		} catch (FontFormatException | IOException e) {
-			logger.error(e.getMessage());
+			LOGGER.error(e.getMessage());
 		}
 
 		mainFrame = new JFrame("Escape From The Aliens In Outer Space");
@@ -216,7 +216,7 @@ public class ClientGUIThread implements Runnable, Observer {
 
 			mainFrame.setContentPane(new BackgroundPanel(myImage));
 		} catch (IOException e) {
-			logger.error(e.getMessage());
+			LOGGER.error(e.getMessage());
 		}
 		mainFrame.getContentPane().setBackground(Color.PINK);
 		mainFrame.setBackground(new Color(255, 255, 255));
@@ -334,25 +334,25 @@ public class ClientGUIThread implements Runnable, Observer {
 		commandsPanel.add(endTurnButton);
 		commandsPanel.setVisible(true);
 
-		state_panel = new JPanel();
-		state_panel.setMaximumSize(new Dimension(600, 32767));
-		state_panel.setBorder(new MatteBorder(10, 0, 0, 0, new Color(100, 100,
+		statePanel = new JPanel();
+		statePanel.setMaximumSize(new Dimension(600, 32767));
+		statePanel.setBorder(new MatteBorder(10, 0, 0, 0, new Color(100, 100,
 				100, 100)));
-		state_panel.setOpaque(false);
-		rightPanel.add(state_panel, BorderLayout.NORTH);
-		state_panel.setLayout(new BorderLayout(0, 0));
+		statePanel.setOpaque(false);
+		rightPanel.add(statePanel, BorderLayout.NORTH);
+		statePanel.setLayout(new BorderLayout(0, 0));
 
-		panel_3 = new JPanel();
-		panel_3.setBorder(new MatteBorder(0, 0, 5, 0, (Color) new Color(100,
+		panel3 = new JPanel();
+		panel3.setBorder(new MatteBorder(0, 0, 5, 0, (Color) new Color(100,
 				100, 100, 100)));
-		panel_3.setBackground(new Color(100, 100, 100, 100));
-		panel_3.setOpaque(true);
-		state_panel.add(panel_3, BorderLayout.CENTER);
-		panel_3.setLayout(new BorderLayout(0, 0));
+		panel3.setBackground(new Color(100, 100, 100, 100));
+		panel3.setOpaque(true);
+		statePanel.add(panel3, BorderLayout.CENTER);
+		panel3.setLayout(new BorderLayout(0, 0));
 
-		state_image = new JLabel("");
-		panel_3.add(state_image, BorderLayout.WEST);
-		state_image.setBorder(new EmptyBorder(0, 60, 5, 0));
+		stateImage = new JLabel("");
+		panel3.add(stateImage, BorderLayout.WEST);
+		stateImage.setBorder(new EmptyBorder(0, 60, 5, 0));
 
 		/**
 		 * Set the default image for the player, changed as soon as he gets an
@@ -360,16 +360,16 @@ public class ClientGUIThread implements Runnable, Observer {
 		 */
 		setStateImage(Resource.IMG_UNKNOWN_CHAR);
 
-		panel_1 = new JPanel();
-		panel_3.add(panel_1, BorderLayout.CENTER);
-		panel_1.setOpaque(false);
-		panel_1.setBackground(Color.WHITE);
-		panel_1.setLayout(new BorderLayout(0, 0));
-		panel_1.setBorder(new EmptyBorder(0, 0, 0, 0));
+		panel1 = new JPanel();
+		panel3.add(panel1, BorderLayout.CENTER);
+		panel1.setOpaque(false);
+		panel1.setBackground(Color.WHITE);
+		panel1.setLayout(new BorderLayout(0, 0));
+		panel1.setBorder(new EmptyBorder(0, 0, 0, 0));
 
 		lblPlayerState = new JLabel();
 		lblPlayerState.setBorder(new EmptyBorder(0, 0, 0, 0));
-		panel_1.add(lblPlayerState, BorderLayout.NORTH);
+		panel1.add(lblPlayerState, BorderLayout.NORTH);
 		lblPlayerState.setFont(fontTitilliumBoldUpright);
 		lblPlayerState.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPlayerState.setText("PLAYER STATE");
@@ -377,7 +377,7 @@ public class ClientGUIThread implements Runnable, Observer {
 
 		labelCurrentState = new JLabel();
 		labelCurrentState.setBorder(new EmptyBorder(0, 0, 5, 0));
-		panel_1.add(labelCurrentState, BorderLayout.CENTER);
+		panel1.add(labelCurrentState, BorderLayout.CENTER);
 		labelCurrentState.setText("The game hasn't started yet");
 		labelCurrentState.setFont(fontTitilliumSemiboldUpright);
 		labelCurrentState.setHorizontalAlignment(SwingConstants.CENTER);
@@ -392,19 +392,19 @@ public class ClientGUIThread implements Runnable, Observer {
 			turnNumberLabel.setIcon(new ImageIcon(roundImage));
 			rightPanel.repaint();
 		} catch (IOException ex) {
-			logger.error(ex.getMessage());
+			LOGGER.error(ex.getMessage());
 		}
 		turnNumberLabel.setHorizontalTextPosition(SwingConstants.CENTER);
 		turnNumberLabel.setBorder(new EmptyBorder(0, 0, 5, 60));
-		panel_3.add(turnNumberLabel, BorderLayout.EAST);
+		panel3.add(turnNumberLabel, BorderLayout.EAST);
 		turnNumberLabel.setVisible(true);
 
-		panel_2 = new JPanel();
-		panel_2.setOpaque(false);
-		panel_2.setBackground(Color.WHITE);
-		panel_2.setBorder(new EmptyBorder(10, 0, 0, 0));
-		state_panel.add(panel_2, BorderLayout.SOUTH);
-		panel_2.setLayout(new BorderLayout(0, 0));
+		panel2 = new JPanel();
+		panel2.setOpaque(false);
+		panel2.setBackground(Color.WHITE);
+		panel2.setBorder(new EmptyBorder(10, 0, 0, 0));
+		statePanel.add(panel2, BorderLayout.SOUTH);
+		panel2.setLayout(new BorderLayout(0, 0));
 
 		lblItemCards = new JLabel();
 		lblItemCards.setFont(fontTitilliumBoldUpright);
@@ -412,12 +412,12 @@ public class ClientGUIThread implements Runnable, Observer {
 		lblItemCards.setHorizontalAlignment(SwingConstants.CENTER);
 		lblItemCards.setText("ITEM CARDS");
 		lblItemCards.setForeground(Color.BLACK);
-		panel_2.add(lblItemCards, BorderLayout.CENTER);
+		panel2.add(lblItemCards, BorderLayout.CENTER);
 
 		cardPanel = new JPanel();
 		cardPanel.setOpaque(false);
 		cardPanel.setBackground(Color.WHITE);
-		panel_2.add(cardPanel, BorderLayout.SOUTH);
+		panel2.add(cardPanel, BorderLayout.SOUTH);
 		cardPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		cardButton1 = new CardButton();
@@ -475,12 +475,9 @@ public class ClientGUIThread implements Runnable, Observer {
 		chatInfoPanel.add(infoPanel);
 		chatInfoPanel.add(chatPanel2);
 		chatPanel2.add(chatPanel, BorderLayout.CENTER);
-		// chatPanel2.add(chatButton, BorderLayout.SOUTH);
 		rightPanel.add(chatInfoPanel, BorderLayout.CENTER);
 		rightPanel.add(commandsPanel, BorderLayout.SOUTH);
 
-		// chatTextPane.setAutoscrolls(true);
-		// infoTextPane.setAutoscrolls(true);
 		chatTextPane.setFont(fontTitilliumSemiboldUpright);
 		infoTextPane.setFont(fontTitilliumSemiboldUpright);
 		chatTextPane.setText("Say hi to the other players!");
@@ -507,10 +504,10 @@ public class ClientGUIThread implements Runnable, Observer {
 			Image tempImage = ImageIO.read(new File(source));
 			Image cardImage = tempImage.getScaledInstance(60, -1,
 					Image.SCALE_SMOOTH);
-			state_image.setIcon(new ImageIcon(cardImage));
+			stateImage.setIcon(new ImageIcon(cardImage));
 			rightPanel.repaint();
 		} catch (IOException ex) {
-			logger.error(ex.getMessage());
+			LOGGER.error(ex.getMessage());
 		}
 
 	}
@@ -568,7 +565,7 @@ public class ClientGUIThread implements Runnable, Observer {
 	@Override
 	public void run() {
 
-		logger.debug("Info text pane is" + infoPanel.getSize());
+		LOGGER.debug("Info text pane is" + infoPanel.getSize());
 
 		cardButton1.getInvisButton().addMouseListener(new MouseInputAdapter() {
 			@Override
@@ -579,7 +576,7 @@ public class ClientGUIThread implements Runnable, Observer {
 					if (action != null) {
 						connectionManager.send(action);
 					} else {
-						logger.debug("THIS DOES NOTHING - STOP DOING IT!");
+						LOGGER.debug("THIS DOES NOTHING - STOP DOING IT!");
 					}
 				}
 			}
@@ -594,7 +591,7 @@ public class ClientGUIThread implements Runnable, Observer {
 					if (action != null) {
 						connectionManager.send(action);
 					} else {
-						logger.debug("Action is passive or not an action");
+						LOGGER.debug("Action is passive or not an action");
 					}
 				}
 			}
@@ -607,7 +604,7 @@ public class ClientGUIThread implements Runnable, Observer {
 					if (action != null) {
 						connectionManager.send(action);
 					} else {
-						logger.debug("Action is passive or not an action");
+						LOGGER.debug("Action is passive or not an action");
 					}
 				}
 			}
@@ -625,7 +622,7 @@ public class ClientGUIThread implements Runnable, Observer {
 						connectionManager.send(new ActionDisconnect());
 					} catch (NullPointerException ex) {
 						// if server is down
-						System.err.println("Server is down");
+						LOGGER.error("Server is down");
 					}
 					System.exit(0);
 				}
@@ -667,7 +664,8 @@ public class ClientGUIThread implements Runnable, Observer {
 							JOptionPane.YES_NO_OPTION);
 					JDialog dialog = optionPane.createDialog("Attack");
 					dialog.setVisible(true);
-					int selection = ((Integer) optionPane.getValue()).intValue();
+					int selection = ((Integer) optionPane.getValue())
+							.intValue();
 					if (selection == JOptionPane.YES_OPTION) {
 						connectionManager.send(new ActionAttack());
 					} else {
@@ -690,7 +688,8 @@ public class ClientGUIThread implements Runnable, Observer {
 					JDialog dialog = optionPane
 							.createDialog("Draw a dangerous sector card");
 					dialog.setVisible(true);
-					int selection = ((Integer) optionPane.getValue()).intValue();
+					int selection = ((Integer) optionPane.getValue())
+							.intValue();
 					if (selection == JOptionPane.YES_OPTION) {
 						connectionManager.send(new ActionDrawCard());
 					} else {
@@ -737,7 +736,8 @@ public class ClientGUIThread implements Runnable, Observer {
 							JOptionPane.YES_NO_OPTION);
 					JDialog dialog = optionPane.createDialog("End turn");
 					dialog.setVisible(true);
-					int selection = ((Integer) optionPane.getValue()).intValue();
+					int selection = ((Integer) optionPane.getValue())
+							.intValue();
 					if (selection == JOptionPane.YES_OPTION) {
 						connectionManager.send(new ActionEndTurn());
 					} else {
@@ -759,18 +759,18 @@ public class ClientGUIThread implements Runnable, Observer {
 							mainFrame, "Pick a card", "Input",
 							JOptionPane.QUESTION_MESSAGE, null, cardList,
 							"Attack");
-					if (output.equals("Attack")) {
+					if ("Attack".equals(output)) {
 						connectionManager.send(new ActionUseCard(
 								new AttackCard()));
-					} else if (output.equals("Adrenaline")) {
+					} else if ("Adrenaline".equals(output)) {
 						connectionManager.send(new ActionUseCard(
 								new AdrenalineCard()));
 
-					} else if (output.equals("Sedatives")) {
+					} else if ("Sedatives".equals(output)) {
 						connectionManager.send(new ActionUseCard(
 								new SedativesCard()));
 
-					} else if (output.equals("Spotlight")) {
+					} else if ("Spotlight".equals(output)) {
 						String coordinateString = JOptionPane.showInputDialog(
 								"Insert target coordinate", "Coordinate");
 						try {
@@ -782,7 +782,7 @@ public class ClientGUIThread implements Runnable, Observer {
 							JOptionPane.showMessageDialog(mainFrame,
 									"Not a valid input!");
 						}
-					} else if (output.equals("Teleport")) {
+					} else if ("Teleport".equals(output)) {
 						connectionManager.send(new ActionUseCard(
 								new TeleportCard()));
 
@@ -809,27 +809,30 @@ public class ClientGUIThread implements Runnable, Observer {
 		// send chat message when enter is pressed
 		chatTextField.addKeyListener(new KeyListener() {
 
+
+
 			@Override
-			public void keyTyped(KeyEvent e) {
+			public void keyPressed(KeyEvent e) {
+
+				if (matchStarted && KeyEvent.VK_ENTER == e.getKeyCode()) {
+					String message = chatTextField.getText();
+					chatTextField.setText("");
+					connectionManager.send(new ActionChat(message));
+				}
 
 			}
 
 			@Override
-			public void keyPressed(KeyEvent e) {
-				if (matchStarted) {
-					if (KeyEvent.VK_ENTER == e.getKeyCode()) {
-						String message = chatTextField.getText();
-						chatTextField.setText("");
-						connectionManager.send(new ActionChat(message));
-					}
-				}
+			public void keyTyped(KeyEvent e) {
+				return;
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
-
+				return;
 			}
+
+
 
 		});
 
@@ -915,17 +918,17 @@ public class ClientGUIThread implements Runnable, Observer {
 								JOptionPane.DEFAULT_OPTION,
 								JOptionPane.QUESTION_MESSAGE, null, options,
 								options[0]);
-						logger.debug("Result: " + result);
-						logger.debug("Options: " + options);
+						LOGGER.debug("Result: " + result);
+						LOGGER.debug("Options: " + options);
 						if (result == 0) {
-							logger.debug("Choose: move");
+							LOGGER.debug("Choose: move");
 							connectionManager.send(new ActionMove(coordinate));
 						} else if (result == 1) {
-							logger.debug("Choose: spotlight");
+							LOGGER.debug("Choose: spotlight");
 							connectionManager.send(new ActionUseCard(
 									new SpotlightCard(), coordinate));
 						} else if (result == 2) {
-							logger.debug("Choose: fake noise");
+							LOGGER.debug("Choose: fake noise");
 							connectionManager.send(new ActionFakeNoise(
 									coordinate));
 						}
@@ -943,13 +946,13 @@ public class ClientGUIThread implements Runnable, Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 
-		if (arg.equals("Chat")) {
+		if ("Chat".equals(arg)) {
 			ResponseChat chat = clientData.getLastChat();
 			this.appendChat(chat.getPlayerName(), chat.getMessage());
 
 			// play music
 			playSound(Resource.SOUND_NOTIFICATION);
-		} else if (arg.equals("Noise")) {
+		} else if ("Noise".equals(arg)) {
 			ResponseNoise noise = clientData.getLastNoise();
 			this.appendInfo("NOISE", noise.toString());
 
@@ -985,7 +988,7 @@ public class ClientGUIThread implements Runnable, Observer {
 			} else if (noise.getNoise() instanceof TeleportNoise) {
 				playSound(Resource.SOUND_TELEPORT);
 			}
-		} else if (arg.equals("Private")) {
+		} else if ("Private".equals(arg)) {
 			ResponsePrivate privateMessage = clientData.getLastPrivate();
 			this.appendInfo("INFO", privateMessage.getMessage());
 		}
@@ -993,38 +996,38 @@ public class ClientGUIThread implements Runnable, Observer {
 		/**
 		 * Update related to card messages.
 		 */
-		else if (arg.equals("Cards")) {
+		else if ("Cards".equals(arg)) {
 			ResponseCard cardMessage = clientData.getCards();
 
 			cardButton1
 					.setCardType(this.analyzeCardType(cardMessage.getCard1()));
-			logger.debug("Card1 Type"
+			LOGGER.debug("Card1 Type"
 					+ this.analyzeCardType(cardMessage.getCard1()));
 			cardButton1.repaint();
 
 			cardButton2
 					.setCardType(this.analyzeCardType(cardMessage.getCard2()));
-			logger.debug("Card2 Type"
+			LOGGER.debug("Card2 Type"
 					+ this.analyzeCardType(cardMessage.getCard2()));
 			cardButton2.repaint();
 
 			cardButton3
 					.setCardType(this.analyzeCardType(cardMessage.getCard3()));
-			logger.debug("Card3 Type"
+			LOGGER.debug("Card3 Type"
 					+ this.analyzeCardType(cardMessage.getCard3()));
 			cardButton3.repaint();
 
 			/**
 			 * Update related to state messages
 			 */
-		} else if (arg.equals("State")) {
+		} else if ("State".equals(arg)) {
 			ResponseState stateMessage = clientData.getState();
 
 			if (playerImageSet == false) {
 				double random = Math.random();
-				logger.debug(stateMessage.getCharacter());
-				if (stateMessage.getCharacter().equals("Human")) {
-					logger.debug("I'm a human, so i set my img");
+				LOGGER.debug(stateMessage.getCharacter());
+				if ("Human".equals(stateMessage.getCharacter())) {
+					LOGGER.debug("I'm a human, so i set my img");
 					if (random < 0.25) {
 						setStateImage(Resource.IMG_HUMAN_1);
 					} else if (random < 0.5) {
@@ -1037,8 +1040,8 @@ public class ClientGUIThread implements Runnable, Observer {
 						setStateImage(Resource.IMG_HUMAN_4);
 
 					}
-				} else if (stateMessage.getCharacter().equals("Alien")) {
-					logger.debug("I'm an alien, so i set my img");
+				} else if ("Alien".equals(stateMessage.getCharacter())) {
+					LOGGER.debug("I'm an alien, so i set my img");
 					cardButton1.updateOverlay(Resource.IMG_ALIEN_OVERLAY);
 					cardButton2.updateOverlay(Resource.IMG_ALIEN_OVERLAY);
 					cardButton3.updateOverlay(Resource.IMG_ALIEN_OVERLAY);
@@ -1067,22 +1070,22 @@ public class ClientGUIThread implements Runnable, Observer {
 			labelCurrentState.setText(state);
 			rightPanel.repaint();
 
-		} else if (arg.equals("Map")) {
+		} else if ("Map".equals(arg)) {
 			ResponseMap response = clientData.getMap();
 			GameMapName mapName = response.getMapName();
 			if (mapName.equals(GameMapName.FERMI)) {
 				setMapImage(Resource.IMG_FERMI_MAP);
-				logger.debug("Map changed to fermi");
+				LOGGER.debug("Map changed to fermi");
 			} else if (mapName.equals(GameMapName.GALILEI)) {
 				setMapImage(Resource.IMG_GALILEI_MAP);
-				logger.debug("Map changed to galilei");
+				LOGGER.debug("Map changed to galilei");
 			} else if (mapName.equals(GameMapName.GALVANI)) {
 				setMapImage(Resource.IMG_GALVANI_MAP);
-				logger.debug("Map changed to galvani");
+				LOGGER.debug("Map changed to galvani");
 			}
 			mapPanel.repaint();
 			matchStarted = true;
-		} else if (arg.equals("Ack")) {
+		} else if ("Ack".equals(arg)) {
 			appendInfo("ACK", clientData.getAck());
 		}
 	}
@@ -1101,7 +1104,7 @@ public class ClientGUIThread implements Runnable, Observer {
 			clip.open(audioInputStream);
 			clip.start();
 		} catch (Exception ex) {
-			logger.error(ex.getMessage());
+			LOGGER.error(ex.getMessage());
 		}
 	}
 
@@ -1125,17 +1128,17 @@ public class ClientGUIThread implements Runnable, Observer {
 	 * @return the correnct CardType value
 	 */
 	private CardType analyzeCardType(String card) {
-		if (card.equals("AdrenalineCard")) {
+		if ("AdrenalineCard".equals(card)) {
 			return CardType.ADRENALINE;
-		} else if (card.equals("AttackCard")) {
+		} else if ("AttackCard".equals(card)) {
 			return CardType.ATTACK;
-		} else if (card.equals("DefenseCard")) {
+		} else if ("DefenseCard".equals(card)) {
 			return CardType.DEFENSE;
-		} else if (card.equals("SedativesCard")) {
+		} else if ("SedativesCard".equals(card)) {
 			return CardType.SEDATIVES;
-		} else if (card.equals("SpotlightCard")) {
+		} else if ("SpotlightCard".equals(card)) {
 			return CardType.SPOTLIGHT;
-		} else if (card.equals("TeleportCard")) {
+		} else if ("TeleportCard".equals(card)) {
 			return CardType.TELEPORT;
 		} else
 			return CardType.DEFAULT;

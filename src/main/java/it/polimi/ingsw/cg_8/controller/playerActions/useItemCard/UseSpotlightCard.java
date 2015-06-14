@@ -38,10 +38,11 @@ public class UseSpotlightCard extends UseItemCard {
 	private static Set<Player> findPlayers(Model model, Set<Coordinate> target) {
 		Set<Player> foundPlayers = new HashSet<Player>();
 		for (Player p : model.getPlayers()) {
-			if (!p.getState().equals(PlayerState.DEAD)) {
-				if (target.contains(p.getLastPosition())) {
-					foundPlayers.add(p);
-				}
+			if (!p.getState().equals(PlayerState.DEAD)
+					&& target.contains(p.getLastPosition())) {
+
+				foundPlayers.add(p);
+
 			}
 		}
 		return foundPlayers;

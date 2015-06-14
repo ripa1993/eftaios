@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.apache.logging.log4j.LogManager;
@@ -33,11 +34,11 @@ public class ServerSocketPublisherThread extends ServerPublisher implements
 	 * The buffer where the messages are stored, before being sent to the
 	 * player.
 	 */
-	private ConcurrentLinkedQueue<ServerResponse> buffer;
+	private Queue<ServerResponse> buffer;
 	/**
 	 * Log4j logger
 	 */
-	private static final Logger logger = LogManager
+	private static final Logger LOGGER = LogManager
 			.getLogger(ServerSocketPublisherThread.class);
 
 	/**
@@ -50,9 +51,9 @@ public class ServerSocketPublisherThread extends ServerPublisher implements
 		try {
 			this.output = new ObjectOutputStream(subscriber.getOutputStream());
 		} catch (IOException e) {
-			logger.error("Cannot open object output stream");
+			LOGGER.error("Cannot open object output stream");
 		}
-		logger.debug("Publisher thread created");
+		LOGGER.debug("Publisher thread created");
 	}
 
 	@Override
@@ -62,21 +63,21 @@ public class ServerSocketPublisherThread extends ServerPublisher implements
 				ServerResponse message = buffer.poll();
 				if (message != null) {
 					if (message instanceof ResponseCard) {
-						System.out.println("response card asd" + message);
+						LOGGER.debug("response card asd" + message);
 					}
 					send(message);
-					logger.debug("Message sent: " + message);
+					LOGGER.debug("Message sent: " + message);
 				} else {
 					try {
 						synchronized (buffer) {
 							buffer.wait();
 						}
 					} catch (InterruptedException e) {
-						logger.error(e.getMessage());
+						LOGGER.error(e.getMessage());
 					}
 				}
 			} catch (IOException e1) {
-				logger.error("Cannot write object to output");
+				LOGGER.error("Cannot write object to output");
 			}
 		}
 	}

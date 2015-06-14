@@ -26,7 +26,7 @@ import org.apache.logging.log4j.Logger;
  * @version 1.0
  */
 
-public class Movement extends PlayerAction {
+public class Movement implements PlayerAction {
 
 	/**
 	 * The player who is moving
@@ -43,7 +43,7 @@ public class Movement extends PlayerAction {
 	/**
 	 * Log4j logger
 	 */
-	private static final Logger logger = LogManager.getLogger(Movement.class);
+	private static final Logger LOGGER = LogManager.getLogger(Movement.class);
 
 	/**
 	 * Constructor
@@ -94,7 +94,7 @@ public class Movement extends PlayerAction {
 						player.setEscaped();
 					}
 				} catch (EmptyDeckException e) {
-					logger.error(e.getMessage());
+					LOGGER.error(e.getMessage());
 				}
 			}
 		}

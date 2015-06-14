@@ -36,7 +36,7 @@ public class ConnectionManagerRMI extends ConnectionManager implements
 	/**
 	 * The server IP address.
 	 */
-	private final String SERVER_ADDRESS = "127.0.0.1";
+	private final static String SERVER_ADDRESS = "127.0.0.1";
 	/**
 	 * The server port used by the client to register.
 	 */
@@ -44,15 +44,15 @@ public class ConnectionManagerRMI extends ConnectionManager implements
 	/**
 	 * The name used to identify the {@link ServerRMIRegistrationView}
 	 */
-	private final String registrationRoomName = "registrationRoom";
+	private final static String REGISTRATION_ROOM_NAME = "registrationRoom";
 	/**
 	 * GameRoom used by RMI.
 	 */
-	private ServerGameRoomInterface view;
+	private transient ServerGameRoomInterface view;
 	/**
 	 * Log4j logger
 	 */
-	private static final Logger logger = LogManager
+	private static final Logger LOGGER = LogManager
 			.getLogger(ConnectionManagerRMI.class);
 
 	/**
@@ -73,13 +73,13 @@ public class ConnectionManagerRMI extends ConnectionManager implements
 	@Override
 	public void setup() {
 
-		logger.debug("Contacting the broker...");
+		LOGGER.debug("Contacting the broker...");
 
 		try {
 			this.view = this.initializeRMI();
-			logger.debug("Successfully registered");
+			LOGGER.debug("Successfully registered");
 		} catch (NotBoundException | RemoteException | AlreadyBoundException e) {
-			logger.error("Failed to connect to the RMI Server: "
+			LOGGER.error("Failed to connect to the RMI Server: "
 					+ e.getMessage());
 		}
 	}
@@ -105,7 +105,7 @@ public class ConnectionManagerRMI extends ConnectionManager implements
 			boolean serverResponse = view.makeAction(this.clientID, inputLine);
 			clientData.storeAck(serverResponse);
 		} catch (RemoteException e) {
-			logger.debug("Can't perform the action");
+			LOGGER.debug("Can't perform the action");
 		}
 
 	}
@@ -116,7 +116,7 @@ public class ConnectionManagerRMI extends ConnectionManager implements
 	 */
 	@Override
 	public void publishMessage(ServerResponse message) throws RemoteException {
-		logger.debug(message);
+		LOGGER.debug(message);
 		this.clientData.storeResponse(message);
 		return;
 	}
@@ -128,36 +128,36 @@ public class ConnectionManagerRMI extends ConnectionManager implements
 	 */
 	public ServerGameRoomInterface initializeRMI() throws RemoteException,
 			NotBoundException, AlreadyBoundException {
-		logger.debug("Connecting to the registry...");
+		LOGGER.debug("Connecting to the registry...");
 		Registry registry = LocateRegistry.getRegistry(SERVER_ADDRESS,
 				REGISTRATION_PORT);
-		logger.debug("Connecting to the registration room...");
+		LOGGER.debug("Connecting to the registration room...");
 		ServerRMIRegistrationViewRemote registrationRoom = (ServerRMIRegistrationViewRemote) registry
-				.lookup(registrationRoomName);
+				.lookup(REGISTRATION_ROOM_NAME);
 
-		logger.debug("Trying to get a clientID...");
+		LOGGER.debug("Trying to get a clientID...");
 		while (this.clientID == 0) {
 			this.clientID = registrationRoom.getClientId(this.clientID);
 		}
-		logger.info("Your clientID is " + this.clientID);
+		LOGGER.info("Your clientID is " + this.clientID);
 
-		logger.debug("Trying to send your name to the server...");
+		LOGGER.debug("Trying to send your name to the server...");
 
 		while (nameSet == false) {
 			nameSet = registrationRoom.sendPlayerName(this.playerName);
 		}
-		logger.debug("NAME ACCEPTED");
+		LOGGER.debug("NAME ACCEPTED");
 
 		/**
 		 * Communicating the chosen map to the server.
 		 */
-		logger.debug("Sending your chosen map to the server...");
+		LOGGER.debug("Sending your chosen map to the server...");
 		registrationRoom.sendMapVote(mapName);
 
 		/**
 		 * The client gets a view to play the game;
 		 */
-		logger.debug("Trying to register...");
+		LOGGER.debug("Trying to register...");
 
 		return registrationRoom
 				.register((SubscriberInterface) UnicastRemoteObject

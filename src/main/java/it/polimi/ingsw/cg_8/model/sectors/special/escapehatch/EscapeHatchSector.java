@@ -17,7 +17,7 @@ public class EscapeHatchSector extends SpecialSector {
 	/**
 	 * Current behaviour of the escape hatch sector
 	 */
-	private EscapeHatchBehaviour status;
+	private transient EscapeHatchBehaviour status;
 	/**
 	 * Number of the escape hatch, 1 to 4
 	 */

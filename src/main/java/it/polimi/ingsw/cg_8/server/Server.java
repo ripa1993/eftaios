@@ -80,7 +80,7 @@ public class Server {
 	/**
 	 * Log4j logger
 	 */
-	private static final Logger logger = LogManager.getLogger(Server.class);
+	private static final Logger LOGGER = LogManager.getLogger(Server.class);
 
 	/**
 	 * Hashmap that counts the votes given to every map by the players, used to
@@ -194,7 +194,7 @@ public class Server {
 	 */
 	public static Controller createNewGame(GameMapName gameMapName) {
 		nextGame = new Controller(gameMapName, new DefaultRules());
-		logger.debug("New game created: " + gameMapName);
+		LOGGER.debug("New game created: " + gameMapName);
 		return nextGame;
 	}
 
@@ -207,7 +207,7 @@ public class Server {
 	 *            The ID of the client.
 	 */
 	public static void addClient(Integer clientID) {
-		logger.info("Player successfully added to the game");
+		LOGGER.info("Player successfully added to the game");
 		Server.getId2Controller().put(clientID, nextGame);
 		if (nextGame.getNumOfPlayers() == Server.MIN_PLAYERS) {
 			Server.startTimeout();
@@ -220,7 +220,7 @@ public class Server {
 
 			nextGame.initGame();
 			Server.nullStartingGame();
-			logger.info("Game started");
+			LOGGER.info("Game started");
 		}
 	}
 
@@ -229,7 +229,7 @@ public class Server {
 	 */
 	public static void nullStartingGame() {
 		nextGame = null;
-		logger.debug("Now the next game is null");
+		LOGGER.debug("Now the next game is null");
 	}
 
 	/**
@@ -241,7 +241,7 @@ public class Server {
 			executorSocket.submit(new ServerSocketRRThread(
 					SERVER_SOCKET_RR_PORT, SERVER_SOCKET_PS_PORT));
 		} catch (IOException e) {
-			logger.error("Cannot start server socket CS on port: "
+			LOGGER.error("Cannot start server socket CS on port: "
 					+ SERVER_SOCKET_RR_PORT);
 		}
 	}
@@ -289,14 +289,14 @@ public class Server {
 					GameMapName chosenMap = Server.countVotes();
 					nextGame.setMap(chosenMap);
 					nextGame.initGame();
-					logger.info("Game started because timeout is over");
+					LOGGER.info("Game started because timeout is over");
 					nullStartingGame();
 				}
 
 			}
 		};
 		timer.schedule(timerTask, TIMEOUT);
-		logger.info("Timeout started");
+		LOGGER.info("Timeout started");
 	}
 
 	/**
@@ -305,7 +305,7 @@ public class Server {
 	 */
 	public static void abortTimeout() {
 		timer.cancel();
-		logger.info("Timeout aborted");
+		LOGGER.info("Timeout aborted");
 	}
 	/**
 	 * Server launcher
@@ -315,11 +315,11 @@ public class Server {
 	 */
 	public static void main(String[] args) throws RemoteException,
 			AlreadyBoundException {
-		logger.info("Starting server main");
+		LOGGER.info("Starting server main");
 		Server server = new Server();
-		logger.info("Starting Socket");
+		LOGGER.info("Starting Socket");
 		server.startSocket();
-		logger.info("Starting RMI");
+		LOGGER.info("Starting RMI");
 		server.startRMI();
 	}
 

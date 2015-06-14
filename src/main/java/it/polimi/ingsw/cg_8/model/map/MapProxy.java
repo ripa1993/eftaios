@@ -53,6 +53,7 @@ public class MapProxy implements ReachableCoordinatesInterface {
 	 *            starting coordinate
 	 * @return connected coordinates from c coordinate
 	 */
+	@Override
 	public Set<Coordinate> getConnectedCoordinates(Coordinate c) {
 		Set<Coordinate> connectedCoordinates = new HashSet<Coordinate>();
 		int currentX = c.getX();
