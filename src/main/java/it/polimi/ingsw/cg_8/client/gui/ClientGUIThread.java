@@ -280,8 +280,6 @@ public class ClientGUIThread implements Runnable, Observer {
 		/**
 		 * Which map is loaded.
 		 */
-		// TODO: mettere un background generico al posto della mappa, magari un
-		// punto di domanda a forma di mappa
 		backgroundImageResource = Resource.IMG_MAP_BG;
 		backgroundImage = new ImageIcon(backgroundImageResource);
 		backgroundImageScaled = new ImageIcon(backgroundImage.getImage()
@@ -292,6 +290,11 @@ public class ClientGUIThread implements Runnable, Observer {
 
 		// setup map panel
 		mapPanel = new JLayeredPane() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -6773174313895718360L;
 
 			@Override
 			public void paintComponent(Graphics g) {
@@ -319,9 +322,6 @@ public class ClientGUIThread implements Runnable, Observer {
 						updatedHeight, null);
 			}
 
-			public Image getBackgroundImageScaled() {
-				return backgroundImageScaled;
-			}
 		};
 		mapPanel.setBackground(Color.WHITE);
 		mapPanel.setVisible(true);

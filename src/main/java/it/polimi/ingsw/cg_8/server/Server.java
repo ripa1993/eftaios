@@ -214,7 +214,6 @@ public class Server {
 		}
 		if (nextGame.getNumOfPlayers() == Server.MAX_PLAYERS) {
 			Server.abortTimeout();
-			// TODO: handles votes, update map
 			GameMapName chosenMap = Server.countVotes();
 			nextGame.setMap(chosenMap);
 
@@ -285,7 +284,6 @@ public class Server {
 			public void run() {
 
 				synchronized (nextGame) {
-					// TODO: handles votes, update map
 					GameMapName chosenMap = Server.countVotes();
 					nextGame.setMap(chosenMap);
 					nextGame.initGame();
