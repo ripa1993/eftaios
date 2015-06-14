@@ -62,7 +62,7 @@ public class ServerSocketPublisherThread extends ServerPublisher implements
 				ServerResponse message = buffer.poll();
 				if (message != null) {
 					if (message instanceof ResponseCard) {
-						System.out.println("response card asd" + message);
+						logger.debug("response card asd" + message);
 					}
 					send(message);
 					logger.debug("Message sent: " + message);

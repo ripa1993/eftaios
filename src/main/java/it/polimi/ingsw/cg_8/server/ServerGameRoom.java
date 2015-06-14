@@ -80,7 +80,7 @@ public class ServerGameRoom extends ServerPublisher implements
 		try {
 			clientRMI.publishMessage(message);
 		} catch (RemoteException e) {
-			System.err.println(e.getMessage());
+			logger.error(e.getMessage());
 		}
 	}
 }

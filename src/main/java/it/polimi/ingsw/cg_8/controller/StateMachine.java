@@ -28,6 +28,7 @@ import it.polimi.ingsw.cg_8.model.player.PlayerState;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 import it.polimi.ingsw.cg_8.model.sectors.Sector;
 import it.polimi.ingsw.cg_8.model.sectors.normal.DangerousSector;
+import it.polimi.ingsw.cg_8.server.ServerSocketPublisherThread;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionAttack;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionChat;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionDisconnect;
@@ -49,6 +50,9 @@ import it.polimi.ingsw.cg_8.view.server.ResponseState;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Simulation of a state machine, used to handle {@link ClientAction} generated
  * by the client
@@ -57,6 +61,12 @@ import java.util.concurrent.TimeUnit;
  * @version 1.0
  */
 public class StateMachine {
+	/**
+	 * Log4j logger
+	 */
+	private static final Logger logger = LogManager
+			.getLogger(StateMachine.class);
+
 	/**
 	 * This method evaluates an action created by a player though a client.
 	 * 
@@ -271,7 +281,7 @@ public class StateMachine {
 							player,
 							new ResponsePrivate("You have drawn a "
 									+ draw.getDangerousSectorCard()));
-					System.out.println(draw.getItemCard());
+					logger.debug(draw.getItemCard());
 
 					if (draw.getItemCard() != null
 							&& draw.isDiscardedItemCard() == false) {
@@ -309,7 +319,7 @@ public class StateMachine {
 						try {
 							TimeUnit.SECONDS.sleep(1);
 						} catch (InterruptedException e) {
-							System.err.println("[DEBUG] Failed to sleep");
+							logger.error("Failed to sleep");
 						}
 						controller.writeToAll(new ResponsePrivate(player
 								.getName()
@@ -483,10 +493,15 @@ public class StateMachine {
 
 	/**
 	 * Handles the use of an adrenaline card
-	 * @param card adrenaline card
-	 * @param player requesting player
-	 * @param controller game
-	 * @return true, if the action has been done<br>false, if not
+	 * 
+	 * @param card
+	 *            adrenaline card
+	 * @param player
+	 *            requesting player
+	 * @param controller
+	 *            game
+	 * @return true, if the action has been done<br>
+	 *         false, if not
 	 */
 	private static boolean useAdrenalineCard(ItemCard card, Player player,
 			Controller controller) {
@@ -505,10 +520,15 @@ public class StateMachine {
 
 	/**
 	 * Handles the use of an attack card
-	 * @param card attack card
-	 * @param player requesting player
-	 * @param controller game
-	 * @return true, if the action has been done<br>false, if not
+	 * 
+	 * @param card
+	 *            attack card
+	 * @param player
+	 *            requesting player
+	 * @param controller
+	 *            game
+	 * @return true, if the action has been done<br>
+	 *         false, if not
 	 */
 	private static boolean useAttackCard(ItemCard card, Player player,
 			Controller controller) {
@@ -526,10 +546,15 @@ public class StateMachine {
 
 	/**
 	 * Handles the use of a teleport card
-	 * @param card teleport card
-	 * @param player requesting player
-	 * @param controller game
-	 * @return true, if the action has been done<br>false, if not
+	 * 
+	 * @param card
+	 *            teleport card
+	 * @param player
+	 *            requesting player
+	 * @param controller
+	 *            game
+	 * @return true, if the action has been done<br>
+	 *         false, if not
 	 */
 	private static boolean useTeleportCard(ItemCard card, Player player,
 			Controller controller) {
@@ -553,10 +578,15 @@ public class StateMachine {
 
 	/**
 	 * Handles the use of a sedatives card
-	 * @param card sedatives card
-	 * @param player requesting player
-	 * @param controller game
-	 * @return true, if the action has been done<br>false, if not
+	 * 
+	 * @param card
+	 *            sedatives card
+	 * @param player
+	 *            requesting player
+	 * @param controller
+	 *            game
+	 * @return true, if the action has been done<br>
+	 *         false, if not
 	 */
 	private static boolean useSedativesCard(ItemCard card, Player player,
 			Controller controller) {
@@ -572,13 +602,20 @@ public class StateMachine {
 		}
 		return false;
 	}
+
 	/**
 	 * Handles the use of a spotlight card
-	 * @param card spotlight card
-	 * @param player requesting player
-	 * @param controller game
-	 * @param coordinate target coordinate
-	 * @return true, if the action has been done<br>false, if not
+	 * 
+	 * @param card
+	 *            spotlight card
+	 * @param player
+	 *            requesting player
+	 * @param controller
+	 *            game
+	 * @param coordinate
+	 *            target coordinate
+	 * @return true, if the action has been done<br>
+	 *         false, if not
 	 */
 	private static boolean useSpotlightCard(ItemCard card, Player player,
 			Controller controller, Coordinate coordinate) {
