@@ -51,7 +51,7 @@ public class Server {
 	/**
 	 * Maximum number of players per game
 	 */
-	public final static int MAX_PLAYERS = 3;
+	public final static int MAX_PLAYERS = 8;
 	/**
 	 * Association between players and the game they are playing.
 	 */
