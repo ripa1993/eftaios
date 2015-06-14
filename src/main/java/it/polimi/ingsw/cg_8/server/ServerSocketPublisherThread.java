@@ -43,6 +43,7 @@ public class ServerSocketPublisherThread extends ServerPublisher implements
 
 	/**
 	 * Creates a publisher for the current subscriber.
+	 * 
 	 * @param subscriber
 	 */
 	public ServerSocketPublisherThread(Socket subscriber) {
@@ -51,7 +52,7 @@ public class ServerSocketPublisherThread extends ServerPublisher implements
 		try {
 			this.output = new ObjectOutputStream(subscriber.getOutputStream());
 		} catch (IOException e) {
-			LOGGER.error("Cannot open object output stream",e);
+			LOGGER.error("Cannot open object output stream", e);
 		}
 		LOGGER.debug("Publisher thread created");
 	}
@@ -68,23 +69,25 @@ public class ServerSocketPublisherThread extends ServerPublisher implements
 					send(message);
 					LOGGER.debug("Message sent: " + message);
 				} else {
-					try {
-						synchronized (buffer) {
-							buffer.wait();
-						}
-					} catch (InterruptedException e) {
-						LOGGER.error(e.getMessage());
+
+					synchronized (buffer) {
+						buffer.wait();
 					}
 				}
+
 			} catch (IOException e1) {
-				LOGGER.error("Cannot write object to output",e1);
+				LOGGER.error("Cannot write object to output", e1);
+			} catch (InterruptedException e) {
+				LOGGER.error(e.getMessage(), e);
 			}
 		}
 	}
 
 	/**
 	 * Add a message to the buffer.
-	 * @param message The message sent by the server.
+	 * 
+	 * @param message
+	 *            The message sent by the server.
 	 */
 	@Override
 	public void dispatchMessage(ServerResponse message) {
@@ -93,9 +96,10 @@ public class ServerSocketPublisherThread extends ServerPublisher implements
 			buffer.notify();
 		}
 	}
-	
+
 	/**
 	 * Send a message to the player.
+	 * 
 	 * @param message
 	 * @throws IOException
 	 * @throws SocketException
