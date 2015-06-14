@@ -1,7 +1,6 @@
 package it.polimi.ingsw.cg_8.controller.playerActions;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import it.polimi.ingsw.cg_8.controller.Controller;
 import it.polimi.ingsw.cg_8.controller.DefaultRules;
 import it.polimi.ingsw.cg_8.controller.Rules;
@@ -15,6 +14,7 @@ import it.polimi.ingsw.cg_8.model.cards.itemCards.SpotlightCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.TeleportCard;
 import it.polimi.ingsw.cg_8.model.exceptions.GameAlreadyRunningException;
 import it.polimi.ingsw.cg_8.model.map.GameMapName;
+import it.polimi.ingsw.cg_8.model.noises.MovementNoise;
 import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.player.character.alien.Alien;
 import it.polimi.ingsw.cg_8.model.player.character.human.Human;
@@ -29,6 +29,7 @@ import it.polimi.ingsw.cg_8.view.client.actions.ActionGetAvailableAction;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionGetReachableCoordinates;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionMove;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionUseCard;
+import it.polimi.ingsw.cg_8.view.server.ResponseNoise;
 import it.polimi.ingsw.cg_8.view.server.ServerResponse;
 
 import java.util.Observable;
@@ -40,26 +41,32 @@ public class StateMachineTest {
 
 	private class DummyController extends Controller {
 
+		public ServerResponse response;
+		
 		public DummyController(GameMapName mapName, Rules rules) {
 			super(mapName, rules);
 		}
 
 		@Override
 		public void writeToAll(ServerResponse message) {
+			response=message;
 		}
 
 		@Override
 		public void writeToId(Integer id, ServerResponse message) {
+			response=message;
+
 		}
 
 		@Override
 		public void writeToPlayer(Player player, ServerResponse message) {
+			response=message;
 		}
 
-		@Override
-		public void update(Observable o, Object arg) {
-
-		}
+//		@Override
+//		public void update(Observable o, Object arg) {
+//
+//		}
 
 	}
 
@@ -712,5 +719,12 @@ public class StateMachineTest {
 		assertTrue(result);
 	}
 	
+	// dummy controller tests
 	
+	@Test
+	public void updateTest(){
+		MovementNoise n = new MovementNoise(0, new Player("ciao"), new Coordinate(1,1));
+		controller.getModel().addNoise(n);
+		assertEquals(n, ((ResponseNoise)((DummyController)controller).response).getNoise());
+	}
 }
