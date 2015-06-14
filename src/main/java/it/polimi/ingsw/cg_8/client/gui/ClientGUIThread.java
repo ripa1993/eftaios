@@ -2,6 +2,7 @@ package it.polimi.ingsw.cg_8.client.gui;
 
 import it.polimi.ingsw.cg_8.Resource;
 import it.polimi.ingsw.cg_8.client.ClientData;
+import it.polimi.ingsw.cg_8.client.ConnectionManager;
 import it.polimi.ingsw.cg_8.client.gui.CardButton.CardType;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.AdrenalineCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.AttackCard;

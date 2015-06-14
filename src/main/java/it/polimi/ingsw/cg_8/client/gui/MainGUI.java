@@ -1,6 +1,9 @@
 package it.polimi.ingsw.cg_8.client.gui;
 
 import it.polimi.ingsw.cg_8.Resource;
+import it.polimi.ingsw.cg_8.client.ConnectionManager;
+import it.polimi.ingsw.cg_8.client.ConnectionManagerRMI;
+import it.polimi.ingsw.cg_8.client.ConnectionManagerSocket;
 import it.polimi.ingsw.cg_8.model.map.GameMapName;
 
 import java.awt.BorderLayout;
@@ -38,7 +41,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.swing.border.EmptyBorder;
 
-public class ClientWelcomeGUI implements Runnable {
+public class MainGUI implements Runnable {
 	private JFrame main;
 	private ImageIcon westPanelImage;
 	private Image westPanelImageScaled;
@@ -60,9 +63,9 @@ public class ClientWelcomeGUI implements Runnable {
 	 * Log4j logger
 	 */
 	private static final Logger logger = LogManager
-			.getLogger(ClientWelcomeGUI.class);
+			.getLogger(MainGUI.class);
 
-	public ClientWelcomeGUI() {
+	public MainGUI() {
 		main = new JFrame("Escape from the aliens in outer space");
 
 		try {
@@ -388,6 +391,6 @@ public class ClientWelcomeGUI implements Runnable {
 	}
 
 	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new ClientWelcomeGUI());
+		SwingUtilities.invokeLater(new MainGUI());
 	}
 }

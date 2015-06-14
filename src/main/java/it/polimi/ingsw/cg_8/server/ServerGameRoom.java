@@ -1,7 +1,7 @@
 package it.polimi.ingsw.cg_8.server;
 
 import it.polimi.ingsw.cg_8.client.SubscriberInterface;
-import it.polimi.ingsw.cg_8.client.gui.BetterCLI;
+import it.polimi.ingsw.cg_8.client.cli.MainCLI;
 import it.polimi.ingsw.cg_8.controller.Controller;
 import it.polimi.ingsw.cg_8.controller.StateMachine;
 import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;

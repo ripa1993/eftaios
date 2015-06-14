@@ -1,8 +1,6 @@
-package it.polimi.ingsw.cg_8.client.gui;
+package it.polimi.ingsw.cg_8.client;
 
 
-import it.polimi.ingsw.cg_8.client.ClientData;
-import it.polimi.ingsw.cg_8.client.SubscriberInterface;
 import it.polimi.ingsw.cg_8.model.map.GameMapName;
 import it.polimi.ingsw.cg_8.server.ServerGameRoom;
 import it.polimi.ingsw.cg_8.server.ServerGameRoomInterface;

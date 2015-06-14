@@ -1,6 +1,9 @@
-package it.polimi.ingsw.cg_8.client.gui;
+package it.polimi.ingsw.cg_8.client.cli;
 
 import it.polimi.ingsw.cg_8.client.ClientData;
+import it.polimi.ingsw.cg_8.client.ConnectionManager;
+import it.polimi.ingsw.cg_8.client.ConnectionManagerRMI;
+import it.polimi.ingsw.cg_8.client.ConnectionManagerSocket;
 import it.polimi.ingsw.cg_8.model.map.GameMapName;
 import it.polimi.ingsw.cg_8.view.client.ActionParser;
 import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
@@ -19,7 +22,7 @@ import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class BetterCLI implements Runnable, Observer {
+public class MainCLI implements Runnable, Observer {
 	/**
 	 * Client data, used to store server messages
 	 */
@@ -31,7 +34,7 @@ public class BetterCLI implements Runnable, Observer {
 	/**
 	 * Log4j logger
 	 */
-	private static final Logger logger = LogManager.getLogger(BetterCLI.class);
+	private static final Logger logger = LogManager.getLogger(MainCLI.class);
 	/**
 	 * System in scanner
 	 */
@@ -48,7 +51,7 @@ public class BetterCLI implements Runnable, Observer {
 	/**
 	 * Constructor, creates the CLI instance
 	 */
-	public BetterCLI() {
+	public MainCLI() {
 		clientData = new ClientData();
 		input = new Scanner(System.in);
 	}
@@ -192,6 +195,6 @@ public class BetterCLI implements Runnable, Observer {
 	}
 
 	public static void main(String[] args) {
-		(new BetterCLI()).run();
+		(new MainCLI()).run();
 	}
 }
