@@ -116,13 +116,7 @@ public class ClientSocketViewCS implements Runnable {
 			logger.debug("Waiting server response");
 			try {
 				boolean serverResponse = (boolean) input.readObject();
-				if (serverResponse) {
-					clientData.storeResponse(new ResponsePrivate(
-							"Your action has been accepted by the server"));
-				} else {
-					clientData.storeResponse(new ResponsePrivate(
-							"Your action has been refused by the server"));
-				}
+				clientData.storeAck(serverResponse);
 				logger.debug("Server response is: " + serverResponse);
 			} catch (ClassNotFoundException e) {
 				logger.error(e.getMessage());

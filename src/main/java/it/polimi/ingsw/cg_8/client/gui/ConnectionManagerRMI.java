@@ -9,6 +9,7 @@ import it.polimi.ingsw.cg_8.server.ServerGameRoomInterface;
 import it.polimi.ingsw.cg_8.server.ServerRMIRegistrationView;
 import it.polimi.ingsw.cg_8.server.ServerRMIRegistrationViewRemote;
 import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
+import it.polimi.ingsw.cg_8.view.server.ResponsePrivate;
 import it.polimi.ingsw.cg_8.view.server.ServerResponse;
 
 import java.io.Serializable;
@@ -89,7 +90,8 @@ public class ConnectionManagerRMI extends ConnectionManager implements
 
 		try {
 
-			view.makeAction(this.clientID, inputLine);
+			boolean serverResponse = view.makeAction(this.clientID, inputLine);
+			clientData.storeAck(serverResponse);
 		} catch (RemoteException e) {
 			logger.debug("Can't perform the action");
 		}

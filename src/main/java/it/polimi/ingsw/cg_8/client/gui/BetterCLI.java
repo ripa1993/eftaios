@@ -184,6 +184,9 @@ public class BetterCLI implements Runnable, Observer {
 			System.out.println("[MAP] The game is started. You will play on "
 					+ response.getMapName());
 			matchStarted = true;
+		} else if (arg.equals("Ack")) {
+			logger.debug("New Update: ACK");
+			System.out.println("[ACK] " + clientData.getAck());
 		}
 
 	}
