@@ -198,20 +198,23 @@ public class StateMachine {
 				ItemCard card = ((ActionUseCard) a).getItemCard();
 				Coordinate coordinate = ((ActionUseCard) a).getCoordinate();
 				if (card instanceof AdrenalineCard) {
-					return StateMachine.useAdrenalineCard(card, player, controller);
+					return StateMachine.useAdrenalineCard(card, player,
+							controller);
 				}
 				if (card instanceof AttackCard) {
 					return StateMachine.useAttackCard(card, player, controller);
 				}
 				if (card instanceof TeleportCard) {
-					return StateMachine.useTeleportCard(card, player, controller);
+					return StateMachine.useTeleportCard(card, player,
+							controller);
 				}
 				if (card instanceof SedativesCard) {
-					return StateMachine.useSedativesCard(card, player, controller);
+					return StateMachine.useSedativesCard(card, player,
+							controller);
 				}
 				if (card instanceof SpotlightCard) {
-					return StateMachine.useSpotlightCard(card, player, controller,
-							coordinate);
+					return StateMachine.useSpotlightCard(card, player,
+							controller, coordinate);
 				}
 
 			}
@@ -242,16 +245,20 @@ public class StateMachine {
 					Coordinate coordinate = ((ActionUseCard) a).getCoordinate();
 
 					if (card instanceof AttackCard) {
-						return StateMachine.useAttackCard(card, player, controller);
+						return StateMachine.useAttackCard(card, player,
+								controller);
 					}
 					if (card instanceof TeleportCard) {
-						return StateMachine.useTeleportCard(card, player, controller);
+						return StateMachine.useTeleportCard(card, player,
+								controller);
 					}
 					if (card instanceof SedativesCard) {
-						return StateMachine.useSedativesCard(card, player, controller);
+						return StateMachine.useSedativesCard(card, player,
+								controller);
 					}
 					if (card instanceof SpotlightCard) {
-						return StateMachine.useSpotlightCard(card, player, controller, coordinate);
+						return StateMachine.useSpotlightCard(card, player,
+								controller, coordinate);
 					}
 				}
 			}
@@ -337,16 +344,20 @@ public class StateMachine {
 					Coordinate coordinate = ((ActionUseCard) a).getCoordinate();
 
 					if (card instanceof AttackCard) {
-						return StateMachine.useAttackCard(card, player, controller);
+						return StateMachine.useAttackCard(card, player,
+								controller);
 					}
 					if (card instanceof TeleportCard) {
-						return StateMachine.useTeleportCard(card, player, controller);
+						return StateMachine.useTeleportCard(card, player,
+								controller);
 					}
 					if (card instanceof SedativesCard) {
-						return StateMachine.useSedativesCard(card, player, controller);
+						return StateMachine.useSedativesCard(card, player,
+								controller);
 					}
 					if (card instanceof SpotlightCard) {
-						return StateMachine.useSpotlightCard(card, player, controller, coordinate);
+						return StateMachine.useSpotlightCard(card, player,
+								controller, coordinate);
 					}
 				}
 			}
@@ -369,10 +380,12 @@ public class StateMachine {
 				ItemCard card = ((ActionUseCard) a).getItemCard();
 				Coordinate coordinate = ((ActionUseCard) a).getCoordinate();
 				if (card instanceof TeleportCard) {
-					return StateMachine.useTeleportCard(card, player, controller);
+					return StateMachine.useTeleportCard(card, player,
+							controller);
 				}
 				if (card instanceof SpotlightCard) {
-					return StateMachine.useSpotlightCard(card, player, controller, coordinate);
+					return StateMachine.useSpotlightCard(card, player,
+							controller, coordinate);
 				}
 			}
 		}
@@ -409,10 +422,12 @@ public class StateMachine {
 				ItemCard card = ((ActionUseCard) a).getItemCard();
 				Coordinate coordinate = ((ActionUseCard) a).getCoordinate();
 				if (card instanceof TeleportCard) {
-					return StateMachine.useTeleportCard(card, player, controller);
+					return StateMachine.useTeleportCard(card, player,
+							controller);
 				}
 				if (card instanceof SpotlightCard) {
-					return StateMachine.useSpotlightCard(card, player, controller, coordinate);
+					return StateMachine.useSpotlightCard(card, player,
+							controller, coordinate);
 				}
 			}
 		}
@@ -420,6 +435,17 @@ public class StateMachine {
 		return false;
 	}
 
+	/**
+	 * Ends the turn calling the EndTurn class and notifying all the player of
+	 * the change
+	 * 
+	 * @param controller
+	 *            game controller
+	 * @param model
+	 *            game model
+	 * @param player
+	 *            player that ends his turn
+	 */
 	private static void endTurn(Controller controller, Model model,
 			Player player) {
 		controller.writeToAll(new ResponsePrivate(player.getName()
@@ -473,7 +499,11 @@ public class StateMachine {
 	}
 
 	/**
-	 * Handles the use of an adrenaline card.
+	 * Handles the use of an adrenaline card
+	 * @param card adrenaline card
+	 * @param player requesting player
+	 * @param controller game
+	 * @return true, if the action has been done<br>false, if not
 	 */
 	private static boolean useAdrenalineCard(ItemCard card, Player player,
 			Controller controller) {
@@ -491,8 +521,11 @@ public class StateMachine {
 	}
 
 	/**
-	 * Handles the use of an attack card.
-	 * 
+	 * Handles the use of an attack card
+	 * @param card attack card
+	 * @param player requesting player
+	 * @param controller game
+	 * @return true, if the action has been done<br>false, if not
 	 */
 	private static boolean useAttackCard(ItemCard card, Player player,
 			Controller controller) {
@@ -509,7 +542,11 @@ public class StateMachine {
 	}
 
 	/**
-	 * Handles the use of a teleport card.
+	 * Handles the use of a teleport card
+	 * @param card teleport card
+	 * @param player requesting player
+	 * @param controller game
+	 * @return true, if the action has been done<br>false, if not
 	 */
 	private static boolean useTeleportCard(ItemCard card, Player player,
 			Controller controller) {
@@ -532,7 +569,11 @@ public class StateMachine {
 	}
 
 	/**
-	 * Handles the use of a sedatives card.
+	 * Handles the use of a sedatives card
+	 * @param card sedatives card
+	 * @param player requesting player
+	 * @param controller game
+	 * @return true, if the action has been done<br>false, if not
 	 */
 	private static boolean useSedativesCard(ItemCard card, Player player,
 			Controller controller) {
@@ -548,7 +589,14 @@ public class StateMachine {
 		}
 		return false;
 	}
-
+	/**
+	 * Handles the use of a spotlight card
+	 * @param card spotlight card
+	 * @param player requesting player
+	 * @param controller game
+	 * @param coordinate target coordinate
+	 * @return true, if the action has been done<br>false, if not
+	 */
 	private static boolean useSpotlightCard(ItemCard card, Player player,
 			Controller controller, Coordinate coordinate) {
 		if (controller.getRules().useItemCardValidator(controller.getModel(),
