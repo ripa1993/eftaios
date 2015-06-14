@@ -4,12 +4,14 @@ import it.polimi.ingsw.cg_8.model.map.GameMapName;
 import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
 
 import java.io.IOException;
+import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.RejectedExecutionException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -84,6 +86,10 @@ public class ConnectionManagerSocket extends ConnectionManager {
 		} catch (IOException e) {
 			logger.error("Cannot connect to socket server (" + SERVER_ADDRESS
 					+ ":" + SOCKET_PORT_CLIENTSERVER + ")");
+		} catch (NullPointerException e) {
+			logger.error(e.getMessage());
+		} catch (RejectedExecutionException e) {
+			logger.error(e.getMessage());
 		}
 
 	}
@@ -124,7 +130,9 @@ public class ConnectionManagerSocket extends ConnectionManager {
 				logger.info("New ID received");
 				this.setclientID((int) clientIDRequested);
 				logger.info("Your ID is: " + this.getclientID());
-			} catch (IOException | ClassNotFoundException e) {
+			} catch (IOException e) {
+				logger.error(e.getMessage());
+			} catch (ClassNotFoundException e) {
 				logger.error(e.getMessage());
 			}
 		} while (this.getclientID() == 0);
