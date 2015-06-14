@@ -22,7 +22,9 @@ import org.apache.logging.log4j.Logger;
  * @version 1.1
  */
 public class ConnectionManagerSocket extends ConnectionManager {
-
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = -3402004204836762667L;
 	/**
 	 * The server IP address.
@@ -50,6 +52,14 @@ public class ConnectionManagerSocket extends ConnectionManager {
 	private static final Logger logger = LogManager
 			.getLogger(ConnectionManagerSocket.class);
 
+	/**
+	 * Constructor
+	 * 
+	 * @param playerName
+	 *            player name
+	 * @param mapName
+	 *            map name
+	 */
 	public ConnectionManagerSocket(String playerName, GameMapName mapName) {
 		super(playerName, mapName);
 		executor = Executors.newCachedThreadPool();
@@ -130,19 +140,20 @@ public class ConnectionManagerSocket extends ConnectionManager {
 					nameSet = true;
 					logger.debug("Name accepted");
 				}
-				
+
 				logger.debug("Sending your chosen map to the server...");
 				output.writeObject(this.mapName);
 				output.flush();
 				String serverMapAnswer = (String) input.readObject();
-				if (serverMapAnswer.equals("MAP CHOSEN: " + this.mapName.toString())) {
+				if (serverMapAnswer.equals("MAP CHOSEN: "
+						+ this.mapName.toString())) {
 					mapSet = true;
 					logger.debug("Map accepted");
 				}
-				
+
 			} catch (IOException e) {
 				logger.error(e.getMessage());
-			} catch (ClassNotFoundException e) {			
+			} catch (ClassNotFoundException e) {
 				logger.error(e.getMessage());
 			}
 		} while (nameSet == false || mapSet == false);
