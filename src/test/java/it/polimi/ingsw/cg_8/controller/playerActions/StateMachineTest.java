@@ -6,6 +6,7 @@ import it.polimi.ingsw.cg_8.controller.Controller;
 import it.polimi.ingsw.cg_8.controller.DefaultRules;
 import it.polimi.ingsw.cg_8.controller.Rules;
 import it.polimi.ingsw.cg_8.controller.StateMachine;
+import it.polimi.ingsw.cg_8.model.TurnPhase;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.AdrenalineCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.AttackCard;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.SedativesCard;
@@ -439,5 +440,9 @@ public class StateMachineTest {
 				currPlayer);
 		assertFalse(result);
 	}
-
+	
+	@Test
+	public void setNameTest(){
+		controller.getModel().setTurnPhase(TurnPhase.GAME_SETUP);
+	}
 }

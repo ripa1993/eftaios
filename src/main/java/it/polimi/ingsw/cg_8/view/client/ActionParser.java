@@ -28,7 +28,6 @@ import java.util.StringTokenizer;
  * object <br>
  * <br>
  * Legal inputs are:<br>
- * NAME player_name: {@link ActionSetName}<br>
  * MOVE coordinate: {@link ActionMove}<br>
  * ATTACK: {@link ActionAttack}<br>
  * USE item_card_type [coordinate]: {@link ActionUseCard}<br>
@@ -93,24 +92,6 @@ public class ActionParser {
 
 		String action = st.nextToken().toUpperCase();
 
-		if (action.equals("NAME")) {
-			if (!st.hasMoreTokens()) {
-				/**
-				 * NAME command without the player_name parameter
-				 */
-				throw new NotAValidInput("Missing player name!");
-			} else {
-				/**
-				 * NAME command with player_name parameter
-				 */
-				String playerName = st.nextToken();
-				while (st.hasMoreTokens()) {
-					playerName = playerName + " " + st.nextToken();
-				}
-				return new ActionSetName(playerName);
-			}
-
-		}
 		if (action.equals("SAY")) {
 			if (!st.hasMoreTokens()) {
 				throw new NotAValidInput("Nothing to say!");
