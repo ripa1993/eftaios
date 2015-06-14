@@ -83,12 +83,25 @@ public class Server {
 	private static final Logger logger = LogManager.getLogger(Server.class);
 
 	/**
+	 * Hashmap that counts the votes given to every map by the players, used to
+	 * determine which map will be used n the game.
+	 */
+	private static Map<GameMapName, Integer> voteCount;
+
+	/**
 	 * The constructor creates an RMI registry on port 7777.
 	 * 
 	 * @throws RemoteException
 	 */
 	public Server() throws RemoteException {
 		nextGame = null;
+		voteCount = new HashMap<GameMapName, Integer>();
+		/**
+		 * When the server is created, every map has no votes.
+		 */
+		for (GameMapName mapName : GameMapName.values()) {
+			voteCount.put(mapName, 0);
+		}
 		timer = new Timer();
 		this.registry = LocateRegistry.createRegistry(7777);
 
@@ -126,6 +139,44 @@ public class Server {
 	}
 
 	/**
+	 * Reset the values of the votes, at the start of the game.
+	 */
+	public synchronized static void resetVotes() {
+		for (GameMapName mapName : GameMapName.values()) {
+			voteCount.put(mapName, 0);
+		}
+	}
+
+	/**
+	 * Add a vote to a certain map
+	 */
+	public static void addVote(GameMapName chosenMap) {
+		if (voteCount.containsKey(chosenMap)) {
+			voteCount.put(chosenMap, voteCount.get(chosenMap) + 1);
+		}
+	}
+
+	public static GameMapName countVotes() {
+		Map.Entry<GameMapName, Integer> maxEntry = null;
+		GameMapName chosenMap = GameMapName.FERMI;
+
+		for (Map.Entry<GameMapName, Integer> entry : voteCount.entrySet()) {
+			if (maxEntry == null
+					|| entry.getValue().compareTo(maxEntry.getValue()) > 0) {
+				maxEntry = entry;
+				chosenMap = maxEntry.getKey();
+			} else if (maxEntry.getValue() == voteCount.get(GameMapName.FERMI)) {
+				chosenMap = GameMapName.FERMI;
+			} else if (maxEntry.getValue() >= voteCount.get(GameMapName.FERMI)
+					&& maxEntry.getValue() == voteCount
+							.get(GameMapName.GALILEI)) {
+				chosenMap = GameMapName.GALILEI;
+			}
+		}
+		return chosenMap;
+	}
+
+	/**
 	 * Creates a new game, replacing the previous reference in nextGame with the
 	 * new one
 	 * 
@@ -137,6 +188,32 @@ public class Server {
 		nextGame = new Controller(gameMapName, new DefaultRules());
 		logger.debug("New game created: " + gameMapName);
 		return nextGame;
+	}
+
+	/**
+	 * Used by {@link ServerRMI} and {@link ServerSocketRRThread} when adding
+	 * clients to the game. The method checks if it is time to start the timeout
+	 * or the game.
+	 * 
+	 * @param clientID
+	 *            The ID of the client.
+	 */
+	public static void addClient(Integer clientID) {
+		logger.info("Player successfully added to the game");
+		Server.getId2Controller().put(clientID, nextGame);
+		if (nextGame.getNumOfPlayers() == Server.MIN_PLAYERS) {
+			Server.startTimeout();
+		}
+		if (nextGame.getNumOfPlayers() == Server.MAX_PLAYERS) {
+			Server.abortTimeout();
+			// TODO: handles votes, update map
+			GameMapName chosenMap = Server.countVotes();
+			nextGame.setMap(chosenMap);
+
+			nextGame.initGame();
+			Server.nullStartingGame();
+			logger.info("Game started");
+		}
 	}
 
 	/**
@@ -197,6 +274,9 @@ public class Server {
 			public void run() {
 
 				synchronized (nextGame) {
+					// TODO: handles votes, update map
+					GameMapName chosenMap = Server.countVotes();
+					nextGame.setMap(chosenMap);
 					nextGame.initGame();
 					logger.info("Game started because timeout is over");
 					nullStartingGame();

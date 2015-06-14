@@ -105,15 +105,22 @@ public class ClientSocketViewCS implements Runnable {
 			// write id
 			output.writeObject(clientId);
 			output.flush();
-			logger.debug("Sent client id: " + clientId);
-			// write action
-			output.writeObject(action);
-			output.flush();
+
 			/**
 			 * Useful for testing purposes.
 			 */
-			logger.debug("Write server command: " + action);
-			logger.debug("Waiting server response");
+			// logger.debug("Sent client id: "+clientId);
+			// write action
+			output.writeObject(action);
+			output.flush();
+
+			// Useful for testing purposes.
+
+			//logger.debug("Write server command: " + action);
+
+			// Useful for testing purposes.
+
+			// logger.debug("Waiting server response");
 			try {
 				boolean serverResponse = (boolean) input.readObject();
 				clientData.storeAck(serverResponse);
@@ -128,7 +135,10 @@ public class ClientSocketViewCS implements Runnable {
 		}
 
 		close(requestSocket, output);
-		logger.debug("Socket connection closed.");
+		/**
+		 * Useful for testing purposes.
+		 */
+		// logger.debug("Socket connection closed.");
 	}
 
 	private void close(Socket socket, ObjectOutputStream output) {

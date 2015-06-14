@@ -33,12 +33,24 @@ public abstract class ConnectionManager implements Serializable {
 	 * Used to store the messages sent by the server.
 	 */
 	protected ClientData clientData;
-
+	/**
+	 * The chosen map.
+	 */
+	protected GameMapName mapName;
+	
+	/**
+	 * The constructor sets the player name and the chosen map, ready to be sent
+	 * to the server.
+	 * 
+	 * @param playerName
+	 * @param mapName
+	 */
 	public ConnectionManager(String playerName, GameMapName mapName) {
 		this.playerName = playerName;
-		nameSet = false;
-		clientID = 0;
-		clientData = new ClientData();
+		this.nameSet = false;
+		this.clientID = 0;
+		this.clientData = new ClientData();
+		this.mapName = mapName;
 	}
 
 	public ConnectionManager() {

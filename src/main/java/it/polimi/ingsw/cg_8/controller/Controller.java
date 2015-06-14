@@ -215,6 +215,17 @@ public class Controller implements Observer {
 	}
 
 	/**
+	 * Used to update the model with the map voted by the players.
+	 * 
+	 * @param chosenMap
+	 *            The most voted map.
+	 */
+	public void setMap(GameMapName chosenMap) {
+		this.model.setMap(chosenMap);
+		this.mapName = chosenMap;
+	}
+
+	/**
 	 * 
 	 * @return this game model
 	 */
@@ -358,10 +369,13 @@ public class Controller implements Observer {
 			this.writeToAll(new ResponsePrivate("Next player is: "
 					+ model.getCurrentPlayerReference().getName()));
 			this.writeToPlayer(model.getCurrentPlayerReference(),
-					new ResponsePrivate("Hey! It's your turn"));
-			this.writeToPlayer(model.getCurrentPlayerReference(),
-					new ResponsePrivate(model.getCurrentPlayerReference()
-							.toString()));
+					new ResponsePrivate("IT'S YOUR TURN"));
+			/**
+			 * Used for testing
+			 */
+			// this.writeToPlayer(model.getCurrentPlayerReference(),
+			// new ResponsePrivate(model.getCurrentPlayerReference()
+			// .toString()));
 			/**
 			 * Notify every player about their state.
 			 */

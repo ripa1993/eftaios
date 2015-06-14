@@ -50,9 +50,9 @@ public class ResponseState implements ServerResponse, Serializable {
 
 	@Override
 	public String toString() {
-		return "ResponseState [playerName=" + playerName + ", character="
-				+ character + ", state=" + state + ", position=" + position
-				+ ", roundNumber=" + roundNumber + "]";
+		return "Your State - Player: " + playerName + ", Character: "
+				+ character + ", State: " + state + ", Position: " + position
+				+ ", Round Number: " + roundNumber;
 	}
 
 }

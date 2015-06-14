@@ -68,7 +68,7 @@ public class ResponseCard implements ServerResponse, Serializable {
 			
 		for (int j = 0; j < CARD_NUM; j++) {
 			if (cardArray[j] == null) {
-				cardArray[j] = "NoCard";
+				cardArray[j] = "No Card";
 			}
 		}
 		return cardArray;

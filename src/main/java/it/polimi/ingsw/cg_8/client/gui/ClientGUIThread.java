@@ -96,10 +96,7 @@ public class ClientGUIThread implements Runnable, Observer {
 	 * The server messages are stored here.
 	 */
 	private ClientData clientData;
-	/**
-	 * Maximum number of cards
-	 */
-	private static final int CARD_NUM = 3;
+
 	private JFrame mainFrame;
 	private Container contentPane;
 
@@ -134,8 +131,6 @@ public class ClientGUIThread implements Runnable, Observer {
 	 */
 	private static final Logger logger = LogManager
 			.getLogger(ClientGUIThread.class);
-
-	private CardButton[] cardList;
 	private JPanel panel_3;
 	private JLabel state_image;
 	/**
@@ -267,7 +262,6 @@ public class ClientGUIThread implements Runnable, Observer {
 
 		// set layouts
 		mainFrame.getContentPane().setLayout(new BorderLayout());
-		GridBagConstraints c = new GridBagConstraints();
 
 		mainFrame.getContentPane().add(mapPanel, BorderLayout.CENTER);
 		mainFrame.getContentPane().add(rightPanel, BorderLayout.EAST);
@@ -500,12 +494,13 @@ public class ClientGUIThread implements Runnable, Observer {
 		cardButton1.getInvisButton().addMouseListener(new MouseInputAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
+
 				if (matchStarted) {
 					ClientAction action = cardButton1.createAction();
 					if (action != null) {
 						connectionManager.send(action);
 					} else {
-						logger.debug("Action is passive or not an action");
+						logger.debug("THIS DOES NOTHING - STOP DOING IT!");
 					}
 				}
 			}
@@ -923,21 +918,20 @@ public class ClientGUIThread implements Runnable, Observer {
 			ResponseCard cardMessage = clientData.getCards();
 
 			cardButton1
-					.setCardType(this.analyzeCardType(cardMessage.getCard1()));
-			logger.debug("card1type"
-					+ this.analyzeCardType(cardMessage.getCard1()));
+					.setCardType(this.analyzeCardType(cardMessage.getCard1()));					
+			logger.debug("Card1 Type" + this.analyzeCardType(cardMessage.getCard1()));
 			cardButton1.repaint();
+			
 			cardButton2
 					.setCardType(this.analyzeCardType(cardMessage.getCard2()));
-			logger.debug("card2type"
+			logger.debug("Card2 Type"
 					+ this.analyzeCardType(cardMessage.getCard2()));
-
 			cardButton2.repaint();
+			
 			cardButton3
 					.setCardType(this.analyzeCardType(cardMessage.getCard3()));
-			logger.debug("card3type"
+			logger.debug("Card3 Type"
 					+ this.analyzeCardType(cardMessage.getCard3()));
-
 			cardButton3.repaint();
 
 			/**

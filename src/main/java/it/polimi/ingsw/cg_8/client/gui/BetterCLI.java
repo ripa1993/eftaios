@@ -163,17 +163,17 @@ public class BetterCLI implements Runnable, Observer {
 			logger.debug("New Update: CARDS");
 			// new card update
 			ResponseCard cardMessage = clientData.getCards();
-			System.out.println("[HAND] Your hand is: " + cardMessage.getCard1()
+			System.out.println("[HAND] Your cards: " + cardMessage.getCard1()
 					+ ", " + cardMessage.getCard2() + " and "
 					+ cardMessage.getCard3());
 		} else if (arg.equals("State")) {
 			logger.debug("New Update: STATE");
 			// new state update
 			ResponseState stateMessage = clientData.getState();
-			System.out.println("[STATE] Hi " + stateMessage.getPlayerName()
-					+ ". You are playing as " + stateMessage.getCharacter());
-			System.out.println("[STATE] Your state is "
-					+ stateMessage.getState() + " and your position is "
+			System.out.println("[STATE] Player: " + stateMessage.getPlayerName()
+					+ ", Character: " + stateMessage.getCharacter());
+			System.out.println(", State: "
+					+ stateMessage.getState() + ", Position: "
 					+ stateMessage.getPosition());
 		} else if (arg.equals("Map")) {
 			logger.debug("New Update: MAP");
