@@ -156,6 +156,7 @@ public class MainCLI implements Runnable, Observer {
 				ClientAction action = ActionParser.createEvent(inputLine);
 				connectionManager.send(action);
 			} catch (NotAValidInput e) {
+				LOGGER.error(e.getMessage(), e);
 				System.out.println(">That's not a valid command");
 			}
 		}

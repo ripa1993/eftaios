@@ -51,7 +51,7 @@ public class ServerSocketPublisherThread extends ServerPublisher implements
 		try {
 			this.output = new ObjectOutputStream(subscriber.getOutputStream());
 		} catch (IOException e) {
-			LOGGER.error("Cannot open object output stream");
+			LOGGER.error("Cannot open object output stream",e);
 		}
 		LOGGER.debug("Publisher thread created");
 	}
@@ -77,7 +77,7 @@ public class ServerSocketPublisherThread extends ServerPublisher implements
 					}
 				}
 			} catch (IOException e1) {
-				LOGGER.error("Cannot write object to output");
+				LOGGER.error("Cannot write object to output",e1);
 			}
 		}
 	}

@@ -83,7 +83,7 @@ public class ConnectionManagerSocket extends ConnectionManager {
 			LOGGER.debug("Subscriber back to main thread");
 		} catch (IOException e) {
 			LOGGER.error("Cannot connect to socket server (" + SERVER_ADDRESS
-					+ ":" + SOCKET_PORT_CLIENTSERVER + ")");
+					+ ":" + SOCKET_PORT_CLIENTSERVER + ")", e);
 		}
 
 	}
@@ -125,7 +125,7 @@ public class ConnectionManagerSocket extends ConnectionManager {
 				this.setclientID((int) clientIDRequested);
 				LOGGER.info("Your ID is: " + this.getclientID());
 			} catch (IOException | ClassNotFoundException e) {
-				LOGGER.error(e.getMessage());
+				LOGGER.error(e.getMessage(),e);
 			}
 		} while (this.getclientID() == 0);
 
@@ -152,9 +152,9 @@ public class ConnectionManagerSocket extends ConnectionManager {
 				}
 
 			} catch (IOException e) {
-				LOGGER.error(e.getMessage());
+				LOGGER.error(e.getMessage(),e);
 			} catch (ClassNotFoundException e) {
-				LOGGER.error(e.getMessage());
+				LOGGER.error(e.getMessage(),e);
 			}
 		} while (nameSet == false || mapSet == false);
 
@@ -168,7 +168,7 @@ public class ConnectionManagerSocket extends ConnectionManager {
 		try {
 			socket.close();
 		} catch (IOException e) {
-			LOGGER.error(e.getMessage());
+			LOGGER.error(e.getMessage(),e);
 		} finally {
 			socket = null;
 			output = null;

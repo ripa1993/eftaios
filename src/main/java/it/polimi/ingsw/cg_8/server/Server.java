@@ -242,7 +242,7 @@ public class Server {
 					SERVER_SOCKET_RR_PORT, SERVER_SOCKET_PS_PORT));
 		} catch (IOException e) {
 			LOGGER.error("Cannot start server socket CS on port: "
-					+ SERVER_SOCKET_RR_PORT);
+					+ SERVER_SOCKET_RR_PORT, e);
 		}
 	}
 

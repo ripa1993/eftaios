@@ -132,7 +132,7 @@ public class CardButton extends JPanel {
 							Resource.FONT_TITILLIUM_SEMIBOLD_UPRIGHT))
 					.deriveFont((float) 20);
 		} catch (FontFormatException | IOException e) {
-			LOGGER.error(e.getMessage());
+			LOGGER.error(e.getMessage(), e);
 		}
 
 		/**
@@ -316,7 +316,7 @@ public class CardButton extends JPanel {
 			cardButtonImage.setIcon(new ImageIcon(cardImage));
 
 		} catch (IOException ex) {
-			LOGGER.error(ex.getMessage());
+			LOGGER.error(ex.getMessage(), ex);
 		}
 	}
 
@@ -335,7 +335,7 @@ public class CardButton extends JPanel {
 					Image.SCALE_SMOOTH);
 
 		} catch (IOException ex) {
-			LOGGER.error(ex.getMessage());
+			LOGGER.error(ex.getMessage(), ex);
 		}
 	}
 
@@ -397,6 +397,7 @@ public class CardButton extends JPanel {
 						.parseCoordinate(coordinateString);
 				return new ActionUseCard(new SpotlightCard(), coordinate);
 			} catch (NotAValidInput e1) {
+				LOGGER.error(e1.getMessage(), e1);
 				JOptionPane
 						.showMessageDialog(getParent(), "Not a valid input!");
 				return null;

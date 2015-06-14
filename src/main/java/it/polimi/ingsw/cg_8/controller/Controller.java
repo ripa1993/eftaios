@@ -121,7 +121,7 @@ public class Controller implements Observer {
 			firstRun = true;
 			taskCompleted = true;
 		} catch (NotAValidMapException e) {
-			LOGGER.error(e.getMessage());
+			LOGGER.error(e.getMessage(), e);
 		}
 		// TODO: ServerSocketPublisherThread should extend ServerPublisherThread
 		// (also RMI do the same)
@@ -201,9 +201,9 @@ public class Controller implements Observer {
 				this.writeToPlayer(p, new ResponsePrivate(
 						"You will be playing as: " + p.getCharacter()));
 			}
-			
+
 		} catch (EmptyDeckException e) {
-			LOGGER.error(e.getMessage());
+			LOGGER.error(e.getMessage(), e);
 		}
 
 	}

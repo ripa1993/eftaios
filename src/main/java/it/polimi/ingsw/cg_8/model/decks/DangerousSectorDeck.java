@@ -27,7 +27,7 @@ public class DangerousSectorDeck extends Deck {
 				this.reshuffle();
 			} catch (EmptyDeckException e) {
 				// never happens
-				LOGGER.error(e.getMessage());
+				LOGGER.error(e.getMessage(), e);
 			}
 		}
 		return this.getCards().remove(0);

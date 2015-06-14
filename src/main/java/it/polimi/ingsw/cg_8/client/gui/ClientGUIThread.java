@@ -193,7 +193,7 @@ public class ClientGUIThread implements Runnable, Observer {
 					new FileInputStream(Resource.FONT_TITILLIUM_BOLD_UPRIGHT))
 					.deriveFont((float) 30);
 		} catch (FontFormatException | IOException e) {
-			LOGGER.error(e.getMessage());
+			LOGGER.error(e.getMessage(), e);
 		}
 
 		try {
@@ -203,7 +203,7 @@ public class ClientGUIThread implements Runnable, Observer {
 							Resource.FONT_TITILLIUM_SEMIBOLD_UPRIGHT))
 					.deriveFont((float) 20);
 		} catch (FontFormatException | IOException e) {
-			LOGGER.error(e.getMessage());
+			LOGGER.error(e.getMessage(), e);
 		}
 
 		mainFrame = new JFrame("Escape From The Aliens In Outer Space");
@@ -216,7 +216,7 @@ public class ClientGUIThread implements Runnable, Observer {
 
 			mainFrame.setContentPane(new BackgroundPanel(myImage));
 		} catch (IOException e) {
-			LOGGER.error(e.getMessage());
+			LOGGER.error(e.getMessage(), e);
 		}
 		mainFrame.getContentPane().setBackground(Color.PINK);
 		mainFrame.setBackground(new Color(255, 255, 255));
@@ -392,7 +392,7 @@ public class ClientGUIThread implements Runnable, Observer {
 			turnNumberLabel.setIcon(new ImageIcon(roundImage));
 			rightPanel.repaint();
 		} catch (IOException ex) {
-			LOGGER.error(ex.getMessage());
+			LOGGER.error(ex.getMessage(), ex);
 		}
 		turnNumberLabel.setHorizontalTextPosition(SwingConstants.CENTER);
 		turnNumberLabel.setBorder(new EmptyBorder(0, 0, 5, 60));
@@ -507,7 +507,7 @@ public class ClientGUIThread implements Runnable, Observer {
 			stateImage.setIcon(new ImageIcon(cardImage));
 			rightPanel.repaint();
 		} catch (IOException ex) {
-			LOGGER.error(ex.getMessage());
+			LOGGER.error(ex.getMessage(), ex);
 		}
 
 	}
@@ -622,7 +622,7 @@ public class ClientGUIThread implements Runnable, Observer {
 						connectionManager.send(new ActionDisconnect());
 					} catch (NullPointerException ex) {
 						// if server is down
-						LOGGER.error("Server is down");
+						LOGGER.error("Server is down", ex);
 					}
 					System.exit(0);
 				}
@@ -644,6 +644,7 @@ public class ClientGUIThread implements Runnable, Observer {
 							connectionManager.send(new ActionMove(coordinate));
 
 						} catch (NotAValidInput e1) {
+							LOGGER.error(e1.getMessage(), e1);
 							JOptionPane.showMessageDialog(mainFrame,
 									"Not a valid input!");
 						}
@@ -711,11 +712,11 @@ public class ClientGUIThread implements Runnable, Observer {
 						try {
 							Coordinate coordinate = ActionParser
 									.parseCoordinate(coordinateString);
-							// TODO: make fake noise
 							connectionManager.send(new ActionFakeNoise(
 									coordinate));
 
 						} catch (NotAValidInput e1) {
+							LOGGER.error(e1.getMessage(), e1);
 							JOptionPane.showMessageDialog(mainFrame,
 									"Not a valid input!");
 						}
@@ -779,6 +780,7 @@ public class ClientGUIThread implements Runnable, Observer {
 							connectionManager.send(new ActionUseCard(
 									new SpotlightCard(), coordinate));
 						} catch (NotAValidInput e1) {
+							LOGGER.error(e1.getMessage(), e1);
 							JOptionPane.showMessageDialog(mainFrame,
 									"Not a valid input!");
 						}
@@ -1104,7 +1106,7 @@ public class ClientGUIThread implements Runnable, Observer {
 			clip.open(audioInputStream);
 			clip.start();
 		} catch (Exception ex) {
-			LOGGER.error(ex.getMessage());
+			LOGGER.error(ex.getMessage(), ex);
 		}
 	}
 

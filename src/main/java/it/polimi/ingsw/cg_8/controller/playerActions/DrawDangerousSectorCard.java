@@ -89,7 +89,7 @@ public class DrawDangerousSectorCard implements PlayerAction {
 			 * This exception never occurs, the deck is always re-shuffled when
 			 * empty.
 			 */
-			LOGGER.error(e.getMessage());
+			LOGGER.error(e.getMessage(),e);
 		}
 
 		if (dangerousSectorCard instanceof NoiseCard) {
@@ -124,7 +124,7 @@ public class DrawDangerousSectorCard implements PlayerAction {
 					}
 
 				} catch (EmptyDeckException e) {
-					LOGGER.error(e.getMessage());
+					LOGGER.error(e.getMessage(),e);
 					this.emptyItemDeck = true;
 					this.itemCard = null;
 					return hasToMakeFakeNoise;

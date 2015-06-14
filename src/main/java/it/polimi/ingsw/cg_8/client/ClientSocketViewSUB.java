@@ -52,7 +52,7 @@ public class ClientSocketViewSUB implements Runnable {
 			this.input = new ObjectInputStream(subSocket.getInputStream());
 			this.connectionManager = connectionManager;
 		} catch (IOException e) {
-			LOGGER.error(e.getMessage());
+			LOGGER.error(e.getMessage(),e);
 		}
 	}
 
@@ -84,7 +84,7 @@ public class ClientSocketViewSUB implements Runnable {
 
 			return;
 		} catch (IOException | ClassNotFoundException e) {
-			LOGGER.error(e.getMessage());
+			LOGGER.error(e.getMessage(),e);
 		}
 	}
 

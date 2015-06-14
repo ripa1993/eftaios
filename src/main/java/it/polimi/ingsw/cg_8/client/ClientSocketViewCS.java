@@ -85,7 +85,7 @@ public class ClientSocketViewCS implements Runnable {
 			this.input = new ObjectInputStream(requestSocket.getInputStream());
 			this.clientData = clientData;
 		} catch (IOException e) {
-			LOGGER.error("Failed to establish a connection with the server");
+			LOGGER.error("Failed to establish a connection with the server",e);
 		}
 
 	}
@@ -117,11 +117,11 @@ public class ClientSocketViewCS implements Runnable {
 				clientData.storeAck(serverResponse);
 				LOGGER.debug("Server response is: " + serverResponse);
 			} catch (ClassNotFoundException e) {
-				LOGGER.error(e.getMessage());
+				LOGGER.error(e.getMessage(),e);
 			}
 
 		} catch (IOException e) {
-			LOGGER.error("Failed to send your request to the server");
+			LOGGER.error("Failed to send your request to the server",e);
 		}
 
 		close(requestSocket, output);
@@ -140,7 +140,7 @@ public class ClientSocketViewCS implements Runnable {
 		try {
 			socket.close();
 		} catch (IOException e) {
-			LOGGER.error(e.getMessage());
+			LOGGER.error(e.getMessage(),e);
 		} finally {
 			socket = null;
 			output = null;

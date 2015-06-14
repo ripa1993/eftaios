@@ -112,7 +112,7 @@ public class MainGUI implements Runnable {
 					new FileInputStream(Resource.FONT_TITILLIUM_BOLD_UPRIGHT))
 					.deriveFont((float) 20);
 		} catch (FontFormatException | IOException e) {
-			LOGGER.error(e.getMessage());
+			LOGGER.error(e.getMessage(), e);
 		}
 
 		main.setBackground(Color.BLACK);

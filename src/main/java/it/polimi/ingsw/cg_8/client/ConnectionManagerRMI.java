@@ -79,8 +79,8 @@ public class ConnectionManagerRMI extends ConnectionManager implements
 			this.view = this.initializeRMI();
 			LOGGER.debug("Successfully registered");
 		} catch (NotBoundException | RemoteException | AlreadyBoundException e) {
-			LOGGER.error("Failed to connect to the RMI Server: "
-					+ e.getMessage());
+			LOGGER.error(
+					"Failed to connect to the RMI Server: " + e.getMessage(), e);
 		}
 	}
 
@@ -105,7 +105,7 @@ public class ConnectionManagerRMI extends ConnectionManager implements
 			boolean serverResponse = view.makeAction(this.clientID, inputLine);
 			clientData.storeAck(serverResponse);
 		} catch (RemoteException e) {
-			LOGGER.debug("Can't perform the action");
+			LOGGER.error("Can't perform the action", e);
 		}
 
 	}

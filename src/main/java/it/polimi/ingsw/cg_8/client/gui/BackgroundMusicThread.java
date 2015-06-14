@@ -52,7 +52,7 @@ public class BackgroundMusicThread implements Runnable {
 			player.play();
 
 		} catch (Exception e) {
-			LOGGER.error(e.getMessage());
+			LOGGER.error(e.getMessage(),e);
 
 		}
 	}

@@ -94,7 +94,7 @@ public class Movement implements PlayerAction {
 						player.setEscaped();
 					}
 				} catch (EmptyDeckException e) {
-					LOGGER.error(e.getMessage());
+					LOGGER.error(e.getMessage(), e);
 				}
 			}
 		}

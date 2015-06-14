@@ -100,7 +100,7 @@ public class ServerRMIRegistrationView implements
 		try {
 			serverRMI.addRMIClient(client, view);
 		} catch (GameAlreadyRunningException e) {
-			LOGGER.error("Game already running, can't add the player to this game");
+			LOGGER.error("Game already running, can't add the player to this game", e);
 		}
 		return view;
 

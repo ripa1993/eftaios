@@ -522,7 +522,7 @@ public class Model extends Observable {
 				throw new NotAValidMapException(chosenMap
 						+ "is not a valid map");
 			} catch (NotAValidMapException e) {
-				LOGGER.error(chosenMap.toString() + "is not a valid map");
+				LOGGER.error(chosenMap.toString() + "is not a valid map", e);
 			}
 		}
 	}
