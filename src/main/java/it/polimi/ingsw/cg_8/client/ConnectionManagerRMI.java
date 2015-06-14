@@ -36,7 +36,7 @@ public class ConnectionManagerRMI extends ConnectionManager implements
 	/**
 	 * The server IP address.
 	 */
-	private final static String SERVER_ADDRESS = "127.0.0.1";
+	private final static String SERVER_ADDRESS = "localhost";
 	/**
 	 * The server port used by the client to register.
 	 */

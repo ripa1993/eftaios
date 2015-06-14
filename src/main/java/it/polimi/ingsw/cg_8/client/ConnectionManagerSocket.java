@@ -29,7 +29,7 @@ public class ConnectionManagerSocket extends ConnectionManager {
 	/**
 	 * The server IP address.
 	 */
-	private final static String SERVER_ADDRESS = "127.0.0.1";
+	private final static String SERVER_ADDRESS = "localhost";
 	/**
 	 * The server port used for the Receive/Response communication.
 	 */
