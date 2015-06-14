@@ -67,7 +67,7 @@ public class ActionParser {
 
 		int x, y;
 		x = inputArray[0] - 65;
-		y = (inputArray[1] - 48) * 10 + (inputArray[2] - 48) -1;
+		y = (inputArray[1] - 48) * 10 + (inputArray[2] - 48) - 1;
 		return new Coordinate(x, y);
 
 	}
@@ -181,7 +181,12 @@ public class ActionParser {
 			throw new NotAValidInput("Not a valid card");
 
 		} else if (action.equals("NOISE")) {
-			String coordinate = st.nextToken();
+			String coordinate;
+			if (st.hasMoreTokens()) {
+				coordinate = st.nextToken();
+			} else {
+				throw new NotAValidInput("Not a valid command");
+			}
 			if (st.hasMoreTokens()) {
 				throw new NotAValidInput("Not a valid command");
 			}

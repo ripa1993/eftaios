@@ -15,5 +15,12 @@ public class ActionSetNameTest {
 		ClientAction action = ActionParser.createEvent(input);
 		assertEquals(((ActionSetName) action).getName(), "this is my name");
 	}
+	
+	@Test(expected = NotAValidInput.class)
+	public void testWrong() throws NotAValidInput {
+		String input = "NAME";
+		ClientAction action = ActionParser.createEvent(input);
+	}
+	
 
 }
