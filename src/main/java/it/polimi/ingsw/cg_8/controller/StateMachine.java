@@ -132,7 +132,7 @@ public class StateMachine {
 			}
 			if (a instanceof ActionGetAvailableAction) {
 				controller.writeToPlayer(player, new ResponsePrivate(
-						GetAllowedActions.printActions(player)));
+						GetAllowedActions.printActions()));
 				return true;
 			}
 		}
