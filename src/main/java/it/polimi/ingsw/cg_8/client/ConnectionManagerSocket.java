@@ -158,7 +158,7 @@ public class ConnectionManagerSocket extends ConnectionManager {
 			}
 		} while (!nameSet || !mapSet);
 
-		this.close(socket, output);
+		this.close(socket);
 		// delete references
 		socket = null;
 		output = null;
@@ -167,7 +167,7 @@ public class ConnectionManagerSocket extends ConnectionManager {
 	/**
 	 * Close the socket used to establish the first connection.
 	 */
-	private void close(Socket socket, ObjectOutputStream output) {
+	private void close(Socket socket) {
 		try {
 			socket.close();
 		} catch (IOException e) {
