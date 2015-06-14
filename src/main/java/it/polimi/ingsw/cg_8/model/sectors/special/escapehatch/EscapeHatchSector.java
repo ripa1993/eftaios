@@ -24,6 +24,23 @@ public class EscapeHatchSector extends SpecialSector {
 	final int number;
 
 	/**
+	 * Constructor for the escape hatch sector
+	 * 
+	 * @param x
+	 *            column of the sector
+	 * @param y
+	 *            row of the sector
+	 * @param number
+	 *            number of the sector [1..4]
+	 */
+	public EscapeHatchSector(int x, int y, int number) {
+		super(x, y);
+		// TODO: throw exception if number < 1 and number > 4
+		this.number = number;
+		status = new NotUsedEHBehaviour();
+	}
+
+	/**
 	 * Getter for current behaviour of the escape hatch sector
 	 * 
 	 * @return current behaviour of the escape hatch sector
@@ -39,23 +56,6 @@ public class EscapeHatchSector extends SpecialSector {
 	 */
 	public int getNumber() {
 		return number;
-	}
-
-	/**
-	 * Constructor for the escape hatch sector
-	 * 
-	 * @param x
-	 *            column of the sector
-	 * @param y
-	 *            row of the sector
-	 * @param number
-	 *            number of the sector [1..4]
-	 */
-	public EscapeHatchSector(int x, int y, int number) {
-		super(x, y);
-		// TODO: throw exception if number < 1 and number > 4
-		this.number = number;
-		status = new NotUsedEHBehaviour();
 	}
 
 	/**
