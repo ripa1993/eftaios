@@ -56,7 +56,6 @@ import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
@@ -66,8 +65,6 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -195,11 +192,7 @@ public class ClientGUIThread implements Runnable, Observer {
 			fontTitilliumBoldUpright = Font.createFont(Font.TRUETYPE_FONT,
 					new FileInputStream(Resource.FONT_TITILLIUM_BOLD_UPRIGHT))
 					.deriveFont((float) 30);
-		} catch (FontFormatException e) {
-			logger.error(e.getMessage());
-		} catch (FileNotFoundException e) {
-			logger.error(e.getMessage());
-		} catch (IOException e) {
+		} catch (FontFormatException | IOException e) {
 			logger.error(e.getMessage());
 		}
 
@@ -209,11 +202,7 @@ public class ClientGUIThread implements Runnable, Observer {
 					new FileInputStream(
 							Resource.FONT_TITILLIUM_SEMIBOLD_UPRIGHT))
 					.deriveFont((float) 20);
-		} catch (FontFormatException e) {
-			logger.error(e.getMessage());
-		} catch (FileNotFoundException e) {
-			logger.error(e.getMessage());
-		} catch (IOException e) {
+		} catch (FontFormatException | IOException e) {
 			logger.error(e.getMessage());
 		}
 
@@ -228,8 +217,6 @@ public class ClientGUIThread implements Runnable, Observer {
 			mainFrame.setContentPane(new BackgroundPanel(myImage));
 		} catch (IOException e) {
 			logger.error(e.getMessage());
-		} catch (IllegalArgumentException ex) {
-			logger.error(ex.getMessage());
 		}
 		mainFrame.getContentPane().setBackground(Color.PINK);
 		mainFrame.setBackground(new Color(255, 255, 255));
@@ -406,8 +393,6 @@ public class ClientGUIThread implements Runnable, Observer {
 			rightPanel.repaint();
 		} catch (IOException ex) {
 			logger.error(ex.getMessage());
-		} catch (IllegalArgumentException ex) {
-			logger.error(ex.getMessage());
 		}
 		turnNumberLabel.setHorizontalTextPosition(SwingConstants.CENTER);
 		turnNumberLabel.setBorder(new EmptyBorder(0, 0, 5, 60));
@@ -526,8 +511,6 @@ public class ClientGUIThread implements Runnable, Observer {
 			rightPanel.repaint();
 		} catch (IOException ex) {
 			logger.error(ex.getMessage());
-		} catch (IllegalArgumentException ex) {
-			logger.error(ex.getMessage());
 		}
 
 	}
@@ -642,7 +625,7 @@ public class ClientGUIThread implements Runnable, Observer {
 						connectionManager.send(new ActionDisconnect());
 					} catch (NullPointerException ex) {
 						// if server is down
-						logger.error("Server is down");
+						System.err.println("Server is down");
 					}
 					System.exit(0);
 				}
@@ -664,7 +647,6 @@ public class ClientGUIThread implements Runnable, Observer {
 							connectionManager.send(new ActionMove(coordinate));
 
 						} catch (NotAValidInput e1) {
-							logger.debug(e1.getMessage());
 							JOptionPane.showMessageDialog(mainFrame,
 									"Not a valid input!");
 						}
@@ -685,8 +667,7 @@ public class ClientGUIThread implements Runnable, Observer {
 							JOptionPane.YES_NO_OPTION);
 					JDialog dialog = optionPane.createDialog("Attack");
 					dialog.setVisible(true);
-					int selection = ((Integer) optionPane.getValue())
-							.intValue();
+					int selection = ((Integer) optionPane.getValue()).intValue();
 					if (selection == JOptionPane.YES_OPTION) {
 						connectionManager.send(new ActionAttack());
 					} else {
@@ -709,8 +690,7 @@ public class ClientGUIThread implements Runnable, Observer {
 					JDialog dialog = optionPane
 							.createDialog("Draw a dangerous sector card");
 					dialog.setVisible(true);
-					int selection = ((Integer) optionPane.getValue())
-							.intValue();
+					int selection = ((Integer) optionPane.getValue()).intValue();
 					if (selection == JOptionPane.YES_OPTION) {
 						connectionManager.send(new ActionDrawCard());
 					} else {
@@ -737,7 +717,6 @@ public class ClientGUIThread implements Runnable, Observer {
 									coordinate));
 
 						} catch (NotAValidInput e1) {
-							logger.debug(e1.getMessage());
 							JOptionPane.showMessageDialog(mainFrame,
 									"Not a valid input!");
 						}
@@ -758,8 +737,7 @@ public class ClientGUIThread implements Runnable, Observer {
 							JOptionPane.YES_NO_OPTION);
 					JDialog dialog = optionPane.createDialog("End turn");
 					dialog.setVisible(true);
-					int selection = ((Integer) optionPane.getValue())
-							.intValue();
+					int selection = ((Integer) optionPane.getValue()).intValue();
 					if (selection == JOptionPane.YES_OPTION) {
 						connectionManager.send(new ActionEndTurn());
 					} else {
@@ -801,7 +779,6 @@ public class ClientGUIThread implements Runnable, Observer {
 							connectionManager.send(new ActionUseCard(
 									new SpotlightCard(), coordinate));
 						} catch (NotAValidInput e1) {
-							logger.debug(e1.getMessage());
 							JOptionPane.showMessageDialog(mainFrame,
 									"Not a valid input!");
 						}
@@ -1123,12 +1100,8 @@ public class ClientGUIThread implements Runnable, Observer {
 			Clip clip = AudioSystem.getClip();
 			clip.open(audioInputStream);
 			clip.start();
-		} catch (IOException ex) {
+		} catch (Exception ex) {
 			logger.error(ex.getMessage());
-		} catch (UnsupportedAudioFileException ex) {
-			logger.error(ex.getMessage());
-		} catch (LineUnavailableException e) {
-			logger.error(e.getMessage());
 		}
 	}
 
