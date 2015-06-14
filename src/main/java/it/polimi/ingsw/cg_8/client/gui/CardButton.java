@@ -47,35 +47,79 @@ import javax.swing.JButton;
  * @version 1.0
  */
 public class CardButton extends JPanel {
-
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = -4771580323012024149L;
+	/**
+	 * Button image
+	 */
 	private JLabel cardButtonImage;
-	private JLabel text;
-	private CardType cardType;
+	/**
+	 * Button image overlay (alien or human)
+	 */
 	private JLabel cardButtonOverlay;
+	/**
+	 * Button text
+	 */
+	private JLabel text;
+	/**
+	 * Button card type
+	 */
+	private CardType cardType;
+	/**
+	 * Button font
+	 */
 	private Font fontTitilliumSemiboldUpright;
 	/**
 	 * Log4j logger
 	 */
 	private static final Logger logger = LogManager.getLogger(CardButton.class);
+	/**
+	 * Button width, fixed
+	 */
 	private static final int BUTTON_WIDTH = 120;
+	/**
+	 * Button height, fixed
+	 */
 	private static final int BUTTON_HEIGHT = 120;
+	/**
+	 * Layered pane used to handle multiple layers: cardButtonImage,
+	 * cardButtonOverlay, invisButton
+	 */
 	private JLayeredPane layeredPane;
+	/**
+	 * Semi-opaque image that overlays the button image
+	 */
 	private Image cardOverlay;
+	/**
+	 * Invisible button placed on top op this button
+	 */
 	private JButton invisButton;
 
+	/**
+	 * Constructor, creates a "No Card" button that is a place holder for future
+	 * player's card
+	 */
 	public CardButton() {
+		/**
+		 * Set up size
+		 */
 		setPreferredSize(new Dimension(100, 120));
 		setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+		/**
+		 * Set up default button
+		 */
 		this.text = new JLabel("No Card");
 		this.cardType = CardType.DEFAULT;
 		this.layeredPane = new JLayeredPane();
 		this.cardButtonOverlay = new JLabel();
 		cardButtonOverlay.setBackground(Color.CYAN);
-
 		this.cardButtonImage = new JLabel();
 		cardButtonImage.setBackground(Color.GREEN);
-
+		/**
+		 * Set up borders
+		 */
 		cardButtonImage.setBorder(new EmptyBorder(0, 0, 5, 0));
 		cardButtonOverlay.setBorder(new EmptyBorder(0, 0, 5, 0));
 		/**
@@ -102,14 +146,20 @@ public class CardButton extends JPanel {
 		cardButtonOverlay.setIcon(new ImageIcon(cardOverlay));
 		cardButtonOverlay.setBounds(0, 0, 124, 106);
 		cardButtonImage.setBounds(0, 0, 124, 106);
-		this.setLayout(new BorderLayout());
 
+		/**
+		 * Set up layout
+		 */
+		this.setLayout(new BorderLayout());
 		add(layeredPane, BorderLayout.CENTER);
 		layeredPane.add(cardButtonImage);
 		layeredPane.setLayer(cardButtonImage, 1);
 		layeredPane.add(cardButtonOverlay);
 		layeredPane.setLayer(cardButtonOverlay, 2);
 
+		/**
+		 * Set up the invisible button
+		 */
 		invisButton = new JButton();
 		invisButton.setVerticalAlignment(SwingConstants.BOTTOM);
 		invisButton.setBounds(0, 0, 124, 106);
@@ -161,10 +211,16 @@ public class CardButton extends JPanel {
 			}
 
 		});
+		/**
+		 * Set up font and text
+		 */
 		this.text.setFont(fontTitilliumSemiboldUpright);
 		text.setHorizontalAlignment(SwingConstants.CENTER);
 		this.add(text, BorderLayout.SOUTH);
 
+		/**
+		 * Final setup
+		 */
 		cardButtonOverlay.setVisible(false);
 		setOpaque(false);
 		this.setVisible(true);
@@ -181,15 +237,25 @@ public class CardButton extends JPanel {
 		DEFAULT, ADRENALINE, ATTACK, DEFENSE, SEDATIVES, SPOTLIGHT, TELEPORT
 	}
 
+	/**
+	 * @return the type of the button
+	 */
 	public CardType getCardType() {
 		return cardType;
 	}
 
+	/**
+	 * Changes the type of the button
+	 * 
+	 * @param cardType
+	 *            type of the card, changes the behaviour of the button
+	 */
 	public void setCardType(CardType cardType) {
+		// change card type
 		this.cardType = cardType;
 		// change image
-		// change action
 		// change texts
+		// change tooltip text
 		if (this.cardType.equals(CardType.DEFAULT)) {
 			this.setImage(Resource.IMG_ITEM);
 			this.setText("No Card");
@@ -282,20 +348,32 @@ public class CardButton extends JPanel {
 		this.repaint();
 	}
 
+	/**
+	 * Changes the text of the button
+	 * 
+	 * @param text
+	 *            text of the button
+	 */
 	private void setText(String text) {
 		this.text.setText(text);
 	}
 
 	/**
 	 * Used to access the cardButton and create actions when the button is
-	 * pressed;
+	 * pressed
 	 * 
-	 * @return
+	 * @return this class jbutton
 	 */
 	public JButton getInvisButton() {
 		return invisButton;
 	}
 
+	/**
+	 * Returns the ClientAction related to this card button
+	 * 
+	 * @return - ClientAction instance if the card is active<br>
+	 *         - null if the card is passive or the button is a placeholder
+	 */
 	public ClientAction createAction() {
 
 		// if return is null the card is not usable or the input is wrong for
