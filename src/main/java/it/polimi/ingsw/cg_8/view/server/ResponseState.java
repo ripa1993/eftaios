@@ -10,15 +10,45 @@ import java.io.Serializable;
  * @version 1.0
  */
 public class ResponseState implements ServerResponse, Serializable {
-
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 6811457673145213295L;
-
+	/**
+	 * Player name
+	 */
 	private final String playerName;
+	/**
+	 * Player character
+	 */
 	private final String character;
+	/**
+	 * Player state
+	 */
 	private final String state;
+	/**
+	 * Player position
+	 */
 	private final String position;
+	/**
+	 * Round number
+	 */
 	private final int roundNumber;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param playerName
+	 *            player name
+	 * @param character
+	 *            player character
+	 * @param state
+	 *            player state
+	 * @param position
+	 *            player position
+	 * @param roundNumber
+	 *            player round number
+	 */
 	public ResponseState(String playerName, String character, String state,
 			String position, int roundNumber) {
 		this.playerName = playerName;
@@ -28,22 +58,42 @@ public class ResponseState implements ServerResponse, Serializable {
 		this.roundNumber = roundNumber;
 	}
 
+	/**
+	 * 
+	 * @return player name
+	 */
 	public String getPlayerName() {
 		return playerName;
 	}
 
+	/**
+	 * 
+	 * @return player character
+	 */
 	public String getCharacter() {
 		return character;
 	}
 
+	/**
+	 * 
+	 * @return player state
+	 */
 	public String getState() {
 		return state;
 	}
 
+	/**
+	 * 
+	 * @return player position
+	 */
 	public String getPosition() {
 		return position;
 	}
 
+	/**
+	 * 
+	 * @return round number
+	 */
 	public String getRoundNumber() {
 		return String.valueOf(roundNumber);
 	}
