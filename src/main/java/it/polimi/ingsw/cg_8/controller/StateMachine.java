@@ -233,27 +233,26 @@ public class StateMachine {
 			// use card
 
 			if (a instanceof ActionUseCard) {
-				if (a instanceof ActionUseCard) {
-					ItemCard card = ((ActionUseCard) a).getItemCard();
-					Coordinate coordinate = ((ActionUseCard) a).getCoordinate();
 
-					if (card instanceof AttackCard) {
-						return StateMachine.useAttackCard(card, player,
-								controller);
-					}
-					if (card instanceof TeleportCard) {
-						return StateMachine.useTeleportCard(card, player,
-								controller);
-					}
-					if (card instanceof SedativesCard) {
-						return StateMachine.useSedativesCard(card, player,
-								controller);
-					}
-					if (card instanceof SpotlightCard) {
-						return StateMachine.useSpotlightCard(card, player,
-								controller, coordinate);
-					}
+				ItemCard card = ((ActionUseCard) a).getItemCard();
+				Coordinate coordinate = ((ActionUseCard) a).getCoordinate();
+
+				if (card instanceof AttackCard) {
+					return StateMachine.useAttackCard(card, player, controller);
 				}
+				if (card instanceof TeleportCard) {
+					return StateMachine.useTeleportCard(card, player,
+							controller);
+				}
+				if (card instanceof SedativesCard) {
+					return StateMachine.useSedativesCard(card, player,
+							controller);
+				}
+				if (card instanceof SpotlightCard) {
+					return StateMachine.useSpotlightCard(card, player,
+							controller, coordinate);
+				}
+
 			}
 			return false;
 		}
@@ -329,26 +328,23 @@ public class StateMachine {
 			// use item card
 
 			if (a instanceof ActionUseCard) {
-				if (a instanceof ActionUseCard) {
-					ItemCard card = ((ActionUseCard) a).getItemCard();
-					Coordinate coordinate = ((ActionUseCard) a).getCoordinate();
+				ItemCard card = ((ActionUseCard) a).getItemCard();
+				Coordinate coordinate = ((ActionUseCard) a).getCoordinate();
 
-					if (card instanceof AttackCard) {
-						return StateMachine.useAttackCard(card, player,
-								controller);
-					}
-					if (card instanceof TeleportCard) {
-						return StateMachine.useTeleportCard(card, player,
-								controller);
-					}
-					if (card instanceof SedativesCard) {
-						return StateMachine.useSedativesCard(card, player,
-								controller);
-					}
-					if (card instanceof SpotlightCard) {
-						return StateMachine.useSpotlightCard(card, player,
-								controller, coordinate);
-					}
+				if (card instanceof AttackCard) {
+					return StateMachine.useAttackCard(card, player, controller);
+				}
+				if (card instanceof TeleportCard) {
+					return StateMachine.useTeleportCard(card, player,
+							controller);
+				}
+				if (card instanceof SedativesCard) {
+					return StateMachine.useSedativesCard(card, player,
+							controller);
+				}
+				if (card instanceof SpotlightCard) {
+					return StateMachine.useSpotlightCard(card, player,
+							controller, coordinate);
 				}
 			}
 
@@ -381,19 +377,16 @@ public class StateMachine {
 		}
 
 		// handle WAITING_FAKE_NOISE
-		if (turnPhase == TurnPhase.WAITING_FAKE_NOISE) {
+		if (turnPhase == TurnPhase.WAITING_FAKE_NOISE
+				&& a instanceof ActionFakeNoise) {
 
-			// do fake noise
-
-			if (a instanceof ActionFakeNoise) {
-				Coordinate target = ((ActionFakeNoise) a).getCoordinate();
-				if (model.getMap().getSectors().keySet().contains(target)) {
-					FakeNoise.fakeNoise(model, target);
-					model.setTurnPhase(TurnPhase.DRAWN_CARD);
-					return true;
-				}
-				return false;
+			Coordinate target = ((ActionFakeNoise) a).getCoordinate();
+			if (model.getMap().getSectors().keySet().contains(target)) {
+				FakeNoise.fakeNoise(model, target);
+				model.setTurnPhase(TurnPhase.DRAWN_CARD);
+				return true;
 			}
+			return false;
 		}
 
 		// handle DRAWN_CARD
@@ -441,7 +434,6 @@ public class StateMachine {
 		controller.writeToAll(new ResponsePrivate(player.getName()
 				+ " has finished his turn"));
 		EndTurn.endTurn(model);
-
 
 	}
 

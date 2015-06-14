@@ -664,7 +664,8 @@ public class ClientGUIThread implements Runnable, Observer {
 							JOptionPane.YES_NO_OPTION);
 					JDialog dialog = optionPane.createDialog("Attack");
 					dialog.setVisible(true);
-					int selection = ((Integer) optionPane.getValue()).intValue();
+					int selection = ((Integer) optionPane.getValue())
+							.intValue();
 					if (selection == JOptionPane.YES_OPTION) {
 						connectionManager.send(new ActionAttack());
 					} else {
@@ -687,7 +688,8 @@ public class ClientGUIThread implements Runnable, Observer {
 					JDialog dialog = optionPane
 							.createDialog("Draw a dangerous sector card");
 					dialog.setVisible(true);
-					int selection = ((Integer) optionPane.getValue()).intValue();
+					int selection = ((Integer) optionPane.getValue())
+							.intValue();
 					if (selection == JOptionPane.YES_OPTION) {
 						connectionManager.send(new ActionDrawCard());
 					} else {
@@ -734,7 +736,8 @@ public class ClientGUIThread implements Runnable, Observer {
 							JOptionPane.YES_NO_OPTION);
 					JDialog dialog = optionPane.createDialog("End turn");
 					dialog.setVisible(true);
-					int selection = ((Integer) optionPane.getValue()).intValue();
+					int selection = ((Integer) optionPane.getValue())
+							.intValue();
 					if (selection == JOptionPane.YES_OPTION) {
 						connectionManager.send(new ActionEndTurn());
 					} else {
@@ -813,13 +816,13 @@ public class ClientGUIThread implements Runnable, Observer {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if (matchStarted) {
-					if (KeyEvent.VK_ENTER == e.getKeyCode()) {
-						String message = chatTextField.getText();
-						chatTextField.setText("");
-						connectionManager.send(new ActionChat(message));
-					}
+
+				if (matchStarted && KeyEvent.VK_ENTER == e.getKeyCode()) {
+					String message = chatTextField.getText();
+					chatTextField.setText("");
+					connectionManager.send(new ActionChat(message));
 				}
+
 			}
 
 			@Override
