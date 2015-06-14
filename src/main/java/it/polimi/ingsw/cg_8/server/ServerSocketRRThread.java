@@ -58,6 +58,10 @@ public class ServerSocketRRThread implements Runnable {
 
 	}
 
+	/**
+	 * Process the registration and the input handling of a client, from the
+	 * registration to the main game.
+	 */
 	@Override
 	public void run() {
 		while (true) {

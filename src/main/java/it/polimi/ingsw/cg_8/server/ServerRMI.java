@@ -12,6 +12,11 @@ import java.rmi.server.UnicastRemoteObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * The class that handles th registration of the RMI clients.
+ * @author Alberto Parravicini
+ * @version 1.0
+ */
 public class ServerRMI implements Runnable {
 	/**
 	 * Main server reference
@@ -47,6 +52,13 @@ public class ServerRMI implements Runnable {
 		return server;
 	}
 
+	/**
+	 * Add a client to the game, check if the game has to start.
+	 * @param client
+	 * @param view 
+	 * @throws GameAlreadyRunningException
+	 * @throws RemoteException
+	 */
 	public synchronized void addRMIClient(SubscriberInterface client,
 			ServerGameRoom view) throws GameAlreadyRunningException,
 			RemoteException {

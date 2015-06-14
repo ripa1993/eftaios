@@ -155,7 +155,14 @@ public class Server {
 			voteCount.put(chosenMap, voteCount.get(chosenMap) + 1);
 		}
 	}
-
+	/**
+	 * Count the votes given to each map by the players, and return the most
+	 * voted map. In case of a draw, maps are returned with a precise hierarchy
+	 * instead of being randomized. This is mainly done to have a predictable
+	 * behaviour when testing, and could be removed if deemed appropriate.
+	 * 
+	 * @return chosenMap The most voted map.
+	 */
 	public static GameMapName countVotes() {
 		Map.Entry<GameMapName, Integer> maxEntry = null;
 		GameMapName chosenMap = GameMapName.FERMI;
@@ -287,7 +294,10 @@ public class Server {
 		timer.schedule(timerTask, TIMEOUT);
 		logger.info("Timeout started");
 	}
-
+	/**
+	 * Cancel the timer if the maximum number of players is reached before the
+	 * end of the allocated time.
+	 */
 	public static void abortTimeout() {
 		timer.cancel();
 		logger.info("Timeout aborted");
