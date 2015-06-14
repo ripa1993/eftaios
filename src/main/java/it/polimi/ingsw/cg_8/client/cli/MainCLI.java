@@ -152,12 +152,16 @@ public class MainCLI implements Runnable, Observer {
 		while (!disconnect) {
 			System.out.println(">Write a command:");
 			String inputLine = input.nextLine();
-			try {
-				ClientAction action = ActionParser.createEvent(inputLine);
-				connectionManager.send(action);
-			} catch (NotAValidInput e) {
-				LOGGER.error(e.getMessage(), e);
-				System.out.println(">That's not a valid command");
+			if (matchStarted) {
+				try {
+					ClientAction action = ActionParser.createEvent(inputLine);
+					connectionManager.send(action);
+				} catch (NotAValidInput e) {
+					LOGGER.error(e.getMessage(), e);
+					System.out.println(">That's not a valid command");
+				}
+			} else {
+				System.out.println("Match isn't started, please wait a minute");
 			}
 		}
 	}

@@ -106,10 +106,6 @@ public class ClientGUIThread implements Runnable, Observer {
 	 */
 	private JFrame mainFrame;
 	/**
-	 * Content pane
-	 */
-	private Container contentPane;
-	/**
 	 * JPanels used in the gui
 	 */
 	private JPanel chatPanel, chatPanel2, rightPanel, infoPanel, commandsPanel,
@@ -210,7 +206,6 @@ public class ClientGUIThread implements Runnable, Observer {
 		mainFrame.setMinimumSize(new Dimension(1280, 720));
 		mainFrame.setResizable(true);
 		BufferedImage myImage;
-		contentPane = mainFrame.getContentPane();
 		try {
 			myImage = ImageIO.read(new File(Resource.IMG_BACKGROUND_PATTERN));
 

@@ -23,10 +23,6 @@ import org.apache.logging.log4j.Logger;
 public class ServerSocketPublisherThread extends ServerPublisher implements
 		Runnable {
 	/**
-	 * The socket of the player.
-	 */
-	private Socket subscriber;
-	/**
 	 * The output stream.
 	 */
 	private ObjectOutputStream output;
@@ -47,7 +43,6 @@ public class ServerSocketPublisherThread extends ServerPublisher implements
 	 * @param subscriber
 	 */
 	public ServerSocketPublisherThread(Socket subscriber) {
-		this.subscriber = subscriber;
 		this.buffer = new ConcurrentLinkedQueue<ServerResponse>();
 		try {
 			this.output = new ObjectOutputStream(subscriber.getOutputStream());
