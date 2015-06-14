@@ -27,9 +27,4 @@ public abstract class NormalSector extends Sector {
 		super(x, y);
 	}
 
-	@Override
-	public String toString() {
-		return super.toString();
-	}
-
 }

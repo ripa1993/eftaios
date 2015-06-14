@@ -27,9 +27,4 @@ public abstract class SpawnSector extends SpecialSector {
 		super(x, y);
 	}
 
-	@Override
-	public String toString() {
-		return super.toString();
-	}
-
 }
