@@ -36,7 +36,7 @@ public class ConnectionManagerRMI extends ConnectionManager implements
 	/**
 	 * The server IP address.
 	 */
-	private final String SERVER_ADDRESS = "127.0.0.1";
+	private final static String SERVER_ADDRESS = "127.0.0.1";
 	/**
 	 * The server port used by the client to register.
 	 */
@@ -44,7 +44,7 @@ public class ConnectionManagerRMI extends ConnectionManager implements
 	/**
 	 * The name used to identify the {@link ServerRMIRegistrationView}
 	 */
-	private final String registrationRoomName = "registrationRoom";
+	private final static String registrationRoomName = "registrationRoom";
 	/**
 	 * GameRoom used by RMI.
 	 */

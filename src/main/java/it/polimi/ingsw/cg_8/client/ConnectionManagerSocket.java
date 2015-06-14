@@ -29,15 +29,15 @@ public class ConnectionManagerSocket extends ConnectionManager {
 	/**
 	 * The server IP address.
 	 */
-	private final String SERVER_ADDRESS = "127.0.0.1";
+	private final static String SERVER_ADDRESS = "127.0.0.1";
 	/**
 	 * The server port used for the Receive/Response communication.
 	 */
-	private final int SOCKET_PORT_CLIENTSERVER = 29998;
+	private final static int SOCKET_PORT_CLIENTSERVER = 29998;
 	/**
 	 * The server port used for the Publisher/Subscriber communication.
 	 */
-	private final int SOCKET_PORT_PUBSUB = 29999;
+	private final static int SOCKET_PORT_PUBSUB = 29999;
 	/**
 	 * Thread executor service
 	 */

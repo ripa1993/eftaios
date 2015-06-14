@@ -54,7 +54,7 @@ public class Model extends Observable {
 	 * The maximum number of turn allowed in the game; if this number is
 	 * reached, the game ends with a draw.
 	 */
-	private final int MAX_ROUND_NUMBER = 39;
+	private final static int MAX_ROUND_NUMBER = 39;
 	/**
 	 * Number of current round. It is increased when all the players have played
 	 * it.
