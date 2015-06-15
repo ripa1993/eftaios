@@ -1,8 +1,10 @@
 package it.polimi.ingsw.cg_8.model.map;
 
-import static org.junit.Assert.*;
-import it.polimi.ingsw.cg_8.model.map.creator.FermiCreator;
-import it.polimi.ingsw.cg_8.model.map.creator.GalvaniCreator;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import it.polimi.ingsw.cg_8.model.map.creator.FermiCreatorXML;
+import it.polimi.ingsw.cg_8.model.map.creator.GalvaniCreatorXML;
 import it.polimi.ingsw.cg_8.model.map.creator.MapCreator;
 
 import org.junit.Before;
@@ -16,14 +18,14 @@ public class MapProxyTest {
 	
 	@Before
 	public void init(){
-		mc = new GalvaniCreator();
+		mc = new GalvaniCreatorXML();
 		map = mc.createMap();
 		mp = map.getMapProxy();
 	}
 	
 	@Test
 	public void equals() {
-		MapCreator mc2 = new FermiCreator();
+		MapCreator mc2 = new FermiCreatorXML();
 		GameMap map2 = mc2.createMap();
 		MapProxy mp2 = map2.getMapProxy();
 		assertFalse(mp.equals(mp2));

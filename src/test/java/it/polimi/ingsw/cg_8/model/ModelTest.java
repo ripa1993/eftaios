@@ -9,9 +9,9 @@ import it.polimi.ingsw.cg_8.model.decks.ItemDeck;
 import it.polimi.ingsw.cg_8.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.cg_8.model.exceptions.GameAlreadyRunningException;
 import it.polimi.ingsw.cg_8.model.exceptions.NotAValidMapException;
-import it.polimi.ingsw.cg_8.model.map.FermiMap;
-import it.polimi.ingsw.cg_8.model.map.GalileiMap;
-import it.polimi.ingsw.cg_8.model.map.GalvaniMap;
+import it.polimi.ingsw.cg_8.model.map.FermiMapXML;
+import it.polimi.ingsw.cg_8.model.map.GalileiMapXML;
+import it.polimi.ingsw.cg_8.model.map.GalvaniMapXML;
 import it.polimi.ingsw.cg_8.model.map.GameMapName;
 
 import org.junit.Before;
@@ -93,7 +93,7 @@ public class ModelTest {
 
 	@Test
 	public void testGetMap() {
-		assertTrue(model.getMap() instanceof FermiMap);
+		assertTrue(model.getMap() instanceof FermiMapXML);
 	}
 
 	@Test
@@ -103,7 +103,7 @@ public class ModelTest {
 			model2.addPlayer("prova");
 			model2.addPlayer("test");
 			model2.initGame();
-			assertTrue(model2.getMap() instanceof GalvaniMap);
+			assertTrue(model2.getMap() instanceof GalvaniMapXML);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -116,7 +116,7 @@ public class ModelTest {
 			model2.addPlayer("prova");
 			model2.addPlayer("test");
 			model2.initGame();
-			assertTrue(model2.getMap() instanceof GalileiMap);
+			assertTrue(model2.getMap() instanceof GalileiMapXML);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

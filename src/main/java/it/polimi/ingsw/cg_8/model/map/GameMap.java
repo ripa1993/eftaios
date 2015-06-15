@@ -59,7 +59,23 @@ public abstract class GameMap implements ReachableCoordinatesInterface {
 	public Coordinate getAlienSpawn() {
 		return alienSpawn;
 	}
-
+	/**
+	 * Setter for human spawn
+	 * 
+	 * @param the coordinate of the spawn.
+	 */
+	public void setHumanSpawn(Coordinate humanSpawn) {
+		this.humanSpawn = humanSpawn;
+	}
+	/**
+	 * Setter for alien spawn
+	 * 
+	 * @param the coordinate of the spawn.
+	 */
+	public void setAlienSpawn(Coordinate alienSpawn) {
+		this.alienSpawn = alienSpawn;
+	}
+	
 	/**
 	 * Getter for this game map's Map<Coordinate, Sector>
 	 * 

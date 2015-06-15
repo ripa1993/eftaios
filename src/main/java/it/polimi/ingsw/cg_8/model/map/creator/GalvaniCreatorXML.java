@@ -1,31 +1,31 @@
 package it.polimi.ingsw.cg_8.model.map.creator;
 
+import it.polimi.ingsw.cg_8.Resource;
+import it.polimi.ingsw.cg_8.model.map.FermiMapXML;
+import it.polimi.ingsw.cg_8.model.map.GalvaniMapXML;
+import it.polimi.ingsw.cg_8.model.map.GameMap;
+import it.polimi.ingsw.cg_8.model.map.GameMapSet;
+import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
+import it.polimi.ingsw.cg_8.model.sectors.Sector;
+
 import java.io.File;
 import java.util.Iterator;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 
-import it.polimi.ingsw.cg_8.Resource;
-import it.polimi.ingsw.cg_8.model.map.FermiMapXML;
-import it.polimi.ingsw.cg_8.model.map.GameMap;
-import it.polimi.ingsw.cg_8.model.map.GameMapSet;
-import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
-import it.polimi.ingsw.cg_8.model.sectors.Sector;
-
-public class FermiCreatorXML extends MapCreator {
-
+public class GalvaniCreatorXML extends MapCreator {
 	/**
 	 * Map that is going to be populated
 	 */
-	private final GameMap fermiMap;
+	private final GameMap galvaniMap;
 
 	/**
 	 * Constructor
 	 */
-	public FermiCreatorXML() {
-		super(new FermiMapXML());
-		fermiMap = this.getGm();
+	public GalvaniCreatorXML() {
+		super(new GalvaniMapXML());
+		galvaniMap = this.getGm();
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class FermiCreatorXML extends MapCreator {
 
 			Unmarshaller unmarshaller = jc.createUnmarshaller();
 			GameMapSet sectorSet = (GameMapSet) unmarshaller
-					.unmarshal(new File(Resource.FERMI_XML));
+					.unmarshal(new File(Resource.GALVANI_XML));
 
 			return sectorSet;
 
@@ -57,29 +57,10 @@ public class FermiCreatorXML extends MapCreator {
 			int y = currentSector.getY();
 			addSector(new Coordinate(x, y), currentSector);
 		}
-		fermiMap.setAlienSpawn(sectorList.getAlienSpawnSector());
-		fermiMap.setHumanSpawn(sectorList.getHumanSpawnSector());
-		return fermiMap;
+		galvaniMap.setAlienSpawn(sectorList.getAlienSpawnSector());
+		galvaniMap.setHumanSpawn(sectorList.getHumanSpawnSector());
+		return galvaniMap;
 		
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

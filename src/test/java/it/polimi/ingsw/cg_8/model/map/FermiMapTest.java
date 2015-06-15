@@ -1,21 +1,18 @@
 package it.polimi.ingsw.cg_8.model.map;
 
-import static org.junit.Assert.*;
-
-import java.util.HashSet;
-import java.util.Set;
-
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import it.polimi.ingsw.cg_8.model.exceptions.NotAValidCoordinateException;
-import it.polimi.ingsw.cg_8.model.map.creator.FermiCreator;
+import it.polimi.ingsw.cg_8.model.map.creator.FermiCreatorXML;
 import it.polimi.ingsw.cg_8.model.map.creator.MapCreator;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 import it.polimi.ingsw.cg_8.model.sectors.Sector;
-
-
-
 import it.polimi.ingsw.cg_8.model.sectors.normal.DangerousSector;
 import it.polimi.ingsw.cg_8.model.sectors.normal.SecureSector;
 import it.polimi.ingsw.cg_8.model.sectors.special.escapehatch.EscapeHatchSector;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +24,7 @@ public class FermiMapTest {
 	
 	@Before
 	public void init(){
-		mapCreator=new FermiCreator();
+		mapCreator=new FermiCreatorXML();
 		testMap = mapCreator.createMap();
 	}
 	

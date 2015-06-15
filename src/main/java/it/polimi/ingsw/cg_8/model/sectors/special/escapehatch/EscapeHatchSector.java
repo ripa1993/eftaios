@@ -26,14 +26,6 @@ public class EscapeHatchSector extends SpecialSector {
 	 * Current behaviour of the escape hatch sector.
 	 */
 	private boolean used;
-	/**
-	 * Number of the escape hatch that have been instantiated so far.
-	 */
-	private static int totalEHSectors = 0;
-	/**
-	 * Number of the escape hatch, 1 to 4.
-	 */
-	private final int sectorNumber;
 
 	/**
 	 * Constructor for the escape hatch sector, used in the XML parsing.
@@ -41,8 +33,6 @@ public class EscapeHatchSector extends SpecialSector {
 	 */
 	public EscapeHatchSector() {
 		super();
-		totalEHSectors++;
-		this.sectorNumber = totalEHSectors;
 		this.used = false;
 	}
 
@@ -54,7 +44,6 @@ public class EscapeHatchSector extends SpecialSector {
 	 */
 	public EscapeHatchSector(int x, int y) {
 		super(x, y);
-		this.sectorNumber = totalEHSectors;
 		this.used = false;
 	}
 
@@ -66,15 +55,6 @@ public class EscapeHatchSector extends SpecialSector {
 	 */
 	public boolean getStatus() {
 		return this.used;
-	}
-
-	/**
-	 * Getter for escape hatch sector number
-	 * 
-	 * @return escape hatch sector number
-	 */
-	public int getNumber() {
-		return this.sectorNumber;
 	}
 
 	/**
@@ -102,7 +82,7 @@ public class EscapeHatchSector extends SpecialSector {
 
 	@Override
 	public String toString() {
-		return "EH" + sectorNumber;
+		return "EH";
 	}
 
 }
