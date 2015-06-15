@@ -537,18 +537,6 @@ public class ClientGUIThread implements Runnable, Observer {
 
 	@Override
 	public void run() {
-		// ROBA DA TOGLIERE GIU
-		mapPanel.setMapImage(Resource.IMG_GALILEI_MAP);
-		try {
-			mapPanel.createArtifact(new Coordinate(1, 1),
-					Resource.IMG_ALIEN_OVERLAY, 1000, 10);
-		} catch (IOException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		mapPanel.repaint();
-
-		// ROBA DA TOGLIER SU
 
 		LOGGER.debug("Info text pane is" + infoPanel.getSize());
 		cardButton1.getInvisButton().addMouseListener(new MouseInputAdapter() {
@@ -872,7 +860,12 @@ public class ClientGUIThread implements Runnable, Observer {
 		} else if ("Noise".equals(arg)) {
 			ResponseNoise noise = clientData.getLastNoise();
 			this.appendInfo("NOISE", noise.toString());
-
+			try {
+				mapPanel.createArtifact(noise.getNoise().getCoordinate(),
+						Resource.IMG_YELLOW_OVER, 1000, 10);
+			} catch (IOException e) {
+				LOGGER.error(e.getMessage(), e);
+			}
 			// play music
 			if (noise.getNoise() instanceof AttackNoise) {
 				Random random = new Random();
@@ -939,7 +932,8 @@ public class ClientGUIThread implements Runnable, Observer {
 			 */
 		} else if ("State".equals(arg)) {
 			ResponseState stateMessage = clientData.getState();
-
+			// change
+			mapPanel.createPlayerPosition(stateMessage.getPosition());
 			if (!playerImageSet) {
 				double random = Math.random();
 				LOGGER.debug(stateMessage.getCharacter());
@@ -947,14 +941,18 @@ public class ClientGUIThread implements Runnable, Observer {
 					LOGGER.debug("I'm a human, so i set my img");
 					if (random < 0.25) {
 						setStateImage(Resource.IMG_HUMAN_1);
+						mapPanel.setPath(Resource.IMG_HUMAN_1);
 					} else if (random < 0.5) {
 						setStateImage(Resource.IMG_HUMAN_2);
+						mapPanel.setPath(Resource.IMG_HUMAN_2);
 
 					} else if (random < 0.75) {
 						setStateImage(Resource.IMG_HUMAN_3);
+						mapPanel.setPath(Resource.IMG_HUMAN_3);
 
 					} else {
 						setStateImage(Resource.IMG_HUMAN_4);
+						mapPanel.setPath(Resource.IMG_HUMAN_4);
 
 					}
 				} else if ("Alien".equals(stateMessage.getCharacter())) {
@@ -965,15 +963,19 @@ public class ClientGUIThread implements Runnable, Observer {
 
 					if (random < 0.25) {
 						setStateImage(Resource.IMG_ALIEN_1);
+						mapPanel.setPath(Resource.IMG_ALIEN_1);
 
 					} else if (random < 0.5) {
 						setStateImage(Resource.IMG_ALIEN_2);
+						mapPanel.setPath(Resource.IMG_ALIEN_2);
 
 					} else if (random < 0.75) {
 						setStateImage(Resource.IMG_ALIEN_3);
+						mapPanel.setPath(Resource.IMG_ALIEN_3);
 
 					} else {
 						setStateImage(Resource.IMG_ALIEN_4);
+						mapPanel.setPath(Resource.IMG_ALIEN_4);
 
 					}
 				}

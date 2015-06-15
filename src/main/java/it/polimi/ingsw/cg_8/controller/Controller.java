@@ -368,7 +368,7 @@ public class Controller implements Observer {
 			for (Player p : model.getPlayers()) {
 				this.writeToPlayer(p, new ResponseState(p.getName(), p
 						.getCharacter().toString(), p.getState().toString(), p
-						.getLastPosition().toString(), model.getRoundNumber()));
+						.getLastPosition(), model.getRoundNumber()));
 			}
 			/**
 			 * Communicate to the current player the cards he's holding.

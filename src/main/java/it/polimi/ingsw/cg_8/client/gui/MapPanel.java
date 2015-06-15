@@ -1,5 +1,6 @@
 package it.polimi.ingsw.cg_8.client.gui;
 
+import it.polimi.ingsw.cg_8.Resource;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 
 import java.awt.Graphics;
@@ -37,7 +38,18 @@ public class MapPanel extends JLayeredPane {
 	 * Map image
 	 */
 	private ImageIcon backgroundImage;
+	/**
+	 * Timer used in blinking
+	 */
 	private Timer timer;
+	/**
+	 * Label used to show player position
+	 */
+	private JLabel playerLabel;
+	/**
+	 * Path to player img
+	 */
+	private String path = Resource.IMG_HUMAN_1;
 
 	@Override
 	public void paintComponent(Graphics g) {
@@ -247,7 +259,7 @@ public class MapPanel extends JLayeredPane {
 			}
 		};
 		add(jlabel);
-		setLayer(jlabel, JLayeredPane.POPUP_LAYER);
+		setLayer(jlabel, JLayeredPane.POPUP_LAYER + 1);
 		jlabel.repaint();
 		// blink
 		ActionListener blink = new ActionListener() {
@@ -262,6 +274,7 @@ public class MapPanel extends JLayeredPane {
 					jlabel.setVisible(true);
 					counter--;
 				}
+				playerLabel.repaint();
 				if (counter <= 0) {
 					timer.stop();
 				}
@@ -271,6 +284,60 @@ public class MapPanel extends JLayeredPane {
 		timer.setInitialDelay(0);
 		timer.start();
 		jlabel.setVisible(false);
+
+	}
+
+	public void createPlayerPosition(Coordinate coordinate) {
+		if (playerLabel != null) {
+			playerLabel.setVisible(false);
+		}
+		final Coordinate coord = coordinate;
+		playerLabel = new JLabel() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 606642999525414965L;
+
+			@Override
+			public void paintComponent(Graphics g) {
+				// get map panel size
+				int mapPanelWidth = this.getWidth();
+				int mapPanelHeight = this.getHeight();
+				// background image sizes
+				float mapImageWidth = mapPanelWidth;
+				float mapImageHeight = mapPanelHeight;
+				if (mapImageWidth - backgroundImageScaled.getWidth(null) > mapImageHeight
+						- backgroundImageScaled.getHeight(null)) {
+					mapImageWidth = mapImageHeight
+							* backgroundImageScaled.getWidth(null)
+							/ backgroundImageScaled.getHeight(null);
+				} else {
+					mapImageHeight = mapImageWidth
+							* backgroundImageScaled.getHeight(null)
+							/ backgroundImageScaled.getWidth(null);
+
+				}
+				// calculate col and row size
+				float columnWidth = (mapImageWidth / NUM_COLUMN) * 4 / 3;
+				float rowHeigth = mapImageHeight / NUM_ROW;
+				ImageIcon image = new ImageIcon(path);
+				Image imageScaled = new ImageIcon(image.getImage()
+						.getScaledInstance(100, -1, Image.SCALE_SMOOTH))
+						.getImage();
+				// get the point where the top left edge of the artifact is
+				Point p = getPoint(coord);
+				g.drawImage(imageScaled, (int) p.getX(), (int) p.getY(),
+						(int) (columnWidth), (int) (rowHeigth * 2), null);
+
+			}
+		};
+		add(playerLabel);
+		setLayer(playerLabel, JLayeredPane.POPUP_LAYER);
+		playerLabel.repaint();
+	}
+
+	public void setPath(String path) {
+		this.path = path;
 
 	}
 }
