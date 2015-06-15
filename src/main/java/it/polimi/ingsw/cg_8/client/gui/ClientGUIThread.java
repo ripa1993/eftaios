@@ -44,6 +44,8 @@ import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -280,10 +282,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		/**
 		 * Which map is loaded.
 		 */
-		backgroundImageResource = Resource.IMG_MAP_BG;
-		backgroundImage = new ImageIcon(backgroundImageResource);
-		backgroundImageScaled = new ImageIcon(backgroundImage.getImage()
-				.getScaledInstance(5000, -1, Image.SCALE_SMOOTH)).getImage();
+		setMapImage(Resource.IMG_GALILEI_MAP);
 
 		// add exit behaviour
 		mainFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -1134,8 +1133,10 @@ public class ClientGUIThread implements Runnable, Observer {
 	 */
 	private void setMapImage(String path) {
 		backgroundImage = new ImageIcon(path);
-		backgroundImageScaled = new ImageIcon(backgroundImage.getImage()
-				.getScaledInstance(5000, -1, Image.SCALE_SMOOTH)).getImage();
+		backgroundImageScaled = new ImageIcon(
+				backgroundImage.getImage().getScaledInstance(
+						mainFrame.getWidth(), -1, Image.SCALE_SMOOTH))
+				.getImage();
 	}
 
 	/**
@@ -1160,5 +1161,50 @@ public class ClientGUIThread implements Runnable, Observer {
 			return CardType.TELEPORT;
 		} else
 			return CardType.DEFAULT;
+	}
+
+	/**
+	 * Given a coordinate, gives the position inside map panel
+	 * 
+	 * @param coordinate
+	 *            sector coordinate
+	 * @return (X, Y) inside the map panel
+	 */
+	private Point getPoint(Coordinate coordinate) {
+		// acquire coords
+		int row = coordinate.getY();
+		int col = coordinate.getX();
+		// get map panel size
+		int mapPanelWidth = mapPanel.getWidth();
+		int mapPanelHeight = mapPanel.getHeight();
+		// get image size, resized
+		float mapImageWidth = mapPanelWidth;
+		float mapImageHeight = mapPanelHeight;
+
+		if (mapImageWidth - backgroundImageScaled.getWidth(null) > mapImageHeight
+				- backgroundImageScaled.getHeight(null)) {
+			mapImageWidth = mapImageHeight
+					* backgroundImageScaled.getWidth(null)
+					/ backgroundImageScaled.getHeight(null);
+		} else {
+			mapImageHeight = mapImageWidth
+					* backgroundImageScaled.getHeight(null)
+					/ backgroundImageScaled.getWidth(null);
+		}
+		// get border sizes
+		float panelBorderWidth = (mapPanelWidth - mapImageWidth) / 2;
+		float panelBorderHeigth = (mapPanelHeight - mapImageHeight) / 2;
+		// calculate col and row size
+		float columnWidth = mapImageWidth / 23;
+		float rowHeigth = mapImageHeight / 29;
+		// calculate x,y position inside the map panel
+		int x, y;
+		x = (int) (panelBorderWidth + col * columnWidth);
+		y = (int) (panelBorderHeigth + 2 * row * rowHeigth);
+		if (col % 2 == 1) {
+			y = (int) (y + rowHeigth);
+		}
+
+		return new Point(x, y);
 	}
 }
