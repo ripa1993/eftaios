@@ -53,35 +53,65 @@ public class MapPanel extends JLayeredPane {
 
 		@Override
 		public void paintComponent(Graphics g) {
-			// get map panel size
-			int mapPanelWidth = this.getWidth();
-			int mapPanelHeight = this.getHeight();
-			// background image sizes
-			float mapImageWidth = mapPanelWidth;
-			float mapImageHeight = mapPanelHeight;
-			if (mapImageWidth - backgroundImageScaled.getWidth(null) > mapImageHeight
-					- backgroundImageScaled.getHeight(null)) {
-				mapImageWidth = mapImageHeight
-						* backgroundImageScaled.getWidth(null)
-						/ backgroundImageScaled.getHeight(null);
-			} else {
-				mapImageHeight = mapImageWidth
-						* backgroundImageScaled.getHeight(null)
-						/ backgroundImageScaled.getWidth(null);
-
-			}
-			// calculate col and row size
-			float columnWidth = (mapImageWidth / NUM_COLUMN) * 4 / 3;
-			float rowHeigth = mapImageHeight / NUM_ROW;
 			ImageIcon image = new ImageIcon(path);
 			Image imageScaled = new ImageIcon(image.getImage()
 					.getScaledInstance(100, -1, Image.SCALE_SMOOTH)).getImage();
 			// get the point where the top left edge of the artifact is
 			Point p = getPoint(coord);
 			g.drawImage(imageScaled, (int) p.getX(), (int) p.getY(),
-					(int) (columnWidth), (int) (rowHeigth * 2), null);
+					(int) (getColumnWidth()), (int) (getRowHeight() * 2), null);
 
 		}
+	}
+
+	/**
+	 * Auxiliary method that calculates column width in the map
+	 * 
+	 * @return
+	 */
+	private float getColumnWidth() {
+		int mapPanelWidth = this.getWidth();
+		int mapPanelHeight = this.getHeight();
+		// background image sizes
+		float mapImageWidth = mapPanelWidth;
+		float mapImageHeight = mapPanelHeight;
+		if (mapImageWidth - backgroundImageScaled.getWidth(null) > mapImageHeight
+				- backgroundImageScaled.getHeight(null)) {
+			mapImageWidth = mapImageHeight
+					* backgroundImageScaled.getWidth(null)
+					/ backgroundImageScaled.getHeight(null);
+		} else {
+			mapImageHeight = mapImageWidth
+					* backgroundImageScaled.getHeight(null)
+					/ backgroundImageScaled.getWidth(null);
+
+		}
+		// calculate col and row size
+		float columnWidth = (mapImageWidth / NUM_COLUMN) * 4 / 3;
+		return columnWidth;
+	}
+
+	public float getRowHeight() {
+		// get map panel size
+		int mapPanelWidth = this.getWidth();
+		int mapPanelHeight = this.getHeight();
+		// background image sizes
+		float mapImageWidth = mapPanelWidth;
+		float mapImageHeight = mapPanelHeight;
+		if (mapImageWidth - backgroundImageScaled.getWidth(null) > mapImageHeight
+				- backgroundImageScaled.getHeight(null)) {
+			mapImageWidth = mapImageHeight
+					* backgroundImageScaled.getWidth(null)
+					/ backgroundImageScaled.getHeight(null);
+		} else {
+			mapImageHeight = mapImageWidth
+					* backgroundImageScaled.getHeight(null)
+					/ backgroundImageScaled.getWidth(null);
+
+		}
+		// calculate col and row size
+		float rowHeigth = mapImageHeight / NUM_ROW;
+		return rowHeigth;
 	}
 
 	/**
@@ -120,33 +150,13 @@ public class MapPanel extends JLayeredPane {
 
 		@Override
 		public void paintComponent(Graphics g) {
-			// get map panel size
-			int mapPanelWidth = this.getWidth();
-			int mapPanelHeight = this.getHeight();
-			// background image sizes
-			float mapImageWidth = mapPanelWidth;
-			float mapImageHeight = mapPanelHeight;
-			if (mapImageWidth - backgroundImageScaled.getWidth(null) > mapImageHeight
-					- backgroundImageScaled.getHeight(null)) {
-				mapImageWidth = mapImageHeight
-						* backgroundImageScaled.getWidth(null)
-						/ backgroundImageScaled.getHeight(null);
-			} else {
-				mapImageHeight = mapImageWidth
-						* backgroundImageScaled.getHeight(null)
-						/ backgroundImageScaled.getWidth(null);
-
-			}
-			// calculate col and row size
-			float columnWidth = (mapImageWidth / NUM_COLUMN) * 4 / 3;
-			float rowHeigth = mapImageHeight / NUM_ROW;
 			ImageIcon image = new ImageIcon(imageFile);
 			Image imageScaled = new ImageIcon(image.getImage()
 					.getScaledInstance(100, -1, Image.SCALE_SMOOTH)).getImage();
 			// get the point where the top left edge of the artifact is
 			Point p = getPoint(coord);
 			g.drawImage(imageScaled, (int) p.getX(), (int) p.getY(),
-					(int) (columnWidth), (int) (rowHeigth * 2), null);
+					(int) (getColumnWidth()), (int) (getRowHeight() * 2), null);
 
 		}
 	}

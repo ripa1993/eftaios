@@ -154,13 +154,14 @@ public class StateMachine {
 					Sector destinationSector = model.getMap().getSectors()
 							.get(destination);
 
-					controller.writeToPlayer(
-							player,
-							new ResponseState(player.getName(), player
-									.getCharacter().toString(), player
-									.getState().toString(), player
-									.getLastPosition(), model
-									.getRoundNumber()));
+					controller
+							.writeToPlayer(
+									player,
+									new ResponseState(player.getName(), player
+											.getCharacter().toString(), player
+											.getState().toString(), player
+											.getLastPosition(), model
+											.getRoundNumber()));
 					if (!currentPlayer.getCharacter().hasToDrawSectorCard()) {
 						model.setTurnPhase(TurnPhase.MOVEMENT_DONE_NOT_DS);
 
@@ -230,25 +231,7 @@ public class StateMachine {
 
 			if (a instanceof ActionUseCard) {
 
-				ItemCard card = ((ActionUseCard) a).getItemCard();
-				Coordinate coordinate = ((ActionUseCard) a).getCoordinate();
-
-				if (card instanceof AttackCard) {
-					return StateMachine.useAttackCard(card, player, controller);
-				}
-				if (card instanceof TeleportCard) {
-					return StateMachine.useTeleportCard(card, player,
-							controller);
-				}
-				if (card instanceof SedativesCard) {
-					return StateMachine.useSedativesCard(card, player,
-							controller);
-				}
-				if (card instanceof SpotlightCard) {
-					return StateMachine.useSpotlightCard(card, player,
-							controller, coordinate);
-				}
-
+				return actionUseCardFull(controller, a, player);
 			}
 			return false;
 		}
@@ -324,24 +307,7 @@ public class StateMachine {
 			// use item card
 
 			if (a instanceof ActionUseCard) {
-				ItemCard card = ((ActionUseCard) a).getItemCard();
-				Coordinate coordinate = ((ActionUseCard) a).getCoordinate();
-
-				if (card instanceof AttackCard) {
-					return StateMachine.useAttackCard(card, player, controller);
-				}
-				if (card instanceof TeleportCard) {
-					return StateMachine.useTeleportCard(card, player,
-							controller);
-				}
-				if (card instanceof SedativesCard) {
-					return StateMachine.useSedativesCard(card, player,
-							controller);
-				}
-				if (card instanceof SpotlightCard) {
-					return StateMachine.useSpotlightCard(card, player,
-							controller, coordinate);
-				}
+				return actionUseCardFull(controller, a, player);
 			}
 
 		}
@@ -359,16 +325,7 @@ public class StateMachine {
 			// use item card
 
 			if (a instanceof ActionUseCard) {
-				ItemCard card = ((ActionUseCard) a).getItemCard();
-				Coordinate coordinate = ((ActionUseCard) a).getCoordinate();
-				if (card instanceof TeleportCard) {
-					return StateMachine.useTeleportCard(card, player,
-							controller);
-				}
-				if (card instanceof SpotlightCard) {
-					return StateMachine.useSpotlightCard(card, player,
-							controller, coordinate);
-				}
+				return actionUseCardTelAndSpot(controller, a, player);
 			}
 		}
 
@@ -398,19 +355,69 @@ public class StateMachine {
 			// use item card
 
 			if (a instanceof ActionUseCard) {
-				ItemCard card = ((ActionUseCard) a).getItemCard();
-				Coordinate coordinate = ((ActionUseCard) a).getCoordinate();
-				if (card instanceof TeleportCard) {
-					return StateMachine.useTeleportCard(card, player,
-							controller);
-				}
-				if (card instanceof SpotlightCard) {
-					return StateMachine.useSpotlightCard(card, player,
-							controller, coordinate);
-				}
+				return actionUseCardTelAndSpot(controller, a, player);
 			}
 		}
 		// other cases
+		return false;
+	}
+
+	/**
+	 * Check if the player can use teleport or spotlight card
+	 * 
+	 * @param controller
+	 *            the game
+	 * @param a
+	 *            action
+	 * @param player
+	 *            requesting player
+	 * @return true, if the action has been validated<br>
+	 *         false, if not
+	 */
+	private static boolean actionUseCardTelAndSpot(Controller controller,
+			ClientAction a, Player player) {
+		ItemCard card = ((ActionUseCard) a).getItemCard();
+		Coordinate coordinate = ((ActionUseCard) a).getCoordinate();
+		if (card instanceof TeleportCard) {
+			return StateMachine.useTeleportCard(card, player, controller);
+		}
+		if (card instanceof SpotlightCard) {
+			return StateMachine.useSpotlightCard(card, player, controller,
+					coordinate);
+		}
+		return false;
+	}
+
+	/**
+	 * Check if the player can use attack, teleport, sedatives or spotlight card
+	 * 
+	 * @param controller
+	 *            the game
+	 * @param a
+	 *            action
+	 * @param player
+	 *            the requesting player
+	 * @return true, if the action has been validated<br>
+	 *         false, if not
+	 */
+	private static boolean actionUseCardFull(Controller controller,
+			ClientAction a, Player player) {
+		ItemCard card = ((ActionUseCard) a).getItemCard();
+		Coordinate coordinate = ((ActionUseCard) a).getCoordinate();
+
+		if (card instanceof AttackCard) {
+			return StateMachine.useAttackCard(card, player, controller);
+		}
+		if (card instanceof TeleportCard) {
+			return StateMachine.useTeleportCard(card, player, controller);
+		}
+		if (card instanceof SedativesCard) {
+			return StateMachine.useSedativesCard(card, player, controller);
+		}
+		if (card instanceof SpotlightCard) {
+			return StateMachine.useSpotlightCard(card, player, controller,
+					coordinate);
+		}
 		return false;
 	}
 
@@ -457,9 +464,11 @@ public class StateMachine {
 			for (Player p : victims) {
 				controller.writeToAll(new ResponsePrivate(p.getName()
 						+ " has been killed!"));
-				controller.writeToPlayer(p, new ResponseState(p.getName(), p
-						.getCharacter().toString(), p.getState().toString(), p
-						.getLastPosition(), model.getRoundNumber()));
+				controller.writeToPlayer(
+						p,
+						new ResponseState(p.getName(), p.getCharacter()
+								.toString(), p.getState().toString(), p
+								.getLastPosition(), model.getRoundNumber()));
 				List<Player> survivors = attack.getSurvivor();
 				for (Player p2 : survivors) {
 					controller
@@ -549,11 +558,10 @@ public class StateMachine {
 					+ " has used a Teleport Card"));
 			controller.writeToPlayer(player, new ResponseCard(player.getHand()
 					.getHeldCards()));
-			controller.writeToPlayer(player,
-					new ResponseState(player.getName(), player.getCharacter()
-							.toString(), player.getState().toString(), player
-							.getLastPosition(), controller
-							.getModel().getRoundNumber()));
+			controller.writeToPlayer(player, new ResponseState(
+					player.getName(), player.getCharacter().toString(), player
+							.getState().toString(), player.getLastPosition(),
+					controller.getModel().getRoundNumber()));
 			return true;
 		}
 		return false;
