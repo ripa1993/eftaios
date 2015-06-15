@@ -17,6 +17,97 @@ import javax.swing.JLayeredPane;
 import javax.swing.Timer;
 
 public class MapPanel extends JLayeredPane {
+	private class PlayerJLabel extends JLabel {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 606642999525414965L;
+		private Coordinate coord;
+
+		public PlayerJLabel(Coordinate coord) {
+			this.coord = coord;
+		}
+
+		@Override
+		public void paintComponent(Graphics g) {
+			// get map panel size
+			int mapPanelWidth = this.getWidth();
+			int mapPanelHeight = this.getHeight();
+			// background image sizes
+			float mapImageWidth = mapPanelWidth;
+			float mapImageHeight = mapPanelHeight;
+			if (mapImageWidth - backgroundImageScaled.getWidth(null) > mapImageHeight
+					- backgroundImageScaled.getHeight(null)) {
+				mapImageWidth = mapImageHeight
+						* backgroundImageScaled.getWidth(null)
+						/ backgroundImageScaled.getHeight(null);
+			} else {
+				mapImageHeight = mapImageWidth
+						* backgroundImageScaled.getHeight(null)
+						/ backgroundImageScaled.getWidth(null);
+
+			}
+			// calculate col and row size
+			float columnWidth = (mapImageWidth / NUM_COLUMN) * 4 / 3;
+			float rowHeigth = mapImageHeight / NUM_ROW;
+			ImageIcon image = new ImageIcon(path);
+			Image imageScaled = new ImageIcon(image.getImage()
+					.getScaledInstance(100, -1, Image.SCALE_SMOOTH)).getImage();
+			// get the point where the top left edge of the artifact is
+			Point p = getPoint(coord);
+			g.drawImage(imageScaled, (int) p.getX(), (int) p.getY(),
+					(int) (columnWidth), (int) (rowHeigth * 2), null);
+
+		}
+	}
+
+	private class ArtifactJLabel extends JLabel {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 606642999525414965L;
+		Coordinate coord;
+		String imageFile;
+
+		public ArtifactJLabel(Coordinate coord, String imageFile) {
+			this.coord = coord;
+			this.imageFile = imageFile;
+		}
+
+		@Override
+		public void paintComponent(Graphics g) {
+			// get map panel size
+			int mapPanelWidth = this.getWidth();
+			int mapPanelHeight = this.getHeight();
+			// background image sizes
+			float mapImageWidth = mapPanelWidth;
+			float mapImageHeight = mapPanelHeight;
+			if (mapImageWidth - backgroundImageScaled.getWidth(null) > mapImageHeight
+					- backgroundImageScaled.getHeight(null)) {
+				mapImageWidth = mapImageHeight
+						* backgroundImageScaled.getWidth(null)
+						/ backgroundImageScaled.getHeight(null);
+			} else {
+				mapImageHeight = mapImageWidth
+						* backgroundImageScaled.getHeight(null)
+						/ backgroundImageScaled.getWidth(null);
+
+			}
+			// calculate col and row size
+			float columnWidth = (mapImageWidth / NUM_COLUMN) * 4 / 3;
+			float rowHeigth = mapImageHeight / NUM_ROW;
+			ImageIcon image = new ImageIcon(imageFile);
+			Image imageScaled = new ImageIcon(image.getImage()
+					.getScaledInstance(100, -1, Image.SCALE_SMOOTH)).getImage();
+			// get the point where the top left edge of the artifact is
+			Point p = getPoint(coord);
+			g.drawImage(imageScaled, (int) p.getX(), (int) p.getY(),
+					(int) (columnWidth), (int) (rowHeigth * 2), null);
+
+		}
+	}
 
 	/**
 	 * 
@@ -216,48 +307,9 @@ public class MapPanel extends JLayeredPane {
 	 *            number of blink repetition
 	 * @throws IOException
 	 */
-	public void createArtifact(Coordinate coordinate, final String path,
+	public void createArtifact(Coordinate coordinate, String imagefile,
 			int milliseconds, final int repetitions) throws IOException {
-		final Coordinate coord = coordinate;
-		final JLabel jlabel = new JLabel() {
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 606642999525414965L;
-
-			@Override
-			public void paintComponent(Graphics g) {
-				// get map panel size
-				int mapPanelWidth = this.getWidth();
-				int mapPanelHeight = this.getHeight();
-				// background image sizes
-				float mapImageWidth = mapPanelWidth;
-				float mapImageHeight = mapPanelHeight;
-				if (mapImageWidth - backgroundImageScaled.getWidth(null) > mapImageHeight
-						- backgroundImageScaled.getHeight(null)) {
-					mapImageWidth = mapImageHeight
-							* backgroundImageScaled.getWidth(null)
-							/ backgroundImageScaled.getHeight(null);
-				} else {
-					mapImageHeight = mapImageWidth
-							* backgroundImageScaled.getHeight(null)
-							/ backgroundImageScaled.getWidth(null);
-
-				}
-				// calculate col and row size
-				float columnWidth = (mapImageWidth / NUM_COLUMN) * 4 / 3;
-				float rowHeigth = mapImageHeight / NUM_ROW;
-				ImageIcon image = new ImageIcon(path);
-				Image imageScaled = new ImageIcon(image.getImage()
-						.getScaledInstance(100, -1, Image.SCALE_SMOOTH))
-						.getImage();
-				// get the point where the top left edge of the artifact is
-				Point p = getPoint(coord);
-				g.drawImage(imageScaled, (int) p.getX(), (int) p.getY(),
-						(int) (columnWidth), (int) (rowHeigth * 2), null);
-
-			}
-		};
+		final JLabel jlabel = new ArtifactJLabel(coordinate, imagefile);
 		add(jlabel);
 		setLayer(jlabel, JLayeredPane.POPUP_LAYER + 1);
 		jlabel.repaint();
@@ -291,46 +343,7 @@ public class MapPanel extends JLayeredPane {
 		if (playerLabel != null) {
 			playerLabel.setVisible(false);
 		}
-		final Coordinate coord = coordinate;
-		playerLabel = new JLabel() {
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 606642999525414965L;
-
-			@Override
-			public void paintComponent(Graphics g) {
-				// get map panel size
-				int mapPanelWidth = this.getWidth();
-				int mapPanelHeight = this.getHeight();
-				// background image sizes
-				float mapImageWidth = mapPanelWidth;
-				float mapImageHeight = mapPanelHeight;
-				if (mapImageWidth - backgroundImageScaled.getWidth(null) > mapImageHeight
-						- backgroundImageScaled.getHeight(null)) {
-					mapImageWidth = mapImageHeight
-							* backgroundImageScaled.getWidth(null)
-							/ backgroundImageScaled.getHeight(null);
-				} else {
-					mapImageHeight = mapImageWidth
-							* backgroundImageScaled.getHeight(null)
-							/ backgroundImageScaled.getWidth(null);
-
-				}
-				// calculate col and row size
-				float columnWidth = (mapImageWidth / NUM_COLUMN) * 4 / 3;
-				float rowHeigth = mapImageHeight / NUM_ROW;
-				ImageIcon image = new ImageIcon(path);
-				Image imageScaled = new ImageIcon(image.getImage()
-						.getScaledInstance(100, -1, Image.SCALE_SMOOTH))
-						.getImage();
-				// get the point where the top left edge of the artifact is
-				Point p = getPoint(coord);
-				g.drawImage(imageScaled, (int) p.getX(), (int) p.getY(),
-						(int) (columnWidth), (int) (rowHeigth * 2), null);
-
-			}
-		};
+		playerLabel = new PlayerJLabel(coordinate);
 		add(playerLabel);
 		setLayer(playerLabel, JLayeredPane.POPUP_LAYER);
 		playerLabel.repaint();
