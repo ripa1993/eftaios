@@ -282,7 +282,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		/**
 		 * Which map is loaded.
 		 */
-		setMapImage(Resource.IMG_GALILEI_MAP);
+		setMapImage(Resource.IMG_MAP_BG);
 
 		// add exit behaviour
 		mainFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
