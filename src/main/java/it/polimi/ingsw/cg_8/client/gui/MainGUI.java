@@ -49,6 +49,122 @@ import org.apache.logging.log4j.Logger;
  * @version 1.0
  */
 public class MainGUI implements Runnable {
+	private class PlayActionListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			LOGGER.debug("Pressed play");
+			ConnectionManager connectionManager;
+			String playerName = playerTextField.getText();
+			if (rmiRadioButton.isSelected() && fermiRadioButton.isSelected()) {
+				connectionManager = new ConnectionManagerRMI(playerName,
+						GameMapName.FERMI);
+			} else if (rmiRadioButton.isSelected()
+					&& galvaniRadioButton.isSelected()) {
+				connectionManager = new ConnectionManagerRMI(playerName,
+						GameMapName.GALVANI);
+			} else if (rmiRadioButton.isSelected()
+					&& galileiRadioButton.isSelected()) {
+				connectionManager = new ConnectionManagerRMI(playerName,
+						GameMapName.GALILEI);
+			} else if (socketRadioButton.isSelected()
+					&& fermiRadioButton.isSelected()) {
+				connectionManager = new ConnectionManagerSocket(playerName,
+						GameMapName.FERMI);
+			} else if (socketRadioButton.isSelected()
+					&& galvaniRadioButton.isSelected()) {
+				connectionManager = new ConnectionManagerSocket(playerName,
+						GameMapName.GALVANI);
+			} else {
+				// socket and galilei is the default if some weird bug
+				// happens
+				connectionManager = new ConnectionManagerSocket(playerName,
+						GameMapName.GALILEI);
+			}
+			LOGGER.debug("Connection manager created");
+
+			LOGGER.debug("Checking if the user wants some music");
+			if (yesMusicRadioButton.isSelected()) {
+				LOGGER.debug("Yes");
+				ExecutorService exec = Executors.newCachedThreadPool();
+				BackgroundMusicThread bmt = new BackgroundMusicThread();
+				LOGGER.debug("Background music loaded");
+				exec.submit(bmt);
+
+			} else {
+				LOGGER.debug("No");
+			}
+			ClientGUIThread guiThread = new ClientGUIThread();
+			LOGGER.debug("Gui thread created");
+			guiThread.setConnectionManager(connectionManager);
+			guiThread.getConnectionManager().setup();
+			LOGGER.debug("Connection manager setup started");
+			SwingUtilities.invokeLater(guiThread);
+			LOGGER.debug("Gui thread started, killing welcome frame");
+			main.dispose();
+			LOGGER.debug("Gui welcome killed");
+
+		}
+	}
+
+	private class EastJPanel extends JPanel {
+
+		@Override
+		public void paintComponent(Graphics g) {
+			super.paintComponent(g);
+
+			int updatedWidth = this.getWidth();
+			int updatedHeight = this.getHeight();
+
+			if (this.getWidth() - eastPanelImageScaled.getWidth(null) > this
+					.getHeight() - eastPanelImageScaled.getHeight(null)) {
+				updatedWidth = updatedHeight
+						* eastPanelImageScaled.getWidth(null)
+						/ eastPanelImageScaled.getHeight(null);
+			}
+			if (this.getWidth() - eastPanelImageScaled.getWidth(null) < this
+					.getHeight() - eastPanelImageScaled.getHeight(null)) {
+				updatedHeight = updatedWidth
+						* eastPanelImageScaled.getHeight(null)
+						/ eastPanelImageScaled.getWidth(null);
+			}
+
+			int x = (this.getWidth() - updatedWidth) / 2;
+			int y = (this.getHeight() - updatedHeight) / 2;
+			g.drawImage(eastPanelImageScaled, x, y, updatedWidth,
+					updatedHeight, null);
+		}
+	}
+
+	private class WestJPanel extends JPanel {
+
+		@Override
+		public void paintComponent(Graphics g) {
+			super.paintComponent(g);
+
+			int updatedWidth = this.getWidth();
+			int updatedHeight = this.getHeight();
+
+			if (this.getWidth() - westPanelImageScaled.getWidth(null) > this
+					.getHeight() - westPanelImageScaled.getHeight(null)) {
+				updatedWidth = updatedHeight
+						* westPanelImageScaled.getWidth(null)
+						/ westPanelImageScaled.getHeight(null);
+			}
+			if (this.getWidth() - westPanelImageScaled.getWidth(null) < this
+					.getHeight() - westPanelImageScaled.getHeight(null)) {
+				updatedHeight = updatedWidth
+						* westPanelImageScaled.getHeight(null)
+						/ westPanelImageScaled.getWidth(null);
+			}
+
+			int x = (this.getWidth() - updatedWidth) / 2;
+			int y = (this.getHeight() - updatedHeight) / 2;
+			g.drawImage(westPanelImageScaled, x, y, updatedWidth,
+					updatedHeight, null);
+		}
+	}
+
 	/**
 	 * Main JFrame
 	 */
@@ -295,66 +411,14 @@ public class MainGUI implements Runnable {
 		westPanelImageScaled = new ImageIcon(westPanelImage.getImage()
 				.getScaledInstance(5000, -1, Image.SCALE_SMOOTH)).getImage();
 
-		JPanel westPanel = new JPanel() {
-			@Override
-			public void paintComponent(Graphics g) {
-				super.paintComponent(g);
-
-				int updatedWidth = this.getWidth();
-				int updatedHeight = this.getHeight();
-
-				if (this.getWidth() - westPanelImageScaled.getWidth(null) > this
-						.getHeight() - westPanelImageScaled.getHeight(null)) {
-					updatedWidth = updatedHeight
-							* westPanelImageScaled.getWidth(null)
-							/ westPanelImageScaled.getHeight(null);
-				}
-				if (this.getWidth() - westPanelImageScaled.getWidth(null) < this
-						.getHeight() - westPanelImageScaled.getHeight(null)) {
-					updatedHeight = updatedWidth
-							* westPanelImageScaled.getHeight(null)
-							/ westPanelImageScaled.getWidth(null);
-				}
-
-				int x = (this.getWidth() - updatedWidth) / 2;
-				int y = (this.getHeight() - updatedHeight) / 2;
-				g.drawImage(westPanelImageScaled, x, y, updatedWidth,
-						updatedHeight, null);
-			}
-		};
+		JPanel westPanel = new WestJPanel();
 		westPanel.setPreferredSize(new Dimension(400, 10));
 		westPanel.setOpaque(false);
 		panel.add(westPanel, BorderLayout.WEST);
 		eastPanelImage = new ImageIcon(Resource.IMG_ART_ALIEN);
 		eastPanelImageScaled = new ImageIcon(eastPanelImage.getImage()
 				.getScaledInstance(5000, -1, Image.SCALE_SMOOTH)).getImage();
-		JPanel eastPanel = new JPanel() {
-			@Override
-			public void paintComponent(Graphics g) {
-				super.paintComponent(g);
-
-				int updatedWidth = this.getWidth();
-				int updatedHeight = this.getHeight();
-
-				if (this.getWidth() - eastPanelImageScaled.getWidth(null) > this
-						.getHeight() - eastPanelImageScaled.getHeight(null)) {
-					updatedWidth = updatedHeight
-							* eastPanelImageScaled.getWidth(null)
-							/ eastPanelImageScaled.getHeight(null);
-				}
-				if (this.getWidth() - eastPanelImageScaled.getWidth(null) < this
-						.getHeight() - eastPanelImageScaled.getHeight(null)) {
-					updatedHeight = updatedWidth
-							* eastPanelImageScaled.getHeight(null)
-							/ eastPanelImageScaled.getWidth(null);
-				}
-
-				int x = (this.getWidth() - updatedWidth) / 2;
-				int y = (this.getHeight() - updatedHeight) / 2;
-				g.drawImage(eastPanelImageScaled, x, y, updatedWidth,
-						updatedHeight, null);
-			}
-		};
+		JPanel eastPanel = new EastJPanel();
 		eastPanel.setPreferredSize(new Dimension(400, 10));
 		eastPanel.setOpaque(false);
 		panel.add(eastPanel, BorderLayout.EAST);
@@ -366,64 +430,7 @@ public class MainGUI implements Runnable {
 	@Override
 	public void run() {
 
-		playButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				LOGGER.debug("Pressed play");
-				ConnectionManager connectionManager;
-				String playerName = playerTextField.getText();
-				if (rmiRadioButton.isSelected()
-						&& fermiRadioButton.isSelected()) {
-					connectionManager = new ConnectionManagerRMI(playerName,
-							GameMapName.FERMI);
-				} else if (rmiRadioButton.isSelected()
-						&& galvaniRadioButton.isSelected()) {
-					connectionManager = new ConnectionManagerRMI(playerName,
-							GameMapName.GALVANI);
-				} else if (rmiRadioButton.isSelected()
-						&& galileiRadioButton.isSelected()) {
-					connectionManager = new ConnectionManagerRMI(playerName,
-							GameMapName.GALILEI);
-				} else if (socketRadioButton.isSelected()
-						&& fermiRadioButton.isSelected()) {
-					connectionManager = new ConnectionManagerSocket(playerName,
-							GameMapName.FERMI);
-				} else if (socketRadioButton.isSelected()
-						&& galvaniRadioButton.isSelected()) {
-					connectionManager = new ConnectionManagerSocket(playerName,
-							GameMapName.GALVANI);
-				} else {
-					// socket and galilei is the default if some weird bug
-					// happens
-					connectionManager = new ConnectionManagerSocket(playerName,
-							GameMapName.GALILEI);
-				}
-				LOGGER.debug("Connection manager created");
-
-				LOGGER.debug("Checking if the user wants some music");
-				if (yesMusicRadioButton.isSelected()) {
-					LOGGER.debug("Yes");
-					ExecutorService exec = Executors.newCachedThreadPool();
-					BackgroundMusicThread bmt = new BackgroundMusicThread();
-					LOGGER.debug("Background music loaded");
-					exec.submit(bmt);
-
-				} else {
-					LOGGER.debug("No");
-				}
-				ClientGUIThread guiThread = new ClientGUIThread();
-				LOGGER.debug("Gui thread created");
-				guiThread.setConnectionManager(connectionManager);
-				guiThread.getConnectionManager().setup();
-				LOGGER.debug("Connection manager setup started");
-				SwingUtilities.invokeLater(guiThread);
-				LOGGER.debug("Gui thread started, killing welcome frame");
-				main.dispose();
-				LOGGER.debug("Gui welcome killed");
-
-			}
-		});
+		playButton.addActionListener(new PlayActionListener());
 	}
 
 	/**
