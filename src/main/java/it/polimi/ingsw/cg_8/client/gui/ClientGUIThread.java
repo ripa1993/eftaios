@@ -92,6 +92,249 @@ import org.apache.logging.log4j.Logger;
  * @version 1.1
  */
 public class ClientGUIThread implements Runnable, Observer {
+	private class MapMouseInputAdapter extends MouseInputAdapter {
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			if (matchStarted) {
+				Coordinate coordinate = mapPanel.getCoordinate(e);
+				if (coordinate.getX() >= 0 && coordinate.getY() >= 0
+						&& coordinate.getX() < MapPanel.NUM_COLUMN
+						&& coordinate.getY() < MapPanel.NUM_ROW) {
+					Object[] options = { "Movement", SPOTLIGHT_TEXT,
+							"Do Fake Noise" };
+					int result = JOptionPane.showOptionDialog(null,
+							"This is sector " + coordinate,
+							"What would you like to do?",
+							JOptionPane.DEFAULT_OPTION,
+							JOptionPane.QUESTION_MESSAGE, null, options,
+							options[0]);
+					LOGGER.debug("Result: " + result);
+					LOGGER.debug("Options: " + options);
+					if (result == 0) {
+						LOGGER.debug("Choose: move");
+						connectionManager.send(new ActionMove(coordinate));
+					} else if (result == 1) {
+						LOGGER.debug("Choose: spotlight");
+						connectionManager.send(new ActionUseCard(
+								new SpotlightCard(), coordinate));
+					} else if (result == 2) {
+						LOGGER.debug("Choose: fake noise");
+						connectionManager.send(new ActionFakeNoise(
+								coordinate));
+					}
+				}
+
+			}
+		}
+	}
+
+	private class CloseDisconnectWindowAdapter extends WindowAdapter {
+		@Override
+		public void windowClosing(WindowEvent e) {
+			int confirm = JOptionPane.showOptionDialog(null,
+					"Do you really want to quit the game?",
+					"Exit Confirmation", JOptionPane.YES_NO_OPTION,
+					JOptionPane.QUESTION_MESSAGE, null, null, null);
+			if (confirm == 0) {
+				try {
+					connectionManager.send(new ActionDisconnect());
+				} catch (NullPointerException ex) {
+					// if server is down
+					LOGGER.error("Server is down", ex);
+				}
+				System.exit(0);
+			}
+		}
+	}
+
+	private class ChatActionListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (matchStarted) {
+				String message = chatTextField.getText();
+				chatTextField.setText("");
+				connectionManager.send(new ActionChat(message));
+			}
+		}
+	}
+
+	private class ChatKeyListener implements KeyListener {
+		@Override
+		public void keyPressed(KeyEvent e) {
+
+			if (matchStarted && KeyEvent.VK_ENTER == e.getKeyCode()) {
+				String message = chatTextField.getText();
+				chatTextField.setText("");
+				connectionManager.send(new ActionChat(message));
+			}
+
+		}
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			return;
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			return;
+		}
+	}
+
+	private class UseItemCardActionListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (matchStarted) {
+				String[] cardList = { ATTACK_TEXT, ADRENALINE_TEXT,
+						SEDATIVES_TEXT, SPOTLIGHT_TEXT, TELEPORT_TEXT };
+				String output = (String) JOptionPane.showInputDialog(
+						mainFrame, "Pick a card", "Input",
+						JOptionPane.QUESTION_MESSAGE, null, cardList,
+						ATTACK_TEXT);
+				if (ATTACK_TEXT.equals(output)) {
+					connectionManager.send(new ActionUseCard(
+							new AttackCard()));
+				} else if (ADRENALINE_TEXT.equals(output)) {
+					connectionManager.send(new ActionUseCard(
+							new AdrenalineCard()));
+
+				} else if (SEDATIVES_TEXT.equals(output)) {
+					connectionManager.send(new ActionUseCard(
+							new SedativesCard()));
+
+				} else if (SPOTLIGHT_TEXT.equals(output)) {
+					String coordinateString = JOptionPane.showInputDialog(
+							"Insert target coordinate", COORDINATE_TEXT);
+					try {
+						Coordinate coordinate = ActionParser
+								.parseCoordinate(coordinateString);
+						connectionManager.send(new ActionUseCard(
+								new SpotlightCard(), coordinate));
+					} catch (NotAValidInput e1) {
+						LOGGER.error(e1.getMessage(), e1);
+						JOptionPane.showMessageDialog(mainFrame,
+								NOT_VALID_INPUT_TEXT);
+					}
+				} else if (TELEPORT_TEXT.equals(output)) {
+					connectionManager.send(new ActionUseCard(
+							new TeleportCard()));
+
+				}
+
+			}
+		}
+	}
+
+	private class EndTurnActionListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (matchStarted) {
+				JOptionPane optionPane = new JOptionPane(
+						"Do you want to end your turn?",
+						JOptionPane.QUESTION_MESSAGE,
+						JOptionPane.YES_NO_OPTION);
+				JDialog dialog = optionPane.createDialog("End turn");
+				dialog.setVisible(true);
+				int selection = ((Integer) optionPane.getValue())
+						.intValue();
+				if (selection == JOptionPane.YES_OPTION) {
+					connectionManager.send(new ActionEndTurn());
+				} else {
+					// do nothing
+				}
+			}
+		}
+	}
+
+	private class FakeNoiseActionListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (matchStarted) {
+				String coordinateString = JOptionPane.showInputDialog(
+						"Insert target coordinate", COORDINATE_TEXT);
+				if (coordinateString != null) {
+					try {
+						Coordinate coordinate = ActionParser
+								.parseCoordinate(coordinateString);
+						connectionManager.send(new ActionFakeNoise(
+								coordinate));
+
+					} catch (NotAValidInput e1) {
+						LOGGER.error(e1.getMessage(), e1);
+						JOptionPane.showMessageDialog(mainFrame,
+								NOT_VALID_INPUT_TEXT);
+					}
+				}
+			}
+		}
+	}
+
+	private class DrawActionListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (matchStarted) {
+				JOptionPane optionPane = new JOptionPane(
+						"Do you want to draw a dangerous sector card?",
+						JOptionPane.QUESTION_MESSAGE,
+						JOptionPane.YES_NO_OPTION);
+				JDialog dialog = optionPane
+						.createDialog("Draw a dangerous sector card");
+				dialog.setVisible(true);
+				int selection = ((Integer) optionPane.getValue())
+						.intValue();
+				if (selection == JOptionPane.YES_OPTION) {
+					connectionManager.send(new ActionDrawCard());
+				} else {
+					// do nothing
+				}
+			}
+		}
+	}
+
+	private class AttackActionListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (matchStarted) {
+				JOptionPane optionPane = new JOptionPane(
+						"Do you want to attack?",
+						JOptionPane.QUESTION_MESSAGE,
+						JOptionPane.YES_NO_OPTION);
+				JDialog dialog = optionPane.createDialog(ATTACK_TEXT);
+				dialog.setVisible(true);
+				int selection = ((Integer) optionPane.getValue())
+						.intValue();
+				if (selection == JOptionPane.YES_OPTION) {
+					connectionManager.send(new ActionAttack());
+				} else {
+					// do nothing
+				}
+			}
+		}
+	}
+
+	private class MoveActionListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (matchStarted) {
+				String coordinateString = JOptionPane.showInputDialog(
+						"Insert destination coordinate", COORDINATE_TEXT);
+				if (coordinateString != null) {
+					try {
+
+						Coordinate coordinate = ActionParser
+								.parseCoordinate(coordinateString);
+						connectionManager.send(new ActionMove(coordinate));
+
+					} catch (NotAValidInput e1) {
+						LOGGER.error(e1.getMessage(), e1);
+						JOptionPane.showMessageDialog(mainFrame,
+								NOT_VALID_INPUT_TEXT);
+					}
+				}
+			}
+		}
+	}
+
 	/**
 	 * Attack text
 	 */
@@ -582,266 +825,26 @@ public class ClientGUIThread implements Runnable, Observer {
 			}
 		});
 
-		mainFrame.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				int confirm = JOptionPane.showOptionDialog(null,
-						"Do you really want to quit the game?",
-						"Exit Confirmation", JOptionPane.YES_NO_OPTION,
-						JOptionPane.QUESTION_MESSAGE, null, null, null);
-				if (confirm == 0) {
-					try {
-						connectionManager.send(new ActionDisconnect());
-					} catch (NullPointerException ex) {
-						// if server is down
-						LOGGER.error("Server is down", ex);
-					}
-					System.exit(0);
-				}
-			}
-		});
+		mainFrame.addWindowListener(new CloseDisconnectWindowAdapter());
 
-		moveButton.addActionListener(new ActionListener() {
+		moveButton.addActionListener(new MoveActionListener());
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (matchStarted) {
-					String coordinateString = JOptionPane.showInputDialog(
-							"Insert destination coordinate", COORDINATE_TEXT);
-					if (coordinateString != null) {
-						try {
+		attackButton.addActionListener(new AttackActionListener());
 
-							Coordinate coordinate = ActionParser
-									.parseCoordinate(coordinateString);
-							connectionManager.send(new ActionMove(coordinate));
+		drawButton.addActionListener(new DrawActionListener());
 
-						} catch (NotAValidInput e1) {
-							LOGGER.error(e1.getMessage(), e1);
-							JOptionPane.showMessageDialog(mainFrame,
-									NOT_VALID_INPUT_TEXT);
-						}
-					}
-				}
-			}
+		fakeNoiseButton.addActionListener(new FakeNoiseActionListener());
 
-		});
+		endTurnButton.addActionListener(new EndTurnActionListener());
 
-		attackButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (matchStarted) {
-					JOptionPane optionPane = new JOptionPane(
-							"Do you want to attack?",
-							JOptionPane.QUESTION_MESSAGE,
-							JOptionPane.YES_NO_OPTION);
-					JDialog dialog = optionPane.createDialog(ATTACK_TEXT);
-					dialog.setVisible(true);
-					int selection = ((Integer) optionPane.getValue())
-							.intValue();
-					if (selection == JOptionPane.YES_OPTION) {
-						connectionManager.send(new ActionAttack());
-					} else {
-						// do nothing
-					}
-				}
-			}
-
-		});
-
-		drawButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (matchStarted) {
-					JOptionPane optionPane = new JOptionPane(
-							"Do you want to draw a dangerous sector card?",
-							JOptionPane.QUESTION_MESSAGE,
-							JOptionPane.YES_NO_OPTION);
-					JDialog dialog = optionPane
-							.createDialog("Draw a dangerous sector card");
-					dialog.setVisible(true);
-					int selection = ((Integer) optionPane.getValue())
-							.intValue();
-					if (selection == JOptionPane.YES_OPTION) {
-						connectionManager.send(new ActionDrawCard());
-					} else {
-						// do nothing
-					}
-				}
-			}
-
-		});
-
-		fakeNoiseButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (matchStarted) {
-					String coordinateString = JOptionPane.showInputDialog(
-							"Insert target coordinate", COORDINATE_TEXT);
-					if (coordinateString != null) {
-						try {
-							Coordinate coordinate = ActionParser
-									.parseCoordinate(coordinateString);
-							connectionManager.send(new ActionFakeNoise(
-									coordinate));
-
-						} catch (NotAValidInput e1) {
-							LOGGER.error(e1.getMessage(), e1);
-							JOptionPane.showMessageDialog(mainFrame,
-									NOT_VALID_INPUT_TEXT);
-						}
-					}
-				}
-			}
-
-		});
-
-		endTurnButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (matchStarted) {
-					JOptionPane optionPane = new JOptionPane(
-							"Do you want to end your turn?",
-							JOptionPane.QUESTION_MESSAGE,
-							JOptionPane.YES_NO_OPTION);
-					JDialog dialog = optionPane.createDialog("End turn");
-					dialog.setVisible(true);
-					int selection = ((Integer) optionPane.getValue())
-							.intValue();
-					if (selection == JOptionPane.YES_OPTION) {
-						connectionManager.send(new ActionEndTurn());
-					} else {
-						// do nothing
-					}
-				}
-			}
-
-		});
-
-		useItemCardButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (matchStarted) {
-					String[] cardList = { ATTACK_TEXT, ADRENALINE_TEXT,
-							SEDATIVES_TEXT, SPOTLIGHT_TEXT, TELEPORT_TEXT };
-					String output = (String) JOptionPane.showInputDialog(
-							mainFrame, "Pick a card", "Input",
-							JOptionPane.QUESTION_MESSAGE, null, cardList,
-							ATTACK_TEXT);
-					if (ATTACK_TEXT.equals(output)) {
-						connectionManager.send(new ActionUseCard(
-								new AttackCard()));
-					} else if (ADRENALINE_TEXT.equals(output)) {
-						connectionManager.send(new ActionUseCard(
-								new AdrenalineCard()));
-
-					} else if (SEDATIVES_TEXT.equals(output)) {
-						connectionManager.send(new ActionUseCard(
-								new SedativesCard()));
-
-					} else if (SPOTLIGHT_TEXT.equals(output)) {
-						String coordinateString = JOptionPane.showInputDialog(
-								"Insert target coordinate", COORDINATE_TEXT);
-						try {
-							Coordinate coordinate = ActionParser
-									.parseCoordinate(coordinateString);
-							connectionManager.send(new ActionUseCard(
-									new SpotlightCard(), coordinate));
-						} catch (NotAValidInput e1) {
-							LOGGER.error(e1.getMessage(), e1);
-							JOptionPane.showMessageDialog(mainFrame,
-									NOT_VALID_INPUT_TEXT);
-						}
-					} else if (TELEPORT_TEXT.equals(output)) {
-						connectionManager.send(new ActionUseCard(
-								new TeleportCard()));
-
-					}
-
-				}
-			}
-
-		});
+		useItemCardButton.addActionListener(new UseItemCardActionListener());
 
 		// send chat message when send button is pressed
-		chatButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (matchStarted) {
-					String message = chatTextField.getText();
-					chatTextField.setText("");
-					connectionManager.send(new ActionChat(message));
-				}
-			}
-
-		});
+		chatButton.addActionListener(new ChatActionListener());
 		// send chat message when enter is pressed
-		chatTextField.addKeyListener(new KeyListener() {
+		chatTextField.addKeyListener(new ChatKeyListener());
 
-			@Override
-			public void keyPressed(KeyEvent e) {
-
-				if (matchStarted && KeyEvent.VK_ENTER == e.getKeyCode()) {
-					String message = chatTextField.getText();
-					chatTextField.setText("");
-					connectionManager.send(new ActionChat(message));
-				}
-
-			}
-
-			@Override
-			public void keyTyped(KeyEvent e) {
-				return;
-			}
-
-			@Override
-			public void keyReleased(KeyEvent e) {
-				return;
-			}
-
-		});
-
-		mapPanel.addMouseListener(new MouseInputAdapter() {
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				if (matchStarted) {
-					Coordinate coordinate = mapPanel.getCoordinate(e);
-					if (coordinate.getX() >= 0 && coordinate.getY() >= 0
-							&& coordinate.getX() < MapPanel.NUM_COLUMN
-							&& coordinate.getY() < MapPanel.NUM_ROW) {
-						Object[] options = { "Movement", SPOTLIGHT_TEXT,
-								"Do Fake Noise" };
-						int result = JOptionPane.showOptionDialog(null,
-								"This is sector " + coordinate,
-								"What would you like to do?",
-								JOptionPane.DEFAULT_OPTION,
-								JOptionPane.QUESTION_MESSAGE, null, options,
-								options[0]);
-						LOGGER.debug("Result: " + result);
-						LOGGER.debug("Options: " + options);
-						if (result == 0) {
-							LOGGER.debug("Choose: move");
-							connectionManager.send(new ActionMove(coordinate));
-						} else if (result == 1) {
-							LOGGER.debug("Choose: spotlight");
-							connectionManager.send(new ActionUseCard(
-									new SpotlightCard(), coordinate));
-						} else if (result == 2) {
-							LOGGER.debug("Choose: fake noise");
-							connectionManager.send(new ActionFakeNoise(
-									coordinate));
-						}
-					}
-
-				}
-			}
-		});
+		mapPanel.addMouseListener(new MapMouseInputAdapter());
 	}
 
 	/**
