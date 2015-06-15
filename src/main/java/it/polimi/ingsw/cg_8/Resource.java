@@ -10,31 +10,40 @@ import java.io.File;
  */
 public class Resource {
 	/**
+	 * images literal
+	 */
+	private static final String IMAGES_LITERAL = "images";
+	/**
+	 * resources literal
+	 */
+	private static final String RESOURCES_LITERAL = "resources";
+	/**
 	 * Images folder
 	 */
-	private static final String IMAGES_FOLDER = "resources"
-			+ File.separatorChar + "images" + File.separatorChar;
+	private static final String IMAGES_FOLDER = RESOURCES_LITERAL
+			+ File.separatorChar + IMAGES_LITERAL + File.separatorChar;
 	/**
 	 * Sound folder
 	 */
-	private static final String SOUND_FOLDER = "resources" + File.separatorChar
-			+ "sounds" + File.separatorChar;
+	private static final String SOUND_FOLDER = RESOURCES_LITERAL
+			+ File.separatorChar + "sounds" + File.separatorChar;
 	/**
 	 * Card folder
 	 */
-	private static final String CARD_FOLDER = "resources" + File.separatorChar
-			+ "images" + File.separatorChar + "card" + File.separatorChar;
+	private static final String CARD_FOLDER = RESOURCES_LITERAL
+			+ File.separatorChar + IMAGES_LITERAL + File.separatorChar + "card"
+			+ File.separatorChar;
 	/**
 	 * Font folder
 	 */
-	private static final String FONT_FOLDER = "resources" + File.separatorChar
-			+ "fonts" + File.separatorChar;
+	private static final String FONT_FOLDER = RESOURCES_LITERAL
+			+ File.separatorChar + "fonts" + File.separatorChar;
 	/**
 	 * Player folder
 	 */
-	private static final String PLAYER_FOLDER = "resources"
-			+ File.separatorChar + "images" + File.separatorChar + "player"
-			+ File.separatorChar;
+	private static final String PLAYER_FOLDER = RESOURCES_LITERAL
+			+ File.separatorChar + IMAGES_LITERAL + File.separatorChar
+			+ "player" + File.separatorChar;
 	/**
 	 * Reference to Fermi map image
 	 */
