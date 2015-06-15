@@ -540,8 +540,8 @@ public class ClientGUIThread implements Runnable, Observer {
 		// ROBA DA TOGLIERE GIU
 		mapPanel.setMapImage(Resource.IMG_GALILEI_MAP);
 		try {
-			mapPanel.createArtifact(new Coordinate(22, 10),
-					Resource.IMG_ALIEN_OVERLAY);
+			mapPanel.createArtifact(new Coordinate(1, 1),
+					Resource.IMG_ALIEN_OVERLAY, 1000, 10);
 		} catch (IOException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();

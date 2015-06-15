@@ -1,20 +1,19 @@
 package it.polimi.ingsw.cg_8.client.gui;
 
-import it.polimi.ingsw.cg_8.Resource;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.Timer;
 
 public class MapPanel extends JLayeredPane {
 
@@ -38,6 +37,7 @@ public class MapPanel extends JLayeredPane {
 	 * Map image
 	 */
 	private ImageIcon backgroundImage;
+	private Timer timer;
 
 	@Override
 	public void paintComponent(Graphics g) {
@@ -190,12 +190,32 @@ public class MapPanel extends JLayeredPane {
 		return new Coordinate(col, row);
 	}
 
-	public void createArtifact(Coordinate coordinate, final String path)
-			throws IOException {
+	/**
+	 * Creates a blinking artifact on the selected coordinate, after the chosen
+	 * repetitions an milliseconds interval, it disappears
+	 * 
+	 * @param coordinate
+	 *            where the artifact is placed
+	 * @param path
+	 *            png image to be displayed
+	 * @param milliseconds
+	 *            interval between blinks
+	 * @param repetitions
+	 *            number of blink repetition
+	 * @throws IOException
+	 */
+	public void createArtifact(Coordinate coordinate, final String path,
+			int milliseconds, final int repetitions) throws IOException {
 		final Coordinate coord = coordinate;
-		JLabel jlabel = new JLabel() {
+		final JLabel jlabel = new JLabel() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 606642999525414965L;
+
 			@Override
 			public void paintComponent(Graphics g) {
+				// get map panel size
 				int mapPanelWidth = this.getWidth();
 				int mapPanelHeight = this.getHeight();
 				// background image sizes
@@ -212,25 +232,45 @@ public class MapPanel extends JLayeredPane {
 							/ backgroundImageScaled.getWidth(null);
 
 				}
-				// border sizes
-				float panelBorderWidth = (mapPanelWidth - mapImageWidth) / 2;
-				float panelBorderHeigth = (mapPanelHeight - mapImageHeight) / 2;
 				// calculate col and row size
-				float columnWidth = (mapImageWidth / NUM_COLUMN);
+				float columnWidth = (mapImageWidth / NUM_COLUMN) * 4 / 3;
 				float rowHeigth = mapImageHeight / NUM_ROW;
 				ImageIcon image = new ImageIcon(path);
 				Image imageScaled = new ImageIcon(image.getImage()
 						.getScaledInstance(100, -1, Image.SCALE_SMOOTH))
 						.getImage();
+				// get the point where the top left edge of the artifact is
 				Point p = getPoint(coord);
 				g.drawImage(imageScaled, (int) p.getX(), (int) p.getY(),
-						(int) (columnWidth * 1.3), (int) (rowHeigth * 2), null);
+						(int) (columnWidth), (int) (rowHeigth * 2), null);
 
 			}
 		};
 		add(jlabel);
 		setLayer(jlabel, JLayeredPane.POPUP_LAYER);
-		// jlabel.setLocation(500, 500);
 		jlabel.repaint();
+		// blink
+		ActionListener blink = new ActionListener() {
+			int counter = repetitions;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (jlabel.isVisible()) {
+					jlabel.setVisible(false);
+					counter--;
+				} else {
+					jlabel.setVisible(true);
+					counter--;
+				}
+				if (counter <= 0) {
+					timer.stop();
+				}
+			}
+		};
+		timer = new Timer(milliseconds, blink);
+		timer.setInitialDelay(0);
+		timer.start();
+		jlabel.setVisible(false);
+
 	}
 }
