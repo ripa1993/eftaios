@@ -16,6 +16,13 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.Timer;
 
+/**
+ * Panel that shows the game map and can show label for noises and player
+ * position
+ * 
+ * @author Simone
+ * @version 1.0
+ */
 public class MapPanel extends JLayeredPane {
 
 	/**
@@ -211,7 +218,7 @@ public class MapPanel extends JLayeredPane {
 	 * @param path
 	 *            png image to be displayed
 	 * @param milliseconds
-	 *            interval between blinks
+	 *            interval between blinks, if -1 the artifact lasts forever
 	 * @param repetitions
 	 *            number of blink repetition
 	 * @throws IOException
@@ -280,13 +287,20 @@ public class MapPanel extends JLayeredPane {
 				}
 			}
 		};
-		timer = new Timer(milliseconds, blink);
-		timer.setInitialDelay(0);
-		timer.start();
-		jlabel.setVisible(false);
+		if (milliseconds == -1) {
+			timer = new Timer(milliseconds, blink);
+			timer.setInitialDelay(0);
+			timer.start();
+			jlabel.setVisible(false);
+		}
 
 	}
 
+	/**
+	 * Creates an label that shows the position of the player on the map.
+	 * 
+	 * @param coordinate
+	 */
 	public void createPlayerPosition(Coordinate coordinate) {
 		if (playerLabel != null) {
 			playerLabel.setVisible(false);
