@@ -274,4 +274,24 @@ public class Resource {
 	 * art alien
 	 */
 	public static final String IMG_ART_ALIEN = IMAGES_FOLDER + "art_alien.png";
+	/**
+	 * Transparent red overlay
+	 */
+	public static final String IMG_RED_OVER = IMAGES_FOLDER + "red_overlay.png";
+	/**
+	 * Transparent yellow overlay
+	 */
+	public static final String IMG_YELLOW_OVER = IMAGES_FOLDER
+			+ "yellow_overlay.png";
+	/**
+	 * Transparent black overlay
+	 */
+	public static final String IMG_BLACK_OVER = IMAGES_FOLDER
+			+ "black_overlay.png";
+	/**
+	 * Transparent green overlay
+	 */
+	public static final String IMG_GREEN_OVER = IMAGES_FOLDER
+			+ "green_overlay.png";
+
 }

@@ -159,7 +159,7 @@ public class StateMachine {
 							new ResponseState(player.getName(), player
 									.getCharacter().toString(), player
 									.getState().toString(), player
-									.getLastPosition().toString(), model
+									.getLastPosition(), model
 									.getRoundNumber()));
 					if (!currentPlayer.getCharacter().hasToDrawSectorCard()) {
 						model.setTurnPhase(TurnPhase.MOVEMENT_DONE_NOT_DS);
@@ -459,7 +459,7 @@ public class StateMachine {
 						+ " has been killed!"));
 				controller.writeToPlayer(p, new ResponseState(p.getName(), p
 						.getCharacter().toString(), p.getState().toString(), p
-						.getLastPosition().toString(), model.getRoundNumber()));
+						.getLastPosition(), model.getRoundNumber()));
 				List<Player> survivors = attack.getSurvivor();
 				for (Player p2 : survivors) {
 					controller
@@ -552,7 +552,7 @@ public class StateMachine {
 			controller.writeToPlayer(player,
 					new ResponseState(player.getName(), player.getCharacter()
 							.toString(), player.getState().toString(), player
-							.getLastPosition().toString(), controller
+							.getLastPosition(), controller
 							.getModel().getRoundNumber()));
 			return true;
 		}

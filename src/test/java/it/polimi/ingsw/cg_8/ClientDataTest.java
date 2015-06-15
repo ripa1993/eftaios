@@ -87,7 +87,8 @@ public class ClientDataTest {
 
 	@Test
 	public void testStoreResponseState() {
-		cd.storeResponse(new ResponseState("a", "v", "a", "a", 1));
+		cd.storeResponse(new ResponseState("a", "v", "a", new Coordinate(1, 1),
+				1));
 		while (!dummy.changed) {
 
 		}
@@ -137,7 +138,8 @@ public class ClientDataTest {
 
 	@Test
 	public void testGetState() {
-		cd.storeResponse(new ResponseState("a", "b", "c", "d", 0));
+		cd.storeResponse(new ResponseState("a", "b", "c", new Coordinate(1, 1),
+				0));
 		ResponseState state = cd.getState();
 		assertEquals("0", state.getRoundNumber());
 	}

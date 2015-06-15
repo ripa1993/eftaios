@@ -1,5 +1,7 @@
 package it.polimi.ingsw.cg_8.view.server;
 
+import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
+
 import java.io.Serializable;
 
 /**
@@ -29,7 +31,7 @@ public class ResponseState implements ServerResponse, Serializable {
 	/**
 	 * Player position
 	 */
-	private final String position;
+	private final Coordinate position;
 	/**
 	 * Round number
 	 */
@@ -50,7 +52,7 @@ public class ResponseState implements ServerResponse, Serializable {
 	 *            player round number
 	 */
 	public ResponseState(String playerName, String character, String state,
-			String position, int roundNumber) {
+			Coordinate position, int roundNumber) {
 		this.playerName = playerName;
 		this.character = character;
 		this.state = state;
@@ -86,7 +88,7 @@ public class ResponseState implements ServerResponse, Serializable {
 	 * 
 	 * @return player position
 	 */
-	public String getPosition() {
+	public Coordinate getPosition() {
 		return position;
 	}
 

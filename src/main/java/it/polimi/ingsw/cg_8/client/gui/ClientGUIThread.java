@@ -44,6 +44,8 @@ import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -138,7 +140,7 @@ public class ClientGUIThread implements Runnable, Observer {
 	/**
 	 * JLayered pane used in the map panel
 	 */
-	private JLayeredPane mapPanel;
+	private MapPanel mapPanel;
 	/**
 	 * JButton used in the gui
 	 */
@@ -161,18 +163,6 @@ public class ClientGUIThread implements Runnable, Observer {
 	 * JScrollPane used to add a scroll to the chat and info text pane
 	 */
 	private JScrollPane chatScroll, infoScroll;
-	/**
-	 * Background image resource
-	 */
-	private String backgroundImageResource;
-	/**
-	 * Map image, scalable
-	 */
-	private Image backgroundImageScaled;
-	/**
-	 * Map image
-	 */
-	private ImageIcon backgroundImage;
 	/**
 	 * CardButton used to display player item cards
 	 */
@@ -280,52 +270,15 @@ public class ClientGUIThread implements Runnable, Observer {
 		/**
 		 * Which map is loaded.
 		 */
-		backgroundImageResource = Resource.IMG_MAP_BG;
-		backgroundImage = new ImageIcon(backgroundImageResource);
-		backgroundImageScaled = new ImageIcon(backgroundImage.getImage()
-				.getScaledInstance(5000, -1, Image.SCALE_SMOOTH)).getImage();
 
 		// add exit behaviour
 		mainFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
 		// setup map panel
-		mapPanel = new JLayeredPane() {
-
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = -6773174313895718360L;
-
-			@Override
-			public void paintComponent(Graphics g) {
-				super.paintComponent(g);
-
-				int updatedWidth = this.getWidth();
-				int updatedHeight = this.getHeight();
-
-				if (this.getWidth() - backgroundImageScaled.getWidth(null) > this
-						.getHeight() - backgroundImageScaled.getHeight(null)) {
-					updatedWidth = updatedHeight
-							* backgroundImageScaled.getWidth(null)
-							/ backgroundImageScaled.getHeight(null);
-				}
-				if (this.getWidth() - backgroundImageScaled.getWidth(null) < this
-						.getHeight() - backgroundImageScaled.getHeight(null)) {
-					updatedHeight = updatedWidth
-							* backgroundImageScaled.getHeight(null)
-							/ backgroundImageScaled.getWidth(null);
-				}
-
-				int x = (this.getWidth() - updatedWidth) / 2;
-				int y = (this.getHeight() - updatedHeight) / 2;
-				g.drawImage(backgroundImageScaled, x, y, updatedWidth,
-						updatedHeight, null);
-			}
-
-		};
+		mapPanel = new MapPanel();
 		mapPanel.setBackground(Color.WHITE);
 		mapPanel.setVisible(true);
-
+		mapPanel.setMapImage(Resource.IMG_MAP_BG);
 		// set layouts
 		mainFrame.getContentPane().setLayout(new BorderLayout());
 
@@ -340,7 +293,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		// set borders
 		chatPanel2.setBorder(new EmptyBorder(10, 10, 10, 10));
 		infoPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-		mapPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+		// mapPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		commandsPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
 		// set up commands jpanel
@@ -586,7 +539,6 @@ public class ClientGUIThread implements Runnable, Observer {
 	public void run() {
 
 		LOGGER.debug("Info text pane is" + infoPanel.getSize());
-
 		cardButton1.getInvisButton().addMouseListener(new MouseInputAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -855,79 +807,14 @@ public class ClientGUIThread implements Runnable, Observer {
 		});
 
 		mapPanel.addMouseListener(new MouseInputAdapter() {
-			private static final int NUM_COLUMN = 23;
-			private static final int NUM_ROW = 29;
-
-			private Coordinate getCoordinate(MouseEvent e) {
-				// result coordinates
-				int col = -1;
-				int row = -1;
-
-				// click coordinates
-				int mouseX = e.getX();
-				int mouseY = e.getY();
-				// mapPanel sizes
-				int mapPanelWidth = mapPanel.getWidth();
-				int mapPanelHeight = mapPanel.getHeight();
-				// background image sizes
-				float mapImageWidth = mapPanelWidth;
-				float mapImageHeight = mapPanelHeight;
-				if (mapImageWidth - backgroundImageScaled.getWidth(null) > mapImageHeight
-						- backgroundImageScaled.getHeight(null)) {
-					mapImageWidth = mapImageHeight
-							* backgroundImageScaled.getWidth(null)
-							/ backgroundImageScaled.getHeight(null);
-				} else {
-					mapImageHeight = mapImageWidth
-							* backgroundImageScaled.getHeight(null)
-							/ backgroundImageScaled.getWidth(null);
-
-				}
-				// border sizes
-				float panelBorderWidth = (mapPanelWidth - mapImageWidth) / 2;
-				float panelBorderHeigth = (mapPanelHeight - mapImageHeight) / 2;
-				// calculate col and row size
-				float columnWidth = mapImageWidth / NUM_COLUMN;
-				float rowHeigth = mapImageHeight / NUM_ROW;
-
-				// calculate coordinate
-				float imageMouseX = mouseX - panelBorderWidth;
-				float imageMouseY = mouseY - panelBorderHeigth;
-
-				// calculate column
-				for (int i = 0; i <= NUM_COLUMN; i++) {
-					if (imageMouseX >= i * columnWidth
-							&& imageMouseX <= (i + 1) * columnWidth) {
-						col = i;
-						break;
-					}
-				}
-				// calculate row
-				for (int i = 0; i <= NUM_ROW; i++) {
-					if (imageMouseY >= i * rowHeigth
-							&& imageMouseY <= (i + 1) * rowHeigth) {
-						row = i;
-						break;
-					}
-				}
-				if (col % 2 != 0) {
-					row--;
-				}
-				if (row < 0 || col < 0 || row >= (NUM_ROW - 1)
-						|| col >= NUM_COLUMN) {
-					return new Coordinate();
-				}
-				row = (int) Math.floor((double) (row / 2));
-				return new Coordinate(col, row);
-			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				if (matchStarted) {
-					Coordinate coordinate = getCoordinate(e);
+					Coordinate coordinate = mapPanel.getCoordinate(e);
 					if (coordinate.getX() >= 0 && coordinate.getY() >= 0
-							&& coordinate.getX() < NUM_COLUMN
-							&& coordinate.getY() < NUM_ROW) {
+							&& coordinate.getX() < MapPanel.NUM_COLUMN
+							&& coordinate.getY() < MapPanel.NUM_ROW) {
 						Object[] options = { "Movement", SPOTLIGHT_TEXT,
 								"Do Fake Noise" };
 						int result = JOptionPane.showOptionDialog(null,
@@ -973,7 +860,12 @@ public class ClientGUIThread implements Runnable, Observer {
 		} else if ("Noise".equals(arg)) {
 			ResponseNoise noise = clientData.getLastNoise();
 			this.appendInfo("NOISE", noise.toString());
-
+			try {
+				mapPanel.createArtifact(noise.getNoise().getCoordinate(),
+						Resource.IMG_YELLOW_OVER, 1000, 10);
+			} catch (IOException e) {
+				LOGGER.error(e.getMessage(), e);
+			}
 			// play music
 			if (noise.getNoise() instanceof AttackNoise) {
 				Random random = new Random();
@@ -1040,7 +932,8 @@ public class ClientGUIThread implements Runnable, Observer {
 			 */
 		} else if ("State".equals(arg)) {
 			ResponseState stateMessage = clientData.getState();
-
+			// change
+			mapPanel.createPlayerPosition(stateMessage.getPosition());
 			if (!playerImageSet) {
 				double random = Math.random();
 				LOGGER.debug(stateMessage.getCharacter());
@@ -1048,14 +941,18 @@ public class ClientGUIThread implements Runnable, Observer {
 					LOGGER.debug("I'm a human, so i set my img");
 					if (random < 0.25) {
 						setStateImage(Resource.IMG_HUMAN_1);
+						mapPanel.setPath(Resource.IMG_HUMAN_1);
 					} else if (random < 0.5) {
 						setStateImage(Resource.IMG_HUMAN_2);
+						mapPanel.setPath(Resource.IMG_HUMAN_2);
 
 					} else if (random < 0.75) {
 						setStateImage(Resource.IMG_HUMAN_3);
+						mapPanel.setPath(Resource.IMG_HUMAN_3);
 
 					} else {
 						setStateImage(Resource.IMG_HUMAN_4);
+						mapPanel.setPath(Resource.IMG_HUMAN_4);
 
 					}
 				} else if ("Alien".equals(stateMessage.getCharacter())) {
@@ -1066,15 +963,19 @@ public class ClientGUIThread implements Runnable, Observer {
 
 					if (random < 0.25) {
 						setStateImage(Resource.IMG_ALIEN_1);
+						mapPanel.setPath(Resource.IMG_ALIEN_1);
 
 					} else if (random < 0.5) {
 						setStateImage(Resource.IMG_ALIEN_2);
+						mapPanel.setPath(Resource.IMG_ALIEN_2);
 
 					} else if (random < 0.75) {
 						setStateImage(Resource.IMG_ALIEN_3);
+						mapPanel.setPath(Resource.IMG_ALIEN_3);
 
 					} else {
 						setStateImage(Resource.IMG_ALIEN_4);
+						mapPanel.setPath(Resource.IMG_ALIEN_4);
 
 					}
 				}
@@ -1092,13 +993,13 @@ public class ClientGUIThread implements Runnable, Observer {
 			ResponseMap response = clientData.getMap();
 			GameMapName mapName = response.getMapName();
 			if (mapName.equals(GameMapName.FERMI)) {
-				setMapImage(Resource.IMG_FERMI_MAP);
+				mapPanel.setMapImage(Resource.IMG_FERMI_MAP);
 				LOGGER.debug("Map changed to fermi");
 			} else if (mapName.equals(GameMapName.GALILEI)) {
-				setMapImage(Resource.IMG_GALILEI_MAP);
+				mapPanel.setMapImage(Resource.IMG_GALILEI_MAP);
 				LOGGER.debug("Map changed to galilei");
 			} else if (mapName.equals(GameMapName.GALVANI)) {
-				setMapImage(Resource.IMG_GALVANI_MAP);
+				mapPanel.setMapImage(Resource.IMG_GALVANI_MAP);
 				LOGGER.debug("Map changed to galvani");
 			}
 			mapPanel.repaint();
@@ -1127,18 +1028,6 @@ public class ClientGUIThread implements Runnable, Observer {
 	}
 
 	/**
-	 * Changes the map image, used when the server sends a ResponseMap message
-	 * 
-	 * @param path
-	 *            path to image file
-	 */
-	private void setMapImage(String path) {
-		backgroundImage = new ImageIcon(path);
-		backgroundImageScaled = new ImageIcon(backgroundImage.getImage()
-				.getScaledInstance(5000, -1, Image.SCALE_SMOOTH)).getImage();
-	}
-
-	/**
 	 * Reads a string and returns a value in the CardType enumeration
 	 * 
 	 * @param card
@@ -1161,4 +1050,5 @@ public class ClientGUIThread implements Runnable, Observer {
 		} else
 			return CardType.DEFAULT;
 	}
+
 }
