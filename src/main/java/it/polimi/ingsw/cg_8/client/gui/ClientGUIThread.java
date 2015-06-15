@@ -293,7 +293,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		// set borders
 		chatPanel2.setBorder(new EmptyBorder(10, 10, 10, 10));
 		infoPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-		mapPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+		// mapPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		commandsPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
 		// set up commands jpanel
@@ -537,9 +537,20 @@ public class ClientGUIThread implements Runnable, Observer {
 
 	@Override
 	public void run() {
+		// ROBA DA TOGLIERE GIU
+		mapPanel.setMapImage(Resource.IMG_GALILEI_MAP);
+		try {
+			mapPanel.createArtifact(new Coordinate(22, 10),
+					Resource.IMG_ALIEN_OVERLAY);
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		mapPanel.repaint();
+
+		// ROBA DA TOGLIER SU
 
 		LOGGER.debug("Info text pane is" + infoPanel.getSize());
-
 		cardButton1.getInvisButton().addMouseListener(new MouseInputAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
