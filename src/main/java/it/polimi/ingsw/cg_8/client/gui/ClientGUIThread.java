@@ -293,6 +293,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		// set borders
 		chatPanel2.setBorder(new EmptyBorder(10, 10, 10, 10));
 		infoPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+		// mapPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		commandsPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
 		// set up commands jpanel
