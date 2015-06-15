@@ -26,12 +26,12 @@ public class ResponseStateTest {
 
 	@Test
 	public void testGetState() {
-		assertEquals("D", response.getState());
+		assertEquals(new Coordinate(1, 1), response.getState());
 	}
 
 	@Test
 	public void testGetPosition() {
-		assertEquals(new Coordinate(1, 1), response.getPosition());
+		assertEquals("D", response.getPosition());
 	}
 
 	@Test
