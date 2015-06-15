@@ -13,9 +13,9 @@ public class AlienTest {
 	static Alien fedAlien;
 	static CharacterCard cc1;
 	static CharacterCard cc2;
-	
+
 	@BeforeClass
-	public static void init(){
+	public static void init() {
 		cc1 = new AlienCard("a", "b", "c");
 		cc2 = new AlienCard("d", "e", "f");
 
@@ -23,45 +23,58 @@ public class AlienTest {
 		fedAlien = new Alien(cc2);
 		fedAlien.feedAlien();
 	}
-	
+
 	// testing normal behaviour
 	@Test
 	public void getMaxAllowedMovement() {
-		assertEquals(normalAlien.getMaxAllowedMovement(),2);
+		assertEquals(normalAlien.getMaxAllowedMovement(), 2);
 	}
+
 	@Test
-	public void isAttackAllowed(){
+	public void isAttackAllowed() {
 		assertTrue(normalAlien.isAttackAllowed());
 	}
+
 	@Test
-	public void isDefendAllowed(){
+	public void isDefendAllowed() {
 		assertFalse(normalAlien.isDefendAllowed());
 	}
+
 	@Test
-	public void hasToDrawSectorCard(){
+	public void hasToDrawSectorCard() {
 		assertTrue(normalAlien.hasToDrawSectorCard());
 	}
+
 	// testing fed behaviour
 	@Test
 	public void getMaxAllowedMovement2() {
-		assertEquals(fedAlien.getMaxAllowedMovement(),3);
+		assertEquals(fedAlien.getMaxAllowedMovement(), 3);
 	}
+
 	@Test
-	public void isAttackAllowed2(){
+	public void isAttackAllowed2() {
 		assertTrue(fedAlien.isAttackAllowed());
 	}
+
 	@Test
-	public void isDefendAllowed2(){
+	public void isDefendAllowed2() {
 		assertFalse(fedAlien.isDefendAllowed());
 	}
+
 	@Test
-	public void hasToDrawSectorCard2(){
+	public void hasToDrawSectorCard2() {
 		assertTrue(fedAlien.hasToDrawSectorCard());
 	}
+
 	// testing equals
 	@Test
-	public void equals(){
+	public void equals() {
 		assertFalse(normalAlien.equals(fedAlien));
+	}
+
+	@Test
+	public void toStringTest() {
+		assertEquals("Fed Alien", fedAlien.toString());
 	}
 
 }

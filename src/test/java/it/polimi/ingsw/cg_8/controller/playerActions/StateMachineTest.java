@@ -42,31 +42,31 @@ public class StateMachineTest {
 	private class DummyController extends Controller {
 
 		public ServerResponse response;
-		
+
 		public DummyController(GameMapName mapName, Rules rules) {
 			super(mapName, rules);
 		}
 
 		@Override
 		public void writeToAll(ServerResponse message) {
-			response=message;
+			response = message;
 		}
 
 		@Override
 		public void writeToId(Integer id, ServerResponse message) {
-			response=message;
+			response = message;
 
 		}
 
 		@Override
 		public void writeToPlayer(Player player, ServerResponse message) {
-			response=message;
+			response = message;
 		}
 
-//		@Override
-//		public void update(Observable o, Object arg) {
-//
-//		}
+		// @Override
+		// public void update(Observable o, Object arg) {
+		//
+		// }
 
 	}
 
@@ -173,28 +173,6 @@ public class StateMachineTest {
 		result = StateMachine.evaluateAction(controller,
 				new ActionGetReachableCoordinates(), p);
 		assertTrue(result);
-	}
-
-	@Test
-	public void disconnectTest1() {
-		Player p = controller.getModel().getCurrentPlayerReference();
-		boolean result = false;
-
-		result = StateMachine.evaluateAction(controller,
-				new ActionDisconnect(), p);
-		assertTrue(result);
-	}
-
-	@Test
-	public void disconnectTest2() {
-		Player p = controller.getModel().getCurrentPlayerReference();
-		boolean result = false;
-
-		result = StateMachine.evaluateAction(controller,
-				new ActionDisconnect(), p);
-		result = StateMachine.evaluateAction(controller,
-				new ActionDisconnect(), p);
-		assertFalse(result);
 	}
 
 	@Test
@@ -653,7 +631,6 @@ public class StateMachineTest {
 		assertTrue(result);
 	}
 
-
 	@Test
 	public void waitingFakeNoiseTest() {
 		while (controller.getModel().getCurrentPlayerReference().getCharacter() instanceof Alien) {
@@ -670,7 +647,6 @@ public class StateMachineTest {
 		assertTrue(result);
 	}
 
-
 	@Test
 	public void endTurnDrawnCard() {
 		while (controller.getModel().getCurrentPlayerReference().getCharacter() instanceof Alien) {
@@ -682,11 +658,11 @@ public class StateMachineTest {
 				.addItemCard(new SpotlightCard());
 		controller.getModel().setTurnPhase(TurnPhase.DRAWN_CARD);
 		boolean result = StateMachine.evaluateAction(controller,
-				new ActionEndTurn(),
-				controller.getModel().getCurrentPlayerReference());
+				new ActionEndTurn(), controller.getModel()
+						.getCurrentPlayerReference());
 		assertTrue(result);
 	}
-	
+
 	@Test
 	public void useCardTeleportDrawnCard() {
 		while (controller.getModel().getCurrentPlayerReference().getCharacter() instanceof Alien) {
@@ -718,13 +694,6 @@ public class StateMachineTest {
 				controller.getModel().getCurrentPlayerReference());
 		assertTrue(result);
 	}
+
 	
-	// dummy controller tests
-	
-	@Test
-	public void updateTest(){
-		MovementNoise n = new MovementNoise(0, new Player("ciao"), new Coordinate(1,1));
-		controller.getModel().addNoise(n);
-		assertEquals(n, ((ResponseNoise)((DummyController)controller).response).getNoise());
-	}
 }

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.cg_8.model.decks;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 import it.polimi.ingsw.cg_8.model.cards.Card;
 import it.polimi.ingsw.cg_8.model.cards.itemCards.ItemCard;
 import it.polimi.ingsw.cg_8.model.decks.deckCreators.ItemDeckCreator;
@@ -45,4 +45,12 @@ public class ItemDeckTest {
 		}
 
 	}
+
+	@Test(expected = EmptyDeckException.class)
+	public void testReshuffle() throws EmptyDeckException {
+		for (int i = 0; i < 13; i++) {
+			items.drawCard();
+		}
+	}
+
 }
