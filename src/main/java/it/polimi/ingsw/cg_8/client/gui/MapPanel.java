@@ -166,7 +166,7 @@ public class MapPanel extends JLayeredPane {
 	/**
 	 * Map image, scalable
 	 */
-	private Image backgroundImageScaled;
+	private transient Image backgroundImageScaled;
 	/**
 	 * Map image
 	 */
