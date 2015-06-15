@@ -350,6 +350,12 @@ public class MapPanel extends JLayeredPane {
 		playerLabel.repaint();
 	}
 
+	/**
+	 * Sets the path to the player image
+	 * 
+	 * @param path
+	 *            path to player image icon
+	 */
 	public void setPath(String path) {
 		this.path = path;
 
