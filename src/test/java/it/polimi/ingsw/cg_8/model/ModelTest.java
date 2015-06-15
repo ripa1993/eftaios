@@ -13,6 +13,7 @@ import it.polimi.ingsw.cg_8.model.map.FermiMap;
 import it.polimi.ingsw.cg_8.model.map.GalileiMap;
 import it.polimi.ingsw.cg_8.model.map.GalvaniMap;
 import it.polimi.ingsw.cg_8.model.map.GameMapName;
+import it.polimi.ingsw.cg_8.model.player.Player;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -53,7 +54,7 @@ public class ModelTest {
 		System.out.println("2:" + model.getCurrentPlayer());
 		EndTurn.endTurn(model);
 		System.out.println("3:" + model.getCurrentPlayer());
-		
+
 		assertEquals(tempPlayer, model.getCurrentPlayer());
 	}
 
@@ -120,5 +121,20 @@ public class ModelTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Test(expected = GameAlreadyRunningException.class)
+	public void addPlayerAfterInit() throws GameAlreadyRunningException,
+			EmptyDeckException {
+		model.initGame();
+		model.addPlayer("asd");
+	}
+
+	@Test(expected = GameAlreadyRunningException.class)
+	public void removePlayerAfterInit() throws EmptyDeckException,
+			GameAlreadyRunningException {
+		model.initGame();
+		Player player = model.getCurrentPlayerReference();
+		model.removePlayer(player);
 	}
 }

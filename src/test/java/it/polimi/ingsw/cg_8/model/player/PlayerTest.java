@@ -6,6 +6,7 @@ import it.polimi.ingsw.cg_8.model.cards.characterCards.CharacterCard;
 import it.polimi.ingsw.cg_8.model.cards.characterCards.HumanCard;
 import it.polimi.ingsw.cg_8.model.player.character.InGameCharacter;
 import it.polimi.ingsw.cg_8.model.player.character.alien.Alien;
+import it.polimi.ingsw.cg_8.model.player.character.alien.AlienBehaviour;
 import it.polimi.ingsw.cg_8.model.player.character.human.Human;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 
@@ -77,8 +78,8 @@ public class PlayerTest {
 		player.setDead();
 		assertEquals(PlayerState.DEAD, player.getState());
 	}
-	
-	@Test 
+
+	@Test
 	public void testSetEscaped() {
 		player.setEscaped();
 		assertEquals(PlayerState.ESCAPED, player.getState());
@@ -153,5 +154,12 @@ public class PlayerTest {
 	@Test
 	public void testHashCode() {
 		assertFalse(player.hashCode() == player2.hashCode());
+	}
+
+	@Test
+	public void resetBehaviour() {
+		((Alien) alien).feedAlien();
+		player.resetDecorations();
+		assertTrue(((Alien) alien).getMaxAllowedMovement() == 3);
 	}
 }

@@ -136,4 +136,9 @@ public class CharacterDeckTest {
 
 	}
 
+	@Test
+	public void testReshuffleNothingToDo() throws EmptyDeckException {
+		charDeck.reshuffle();
+		assertEquals(8, charDeck.getCards().size());
+	}
 }
