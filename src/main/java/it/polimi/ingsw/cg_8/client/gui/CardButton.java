@@ -44,9 +44,21 @@ import org.apache.logging.log4j.Logger;
  * @version 1.0
  */
 public class CardButton extends JPanel {
+	/**
+	 * Handles mouse click on the button
+	 * 
+	 * @author Simone
+	 * @version 1.0
+	 */
 	private class CardMouseAdapter extends MouseAdapter {
-
-		int width, height;
+		/**
+		 * Width
+		 */
+		int width;
+		/**
+		 * Height
+		 */
+		int height;
 
 		@Override
 		public void mouseEntered(MouseEvent event) {

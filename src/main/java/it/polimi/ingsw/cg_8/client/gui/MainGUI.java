@@ -49,6 +49,12 @@ import org.apache.logging.log4j.Logger;
  * @version 1.0
  */
 public class MainGUI implements Runnable {
+	/**
+	 * Handles game start
+	 * 
+	 * @author Simone
+	 * @version 1.0
+	 */
 	private class PlayActionListener implements ActionListener {
 
 		@Override
@@ -107,6 +113,12 @@ public class MainGUI implements Runnable {
 		}
 	}
 
+	/**
+	 * JPanel showing an image on the right side
+	 * 
+	 * @author Simone
+	 * @version 1.0
+	 */
 	private class EastJPanel extends JPanel {
 
 		@Override
@@ -136,6 +148,12 @@ public class MainGUI implements Runnable {
 		}
 	}
 
+	/**
+	 * Jpanel showing an image on the left side
+	 * 
+	 * @author Simone
+	 * @version 1.0
+	 */
 	private class WestJPanel extends JPanel {
 
 		@Override

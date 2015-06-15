@@ -17,14 +17,29 @@ import javax.swing.JLayeredPane;
 import javax.swing.Timer;
 
 public class MapPanel extends JLayeredPane {
+	/**
+	 * Player jlabel that show its position on the map
+	 * 
+	 * @author Simone
+	 * @version 1.0
+	 */
 	private class PlayerJLabel extends JLabel {
 
 		/**
 		 * 
 		 */
 		private static final long serialVersionUID = 606642999525414965L;
+		/**
+		 * Coordinate
+		 */
 		private Coordinate coord;
 
+		/**
+		 * Constructor
+		 * 
+		 * @param coord
+		 *            coordinate
+		 */
 		public PlayerJLabel(Coordinate coord) {
 			this.coord = coord;
 		}
@@ -62,15 +77,35 @@ public class MapPanel extends JLayeredPane {
 		}
 	}
 
+	/**
+	 * JLabel that show an event on the map, it blinks
+	 * 
+	 * @author Simone
+	 * @version 1.0
+	 */
 	private class ArtifactJLabel extends JLabel {
 
 		/**
 		 * 
 		 */
 		private static final long serialVersionUID = 606642999525414965L;
-		Coordinate coord;
-		String imageFile;
+		/**
+		 * Coordinates
+		 */
+		private Coordinate coord;
+		/**
+		 * Image file
+		 */
+		private String imageFile;
 
+		/**
+		 * Constructor
+		 * 
+		 * @param coord
+		 *            coordinates where the artifact is
+		 * @param imageFile
+		 *            image of the artifact
+		 */
 		public ArtifactJLabel(Coordinate coord, String imageFile) {
 			this.coord = coord;
 			this.imageFile = imageFile;

@@ -92,6 +92,12 @@ import org.apache.logging.log4j.Logger;
  * @version 1.1
  */
 public class ClientGUIThread implements Runnable, Observer {
+	/**
+	 * Handles the mouse input on map panel
+	 * 
+	 * @author Simone
+	 * @version 1.0
+	 */
 	private class MapMouseInputAdapter extends MouseInputAdapter {
 		@Override
 		public void mouseReleased(MouseEvent e) {
@@ -119,8 +125,7 @@ public class ClientGUIThread implements Runnable, Observer {
 								new SpotlightCard(), coordinate));
 					} else if (result == 2) {
 						LOGGER.debug("Choose: fake noise");
-						connectionManager.send(new ActionFakeNoise(
-								coordinate));
+						connectionManager.send(new ActionFakeNoise(coordinate));
 					}
 				}
 
@@ -128,6 +133,12 @@ public class ClientGUIThread implements Runnable, Observer {
 		}
 	}
 
+	/**
+	 * Handles disconnection on frame closing
+	 * 
+	 * @author Simone
+	 * @version 1.0
+	 */
 	private class CloseDisconnectWindowAdapter extends WindowAdapter {
 		@Override
 		public void windowClosing(WindowEvent e) {
@@ -147,6 +158,12 @@ public class ClientGUIThread implements Runnable, Observer {
 		}
 	}
 
+	/**
+	 * Handles chat messages when button send is pressed
+	 * 
+	 * @author Simone
+	 * @version 1.0
+	 */
 	private class ChatActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -158,6 +175,12 @@ public class ClientGUIThread implements Runnable, Observer {
 		}
 	}
 
+	/**
+	 * Handles chat messages when enter is pressed
+	 * 
+	 * @author Simone
+	 * @version 1.0
+	 */
 	private class ChatKeyListener implements KeyListener {
 		@Override
 		public void keyPressed(KeyEvent e) {
@@ -181,19 +204,23 @@ public class ClientGUIThread implements Runnable, Observer {
 		}
 	}
 
+	/**
+	 * Handles item card usage on click
+	 * 
+	 * @author Simone
+	 * @version 1.0
+	 */
 	private class UseItemCardActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (matchStarted) {
 				String[] cardList = { ATTACK_TEXT, ADRENALINE_TEXT,
 						SEDATIVES_TEXT, SPOTLIGHT_TEXT, TELEPORT_TEXT };
-				String output = (String) JOptionPane.showInputDialog(
-						mainFrame, "Pick a card", "Input",
-						JOptionPane.QUESTION_MESSAGE, null, cardList,
-						ATTACK_TEXT);
+				String output = (String) JOptionPane.showInputDialog(mainFrame,
+						"Pick a card", "Input", JOptionPane.QUESTION_MESSAGE,
+						null, cardList, ATTACK_TEXT);
 				if (ATTACK_TEXT.equals(output)) {
-					connectionManager.send(new ActionUseCard(
-							new AttackCard()));
+					connectionManager.send(new ActionUseCard(new AttackCard()));
 				} else if (ADRENALINE_TEXT.equals(output)) {
 					connectionManager.send(new ActionUseCard(
 							new AdrenalineCard()));
@@ -216,8 +243,8 @@ public class ClientGUIThread implements Runnable, Observer {
 								NOT_VALID_INPUT_TEXT);
 					}
 				} else if (TELEPORT_TEXT.equals(output)) {
-					connectionManager.send(new ActionUseCard(
-							new TeleportCard()));
+					connectionManager
+							.send(new ActionUseCard(new TeleportCard()));
 
 				}
 
@@ -225,18 +252,22 @@ public class ClientGUIThread implements Runnable, Observer {
 		}
 	}
 
+	/**
+	 * Handles end turn
+	 * 
+	 * @author Simone
+	 * @version 1.0
+	 */
 	private class EndTurnActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (matchStarted) {
 				JOptionPane optionPane = new JOptionPane(
 						"Do you want to end your turn?",
-						JOptionPane.QUESTION_MESSAGE,
-						JOptionPane.YES_NO_OPTION);
+						JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
 				JDialog dialog = optionPane.createDialog("End turn");
 				dialog.setVisible(true);
-				int selection = ((Integer) optionPane.getValue())
-						.intValue();
+				int selection = ((Integer) optionPane.getValue()).intValue();
 				if (selection == JOptionPane.YES_OPTION) {
 					connectionManager.send(new ActionEndTurn());
 				} else {
@@ -246,6 +277,12 @@ public class ClientGUIThread implements Runnable, Observer {
 		}
 	}
 
+	/**
+	 * Handles fake noise creation
+	 * 
+	 * @author Simone
+	 * @version 1.0
+	 */
 	private class FakeNoiseActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -256,8 +293,7 @@ public class ClientGUIThread implements Runnable, Observer {
 					try {
 						Coordinate coordinate = ActionParser
 								.parseCoordinate(coordinateString);
-						connectionManager.send(new ActionFakeNoise(
-								coordinate));
+						connectionManager.send(new ActionFakeNoise(coordinate));
 
 					} catch (NotAValidInput e1) {
 						LOGGER.error(e1.getMessage(), e1);
@@ -269,19 +305,22 @@ public class ClientGUIThread implements Runnable, Observer {
 		}
 	}
 
+	/***
+	 * Handles card drawing
+	 * 
+	 * @author Simone version 1.0
+	 */
 	private class DrawActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (matchStarted) {
 				JOptionPane optionPane = new JOptionPane(
 						"Do you want to draw a dangerous sector card?",
-						JOptionPane.QUESTION_MESSAGE,
-						JOptionPane.YES_NO_OPTION);
+						JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
 				JDialog dialog = optionPane
 						.createDialog("Draw a dangerous sector card");
 				dialog.setVisible(true);
-				int selection = ((Integer) optionPane.getValue())
-						.intValue();
+				int selection = ((Integer) optionPane.getValue()).intValue();
 				if (selection == JOptionPane.YES_OPTION) {
 					connectionManager.send(new ActionDrawCard());
 				} else {
@@ -291,18 +330,22 @@ public class ClientGUIThread implements Runnable, Observer {
 		}
 	}
 
+	/**
+	 * Handles attacks creation
+	 * 
+	 * @author Simone
+	 * @version 1.0
+	 */
 	private class AttackActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (matchStarted) {
 				JOptionPane optionPane = new JOptionPane(
-						"Do you want to attack?",
-						JOptionPane.QUESTION_MESSAGE,
+						"Do you want to attack?", JOptionPane.QUESTION_MESSAGE,
 						JOptionPane.YES_NO_OPTION);
 				JDialog dialog = optionPane.createDialog(ATTACK_TEXT);
 				dialog.setVisible(true);
-				int selection = ((Integer) optionPane.getValue())
-						.intValue();
+				int selection = ((Integer) optionPane.getValue()).intValue();
 				if (selection == JOptionPane.YES_OPTION) {
 					connectionManager.send(new ActionAttack());
 				} else {
@@ -312,6 +355,12 @@ public class ClientGUIThread implements Runnable, Observer {
 		}
 	}
 
+	/**
+	 * Handles movements creation
+	 * 
+	 * @author Simone
+	 * @version 1.0
+	 */
 	private class MoveActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
