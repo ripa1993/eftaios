@@ -231,15 +231,14 @@ public class ClientGUIThread implements Runnable, Observer {
 		mainFrame.setMinimumSize(new Dimension(1280, 720));
 		mainFrame.setResizable(true);
 		BufferedImage myImage;
-		try {
-			myImage = ImageIO.read(new File(Resource.IMG_BACKGROUND_PATTERN));
-
-			mainFrame.setContentPane(new BackgroundPanel(myImage));
-		} catch (IOException e) {
-			LOGGER.error(e.getMessage(), e);
-		}
-		mainFrame.getContentPane().setBackground(Color.PINK);
-		mainFrame.setBackground(new Color(255, 255, 255));
+		 try {
+		 myImage = ImageIO.read(new File(Resource.IMG_BACKGROUND_PATTERN));
+		
+		 mainFrame.setContentPane(new BackgroundPanel(myImage));
+		 } catch (IOException e) {
+		 LOGGER.error(e.getMessage(), e);
+		 }
+		
 		chatPanel = new JPanel();
 		chatPanel.setOpaque(false);
 		chatPanel.setBackground(Color.WHITE);
@@ -323,7 +322,10 @@ public class ClientGUIThread implements Runnable, Observer {
 			}
 
 		};
-		mapPanel.setBackground(Color.WHITE);
+		mapPanel.setOpaque(true);
+		mapPanel.setBackground(new Color(100, 100,
+				100, 100));
+
 		mapPanel.setVisible(true);
 
 		// set layouts
@@ -340,7 +342,8 @@ public class ClientGUIThread implements Runnable, Observer {
 		// set borders
 		chatPanel2.setBorder(new EmptyBorder(10, 10, 10, 10));
 		infoPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-		mapPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+		mapPanel.setBorder(new MatteBorder(5, 5, 5, 0, (Color) new Color(90,
+				90, 90, 150)));
 		commandsPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
 		// set up commands jpanel

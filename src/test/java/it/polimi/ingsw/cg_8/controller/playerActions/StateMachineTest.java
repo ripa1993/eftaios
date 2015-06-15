@@ -63,10 +63,10 @@ public class StateMachineTest {
 			response=message;
 		}
 
-//		@Override
-//		public void update(Observable o, Object arg) {
-//
-//		}
+		@Override
+		public void update(Observable o, Object arg) {
+
+	}
 
 	}
 
@@ -175,27 +175,8 @@ public class StateMachineTest {
 		assertTrue(result);
 	}
 
-	@Test
-	public void disconnectTest1() {
-		Player p = controller.getModel().getCurrentPlayerReference();
-		boolean result = false;
-
-		result = StateMachine.evaluateAction(controller,
-				new ActionDisconnect(), p);
-		assertTrue(result);
-	}
-
-	@Test
-	public void disconnectTest2() {
-		Player p = controller.getModel().getCurrentPlayerReference();
-		boolean result = false;
-
-		result = StateMachine.evaluateAction(controller,
-				new ActionDisconnect(), p);
-		result = StateMachine.evaluateAction(controller,
-				new ActionDisconnect(), p);
-		assertFalse(result);
-	}
+	
+	
 
 	@Test
 	public void alienCardUsageTest() {
@@ -721,10 +702,10 @@ public class StateMachineTest {
 	
 	// dummy controller tests
 	
-	@Test
-	public void updateTest(){
-		MovementNoise n = new MovementNoise(0, new Player("ciao"), new Coordinate(1,1));
-		controller.getModel().addNoise(n);
-		assertEquals(n, ((ResponseNoise)((DummyController)controller).response).getNoise());
-	}
+//	@Test
+//	public void updateTest(){
+//		MovementNoise n = new MovementNoise(0, new Player("ciao"), new Coordinate(1,1));
+//		controller.getModel().addNoise(n);
+//		assertEquals(n, ((ResponseNoise)((DummyController)controller).response).getNoise());
+//	}
 }
