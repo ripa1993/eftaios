@@ -45,6 +45,59 @@ import org.apache.logging.log4j.Logger;
  */
 public class CardButton extends JPanel {
 	/**
+	 * Handles mouse click on the button
+	 * 
+	 * @author Simone
+	 * @version 1.0
+	 */
+	private class CardMouseAdapter extends MouseAdapter {
+		/**
+		 * Width
+		 */
+		int width;
+		/**
+		 * Height
+		 */
+		int height;
+
+		@Override
+		public void mouseEntered(MouseEvent event) {
+
+			cardButtonOverlay.setVisible(true);
+			cardButtonImage.repaint();
+		}
+
+		@Override
+		public void mouseExited(MouseEvent event) {
+			cardButtonOverlay.setVisible(false);
+			cardButtonImage.repaint();
+
+		}
+
+		@Override
+		public void mousePressed(MouseEvent event) {
+			width = cardButtonImage.getWidth();
+			height = cardButtonImage.getHeight();
+			cardButtonImage
+					.setSize((int) (1.05 * width), (int) (1.05 * height));
+			cardButtonImage.repaint();
+			cardButtonOverlay.setSize((int) (1.05 * width),
+					(int) (1.05 * height));
+
+			cardButtonOverlay.repaint();
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent event) {
+			cardButtonImage.setSize(width, height);
+			cardButtonImage.repaint();
+			cardButtonOverlay.setSize(width, height);
+			cardButtonOverlay.repaint();
+		}
+
+	}
+
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -4771580323012024149L;
@@ -99,6 +152,7 @@ public class CardButton extends JPanel {
 	 * player's card
 	 */
 	public CardButton() {
+
 		/**
 		 * Set up size
 		 */
@@ -169,45 +223,7 @@ public class CardButton extends JPanel {
 		/**
 		 * Input handling on the cardButton
 		 */
-		invisButton.addMouseListener(new MouseAdapter() {
-			int width, height;
-
-			@Override
-			public void mouseEntered(MouseEvent event) {
-
-				cardButtonOverlay.setVisible(true);
-				cardButtonImage.repaint();
-			}
-
-			@Override
-			public void mouseExited(MouseEvent event) {
-				cardButtonOverlay.setVisible(false);
-				cardButtonImage.repaint();
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent event) {
-				width = cardButtonImage.getWidth();
-				height = cardButtonImage.getHeight();
-				cardButtonImage.setSize((int) (1.05 * width),
-						(int) (1.05 * height));
-				cardButtonImage.repaint();
-				cardButtonOverlay.setSize((int) (1.05 * width),
-						(int) (1.05 * height));
-
-				cardButtonOverlay.repaint();
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent event) {
-				cardButtonImage.setSize(width, height);
-				cardButtonImage.repaint();
-				cardButtonOverlay.setSize(width, height);
-				cardButtonOverlay.repaint();
-			}
-
-		});
+		invisButton.addMouseListener(new CardMouseAdapter());
 		/**
 		 * Set up font and text
 		 */
