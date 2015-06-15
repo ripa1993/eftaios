@@ -3,9 +3,11 @@ package it.polimi.ingsw.cg_8.client.gui;
 import it.polimi.ingsw.cg_8.Resource;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -90,9 +92,12 @@ public class MapPanel extends JLayeredPane {
 	 *            path to image file
 	 */
 	void setMapImage(String path) {
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		double width = screenSize.getWidth();
 		backgroundImage = new ImageIcon(path);
 		backgroundImageScaled = new ImageIcon(backgroundImage.getImage()
-				.getScaledInstance(1000, -1, Image.SCALE_SMOOTH)).getImage();
+				.getScaledInstance((int) width, -1, Image.SCALE_SMOOTH))
+				.getImage();
 	}
 
 	/**
