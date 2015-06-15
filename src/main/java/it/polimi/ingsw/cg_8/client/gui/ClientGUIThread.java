@@ -916,10 +916,10 @@ public class ClientGUIThread implements Runnable, Observer {
 				if (col % 2 != 0) {
 					row--;
 				}
-				if (row < 0 || col < 0 || row >= (NUM_ROW - 1)
-						|| col >= NUM_COLUMN) {
-					return new Coordinate();
-				}
+//				if (row < 0 || col < 0 || row >= (NUM_ROW - 1)
+//						|| col >= NUM_COLUMN) {
+//					return new Coordinate();
+//				}
 				row = (int) Math.floor((double) (row / 2));
 				return new Coordinate(col, row);
 			}

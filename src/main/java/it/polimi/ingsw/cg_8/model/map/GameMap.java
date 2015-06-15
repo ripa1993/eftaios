@@ -5,6 +5,7 @@ import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 import it.polimi.ingsw.cg_8.model.sectors.Sector;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -33,21 +34,12 @@ public abstract class GameMap implements ReachableCoordinatesInterface {
 	 */
 	private Coordinate alienSpawn;
 
-	/**
-	 * Constructor for GameMap. Creates a new HashMap of sector, a new MapProxy
-	 * and spawn coordinates
-	 * 
-	 * @param humanSpawn
-	 *            coordinate of human spawn
-	 * @param alienSpawn
-	 *            coordinate of alien spawn
-	 */
+	
+	
+	public GameMap() {
 
-	public GameMap(Coordinate humanSpawn, Coordinate alienSpawn) {
-		sectors = new HashMap<Coordinate, Sector>();
+		this.sectors = new HashMap<Coordinate, Sector>();
 		mapProxy = new MapProxy(this);
-		this.humanSpawn = humanSpawn;
-		this.alienSpawn = alienSpawn;
 	}
 
 	/**

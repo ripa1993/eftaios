@@ -1,51 +1,71 @@
 package it.polimi.ingsw.cg_8.model.sectors.special.escapehatch;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+
 import it.polimi.ingsw.cg_8.model.sectors.special.SpecialSector;
 
 /**
  * Escape hatch sector class. It's the sector where the player is allowed to try
- * to escape and win the game
+ * to escape and win the game. The ability to escape is represented with a
+ * boolean value that shows if the escape hatch has been already activated: it
+ * is not possible to use a more flexible approach (such as a strategy patter)
+ * as JAXB doesn't support the use of interfaces in the XML document that is
+ * unmarshalled.
  * 
- * @author Simone
- * @version 1.0
+ * @author Alberto
+ * @version 1.1
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 public class EscapeHatchSector extends SpecialSector {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 4782069866892094554L;
 	/**
-	 * Current behaviour of the escape hatch sector
+	 * Current behaviour of the escape hatch sector.
 	 */
-	private transient EscapeHatchBehaviour status;
+	private boolean used;
 	/**
-	 * Number of the escape hatch, 1 to 4
+	 * Number of the escape hatch that have been instantiated so far.
 	 */
-	final int number;
+	private static int totalEHSectors = 0;
+	/**
+	 * Number of the escape hatch, 1 to 4.
+	 */
+	private final int sectorNumber;
 
 	/**
-	 * Constructor for the escape hatch sector
+	 * Constructor for the escape hatch sector, used in the XML parsing.
 	 * 
-	 * @param x
-	 *            column of the sector
-	 * @param y
-	 *            row of the sector
-	 * @param number
-	 *            number of the sector [1..4]
 	 */
-	public EscapeHatchSector(int x, int y, int number) {
-		super(x, y);
-		this.number = number;
-		status = new NotUsedEHBehaviour();
+	public EscapeHatchSector() {
+		super();
+		totalEHSectors++;
+		this.sectorNumber = totalEHSectors;
+		this.used = false;
 	}
 
 	/**
-	 * Getter for current behaviour of the escape hatch sector
+	 * Constructor for the escape hatch sector, used to perform checks and
+	 * validations. The static value totalEHSectors isn't increased as this
+	 * sector isn't actually added to the map.
 	 * 
-	 * @return current behaviour of the escape hatch sector
 	 */
-	public EscapeHatchBehaviour getStatus() {
-		return status;
+	public EscapeHatchSector(int x, int y) {
+		super(x, y);
+		this.sectorNumber = totalEHSectors;
+		this.used = false;
+	}
+
+	/**
+	 * Getter for current status of the escape hatch sector
+	 * 
+	 * @return current status of the escape hatch sector, true if the escape
+	 *         hatch has been used, false otherwise.
+	 */
+	public boolean getStatus() {
+		return this.used;
 	}
 
 	/**
@@ -54,17 +74,14 @@ public class EscapeHatchSector extends SpecialSector {
 	 * @return escape hatch sector number
 	 */
 	public int getNumber() {
-		return number;
+		return this.sectorNumber;
 	}
 
 	/**
-	 * Changes the status (behaviour) of the escape hatch from not used to used
+	 * Changes the status of the escape hatch from not used to used
 	 */
 	private void setUsed() {
-
-		// change the status of the hatch from not used to used
-
-		this.status = new UsedEHBehaviour();
+		this.used = true;
 	}
 
 	/**
@@ -76,21 +93,16 @@ public class EscapeHatchSector extends SpecialSector {
 	 */
 	public boolean allowEscape() {
 
-		// return true if you can use the hatch to escape, changes the status
-		// from not used to used
-		// return false if you cannot use the hatch to escape, because it has
-		// been already used
-
-		boolean allowedUse = status.allowEscape();
-		if (allowedUse) {
+		if (used == false) {
 			this.setUsed();
+			return true;
 		}
-		return allowedUse;
+		return false;
 	}
 
 	@Override
 	public String toString() {
-		return "EH" + number;
+		return "EH" + sectorNumber;
 	}
 
 }

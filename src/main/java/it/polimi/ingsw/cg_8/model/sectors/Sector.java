@@ -1,12 +1,15 @@
 package it.polimi.ingsw.cg_8.model.sectors;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+
 /**
  * Abstract sector class, it is extended by any sector
  * 
  * @author Simone
  * @version 1.0
  */
-
+@XmlAccessorType(XmlAccessType.FIELD)
 public abstract class Sector extends Coordinate {
 
 	/**
@@ -24,6 +27,10 @@ public abstract class Sector extends Coordinate {
 	 */
 	public Sector(int x, int y) {
 		super(x, y);
+	}
+	
+	public Sector() {
+		super();
 	}
 
 	@Override

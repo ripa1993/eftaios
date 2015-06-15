@@ -86,7 +86,7 @@ public class Movement implements PlayerAction {
 			Noise escapeSectorNoise = new EscapeSectorNoise(
 					model.getRoundNumber(), player, player.getLastPosition());
 			model.addNoise(escapeSectorNoise);
-			if (((EscapeHatchSector) destination).getStatus().allowEscape()) {
+			if (((EscapeHatchSector) destination).allowEscape()) {
 				Card escapeCard;
 				try {
 					escapeCard = drawEHSectorCard();
