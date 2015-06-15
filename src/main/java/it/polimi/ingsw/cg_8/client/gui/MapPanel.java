@@ -16,6 +16,13 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.Timer;
 
+/**
+ * JLayeredPane that show a map in the background and elements over it. Elements
+ * are the player character and the blinking noises
+ * 
+ * @author Simone
+ * @version 1.0
+ */
 public class MapPanel extends JLayeredPane {
 	/**
 	 * Player jlabel that show its position on the map
@@ -374,6 +381,12 @@ public class MapPanel extends JLayeredPane {
 
 	}
 
+	/**
+	 * Creates a player label on the map at the requested coordinate
+	 * 
+	 * @param coordinate
+	 *            where the label will appear
+	 */
 	public void createPlayerPosition(Coordinate coordinate) {
 		if (playerLabel != null) {
 			playerLabel.setVisible(false);
