@@ -64,6 +64,11 @@ public class MapPanel extends JLayeredPane {
 		}
 	}
 
+	/**
+	 * Auxiliary method that calculates column width in the map
+	 * 
+	 * @return
+	 */
 	private float getColumnWidth() {
 		int mapPanelWidth = this.getWidth();
 		int mapPanelHeight = this.getHeight();
