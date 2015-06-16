@@ -68,7 +68,7 @@ public class MapPanel extends JLayeredPane {
 	/**
 	 * Auxiliary method that calculates column width in the map
 	 * 
-	 * @return
+	 * @return column width in the map
 	 */
 	private float getColumnWidth() {
 		int mapPanelWidth = this.getWidth();
@@ -92,6 +92,11 @@ public class MapPanel extends JLayeredPane {
 		return columnWidth;
 	}
 
+	/**
+	 * Auxiliary method that calculates row heigh in the map
+	 * 
+	 * @return row heigh in the map
+	 */
 	public float getRowHeight() {
 		// get map panel size
 		int mapPanelWidth = this.getWidth();
