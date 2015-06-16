@@ -3,6 +3,8 @@ package it.polimi.ingsw.cg_8.model.map;
 import it.polimi.ingsw.cg_8.model.exceptions.NotAValidCoordinateException;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 import it.polimi.ingsw.cg_8.model.sectors.Sector;
+import it.polimi.ingsw.cg_8.model.sectors.special.spawn.AlienSector;
+import it.polimi.ingsw.cg_8.model.sectors.special.spawn.HumanSector;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -25,21 +27,13 @@ public abstract class GameMap implements ReachableCoordinatesInterface {
 	 * Reference to the map proxy related to this map
 	 */
 	private final MapProxy mapProxy;
-	/**
-	 * Human starting coordinate
-	 */
-	private Coordinate humanSpawn;
-	/**
-	 * Alien starting coordinate
-	 */
-	private Coordinate alienSpawn;
-
 	
 	
 	public GameMap() {
 
 		this.sectors = new HashMap<Coordinate, Sector>();
 		mapProxy = new MapProxy(this);
+	
 	}
 
 	/**
@@ -48,7 +42,15 @@ public abstract class GameMap implements ReachableCoordinatesInterface {
 	 * @return coordinate of human spawn
 	 */
 	public Coordinate getHumanSpawn() {
-		return humanSpawn;
+		Iterator<Entry<Coordinate, Sector>> entries = sectors.entrySet().iterator();
+		while (entries.hasNext()) {
+			Entry<Coordinate, Sector> thisEntry = (Entry<Coordinate, Sector>) entries.next();
+			  Coordinate key = (Coordinate) thisEntry.getKey();
+			  if (thisEntry.getValue() instanceof HumanSector) {
+				  return key;
+			  }
+		}
+		return null;	
 	}
 
 	/**
@@ -57,25 +59,17 @@ public abstract class GameMap implements ReachableCoordinatesInterface {
 	 * @return coordinate of alien spawn
 	 */
 	public Coordinate getAlienSpawn() {
-		return alienSpawn;
+		Iterator<Entry<Coordinate, Sector>> entries = sectors.entrySet().iterator();
+		while (entries.hasNext()) {
+			Entry<Coordinate, Sector> thisEntry = (Entry<Coordinate, Sector>) entries.next();
+			  Coordinate key = (Coordinate) thisEntry.getKey();
+			  if (thisEntry.getValue() instanceof AlienSector) {
+				  return key;
+			  }
+		}
+		return null;	
 	}
-	/**
-	 * Setter for human spawn
-	 * 
-	 * @param the coordinate of the spawn.
-	 */
-	public void setHumanSpawn(Coordinate humanSpawn) {
-		this.humanSpawn = humanSpawn;
-	}
-	/**
-	 * Setter for alien spawn
-	 * 
-	 * @param the coordinate of the spawn.
-	 */
-	public void setAlienSpawn(Coordinate alienSpawn) {
-		this.alienSpawn = alienSpawn;
-	}
-	
+
 	/**
 	 * Getter for this game map's Map<Coordinate, Sector>
 	 * 

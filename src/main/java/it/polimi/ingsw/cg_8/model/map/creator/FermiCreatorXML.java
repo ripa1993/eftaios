@@ -57,8 +57,6 @@ public class FermiCreatorXML extends MapCreator {
 			int y = currentSector.getY();
 			addSector(new Coordinate(x, y), currentSector);
 		}
-		fermiMap.setAlienSpawn(sectorList.getAlienSpawnSector());
-		fermiMap.setHumanSpawn(sectorList.getHumanSpawnSector());
 		return fermiMap;
 		
 	}

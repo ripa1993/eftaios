@@ -57,8 +57,8 @@ public class GalvaniCreatorXML extends MapCreator {
 			int y = currentSector.getY();
 			addSector(new Coordinate(x, y), currentSector);
 		}
-		galvaniMap.setAlienSpawn(sectorList.getAlienSpawnSector());
-		galvaniMap.setHumanSpawn(sectorList.getHumanSpawnSector());
+		//galvaniMap.setAlienSpawn(sectorList.getAlienSpawnSector());
+		//galvaniMap.setHumanSpawn(sectorList.getHumanSpawnSector());
 		return galvaniMap;
 		
 	}

@@ -56,8 +56,8 @@ public class GalileiCreatorXML extends MapCreator {
 			int y = currentSector.getY();
 			addSector(new Coordinate(x, y), currentSector);
 		}
-		galileiMap.setAlienSpawn(sectorList.getAlienSpawnSector());
-		galileiMap.setHumanSpawn(sectorList.getHumanSpawnSector());
+		//galileiMap.setAlienSpawn(sectorList.getAlienSpawnSector());
+		//galileiMap.setHumanSpawn(sectorList.getHumanSpawnSector());
 		return galileiMap;
 		
 	}

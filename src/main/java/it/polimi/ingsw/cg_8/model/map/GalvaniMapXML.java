@@ -1,5 +1,9 @@
 package it.polimi.ingsw.cg_8.model.map;
 
-public class GalvaniMapXML extends GameMap {
+import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 
+public class GalvaniMapXML extends GameMap {
+	public GalvaniMapXML() {
+		super();
+	}
 }
