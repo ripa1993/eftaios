@@ -752,6 +752,8 @@ public class ClientGUIThread implements Runnable, Observer {
 		chatPanel.setVisible(true);
 		infoPanel.setVisible(true);
 		mapPanel.setVisible(true);
+		ImageIcon img = new ImageIcon(Resource.LOGO);
+		mainFrame.setIconImage(img.getImage());
 		mainFrame.setVisible(true);
 		mainFrame.setSize(1280, 720);
 

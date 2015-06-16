@@ -9,6 +9,7 @@ import java.io.File;
  * @version 1.0
  */
 public class Resource {
+
 	/**
 	 * images literal
 	 */
@@ -293,5 +294,9 @@ public class Resource {
 	 */
 	public static final String IMG_GREEN_OVER = IMAGES_FOLDER
 			+ "green_overlay.png";
+	/**
+	 * Logo
+	 */
+	public static final String LOGO = IMAGES_FOLDER + "eftaios_logo.png";
 
 }
