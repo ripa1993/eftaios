@@ -54,9 +54,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
@@ -72,10 +74,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
-import javax.swing.LookAndFeel;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.event.MouseInputAdapter;
@@ -102,31 +101,39 @@ public class ClientGUIThread implements Runnable, Observer {
 		public void mouseReleased(MouseEvent e) {
 			if (matchStarted) {
 				Coordinate coordinate = mapPanel.getCoordinate(e);
-				if (coordinate.getX() >= 0 && coordinate.getY() >= 0
-						&& coordinate.getX() < MapPanel.NUM_COLUMN
-						&& coordinate.getY() < MapPanel.NUM_ROW) {
-					Object[] options = { "Movement", SPOTLIGHT_TEXT,
-							"Do Fake Noise" };
-					int result = JOptionPane.showOptionDialog(null,
-							"This is sector " + coordinate,
-							"What would you like to do?",
-							JOptionPane.DEFAULT_OPTION,
-							JOptionPane.QUESTION_MESSAGE, null, options,
-							options[0]);
-					LOGGER.debug("Result: " + result);
-					LOGGER.debug("Options: " + options);
-					if (result == 0) {
-						LOGGER.debug("Choose: move");
-						connectionManager.send(new ActionMove(coordinate));
-					} else if (result == 1) {
-						LOGGER.debug("Choose: spotlight");
-						connectionManager.send(new ActionUseCard(
-								new SpotlightCard(), coordinate));
-					} else if (result == 2) {
-						LOGGER.debug("Choose: fake noise");
-						connectionManager.send(new ActionFakeNoise(coordinate));
+				ClientCoordinate dummyCoordinate = new ClientCoordinate(coordinate);
+				System.out.println(coordinate);
+				System.out.println(dummyCoordinate);
+				System.out.println(coordinateSet.contains(dummyCoordinate));
+				if (coordinateSet.contains(dummyCoordinate)) {
+					if (coordinate.getX() >= 0 && coordinate.getY() >= 0
+							&& coordinate.getX() < MapPanel.NUM_COLUMN
+							&& coordinate.getY() < MapPanel.NUM_ROW) {
+						Object[] options = { "Movement", SPOTLIGHT_TEXT,
+								"Do Fake Noise" };
+						int result = JOptionPane.showOptionDialog(null,
+								"This is sector " + coordinate,
+								"What would you like to do?",
+								JOptionPane.DEFAULT_OPTION,
+								JOptionPane.QUESTION_MESSAGE, null, options,
+								options[0]);
+						LOGGER.debug("Result: " + result);
+						LOGGER.debug("Options: " + options);
+						if (result == 0) {
+							LOGGER.debug("Choose: move");
+							connectionManager.send(new ActionMove(coordinate));
+						} else if (result == 1) {
+							LOGGER.debug("Choose: spotlight");
+							connectionManager.send(new ActionUseCard(
+									new SpotlightCard(), coordinate));
+						} else if (result == 2) {
+							LOGGER.debug("Choose: fake noise");
+							connectionManager.send(new ActionFakeNoise(coordinate));
+						}
 					}
+					
 				}
+				
 
 			}
 		}
@@ -477,6 +484,13 @@ public class ClientGUIThread implements Runnable, Observer {
 	private boolean playerImageSet;
 
 	/**
+	 * Sets containing the coordinates of the current map, used to allow the
+	 * user to click only on the actual coordinates of the map, and not on the
+	 * empty spaces.
+	 */
+	private Set<ClientCoordinate> coordinateSet;
+
+	/**
 	 * Constructor, create the main frame for the gui. Instead of the map shows
 	 * a temp image that changes when the game starts and the server
 	 * communicates the game map. Player can click on the sectors on the left
@@ -557,7 +571,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		chatPanel2.setBackground(Color.WHITE);
 		infoScroll = new JScrollPane(infoTextPane);
 		chatScroll = new JScrollPane(chatTextPane);
-
+		
 		/**
 		 * Which map is loaded.
 		 */
@@ -1045,14 +1059,21 @@ public class ClientGUIThread implements Runnable, Observer {
 		} else if ("Map".equals(arg)) {
 			ResponseMap response = clientData.getMap();
 			GameMapName mapName = response.getMapName();
+			coordinateSet = new HashSet<ClientCoordinate>();
+
 			if (mapName.equals(GameMapName.FERMI)) {
 				mapPanel.setMapImage(Resource.IMG_FERMI_MAP);
-				LOGGER.debug("Map changed to fermi");
+				coordinateSet.addAll(MapParserClient.parse(Resource.FERMI_XML));
+				System.out.println(coordinateSet.toString());
+				
+				LOGGER.info("Map changed to fermi");
 			} else if (mapName.equals(GameMapName.GALILEI)) {
 				mapPanel.setMapImage(Resource.IMG_GALILEI_MAP);
+				coordinateSet.addAll(MapParserClient.parse(Resource.GALILEI_XML));
 				LOGGER.debug("Map changed to galilei");
 			} else if (mapName.equals(GameMapName.GALVANI)) {
 				mapPanel.setMapImage(Resource.IMG_GALVANI_MAP);
+				coordinateSet.addAll(MapParserClient.parse(Resource.GALVANI_XML));
 				LOGGER.debug("Map changed to galvani");
 			}
 			mapPanel.repaint();

@@ -19,6 +19,15 @@ public class Resource {
 	 */
 	private static final String RESOURCES_LITERAL = "resources";
 	/**
+	 * resources literal
+	 */
+	private static final String MAPS_LITERAL = "maps";	
+	/**
+	 * XML Maps folder
+	 */
+	private static final String MAPS_FOLDER = RESOURCES_LITERAL
+			+ File.separatorChar + MAPS_LITERAL + File.separatorChar;
+	/**
 	 * Images folder
 	 */
 	private static final String IMAGES_FOLDER = RESOURCES_LITERAL
@@ -298,5 +307,17 @@ public class Resource {
 	 * Logo
 	 */
 	public static final String LOGO = IMAGES_FOLDER + "eftaios_logo.png";
+	/**
+	 * XML document of FERMI
+	 */
+	public static final String FERMI_XML = MAPS_FOLDER + "FERMI.xml";
+	/**
+	 * XML document of GALILEI
+	 */
+	public static final String GALILEI_XML = MAPS_FOLDER + "GALILEI.xml";
+	/**
+	 * XML document of FERMI
+	 */
+	public static final String GALVANI_XML = MAPS_FOLDER + "GALVANI.xml";
 
 }
