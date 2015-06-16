@@ -22,6 +22,28 @@ public class EscapeHatchSector extends SpecialSector {
 	 * 
 	 */
 	private static final long serialVersionUID = 4782069866892094554L;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + (used ? 1231 : 1237);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		EscapeHatchSector other = (EscapeHatchSector) obj;
+		if (used != other.used)
+			return false;
+		return true;
+	}
+
 	/**
 	 * Current behaviour of the escape hatch sector.
 	 */
