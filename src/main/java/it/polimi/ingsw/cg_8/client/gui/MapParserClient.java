@@ -12,6 +12,9 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Simplified XML parser that return the coordinates of a given map, so that the
  * user can only click on them and not on the blank spaces of the map, and as a
@@ -21,6 +24,11 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @version 1.0
  */
 public class MapParserClient {
+	/**
+	 * Log4j logger
+	 */
+	private static final Logger LOGGER = LogManager
+			.getLogger(MapParserClient.class);
 
 	/**
 	 * Private class containing the set of the coordinates of the map.
@@ -57,7 +65,9 @@ public class MapParserClient {
 
 	/**
 	 * Parse an XML document referring to the map passed as parameter.
-	 * @param mapName the reference to the XML document of the current map.
+	 * 
+	 * @param mapName
+	 *            the reference to the XML document of the current map.
 	 * @return the coordinates of the current map.
 	 */
 	public static Set<ClientCoordinate> parse(String mapName) {
@@ -72,7 +82,7 @@ public class MapParserClient {
 			return sectorSet.getSectorList();
 
 		} catch (Exception e) {
-			e.printStackTrace(System.out);
+			LOGGER.error(e.getMessage(), e);
 			return null;
 		}
 	}

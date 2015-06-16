@@ -461,7 +461,7 @@ public class MainGUI implements Runnable {
 	public static void main(String[] args) {
 		try {
 			UIManager.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeel");
-		} catch (Throwable e) {
+		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
 		}
 		SwingUtilities.invokeLater(new MainGUI());
