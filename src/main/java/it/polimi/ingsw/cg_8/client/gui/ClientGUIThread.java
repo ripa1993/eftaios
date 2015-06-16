@@ -530,7 +530,6 @@ public class ClientGUIThread implements Runnable, Observer {
 		} catch (IOException e) {
 			LOGGER.error(e.getMessage(), e);
 		}
-		mainFrame.getContentPane().setBackground(Color.PINK);
 		mainFrame.setBackground(new Color(255, 255, 255));
 		chatPanel = new JPanel();
 		chatPanel.setOpaque(false);
@@ -581,7 +580,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		
 		//TODO : fix artifacts.
 		//mapPanel.setBackground(new Color(100, 100, 100, 100));
-		mapPanel.setOpaque(true);
+		mapPanel.setOpaque(false);
 		mapPanel.setVisible(true);
 		mapPanel.setMapImage(Resource.IMG_MAP_BG);
 		// set layouts

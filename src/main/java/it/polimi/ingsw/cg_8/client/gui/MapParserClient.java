@@ -1,6 +1,7 @@
 package it.polimi.ingsw.cg_8.client.gui;
 
 import java.io.File;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.xml.bind.JAXBContext;
@@ -83,7 +84,7 @@ public class MapParserClient {
 
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
-			return null;
+			return new HashSet<ClientCoordinate>();
 		}
 	}
 }
