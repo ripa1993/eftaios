@@ -39,7 +39,6 @@ import javax.swing.border.EmptyBorder;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import com.jtattoo.plaf.acryl.*;
 
 /**
  * Main class for client graphic user interface. It uses a swing frame to

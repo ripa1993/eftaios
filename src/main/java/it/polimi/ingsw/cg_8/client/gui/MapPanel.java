@@ -3,7 +3,6 @@ package it.polimi.ingsw.cg_8.client.gui;
 import it.polimi.ingsw.cg_8.Resource;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
