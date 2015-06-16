@@ -102,10 +102,7 @@ public class ClientGUIThread implements Runnable, Observer {
 			if (matchStarted) {
 				Coordinate coordinate = mapPanel.getCoordinate(e);
 				ClientCoordinate dummyCoordinate = new ClientCoordinate(coordinate);
-				System.out.println(coordinate);
-				System.out.println(dummyCoordinate);
-				System.out.println(coordinateSet.contains(dummyCoordinate));
-				if (coordinateSet.contains(dummyCoordinate)) {
+					if (coordinateSet.contains(dummyCoordinate)) {
 					if (coordinate.getX() >= 0 && coordinate.getY() >= 0
 							&& coordinate.getX() < MapPanel.NUM_COLUMN
 							&& coordinate.getY() < MapPanel.NUM_ROW) {
@@ -581,7 +578,9 @@ public class ClientGUIThread implements Runnable, Observer {
 
 		// setup map panel
 		mapPanel = new MapPanel();
-		mapPanel.setBackground(new Color(100, 100, 100, 100));
+		
+		//TODO : fix artifacts.
+		//mapPanel.setBackground(new Color(100, 100, 100, 100));
 		mapPanel.setOpaque(true);
 		mapPanel.setVisible(true);
 		mapPanel.setMapImage(Resource.IMG_MAP_BG);
@@ -1064,8 +1063,6 @@ public class ClientGUIThread implements Runnable, Observer {
 			if (mapName.equals(GameMapName.FERMI)) {
 				mapPanel.setMapImage(Resource.IMG_FERMI_MAP);
 				coordinateSet.addAll(MapParserClient.parse(Resource.FERMI_XML));
-				System.out.println(coordinateSet.toString());
-				
 				LOGGER.info("Map changed to fermi");
 			} else if (mapName.equals(GameMapName.GALILEI)) {
 				mapPanel.setMapImage(Resource.IMG_GALILEI_MAP);
@@ -1076,6 +1073,8 @@ public class ClientGUIThread implements Runnable, Observer {
 				coordinateSet.addAll(MapParserClient.parse(Resource.GALVANI_XML));
 				LOGGER.debug("Map changed to galvani");
 			}
+			mainFrame.revalidate();
+			mapPanel.revalidate();
 			mapPanel.repaint();
 			matchStarted = true;
 		} else if ("Ack".equals(arg)) {

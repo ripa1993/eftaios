@@ -6,23 +6,45 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 
+/**
+ * Dummy coordinate used by the XML parser of the client.
+ * 
+ * @author Alberto
+ * @version 1.0
+ */
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ClientCoordinate {
 
+	/**
+	 * The horizontal coordinate.
+	 */
 	@XmlElement
 	private int x;
+	/**
+	 * The vertical coordinate.
+	 */
 	@XmlElement
 	private int y;
 
+	/**
+	 * The empty constructor is used by JAXB; X and Y are actually assigned by
+	 * this constructor.
+	 */
 	public ClientCoordinate() {
 
 	}
-	
+
+	/**
+	 * Constructor used to create a ClientCoordinate from a Coordinate, used to
+	 * perform check bewteen coordiantes on the client.
+	 * 
+	 * @param coordinate
+	 */
 	public ClientCoordinate(Coordinate coordinate) {
 		this.x = coordinate.getX();
 		this.y = coordinate.getY();
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
