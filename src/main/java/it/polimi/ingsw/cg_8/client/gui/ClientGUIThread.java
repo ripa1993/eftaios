@@ -41,11 +41,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.FontFormatException;
-import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Point;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -70,13 +67,15 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.LookAndFeel;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.event.MouseInputAdapter;
@@ -568,7 +567,8 @@ public class ClientGUIThread implements Runnable, Observer {
 
 		// setup map panel
 		mapPanel = new MapPanel();
-		mapPanel.setBackground(Color.WHITE);
+		mapPanel.setBackground(new Color(100, 100, 100, 100));
+		mapPanel.setOpaque(true);
 		mapPanel.setVisible(true);
 		mapPanel.setMapImage(Resource.IMG_MAP_BG);
 		// set layouts
@@ -682,7 +682,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		cardPanel.setOpaque(false);
 		cardPanel.setBackground(Color.WHITE);
 		panel2.add(cardPanel, BorderLayout.SOUTH);
-		cardPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		cardPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 35, 5));
 
 		cardButton1 = new CardButton();
 		cardButton1.setBackground(Color.WHITE);

@@ -34,6 +34,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 import org.apache.logging.log4j.LogManager;
@@ -303,7 +304,7 @@ public class MainGUI implements Runnable {
 		playerTextField = new JTextField();
 		playerTextField.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		playerTextField.setHorizontalAlignment(SwingConstants.CENTER);
-		playerTextField.setBackground(Color.WHITE);
+		playerTextField.setBackground(new Color(214, 217, 223));
 		playerTextField.setText("Player");
 		GridBagConstraints gbcTxtAsd = new GridBagConstraints();
 		gbcTxtAsd.insets = new Insets(0, 0, 5, 0);
@@ -325,7 +326,6 @@ public class MainGUI implements Runnable {
 		centerPanel.add(connectionTypeLabel, gbcLblConnectionType);
 
 		JPanel panel1 = new JPanel();
-		panel1.setOpaque(false);
 		GridBagConstraints gbcPanel1 = new GridBagConstraints();
 		gbcPanel1.anchor = GridBagConstraints.NORTH;
 		gbcPanel1.insets = new Insets(0, 0, 5, 0);
@@ -458,6 +458,12 @@ public class MainGUI implements Runnable {
 	 *            parameters
 	 */
 	public static void main(String[] args) {
+		try {
+			UIManager
+					.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
 		SwingUtilities.invokeLater(new MainGUI());
 	}
 }

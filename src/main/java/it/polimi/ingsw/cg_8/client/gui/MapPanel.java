@@ -3,6 +3,7 @@ package it.polimi.ingsw.cg_8.client.gui;
 import it.polimi.ingsw.cg_8.Resource;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
@@ -201,13 +202,13 @@ public class MapPanel extends JLayeredPane {
 		int updatedWidth = this.getWidth();
 		int updatedHeight = this.getHeight();
 
-		if (this.getWidth() - backgroundImageScaled.getWidth(null) > this
-				.getHeight() - backgroundImageScaled.getHeight(null)) {
+		if ((float) this.getWidth() / backgroundImageScaled.getWidth(null) > (float) this
+				.getHeight() / backgroundImageScaled.getHeight(null)) {
 			updatedWidth = updatedHeight * backgroundImageScaled.getWidth(null)
 					/ backgroundImageScaled.getHeight(null);
 		}
-		if (this.getWidth() - backgroundImageScaled.getWidth(null) < this
-				.getHeight() - backgroundImageScaled.getHeight(null)) {
+		if ((float) this.getWidth() / backgroundImageScaled.getWidth(null) < (float) this
+				.getHeight() / backgroundImageScaled.getHeight(null)) {
 			updatedHeight = updatedWidth
 					* backgroundImageScaled.getHeight(null)
 					/ backgroundImageScaled.getWidth(null);
@@ -215,6 +216,9 @@ public class MapPanel extends JLayeredPane {
 
 		int x = (this.getWidth() - updatedWidth) / 2;
 		int y = (this.getHeight() - updatedHeight) / 2;
+		backgroundImageScaled = new ImageIcon(backgroundImage.getImage()
+				.getScaledInstance(updatedWidth, -1, Image.SCALE_SMOOTH))
+				.getImage();
 		g.drawImage(backgroundImageScaled, x, y, updatedWidth, updatedHeight,
 				null);
 	}
@@ -228,7 +232,8 @@ public class MapPanel extends JLayeredPane {
 	void setMapImage(String path) {
 		backgroundImage = new ImageIcon(path);
 		backgroundImageScaled = new ImageIcon(backgroundImage.getImage()
-				.getScaledInstance(1000, -1, Image.SCALE_SMOOTH)).getImage();
+				.getScaledInstance(5000, -1, Image.SCALE_SMOOTH)).getImage();
+
 	}
 
 	/**
