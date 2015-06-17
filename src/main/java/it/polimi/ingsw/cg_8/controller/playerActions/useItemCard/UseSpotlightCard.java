@@ -15,13 +15,13 @@ import java.util.Set;
  * Action that uses a spotlight card. It let's
  * 
  * @author Simone
- * @versino 1.0
+ * @version 1.0
  */
 public class UseSpotlightCard extends UseItemCard {
 
 	/**
 	 * Adds to {@link #spotlightTarget} the starting coordinate ({@link #target}
-	 * ) and the sourrounding six
+	 * ) and the surrounding six
 	 */
 	private static Set<Coordinate> findSpotlightTarget(Model model,
 			Coordinate target) {
@@ -38,10 +38,9 @@ public class UseSpotlightCard extends UseItemCard {
 	private static Set<Player> findPlayers(Model model, Set<Coordinate> target) {
 		Set<Player> foundPlayers = new HashSet<Player>();
 		for (Player p : model.getPlayers()) {
-			System.out.println(p.getLastPosition());
 			if (!p.getState().equals(PlayerState.DEAD)
 					&& target.contains(p.getLastPosition())) {
-				
+
 				foundPlayers.add(p);
 
 			}
