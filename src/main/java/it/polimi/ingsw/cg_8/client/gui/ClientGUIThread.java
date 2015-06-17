@@ -592,8 +592,6 @@ public class ClientGUIThread implements Runnable, Observer {
 
         mapPanel = new MapPanel();
 
-        // TODO : fix artifacts.
-        // mapPanel.setBackground(new Color(100, 100, 100, 100));
         mapPanel.setOpaque(false);
 
         mapPanel.setVisible(true);
