@@ -24,6 +24,55 @@ import javax.swing.Timer;
  * @version 1.0
  */
 public class MapPanel extends JLayeredPane {
+	private class AuxiliaryUtils {
+		/**
+		 * Auxiliary variables
+		 */
+		private float mapImageWidth, mapImageHeight, panelBorderWidth,
+				panelBorderHeight;
+
+		/**
+		 * Calculates the auxiliary variables
+		 */
+		public AuxiliaryUtils() {
+			int mapPanelWidth = getWidth();
+			int mapPanelHeight = getHeight();
+			// get image size, resized
+			mapImageWidth = mapPanelWidth;
+			mapImageHeight = mapPanelHeight;
+
+			if (mapImageWidth - backgroundImageScaled.getWidth(null) > mapImageHeight
+					- backgroundImageScaled.getHeight(null)) {
+				mapImageWidth = mapImageHeight
+						* backgroundImageScaled.getWidth(null)
+						/ backgroundImageScaled.getHeight(null);
+			} else {
+				mapImageHeight = mapImageWidth
+						* backgroundImageScaled.getHeight(null)
+						/ backgroundImageScaled.getWidth(null);
+			}
+			// get border sizes
+			panelBorderWidth = (mapPanelWidth - mapImageWidth) / 2;
+			panelBorderHeight = (mapPanelHeight - mapImageHeight) / 2;
+		}
+
+		public float getMapImageWidth() {
+			return mapImageWidth;
+		}
+
+		public float getMapImageHeight() {
+			return mapImageHeight;
+		}
+
+		public float getPanelBorderWidth() {
+			return panelBorderWidth;
+		}
+
+		public float getPanelBorderHeight() {
+			return panelBorderHeight;
+		}
+	}
+
 	/**
 	 * Player jlabel that show its position on the map
 	 * 
@@ -300,33 +349,14 @@ public class MapPanel extends JLayeredPane {
 		// click coordinates
 		int mouseX = e.getX();
 		int mouseY = e.getY();
-		// mapPanel sizes
-		int mapPanelWidth = this.getWidth();
-		int mapPanelHeight = this.getHeight();
-		// background image sizes
-		float mapImageWidth = mapPanelWidth;
-		float mapImageHeight = mapPanelHeight;
-		if (mapImageWidth - backgroundImageScaled.getWidth(null) > mapImageHeight
-				- backgroundImageScaled.getHeight(null)) {
-			mapImageWidth = mapImageHeight
-					* backgroundImageScaled.getWidth(null)
-					/ backgroundImageScaled.getHeight(null);
-		} else {
-			mapImageHeight = mapImageWidth
-					* backgroundImageScaled.getHeight(null)
-					/ backgroundImageScaled.getWidth(null);
-
-		}
-		// border sizes
-		float panelBorderWidth = (mapPanelWidth - mapImageWidth) / 2;
-		float panelBorderHeigth = (mapPanelHeight - mapImageHeight) / 2;
+		AuxiliaryUtils utils = new AuxiliaryUtils();
 		// calculate col and row size
-		float columnWidth = mapImageWidth / NUM_COLUMN;
-		float rowHeigth = mapImageHeight / NUM_ROW;
+		float columnWidth = utils.getMapImageWidth() / NUM_COLUMN;
+		float rowHeigth = utils.getMapImageHeight() / NUM_ROW;
 
 		// calculate coordinate
-		float imageMouseX = mouseX - panelBorderWidth;
-		float imageMouseY = mouseY - panelBorderHeigth;
+		float imageMouseX = mouseX - utils.getPanelBorderWidth();
+		float imageMouseY = mouseY - utils.getPanelBorderHeight();
 
 		// calculate column
 		for (int i = 0; i <= NUM_COLUMN; i++) {
