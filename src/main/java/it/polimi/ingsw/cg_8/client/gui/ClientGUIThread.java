@@ -101,8 +101,9 @@ public class ClientGUIThread implements Runnable, Observer {
 		public void mouseReleased(MouseEvent e) {
 			if (matchStarted) {
 				Coordinate coordinate = mapPanel.getCoordinate(e);
-				ClientCoordinate dummyCoordinate = new ClientCoordinate(coordinate);
-					if (coordinateSet.contains(dummyCoordinate)) {
+				ClientCoordinate dummyCoordinate = new ClientCoordinate(
+						coordinate);
+				if (coordinateSet.contains(dummyCoordinate)) {
 					if (coordinate.getX() >= 0 && coordinate.getY() >= 0
 							&& coordinate.getX() < MapPanel.NUM_COLUMN
 							&& coordinate.getY() < MapPanel.NUM_ROW) {
@@ -125,12 +126,12 @@ public class ClientGUIThread implements Runnable, Observer {
 									new SpotlightCard(), coordinate));
 						} else if (result == 2) {
 							LOGGER.debug("Choose: fake noise");
-							connectionManager.send(new ActionFakeNoise(coordinate));
+							connectionManager.send(new ActionFakeNoise(
+									coordinate));
 						}
 					}
-					
+
 				}
-				
 
 			}
 		}
@@ -270,9 +271,12 @@ public class ClientGUIThread implements Runnable, Observer {
 						JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
 				JDialog dialog = optionPane.createDialog("End turn");
 				dialog.setVisible(true);
-				int selection = ((Integer) optionPane.getValue()).intValue();
-				if (selection == JOptionPane.YES_OPTION) {
-					connectionManager.send(new ActionEndTurn());
+				if (optionPane.getValue() != null) {
+					int selection = ((Integer) optionPane.getValue())
+							.intValue();
+					if (selection == JOptionPane.YES_OPTION) {
+						connectionManager.send(new ActionEndTurn());
+					}
 				} else {
 					// do nothing
 				}
@@ -323,9 +327,13 @@ public class ClientGUIThread implements Runnable, Observer {
 				JDialog dialog = optionPane
 						.createDialog("Draw a dangerous sector card");
 				dialog.setVisible(true);
-				int selection = ((Integer) optionPane.getValue()).intValue();
-				if (selection == JOptionPane.YES_OPTION) {
-					connectionManager.send(new ActionDrawCard());
+				if (optionPane.getValue() != null) {
+					int selection = ((Integer) optionPane.getValue())
+							.intValue();
+					if (selection == JOptionPane.YES_OPTION) {
+						connectionManager.send(new ActionDrawCard());
+					}
+
 				} else {
 					// do nothing
 				}
@@ -348,9 +356,14 @@ public class ClientGUIThread implements Runnable, Observer {
 						JOptionPane.YES_NO_OPTION);
 				JDialog dialog = optionPane.createDialog(ATTACK_TEXT);
 				dialog.setVisible(true);
-				int selection = ((Integer) optionPane.getValue()).intValue();
-				if (selection == JOptionPane.YES_OPTION) {
-					connectionManager.send(new ActionAttack());
+
+				if (optionPane.getValue() != null) {
+					int selection = ((Integer) optionPane.getValue())
+							.intValue();
+					if (selection == JOptionPane.YES_OPTION) {
+						connectionManager.send(new ActionAttack());
+					}
+
 				} else {
 					// do nothing
 				}
@@ -568,7 +581,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		chatPanel2.setBackground(Color.WHITE);
 		infoScroll = new JScrollPane(infoTextPane);
 		chatScroll = new JScrollPane(chatTextPane);
-		
+
 		/**
 		 * Which map is loaded.
 		 */
@@ -579,9 +592,9 @@ public class ClientGUIThread implements Runnable, Observer {
 		// setup map panel
 
 		mapPanel = new MapPanel();
-		
-		//TODO : fix artifacts.
-		//mapPanel.setBackground(new Color(100, 100, 100, 100));
+
+		// TODO : fix artifacts.
+		// mapPanel.setBackground(new Color(100, 100, 100, 100));
 		mapPanel.setOpaque(false);
 
 		mapPanel.setVisible(true);
@@ -910,7 +923,6 @@ public class ClientGUIThread implements Runnable, Observer {
 		// send chat message when enter is pressed
 		chatTextField.addKeyListener(new ChatKeyListener());
 
-
 		mapPanel.addMouseListener(new MapMouseInputAdapter());
 
 	}
@@ -1071,11 +1083,13 @@ public class ClientGUIThread implements Runnable, Observer {
 				LOGGER.info("Map changed to fermi");
 			} else if (mapName.equals(GameMapName.GALILEI)) {
 				mapPanel.setMapImage(Resource.IMG_GALILEI_MAP);
-				coordinateSet.addAll(MapParserClient.parse(Resource.GALILEI_XML));
+				coordinateSet.addAll(MapParserClient
+						.parse(Resource.GALILEI_XML));
 				LOGGER.debug("Map changed to galilei");
 			} else if (mapName.equals(GameMapName.GALVANI)) {
 				mapPanel.setMapImage(Resource.IMG_GALVANI_MAP);
-				coordinateSet.addAll(MapParserClient.parse(Resource.GALVANI_XML));
+				coordinateSet.addAll(MapParserClient
+						.parse(Resource.GALVANI_XML));
 				LOGGER.debug("Map changed to galvani");
 			}
 			mainFrame.revalidate();
