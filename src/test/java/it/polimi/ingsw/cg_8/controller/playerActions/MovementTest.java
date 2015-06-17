@@ -1,6 +1,7 @@
 package it.polimi.ingsw.cg_8.controller.playerActions;
 
 import static org.junit.Assert.*;
+import it.polimi.ingsw.cg_8.controller.playeraction.Movement;
 import it.polimi.ingsw.cg_8.model.Model;
 import it.polimi.ingsw.cg_8.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.cg_8.model.exceptions.GameAlreadyRunningException;
@@ -13,38 +14,38 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class MovementTest {
-	Model model;
+    Model model;
 
-	@Before
-	public void init() {
+    @Before
+    public void init() {
 
-		try {
-			model = new Model(GameMapName.FERMI);
-			model.addPlayer("A");
-			model.addPlayer("B");
-			model.addPlayer("C");
-			model.initGame();
-		} catch (EmptyDeckException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NotAValidMapException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (GameAlreadyRunningException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+        try {
+            model = new Model(GameMapName.FERMI);
+            model.addPlayer("A");
+            model.addPlayer("B");
+            model.addPlayer("C");
+            model.initGame();
+        } catch (EmptyDeckException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (NotAValidMapException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (GameAlreadyRunningException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 
-	@Test
-	public void testMakeMove() {
-		if (model.getCurrentPlayerReference().getCharacter() instanceof Human) {
-			model.nextPlayer();
-		}
+    @Test
+    public void testMakeMove() {
+        if (model.getCurrentPlayerReference().getCharacter() instanceof Human) {
+            model.nextPlayer();
+        }
 
-		Movement move = new Movement(model, new Coordinate(12, 10));
-		move.makeMove();
-		assertEquals(model.getCurrentPlayerReference().getLastPosition(),
-				new Coordinate(12, 10));
-	}
+        Movement move = new Movement(model, new Coordinate(12, 10));
+        move.makeMove();
+        assertEquals(model.getCurrentPlayerReference().getLastPosition(),
+                new Coordinate(12, 10));
+    }
 }

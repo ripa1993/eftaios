@@ -27,73 +27,73 @@ import org.apache.logging.log4j.Logger;
  * @version 1.0
  */
 public class MapParserClient {
-	/**
-	 * Log4j logger
-	 */
-	private static final Logger LOGGER = LogManager
-			.getLogger(MapParserClient.class);
+    /**
+     * Log4j logger
+     */
+    private static final Logger LOGGER = LogManager
+            .getLogger(MapParserClient.class);
 
-	/**
-	 * Constructor
-	 */
-	private MapParserClient() {
+    /**
+     * Constructor
+     */
+    private MapParserClient() {
 
-	}
+    }
 
-	/**
-	 * Private class containing the set of the coordinates of the map.
-	 * 
-	 * @author Alberto
-	 * @version 1.0
-	 */
-	@XmlRootElement(name = "map")
-	@XmlAccessorType(XmlAccessType.FIELD)
-	private static class GameMapSet {
+    /**
+     * Private class containing the set of the coordinates of the map.
+     * 
+     * @author Alberto
+     * @version 1.0
+     */
+    @XmlRootElement(name = "map")
+    @XmlAccessorType(XmlAccessType.FIELD)
+    private static class GameMapSet {
 
-		/**
-		 * Set of the coordinates of the map.
-		 */
-		@XmlElementWrapper(name = "sectorList")
-		@XmlElements({
-				@XmlElement(name = "safeSector", type = Coordinate.class),
-				@XmlElement(name = "dangerousSector", type = Coordinate.class),
-				@XmlElement(name = "escapeHatchSector", type = Coordinate.class),
-				@XmlElement(name = "humanSector", type = Coordinate.class),
-				@XmlElement(name = "alienSector", type = Coordinate.class), })
-		private Set<Coordinate> sectorSet;
+        /**
+         * Set of the coordinates of the map.
+         */
+        @XmlElementWrapper(name = "sectorList")
+        @XmlElements({
+                @XmlElement(name = "safeSector", type = Coordinate.class),
+                @XmlElement(name = "dangerousSector", type = Coordinate.class),
+                @XmlElement(name = "escapeHatchSector", type = Coordinate.class),
+                @XmlElement(name = "humanSector", type = Coordinate.class),
+                @XmlElement(name = "alienSector", type = Coordinate.class), })
+        private Set<Coordinate> sectorSet;
 
-		/**
-		 * Return the coordinates of the current map
-		 * 
-		 * @return the coordinates of the map referred by the document used as
-		 *         input in the parsing.
-		 */
-		public Set<Coordinate> getSectorList() {
-			return this.sectorSet;
-		}
-	}
+        /**
+         * Return the coordinates of the current map
+         * 
+         * @return the coordinates of the map referred by the document used as
+         *         input in the parsing.
+         */
+        public Set<Coordinate> getSectorList() {
+            return this.sectorSet;
+        }
+    }
 
-	/**
-	 * Parse an XML document referring to the map passed as parameter.
-	 * 
-	 * @param mapName
-	 *            the reference to the XML document of the current map.
-	 * @return the coordinates of the current map.
-	 */
-	public static Set<Coordinate> parse(String mapName) {
+    /**
+     * Parse an XML document referring to the map passed as parameter.
+     * 
+     * @param mapName
+     *            the reference to the XML document of the current map.
+     * @return the coordinates of the current map.
+     */
+    public static Set<Coordinate> parse(String mapName) {
 
-		try {
-			JAXBContext jc = JAXBContext.newInstance(GameMapSet.class);
+        try {
+            JAXBContext jc = JAXBContext.newInstance(GameMapSet.class);
 
-			Unmarshaller unmarshaller = jc.createUnmarshaller();
-			GameMapSet sectorSet = (GameMapSet) unmarshaller
-					.unmarshal(new File(mapName));
+            Unmarshaller unmarshaller = jc.createUnmarshaller();
+            GameMapSet sectorSet = (GameMapSet) unmarshaller
+                    .unmarshal(new File(mapName));
 
-			return sectorSet.getSectorList();
+            return sectorSet.getSectorList();
 
-		} catch (Exception e) {
-			LOGGER.error(e.getMessage(), e);
-			return new HashSet<Coordinate>();
-		}
-	}
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage(), e);
+            return new HashSet<Coordinate>();
+        }
+    }
 }

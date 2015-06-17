@@ -20,68 +20,68 @@ import org.apache.logging.log4j.Logger;
  * @version 1.0
  */
 public class ServerGameRoom extends ServerPublisher implements
-		ServerGameRoomInterface {
-	/**
-	 * Reference to the client assigned to a specific instance of this class,
-	 * used to send messages to it.
-	 */
-	private SubscriberInterface clientRMI;
-	/**
-	 * Log4j logger
-	 */
-	private static final Logger LOGGER = LogManager
-			.getLogger(ServerGameRoom.class);
+        ServerGameRoomInterface {
+    /**
+     * Reference to the client assigned to a specific instance of this class,
+     * used to send messages to it.
+     */
+    private SubscriberInterface clientRMI;
+    /**
+     * Log4j logger
+     */
+    private static final Logger LOGGER = LogManager
+            .getLogger(ServerGameRoom.class);
 
-	/**
-	 * The class has to be exported to be used by the client.
-	 * 
-	 * @param client
-	 * @throws RemoteException
-	 */
-	protected ServerGameRoom(SubscriberInterface client) throws RemoteException {
-		UnicastRemoteObject.exportObject(this, 7777);
-		this.clientRMI = client;
-	}
+    /**
+     * The class has to be exported to be used by the client.
+     * 
+     * @param client
+     * @throws RemoteException
+     */
+    protected ServerGameRoom(SubscriberInterface client) throws RemoteException {
+        UnicastRemoteObject.exportObject(this, 7777);
+        this.clientRMI = client;
+    }
 
-	/**
-	 * Used by the client to send actions to the server, after the start of the
-	 * game.
-	 * 
-	 * @param clientId
-	 *            The client Id
-	 * @param action
-	 *            The action sent by the client
-	 * @return Whether the action was accepted or not.
-	 * @throws RemoteException
-	 */
-	@Override
-	public boolean makeAction(int clientId, ClientAction action)
-			throws RemoteException {
+    /**
+     * Used by the client to send actions to the server, after the start of the
+     * game.
+     * 
+     * @param clientId
+     *            The client Id
+     * @param action
+     *            The action sent by the client
+     * @return Whether the action was accepted or not.
+     * @throws RemoteException
+     */
+    @Override
+    public boolean makeAction(int clientId, ClientAction action)
+            throws RemoteException {
 
-		Controller controller = Server.getId2Controller().get(clientId);
-		boolean result = StateMachine.evaluateAction(controller, action,
-				controller.getPlayerById(clientId));
-		LOGGER.debug(result);
-		/**
-		 * Can be used to print the action result on the client, for debugging
-		 * purposes
-		 */
-		return result;
-	}
+        Controller controller = Server.getId2Controller().get(clientId);
+        boolean result = StateMachine.evaluateAction(controller, action,
+                controller.getPlayerById(clientId));
+        LOGGER.debug(result);
+        /**
+         * Can be used to print the action result on the client, for debugging
+         * purposes
+         */
+        return result;
+    }
 
-	/**
-	 * Used by the server to send messages to the client.
-	 * 
-	 * @param message
-	 *            A {@link ServerResponse} given by the server.
-	 */
-	@Override
-	public void dispatchMessage(ServerResponse message) {
+    /**
+     * Used by the server to send messages to the client.
+     * 
+     * @param message
+     *            A {@link ServerResponse} given by the server.
+     */
+    @Override
+    public void dispatchMessage(ServerResponse message) {
 
-		try {
-			clientRMI.publishMessage(message);
-		} catch (RemoteException e) {
-			LOGGER.error(e.getMessage(), e);
-		}
-	}
+        try {
+            clientRMI.publishMessage(message);
+        } catch (RemoteException e) {
+            LOGGER.error(e.getMessage(), e);
+        }
+    }
 }

@@ -4,6 +4,7 @@ import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+
 /**
  * Contains the methods usable by the client after registering (and thus after
  * the start of the game) The client after registering gets a reference to the
@@ -14,14 +15,16 @@ import java.rmi.RemoteException;
  */
 public interface ServerGameRoomInterface extends Remote {
 
-	/**
-	 * 
-	 * @param clientId The client Id
-	 * @param action The action sent by the client
-	 * @return Whether the action was accepted or not.
-	 * @throws RemoteException
-	 */
-	public boolean makeAction(int clientId, ClientAction action) throws RemoteException;
-	
-	
+    /**
+     * 
+     * @param clientId
+     *            The client Id
+     * @param action
+     *            The action sent by the client
+     * @return Whether the action was accepted or not.
+     * @throws RemoteException
+     */
+    public boolean makeAction(int clientId, ClientAction action)
+            throws RemoteException;
+
 }

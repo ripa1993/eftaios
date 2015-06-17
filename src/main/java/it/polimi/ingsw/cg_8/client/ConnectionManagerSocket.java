@@ -22,156 +22,156 @@ import org.apache.logging.log4j.Logger;
  * @version 1.1
  */
 public class ConnectionManagerSocket extends ConnectionManager {
-	/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = -3402004204836762667L;
-	/**
-	 * The server IP address.
-	 */
-	private static final String SERVER_ADDRESS = "localhost";
-	/**
-	 * The server port used for the Receive/Response communication.
-	 */
-	private static final int SOCKET_PORT_CLIENTSERVER = 29998;
-	/**
-	 * The server port used for the Publisher/Subscriber communication.
-	 */
-	private static final int SOCKET_PORT_PUBSUB = 29999;
-	/**
-	 * Thread executor service
-	 */
-	private transient ExecutorService executor;
-	/**
-	 * Flag for when the map has been chosen by the player.
-	 */
-	private boolean mapSet;
-	/**
-	 * Log4j logger
-	 */
-	private static final Logger LOGGER = LogManager
-			.getLogger(ConnectionManagerSocket.class);
+    private static final long serialVersionUID = -3402004204836762667L;
+    /**
+     * The server IP address.
+     */
+    private static final String SERVER_ADDRESS = "localhost";
+    /**
+     * The server port used for the Receive/Response communication.
+     */
+    private static final int SOCKET_PORT_CLIENTSERVER = 29998;
+    /**
+     * The server port used for the Publisher/Subscriber communication.
+     */
+    private static final int SOCKET_PORT_PUBSUB = 29999;
+    /**
+     * Thread executor service
+     */
+    private transient ExecutorService executor;
+    /**
+     * Flag for when the map has been chosen by the player.
+     */
+    private boolean mapSet;
+    /**
+     * Log4j logger
+     */
+    private static final Logger LOGGER = LogManager
+            .getLogger(ConnectionManagerSocket.class);
 
-	/**
-	 * Constructor
-	 * 
-	 * @param playerName
-	 *            player name
-	 * @param mapName
-	 *            map name
-	 */
-	public ConnectionManagerSocket(String playerName, GameMapName mapName) {
-		super(playerName, mapName);
-		executor = Executors.newCachedThreadPool();
-		mapSet = false;
-	}
+    /**
+     * Constructor
+     * 
+     * @param playerName
+     *            player name
+     * @param mapName
+     *            map name
+     */
+    public ConnectionManagerSocket(String playerName, GameMapName mapName) {
+        super(playerName, mapName);
+        executor = Executors.newCachedThreadPool();
+        mapSet = false;
+    }
 
-	/**
-	 * Function called to setup the connection with the server.
-	 */
-	@Override
-	public void setup() {
-		try {
-			this.initializeSocket();
+    /**
+     * Function called to setup the connection with the server.
+     */
+    @Override
+    public void setup() {
+        try {
+            this.initializeSocket();
 
-			/**
-			 * Creates an always-on thread that works as a subscriber. When the
-			 * server publishes something, this thread is notified.
-			 */
-			executor.submit(new ClientSocketViewSUB(SERVER_ADDRESS,
-					SOCKET_PORT_PUBSUB, this));
-			LOGGER.debug("Subscriber back to main thread");
-		} catch (IOException e) {
-			LOGGER.error("Cannot connect to socket server (" + SERVER_ADDRESS
-					+ ":" + SOCKET_PORT_CLIENTSERVER + ")", e);
-		}
+            /**
+             * Creates an always-on thread that works as a subscriber. When the
+             * server publishes something, this thread is notified.
+             */
+            executor.submit(new ClientSocketViewSUB(SERVER_ADDRESS,
+                    SOCKET_PORT_PUBSUB, this));
+            LOGGER.debug("Subscriber back to main thread");
+        } catch (IOException e) {
+            LOGGER.error("Cannot connect to socket server (" + SERVER_ADDRESS
+                    + ":" + SOCKET_PORT_CLIENTSERVER + ")", e);
+        }
 
-	}
+    }
 
-	/**
-	 * Function used to send messages (i.e {@link ClientAction} to the server.
-	 */
-	@Override
-	public void send(ClientAction inputLine) {
-		LOGGER.debug("Sending action...");
-		ClientSocketViewCS socketCS = new ClientSocketViewCS(SERVER_ADDRESS,
-				SOCKET_PORT_CLIENTSERVER, inputLine, clientID, clientData);
-		executor.submit(socketCS);
+    /**
+     * Function used to send messages (i.e {@link ClientAction} to the server.
+     */
+    @Override
+    public void send(ClientAction inputLine) {
+        LOGGER.debug("Sending action...");
+        ClientSocketViewCS socketCS = new ClientSocketViewCS(SERVER_ADDRESS,
+                SOCKET_PORT_CLIENTSERVER, inputLine, clientID, clientData);
+        executor.submit(socketCS);
 
-	}
+    }
 
-	/**
-	 * Used to establish a connection with the server.
-	 * 
-	 * @throws UnknownHostException
-	 * @throws IOException
-	 */
-	public void initializeSocket() throws IOException {
-		Socket socket = new Socket(SERVER_ADDRESS, SOCKET_PORT_CLIENTSERVER);
-		LOGGER.debug("Connected to server " + SERVER_ADDRESS + " on port "
-				+ SOCKET_PORT_CLIENTSERVER);
+    /**
+     * Used to establish a connection with the server.
+     * 
+     * @throws UnknownHostException
+     * @throws IOException
+     */
+    public void initializeSocket() throws IOException {
+        Socket socket = new Socket(SERVER_ADDRESS, SOCKET_PORT_CLIENTSERVER);
+        LOGGER.debug("Connected to server " + SERVER_ADDRESS + " on port "
+                + SOCKET_PORT_CLIENTSERVER);
 
-		ObjectOutputStream output = new ObjectOutputStream(
-				socket.getOutputStream());
-		ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
+        ObjectOutputStream output = new ObjectOutputStream(
+                socket.getOutputStream());
+        ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
 
-		do {
-			try {
-				LOGGER.info("Your ID is not set.");
-				output.writeObject(new Integer(this.getclientID()));
-				output.flush();
-				Integer clientIDRequested = (Integer) input.readObject();
-				LOGGER.info("New ID received");
-				this.setclientID((int) clientIDRequested);
-				LOGGER.info("Your ID is: " + this.getclientID());
-			} catch (IOException | ClassNotFoundException e) {
-				LOGGER.error(e.getMessage(), e);
-			}
-		} while (this.getclientID() == 0);
+        do {
+            try {
+                LOGGER.info("Your ID is not set.");
+                output.writeObject(new Integer(this.getclientID()));
+                output.flush();
+                Integer clientIDRequested = (Integer) input.readObject();
+                LOGGER.info("New ID received");
+                this.setclientID((int) clientIDRequested);
+                LOGGER.info("Your ID is: " + this.getclientID());
+            } catch (IOException | ClassNotFoundException e) {
+                LOGGER.error(e.getMessage(), e);
+            }
+        } while (this.getclientID() == 0);
 
-		do {
-			try {
+        do {
+            try {
 
-				LOGGER.debug("Sending your User-Name to the server...");
-				output.writeObject(this.playerName);
-				output.flush();
-				String serverAnswer = (String) input.readObject();
-				if ("NAME ACCEPTED".equals(serverAnswer)) {
-					nameSet = true;
-					LOGGER.debug("Name accepted");
-				}
+                LOGGER.debug("Sending your User-Name to the server...");
+                output.writeObject(this.playerName);
+                output.flush();
+                String serverAnswer = (String) input.readObject();
+                if ("NAME ACCEPTED".equals(serverAnswer)) {
+                    nameSet = true;
+                    LOGGER.debug("Name accepted");
+                }
 
-				LOGGER.debug("Sending your chosen map to the server...");
-				output.writeObject(this.mapName);
-				output.flush();
-				String serverMapAnswer = (String) input.readObject();
-				if (serverMapAnswer.equals("MAP CHOSEN: "
-						+ this.mapName.toString())) {
-					mapSet = true;
-					LOGGER.debug("Map accepted");
-				}
+                LOGGER.debug("Sending your chosen map to the server...");
+                output.writeObject(this.mapName);
+                output.flush();
+                String serverMapAnswer = (String) input.readObject();
+                if (serverMapAnswer.equals("MAP CHOSEN: "
+                        + this.mapName.toString())) {
+                    mapSet = true;
+                    LOGGER.debug("Map accepted");
+                }
 
-			} catch (IOException e) {
-				LOGGER.error(e.getMessage(), e);
-			} catch (ClassNotFoundException e) {
-				LOGGER.error(e.getMessage(), e);
-			}
-		} while (!nameSet || !mapSet);
+            } catch (IOException e) {
+                LOGGER.error(e.getMessage(), e);
+            } catch (ClassNotFoundException e) {
+                LOGGER.error(e.getMessage(), e);
+            }
+        } while (!nameSet || !mapSet);
 
-		this.close(socket);
-		// delete references
-		socket = null;
-		output = null;
-	}
+        this.close(socket);
+        // delete references
+        socket = null;
+        output = null;
+    }
 
-	/**
-	 * Close the socket used to establish the first connection.
-	 */
-	private void close(Socket socket) {
-		try {
-			socket.close();
-		} catch (IOException e) {
-			LOGGER.error(e.getMessage(), e);
-		}
-	}
+    /**
+     * Close the socket used to establish the first connection.
+     */
+    private void close(Socket socket) {
+        try {
+            socket.close();
+        } catch (IOException e) {
+            LOGGER.error(e.getMessage(), e);
+        }
+    }
 }

@@ -14,29 +14,29 @@ import it.polimi.ingsw.cg_8.model.sectors.special.SpecialSector;
 @XmlAccessorType(XmlAccessType.FIELD)
 public abstract class SpawnSector extends SpecialSector {
 
-	/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = -1851902876364291445L;
+    private static final long serialVersionUID = -1851902876364291445L;
 
-	/**
-	 * Default constructor for {@link SpecialSector}, used to performs checks
-	 * and validations.
-	 * 
-	 * @param x
-	 *            column number
-	 * @param y
-	 *            row number
-	 */
-	public SpawnSector(int x, int y) {
-		super(x, y);
-	}
+    /**
+     * Default constructor for {@link SpecialSector}, used to performs checks
+     * and validations.
+     * 
+     * @param x
+     *            column number
+     * @param y
+     *            row number
+     */
+    public SpawnSector(int x, int y) {
+        super(x, y);
+    }
 
-	/**
-	 * Default constructor used in the XML parsing.
-	 */
-	public SpawnSector() {
-		super();
-	}
+    /**
+     * Default constructor used in the XML parsing.
+     */
+    public SpawnSector() {
+        super();
+    }
 
 }

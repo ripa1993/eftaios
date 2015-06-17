@@ -19,67 +19,67 @@ import org.apache.logging.log4j.Logger;
  * @version 1.0
  */
 public class ServerRMI implements Runnable {
-	/**
-	 * Main server reference
-	 */
-	private Server server;
+    /**
+     * Main server reference
+     */
+    private Server server;
 
-	/**
-	 * Log4j logger
-	 */
-	private static final Logger LOGGER = LogManager.getLogger(ServerRMI.class);
+    /**
+     * Log4j logger
+     */
+    private static final Logger LOGGER = LogManager.getLogger(ServerRMI.class);
 
-	/**
-	 * Passing the server is needed to bind the registration room.
-	 * 
-	 * @param server
-	 */
-	public ServerRMI(Server server) {
-		this.server = server;
-	}
+    /**
+     * Passing the server is needed to bind the registration room.
+     * 
+     * @param server
+     */
+    public ServerRMI(Server server) {
+        this.server = server;
+    }
 
-	@Override
-	public void run() {
+    @Override
+    public void run() {
 
-		ServerRMIRegistrationViewRemote gameRegistration = new ServerRMIRegistrationView(
-				this);
-		try {
-			ServerRMIRegistrationViewRemote gameRemoteRegistration = (ServerRMIRegistrationViewRemote) UnicastRemoteObject
-					.exportObject(gameRegistration, 0);
-			LOGGER.info("Binding server implementation to registry...");
+        ServerRMIRegistrationViewRemote gameRegistration = new ServerRMIRegistrationView(
+                this);
+        try {
+            ServerRMIRegistrationViewRemote gameRemoteRegistration = (ServerRMIRegistrationViewRemote) UnicastRemoteObject
+                    .exportObject(gameRegistration, 0);
+            LOGGER.info("Binding server implementation to registry...");
 
-			server.getRegistry().bind(Server.getName(), gameRemoteRegistration);
-			LOGGER.info("RMI successfully started");
-		} catch (RemoteException | AlreadyBoundException e) {
-			LOGGER.error("Cannot start an RMI registry", e);
-		}
-	}
+            server.getRegistry().bind(Server.getName(), gameRemoteRegistration);
+            LOGGER.info("RMI successfully started");
+        } catch (RemoteException | AlreadyBoundException e) {
+            LOGGER.error("Cannot start an RMI registry", e);
+        }
+    }
 
-	/**
-	 * Add a client to the game, check if the game has to start.
-	 * 
-	 * @param client
-	 * @param view
-	 * @throws GameAlreadyRunningException
-	 * @throws RemoteException
-	 */
-	public synchronized void addRMIClient(SubscriberInterface client,
-			ServerGameRoom view) throws GameAlreadyRunningException,
-			RemoteException {
+    /**
+     * Add a client to the game, check if the game has to start.
+     * 
+     * @param client
+     * @param view
+     * @throws GameAlreadyRunningException
+     * @throws RemoteException
+     */
+    public synchronized void addRMIClient(SubscriberInterface client,
+            ServerGameRoom view) throws GameAlreadyRunningException,
+            RemoteException {
 
-		Controller nextGame = Server.getStartingGame();
-		if (nextGame == null) {
-			nextGame = Server.createNewGame(GameMapName.FERMI);
-		}
-		synchronized (Server.getStartingGame()) {
+        Controller nextGame = Server.getStartingGame();
+        if (nextGame == null) {
+            nextGame = Server.createNewGame(GameMapName.FERMI);
+        }
+        synchronized (Server.getStartingGame()) {
 
-			nextGame.addClientRMI(client.getClientId(), client.getPlayerName(),
-					view);
+            nextGame.addClientRMI(client.getClientId(), client.getPlayerName(),
+                    view);
 
-			/**
-			 * Check if the game has to start.
-			 */
-			Server.addClient(client.getClientId());
-		}
-	}
+            /**
+             * Check if the game has to start.
+             */
+            Server.addClient(client.getClientId());
+        }
+    }
 }

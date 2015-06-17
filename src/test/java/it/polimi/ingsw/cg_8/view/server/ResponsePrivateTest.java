@@ -6,16 +6,16 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class ResponsePrivateTest {
-	ResponsePrivate response;
+    ResponsePrivate response;
 
-	@Before
-	public void init() {
-		response = new ResponsePrivate("Test");
-	}
+    @Before
+    public void init() {
+        response = new ResponsePrivate("Test");
+    }
 
-	@Test
-	public void testGetMessage() {
-		assertEquals("Test", response.getMessage());
-	}
+    @Test
+    public void testGetMessage() {
+        assertEquals("Test", response.getMessage());
+    }
 
 }

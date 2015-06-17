@@ -10,31 +10,31 @@ import java.io.Serializable;
  */
 public class ActionChat implements ClientAction, Serializable {
 
-	/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = -4231024378871912612L;
-	/**
-	 * Chat message
-	 */
-	String message;
+    private static final long serialVersionUID = -4231024378871912612L;
+    /**
+     * Chat message
+     */
+    String message;
 
-	/**
-	 * Constructor
-	 * 
-	 * @param message
-	 *            chat message
-	 */
-	public ActionChat(String message) {
-		this.message = message;
-	}
+    /**
+     * Constructor
+     * 
+     * @param message
+     *            chat message
+     */
+    public ActionChat(String message) {
+        this.message = message;
+    }
 
-	/**
-	 * Getter
-	 * 
-	 * @return chat message
-	 */
-	public String getMessage() {
-		return this.message;
-	}
+    /**
+     * Getter
+     * 
+     * @return chat message
+     */
+    public String getMessage() {
+        return this.message;
+    }
 }

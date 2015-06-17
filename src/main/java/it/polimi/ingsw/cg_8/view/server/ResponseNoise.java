@@ -12,35 +12,35 @@ import java.io.Serializable;
  */
 public class ResponseNoise implements Serializable, ServerResponse {
 
-	/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = -539924760536211551L;
-	/**
-	 * Noise to be sent
-	 */
-	private final Noise noise;
+    private static final long serialVersionUID = -539924760536211551L;
+    /**
+     * Noise to be sent
+     */
+    private final Noise noise;
 
-	/**
-	 * Builds a new server response with the given noise
-	 * 
-	 * @param noise
-	 *            noise to be communicated
-	 */
-	public ResponseNoise(Noise noise) {
-		this.noise = noise;
-	}
+    /**
+     * Builds a new server response with the given noise
+     * 
+     * @param noise
+     *            noise to be communicated
+     */
+    public ResponseNoise(Noise noise) {
+        this.noise = noise;
+    }
 
-	/**
-	 * 
-	 * @return the communicated noise
-	 */
-	public Noise getNoise() {
-		return noise;
-	}
+    /**
+     * 
+     * @return the communicated noise
+     */
+    public Noise getNoise() {
+        return noise;
+    }
 
-	@Override
-	public String toString() {
-		return noise.toString();
-	}
+    @Override
+    public String toString() {
+        return noise.toString();
+    }
 }

@@ -26,141 +26,141 @@ import org.apache.logging.log4j.Logger;
  * @version 1.0
  */
 public class ConnectionManagerRMI extends ConnectionManager implements
-		Serializable, SubscriberInterface {
-	/**
+        Serializable, SubscriberInterface {
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = 9162555998546617215L;
+    private static final long serialVersionUID = 9162555998546617215L;
 
-	/**
-	 * The server IP address.
-	 */
-	private static final String SERVER_ADDRESS = "localhost";
-	/**
-	 * The server port used by the client to register.
-	 */
-	private static final int REGISTRATION_PORT = 7777;
-	/**
-	 * The name used to identify the {@link ServerRMIRegistrationView}
-	 */
-	private static final String REGISTRATION_ROOM_NAME = "registrationRoom";
-	/**
-	 * GameRoom used by RMI.
-	 */
-	private transient ServerGameRoomInterface view;
-	/**
-	 * Log4j logger
-	 */
-	private static final Logger LOGGER = LogManager
-			.getLogger(ConnectionManagerRMI.class);
+    /**
+     * The server IP address.
+     */
+    private static final String SERVER_ADDRESS = "localhost";
+    /**
+     * The server port used by the client to register.
+     */
+    private static final int REGISTRATION_PORT = 7777;
+    /**
+     * The name used to identify the {@link ServerRMIRegistrationView}
+     */
+    private static final String REGISTRATION_ROOM_NAME = "registrationRoom";
+    /**
+     * GameRoom used by RMI.
+     */
+    private transient ServerGameRoomInterface view;
+    /**
+     * Log4j logger
+     */
+    private static final Logger LOGGER = LogManager
+            .getLogger(ConnectionManagerRMI.class);
 
-	/**
-	 * The constructor is the same as the parent class.
-	 * 
-	 * @param playerName
-	 *            player name
-	 * @param mapName
-	 *            map name
-	 */
-	public ConnectionManagerRMI(String playerName, GameMapName mapName) {
-		super(playerName, mapName);
-	}
+    /**
+     * The constructor is the same as the parent class.
+     * 
+     * @param playerName
+     *            player name
+     * @param mapName
+     *            map name
+     */
+    public ConnectionManagerRMI(String playerName, GameMapName mapName) {
+        super(playerName, mapName);
+    }
 
-	/**
-	 * Method used to setup the RMI connection with the server.
-	 */
-	@Override
-	public void setup() {
+    /**
+     * Method used to setup the RMI connection with the server.
+     */
+    @Override
+    public void setup() {
 
-		LOGGER.debug("Contacting the broker...");
+        LOGGER.debug("Contacting the broker...");
 
-		try {
-			this.view = this.initializeRMI();
-			LOGGER.debug("Successfully registered");
-		} catch (NotBoundException | RemoteException | AlreadyBoundException e) {
-			LOGGER.error(
-					"Failed to connect to the RMI Server: " + e.getMessage(), e);
-		}
-	}
+        try {
+            this.view = this.initializeRMI();
+            LOGGER.debug("Successfully registered");
+        } catch (NotBoundException | RemoteException | AlreadyBoundException e) {
+            LOGGER.error(
+                    "Failed to connect to the RMI Server: " + e.getMessage(), e);
+        }
+    }
 
-	@Override
-	public int getClientId() throws RemoteException {
-		return this.clientID;
-	}
+    @Override
+    public int getClientId() throws RemoteException {
+        return this.clientID;
+    }
 
-	@Override
-	public String getPlayerName() throws RemoteException {
-		return this.playerName;
-	}
+    @Override
+    public String getPlayerName() throws RemoteException {
+        return this.playerName;
+    }
 
-	/**
-	 * Method used to send {@link ClientAction} to the server.
-	 */
-	@Override
-	public void send(ClientAction inputLine) {
+    /**
+     * Method used to send {@link ClientAction} to the server.
+     */
+    @Override
+    public void send(ClientAction inputLine) {
 
-		try {
+        try {
 
-			boolean serverResponse = view.makeAction(this.clientID, inputLine);
-			clientData.storeAck(serverResponse);
-		} catch (RemoteException e) {
-			LOGGER.error("Can't perform the action", e);
-		}
+            boolean serverResponse = view.makeAction(this.clientID, inputLine);
+            clientData.storeAck(serverResponse);
+        } catch (RemoteException e) {
+            LOGGER.error("Can't perform the action", e);
+        }
 
-	}
+    }
 
-	/**
-	 * Method used by the server to print messages on the client, and store them
-	 * in {@link ClientData}.
-	 */
-	@Override
-	public void publishMessage(ServerResponse message) throws RemoteException {
-		LOGGER.debug(message);
-		this.clientData.storeResponse(message);
-		return;
-	}
+    /**
+     * Method used by the server to print messages on the client, and store them
+     * in {@link ClientData}.
+     */
+    @Override
+    public void publishMessage(ServerResponse message) throws RemoteException {
+        LOGGER.debug(message);
+        this.clientData.storeResponse(message);
+        return;
+    }
 
-	/**
-	 * Method used to initialize the RMI connection and get a
-	 * {@link ServerGameRoom} to perform actions.
-	 * 
-	 */
-	public ServerGameRoomInterface initializeRMI() throws RemoteException,
-			NotBoundException, AlreadyBoundException {
-		LOGGER.debug("Connecting to the registry...");
-		Registry registry = LocateRegistry.getRegistry(SERVER_ADDRESS,
-				REGISTRATION_PORT);
-		LOGGER.debug("Connecting to the registration room...");
-		ServerRMIRegistrationViewRemote registrationRoom = (ServerRMIRegistrationViewRemote) registry
-				.lookup(REGISTRATION_ROOM_NAME);
+    /**
+     * Method used to initialize the RMI connection and get a
+     * {@link ServerGameRoom} to perform actions.
+     * 
+     */
+    public ServerGameRoomInterface initializeRMI() throws RemoteException,
+            NotBoundException, AlreadyBoundException {
+        LOGGER.debug("Connecting to the registry...");
+        Registry registry = LocateRegistry.getRegistry(SERVER_ADDRESS,
+                REGISTRATION_PORT);
+        LOGGER.debug("Connecting to the registration room...");
+        ServerRMIRegistrationViewRemote registrationRoom = (ServerRMIRegistrationViewRemote) registry
+                .lookup(REGISTRATION_ROOM_NAME);
 
-		LOGGER.debug("Trying to get a clientID...");
-		while (this.clientID == 0) {
-			this.clientID = registrationRoom.getClientId(this.clientID);
-		}
-		LOGGER.info("Your clientID is " + this.clientID);
+        LOGGER.debug("Trying to get a clientID...");
+        while (this.clientID == 0) {
+            this.clientID = registrationRoom.getClientId(this.clientID);
+        }
+        LOGGER.info("Your clientID is " + this.clientID);
 
-		LOGGER.debug("Trying to send your name to the server...");
+        LOGGER.debug("Trying to send your name to the server...");
 
-		while (!nameSet) {
-			nameSet = registrationRoom.sendPlayerName(this.playerName);
-		}
-		LOGGER.debug("NAME ACCEPTED");
+        while (!nameSet) {
+            nameSet = registrationRoom.sendPlayerName(this.playerName);
+        }
+        LOGGER.debug("NAME ACCEPTED");
 
-		/**
-		 * Communicating the chosen map to the server.
-		 */
-		LOGGER.debug("Sending your chosen map to the server...");
-		registrationRoom.sendMapVote(mapName);
+        /**
+         * Communicating the chosen map to the server.
+         */
+        LOGGER.debug("Sending your chosen map to the server...");
+        registrationRoom.sendMapVote(mapName);
 
-		/**
-		 * The client gets a view to play the game;
-		 */
-		LOGGER.debug("Trying to register...");
+        /**
+         * The client gets a view to play the game;
+         */
+        LOGGER.debug("Trying to register...");
 
-		return registrationRoom
-				.register((SubscriberInterface) UnicastRemoteObject
-						.exportObject(this, 0));
+        return registrationRoom
+                .register((SubscriberInterface) UnicastRemoteObject
+                        .exportObject(this, 0));
 
-	}
+    }
 }

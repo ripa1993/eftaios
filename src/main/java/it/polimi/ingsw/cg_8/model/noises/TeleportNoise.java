@@ -11,28 +11,28 @@ import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
  */
 public class TeleportNoise extends Noise {
 
-	/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = -3048154288023124880L;
+    private static final long serialVersionUID = -3048154288023124880L;
 
-	/**
-	 * Constructor
-	 * 
-	 * @param turnNumber
-	 *            turn number
-	 * @param player
-	 *            player that made noise
-	 * @param coordinate
-	 *            coordinate of the player
-	 */
-	public TeleportNoise(int turnNumber, Player player, Coordinate coordinate) {
-		super(turnNumber, player, coordinate);
-	}
+    /**
+     * Constructor
+     * 
+     * @param turnNumber
+     *            turn number
+     * @param player
+     *            player that made noise
+     * @param coordinate
+     *            coordinate of the player
+     */
+    public TeleportNoise(int turnNumber, Player player, Coordinate coordinate) {
+        super(turnNumber, player, coordinate);
+    }
 
-	@Override
-	public String toString() {
-		return "Teleport noise: " + super.toString();
-	}
+    @Override
+    public String toString() {
+        return "Teleport noise: " + super.toString();
+    }
 
 }

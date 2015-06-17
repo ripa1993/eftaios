@@ -22,35 +22,35 @@ import org.apache.logging.log4j.Logger;
  */
 public class GalileiCreator extends MapCreator {
 
-	/**
-	 * Log4j logger
-	 */
-	private static final Logger LOGGER = LogManager
-			.getLogger(GalileiCreator.class);
+    /**
+     * Log4j logger
+     */
+    private static final Logger LOGGER = LogManager
+            .getLogger(GalileiCreator.class);
 
-	/**
-	 * Constructor
-	 */
-	public GalileiCreator() {
-		super(new GalileiMap());
+    /**
+     * Constructor
+     */
+    public GalileiCreator() {
+        super(new GalileiMap());
 
-	}
+    }
 
-	@Override
-	protected GameMapSet sectorParser() {
+    @Override
+    protected GameMapSet sectorParser() {
 
-		try {
-			JAXBContext jc = JAXBContext.newInstance(GameMapSet.class);
+        try {
+            JAXBContext jc = JAXBContext.newInstance(GameMapSet.class);
 
-			Unmarshaller unmarshaller = jc.createUnmarshaller();
+            Unmarshaller unmarshaller = jc.createUnmarshaller();
 
-			return (GameMapSet) unmarshaller.unmarshal(new File(
-					Resource.GALILEI_XML));
+            return (GameMapSet) unmarshaller.unmarshal(new File(
+                    Resource.GALILEI_XML));
 
-		} catch (Exception e) {
-			LOGGER.error(e.getMessage(), e);
-			return new GameMapSet();
-		}
-	}
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage(), e);
+            return new GameMapSet();
+        }
+    }
 
 }

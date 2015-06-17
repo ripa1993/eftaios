@@ -4,20 +4,21 @@ import java.io.Serializable;
 
 /**
  * Allowed maps to be played
+ * 
  * @author Simone
  * @version 1.0
  */
 public enum GameMapName implements Serializable {
-	/**
-	 * Fermi map
-	 */
-	FERMI,
-	/**
-	 * Galilei map
-	 */
-	GALILEI,
-	/**
-	 * Galvani map
-	 */
-	GALVANI;
+    /**
+     * Fermi map
+     */
+    FERMI,
+    /**
+     * Galilei map
+     */
+    GALILEI,
+    /**
+     * Galvani map
+     */
+    GALVANI;
 }

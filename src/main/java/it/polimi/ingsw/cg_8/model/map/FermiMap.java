@@ -12,11 +12,11 @@ import it.polimi.ingsw.cg_8.model.map.creator.MapCreator;
  */
 public class FermiMap extends GameMap {
 
-	/**
-	 * Empty constructor for the map, instantiating the coordinates of thwe map
-	 * is done by the {@link MapCreator}
-	 */
-	public FermiMap() {
-		super();
-	}
+    /**
+     * Empty constructor for the map, instantiating the coordinates of thwe map
+     * is done by the {@link MapCreator}
+     */
+    public FermiMap() {
+        super();
+    }
 }

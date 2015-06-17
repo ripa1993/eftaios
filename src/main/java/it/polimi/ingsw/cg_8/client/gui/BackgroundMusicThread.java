@@ -22,47 +22,47 @@ import org.apache.logging.log4j.Logger;
  *
  */
 public class BackgroundMusicThread implements Runnable {
-	/**
-	 * Mp3 player
-	 */
-	private Player player;
-	/**
-	 * Log4j logger
-	 */
-	private static final Logger LOGGER = LogManager
-			.getLogger(BackgroundMusicThread.class);
+    /**
+     * Mp3 player
+     */
+    private Player player;
+    /**
+     * Log4j logger
+     */
+    private static final Logger LOGGER = LogManager
+            .getLogger(BackgroundMusicThread.class);
 
-	/**
-	 * Empty constructor
-	 */
-	public BackgroundMusicThread() {
+    /**
+     * Empty constructor
+     */
+    public BackgroundMusicThread() {
 
-	}
+    }
 
-	/**
-	 * Starts the background music
-	 */
-	private void playMe() {
-		try {
+    /**
+     * Starts the background music
+     */
+    private void playMe() {
+        try {
 
-			File file = new File(Resource.SOUND_BACKGROUDN);
-			FileInputStream fis = new FileInputStream(file);
-			BufferedInputStream bis = new BufferedInputStream(fis);
-			player = new Player(bis);
-			player.play();
+            File file = new File(Resource.SOUND_BACKGROUDN);
+            FileInputStream fis = new FileInputStream(file);
+            BufferedInputStream bis = new BufferedInputStream(fis);
+            player = new Player(bis);
+            player.play();
 
-		} catch (Exception e) {
-			LOGGER.error(e.getMessage(),e);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage(), e);
 
-		}
-	}
+        }
+    }
 
-	@Override
-	public void run() {
-		while (true) {
-			playMe();
-		}
+    @Override
+    public void run() {
+        while (true) {
+            playMe();
+        }
 
-	}
+    }
 
 }

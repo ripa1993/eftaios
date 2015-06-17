@@ -9,16 +9,16 @@ import org.junit.Test;
 
 public class ActionEndTurnTest {
 
-	@Test
-	public void testCorrect() throws NotAValidInput {
-		String input = "END";
-		ClientAction action = ActionParser.createEvent(input);
-		assertTrue(action instanceof ActionEndTurn);
-	}
+    @Test
+    public void testCorrect() throws NotAValidInput {
+        String input = "END";
+        ClientAction action = ActionParser.createEvent(input);
+        assertTrue(action instanceof ActionEndTurn);
+    }
 
-	@Test(expected = NotAValidInput.class)
-	public void testException() throws NotAValidInput {
-		String input = "END nonvalid";
-		ClientAction action = ActionParser.createEvent(input);
-	}
+    @Test(expected = NotAValidInput.class)
+    public void testException() throws NotAValidInput {
+        String input = "END nonvalid";
+        ClientAction action = ActionParser.createEvent(input);
+    }
 }

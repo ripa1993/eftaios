@@ -9,18 +9,18 @@ import java.io.Serializable;
  *
  */
 public class ActionGetReachableCoordinates implements ClientAction,
-		Serializable {
+        Serializable {
 
-	/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = 4115170137313357008L;
+    private static final long serialVersionUID = 4115170137313357008L;
 
-	/**
-	 * Constructor
-	 */
-	public ActionGetReachableCoordinates() {
+    /**
+     * Constructor
+     */
+    public ActionGetReachableCoordinates() {
 
-	}
+    }
 
 }

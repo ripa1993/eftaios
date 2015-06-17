@@ -10,33 +10,35 @@ import org.junit.Test;
 
 public class EscapeHatchSectorTest {
 
-	EscapeHatchSector ehs;
-	
-	@Before
-	public void init(){
-		ehs = new EscapeHatchSector(10, 20);
-	}
-	
-	
-	@Test
-	public void testGetX() {
-	
-		assertEquals(10, ehs.getX());
-	}
-	@Test
-	public void testGetY(){
+    EscapeHatchSector ehs;
 
-		assertEquals(20, ehs.getY());
-	}
-	@Test
-	public void testAllowEscape(){
-	
-		assertTrue(ehs.allowEscape());
-	}
-	@Test
-	public void testAllowEscape2(){
-	
-		assertFalse(ehs.allowEscape() == ehs.allowEscape());
-	}
+    @Before
+    public void init() {
+        ehs = new EscapeHatchSector(10, 20);
+    }
+
+    @Test
+    public void testGetX() {
+
+        assertEquals(10, ehs.getX());
+    }
+
+    @Test
+    public void testGetY() {
+
+        assertEquals(20, ehs.getY());
+    }
+
+    @Test
+    public void testAllowEscape() {
+
+        assertTrue(ehs.allowEscape());
+    }
+
+    @Test
+    public void testAllowEscape2() {
+
+        assertFalse(ehs.allowEscape() == ehs.allowEscape());
+    }
 
 }

@@ -7,8 +7,8 @@ package it.polimi.ingsw.cg_8.model.player.character.alien;
  * @version 1.0
  */
 public interface AlienBehaviour {
-	/**
-	 * @return max distance that the character can walk
-	 */
-	public int getMaxMovementDistance();
+    /**
+     * @return max distance that the character can walk
+     */
+    public int getMaxMovementDistance();
 }

@@ -10,17 +10,17 @@ import org.junit.Test;
 
 public class ActionGetReachableCoordinatesTest {
 
-	@Test
-	public void testCorrect() throws NotAValidInput {
-		String input = "COORDINATES";
-		ClientAction action = ActionParser.createEvent(input);
-		assertTrue(action instanceof ActionGetReachableCoordinates);
-	}
+    @Test
+    public void testCorrect() throws NotAValidInput {
+        String input = "COORDINATES";
+        ClientAction action = ActionParser.createEvent(input);
+        assertTrue(action instanceof ActionGetReachableCoordinates);
+    }
 
-	@Test(expected = NotAValidInput.class)
-	public void testException() throws NotAValidInput {
-		String input = "COORDINATES nonvalid";
-		ClientAction action = ActionParser.createEvent(input);
-	}
+    @Test(expected = NotAValidInput.class)
+    public void testException() throws NotAValidInput {
+        String input = "COORDINATES nonvalid";
+        ClientAction action = ActionParser.createEvent(input);
+    }
 
 }

@@ -22,36 +22,35 @@ import org.apache.logging.log4j.Logger;
  */
 public class GalvaniCreator extends MapCreator {
 
-	/**
-	 * Log4j logger
-	 */
-	private static final Logger LOGGER = LogManager.getLogger(GalvaniCreator.class);
+    /**
+     * Log4j logger
+     */
+    private static final Logger LOGGER = LogManager
+            .getLogger(GalvaniCreator.class);
 
-	/**
-	 * Constructor
-	 */
-	public GalvaniCreator() {
-		super(new GalvaniMap());
+    /**
+     * Constructor
+     */
+    public GalvaniCreator() {
+        super(new GalvaniMap());
 
-	}
+    }
 
-	@Override
-	protected GameMapSet sectorParser() {
+    @Override
+    protected GameMapSet sectorParser() {
 
-		try {
-			JAXBContext jc = JAXBContext.newInstance(GameMapSet.class);
+        try {
+            JAXBContext jc = JAXBContext.newInstance(GameMapSet.class);
 
-			Unmarshaller unmarshaller = jc.createUnmarshaller();
+            Unmarshaller unmarshaller = jc.createUnmarshaller();
 
-			return (GameMapSet) unmarshaller
-					.unmarshal(new File(Resource.GALVANI_XML));
+            return (GameMapSet) unmarshaller.unmarshal(new File(
+                    Resource.GALVANI_XML));
 
-		} catch (Exception e) {
-			LOGGER.error(e.getMessage(), e);
-			return new GameMapSet();
-		}
-	}
-
-
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage(), e);
+            return new GameMapSet();
+        }
+    }
 
 }

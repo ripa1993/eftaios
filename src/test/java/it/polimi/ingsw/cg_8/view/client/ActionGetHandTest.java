@@ -9,17 +9,17 @@ import org.junit.Test;
 
 public class ActionGetHandTest {
 
-	@Test
-	public void testCorrect() throws NotAValidInput {
-		String input = "CARDS";
-		ClientAction action = ActionParser.createEvent(input);
-		assertTrue(action instanceof ActionGetHand);
-	}
+    @Test
+    public void testCorrect() throws NotAValidInput {
+        String input = "CARDS";
+        ClientAction action = ActionParser.createEvent(input);
+        assertTrue(action instanceof ActionGetHand);
+    }
 
-	@Test(expected = NotAValidInput.class)
-	public void testException() throws NotAValidInput {
-		String input = "CARDS nonvalid";
-		ClientAction action = ActionParser.createEvent(input);
-	}
+    @Test(expected = NotAValidInput.class)
+    public void testException() throws NotAValidInput {
+        String input = "CARDS nonvalid";
+        ClientAction action = ActionParser.createEvent(input);
+    }
 
 }

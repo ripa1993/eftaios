@@ -12,32 +12,32 @@ import java.io.Serializable;
  */
 public class ActionMove implements Serializable, ClientAction {
 
-	/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = -2224360105510637030L;
-	/**
-	 * Destination coordinate
-	 */
-	private final Coordinate coordinate;
+    private static final long serialVersionUID = -2224360105510637030L;
+    /**
+     * Destination coordinate
+     */
+    private final Coordinate coordinate;
 
-	/**
-	 * Constructor
-	 * 
-	 * @param coordinate
-	 *            destination
-	 */
-	public ActionMove(Coordinate coordinate) {
-		this.coordinate = coordinate;
-	}
+    /**
+     * Constructor
+     * 
+     * @param coordinate
+     *            destination
+     */
+    public ActionMove(Coordinate coordinate) {
+        this.coordinate = coordinate;
+    }
 
-	/**
-	 * Getter
-	 * 
-	 * @return destination coordinate
-	 */
-	public Coordinate getCoordinate() {
-		return coordinate;
-	}
+    /**
+     * Getter
+     * 
+     * @return destination coordinate
+     */
+    public Coordinate getCoordinate() {
+        return coordinate;
+    }
 
 }

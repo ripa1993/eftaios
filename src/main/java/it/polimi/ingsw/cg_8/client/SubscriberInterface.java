@@ -13,29 +13,29 @@ import java.rmi.RemoteException;
  * @version 1.0
  */
 public interface SubscriberInterface extends Remote {
-	/**
-	 * Sends a ServerResponse message to the server
-	 * 
-	 * @param message
-	 *            ServerResponse message
-	 * @throws RemoteException
-	 */
-	public void publishMessage(ServerResponse message) throws RemoteException;
+    /**
+     * Sends a ServerResponse message to the server
+     * 
+     * @param message
+     *            ServerResponse message
+     * @throws RemoteException
+     */
+    public void publishMessage(ServerResponse message) throws RemoteException;
 
-	/**
-	 * Used to get the client id
-	 * 
-	 * @return the client id
-	 * @throws RemoteException
-	 */
-	public int getClientId() throws RemoteException;
+    /**
+     * Used to get the client id
+     * 
+     * @return the client id
+     * @throws RemoteException
+     */
+    public int getClientId() throws RemoteException;
 
-	/**
-	 * Used to get the player name
-	 * 
-	 * @return the player name
-	 * @throws RemoteException
-	 */
-	public String getPlayerName() throws RemoteException;
+    /**
+     * Used to get the player name
+     * 
+     * @return the player name
+     * @throws RemoteException
+     */
+    public String getPlayerName() throws RemoteException;
 
 }

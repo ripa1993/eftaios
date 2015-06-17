@@ -5,21 +5,21 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class ResponseChatTest {
-	ResponseChat response;
+    ResponseChat response;
 
-	@Before
-	public void init() {
-		response = new ResponseChat("A", "B");
-	}
+    @Before
+    public void init() {
+        response = new ResponseChat("A", "B");
+    }
 
-	@Test
-	public void testGetPlayerName() {
-		assertEquals("A", response.getPlayerName());
-	}
+    @Test
+    public void testGetPlayerName() {
+        assertEquals("A", response.getPlayerName());
+    }
 
-	@Test
-	public void testGetMessage() {
-		assertEquals("B", response.getMessage());
-	}
+    @Test
+    public void testGetMessage() {
+        assertEquals("B", response.getMessage());
+    }
 
 }

@@ -9,22 +9,22 @@ import org.junit.Test;
 
 public class ActionDisconnectTest {
 
-	@Test
-	public void testCorrect() throws NotAValidInput {
-		String input = "DISCONNECT";
-		ClientAction action = ActionParser.createEvent(input);
-		assertTrue(action instanceof ActionDisconnect);
-	}
+    @Test
+    public void testCorrect() throws NotAValidInput {
+        String input = "DISCONNECT";
+        ClientAction action = ActionParser.createEvent(input);
+        assertTrue(action instanceof ActionDisconnect);
+    }
 
-	@Test(expected = NotAValidInput.class)
-	public void testException() throws NotAValidInput {
-		String input = "DISCONNECT nonvalid";
-		ClientAction action = ActionParser.createEvent(input);
-	}
+    @Test(expected = NotAValidInput.class)
+    public void testException() throws NotAValidInput {
+        String input = "DISCONNECT nonvalid";
+        ClientAction action = ActionParser.createEvent(input);
+    }
 
-	@Test(expected = NotAValidInput.class)
-	public void testNotACommand() throws NotAValidInput {
-		String input = "CIAO";
-		ClientAction action = ActionParser.createEvent(input);
-	}
+    @Test(expected = NotAValidInput.class)
+    public void testNotACommand() throws NotAValidInput {
+        String input = "CIAO";
+        ClientAction action = ActionParser.createEvent(input);
+    }
 }
