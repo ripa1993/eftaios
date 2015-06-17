@@ -98,7 +98,7 @@ public class Controller implements Observer {
 	 * Log4j logger
 	 */
 	private static final Logger LOGGER = LogManager
-			.getLogger(ServerSocketPublisherThread.class);
+			.getLogger(Controller.class);
 
 	/**
 	 * Initialization of a new game. Note that the model is initialized with the

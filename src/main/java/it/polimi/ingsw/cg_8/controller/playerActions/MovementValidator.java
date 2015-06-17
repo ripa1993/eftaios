@@ -1,5 +1,6 @@
 package it.polimi.ingsw.cg_8.controller.playerActions;
 
+import it.polimi.ingsw.cg_8.controller.Controller;
 import it.polimi.ingsw.cg_8.model.Model;
 import it.polimi.ingsw.cg_8.model.exceptions.NotAValidCoordinateException;
 import it.polimi.ingsw.cg_8.model.map.GameMap;
@@ -14,6 +15,9 @@ import it.polimi.ingsw.cg_8.model.sectors.special.spawn.SpawnSector;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Contains method that are used in order to evaluate a player movement
  * 
@@ -21,6 +25,11 @@ import java.util.Set;
  * @version 1.0
  */
 public class MovementValidator {
+	/**
+	 * Log4j logger
+	 */
+	private static final Logger LOGGER = LogManager
+			.getLogger(MovementValidator.class);
 
 	/**
 	 * Validates the movement for the current player in model to the destination
@@ -57,10 +66,11 @@ public class MovementValidator {
 		Set<Coordinate> allowedCoordinates = setAllowedCoordinates(gameMap,
 				startingSector, maxDistance);
 
-		
 		try {
-			 destinationSector = model.getMap().getSectorByCoordinates(destination);
+			destinationSector = model.getMap().getSectorByCoordinates(
+					destination);
 		} catch (NotAValidCoordinateException e) {
+			LOGGER.error(e.getMessage(), e);
 			return false;
 		}
 		if (checkMovement(player, startingSector, destinationSector)) {
@@ -91,11 +101,10 @@ public class MovementValidator {
 		if (destinationSector instanceof SpawnSector) {
 			return false;
 		}
-		if (player.getCharacter() instanceof Alien) {
-			if (destinationSector instanceof EscapeHatchSector) {
-				
-				return false;
-			}
+		if (player.getCharacter() instanceof Alien
+				&& destinationSector instanceof EscapeHatchSector) {
+
+			return false;
 		}
 
 		return true;

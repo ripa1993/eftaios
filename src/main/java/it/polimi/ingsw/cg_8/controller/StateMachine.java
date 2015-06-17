@@ -311,11 +311,11 @@ public class StateMachine {
 				return actionUseCardFull(controller, action, player);
 			}
 
-			if (action instanceof ActionEndTurn) {
-				if (!player.getCharacter().hasToDrawSectorCard()) {
-					EndTurn.endTurn(model);
-					return true;
-				}
+			if (action instanceof ActionEndTurn
+					&& !player.getCharacter().hasToDrawSectorCard()) {
+				EndTurn.endTurn(model);
+				return true;
+
 			}
 		}
 
