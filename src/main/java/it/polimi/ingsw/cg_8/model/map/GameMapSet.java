@@ -17,12 +17,13 @@ import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Return a set containing the various sector of a map, obtained by parsing an
- * XML document. The class also contains method used to get a set of the various
- * sectors of a given type.
+ * The class contains a set of the various sector of a map, obtained by parsing
+ * an XML document. It works as an adapter between the result of the parsing (a
+ * set of sectors) and the actual representation of the map in the model, i.e an
+ * Hashmap<Coordinate, Sector>, which it is easier to manipulate and analyze.
  * 
  * @author Alberto Parravicini
- *
+ * @version 1.0
  */
 @XmlRootElement(name = "map")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -42,6 +43,7 @@ public class GameMapSet {
 
 	/**
 	 * Return the set of the Sectors of the map.
+	 * 
 	 * @return the Sectors of the map.
 	 */
 	public Set<Sector> getSectorList() {
