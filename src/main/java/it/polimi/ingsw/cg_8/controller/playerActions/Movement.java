@@ -74,9 +74,10 @@ public class Movement implements PlayerAction {
 
 		int lastModelTurn = model.getRoundNumber();
 		int lastPlayerTurn = player.getRoundNumber();
-		
+
 		try {
-			destinationSector = model.getMap().getSectorByCoordinates(destination);
+			destinationSector = model.getMap().getSectorByCoordinates(
+					destination);
 		} catch (NotAValidCoordinateException e1) {
 			LOGGER.error(e1.getMessage(), e1);
 		}
@@ -95,23 +96,24 @@ public class Movement implements PlayerAction {
 		 * Depending on the type of the reached sector, different actions are
 		 * performed.
 		 */
-		if (destinationSector instanceof EscapeHatchSector) {
 
+		if (destinationSector instanceof EscapeHatchSector
+				&& ((EscapeHatchSector) destinationSector).allowEscape()) {
+			// noise only if the escape hatch is usable
 			Noise escapeSectorNoise = new EscapeSectorNoise(
 					model.getRoundNumber(), player, player.getLastPosition());
-			model.addNoise(escapeSectorNoise);
-			if (((EscapeHatchSector) destinationSector).allowEscape()) {
-				Card escapeCard;
-				try {
-					escapeCard = drawEHSectorCard();
-					if (escapeCard instanceof GreenEhCard) {
-						player.setEscaped();
-					}
-				} catch (EmptyDeckException e) {
-					LOGGER.error(e.getMessage(), e);
+			Card escapeCard;
+			try {
+				escapeCard = drawEHSectorCard();
+				if (escapeCard instanceof GreenEhCard) {
+					player.setEscaped();
 				}
+			} catch (EmptyDeckException e) {
+				LOGGER.error(e.getMessage(), e);
 			}
+			model.addNoise(escapeSectorNoise);
 		}
+
 	}
 
 	/**

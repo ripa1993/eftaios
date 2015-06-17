@@ -7,6 +7,7 @@ import it.polimi.ingsw.cg_8.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.cg_8.model.exceptions.GameAlreadyRunningException;
 import it.polimi.ingsw.cg_8.model.exceptions.NotAValidMapException;
 import it.polimi.ingsw.cg_8.model.map.GameMapName;
+import it.polimi.ingsw.cg_8.model.noises.EscapeSectorNoise;
 import it.polimi.ingsw.cg_8.model.noises.Noise;
 import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.player.PlayerState;
@@ -97,8 +98,7 @@ public class Controller implements Observer {
 	/**
 	 * Log4j logger
 	 */
-	private static final Logger LOGGER = LogManager
-			.getLogger(Controller.class);
+	private static final Logger LOGGER = LogManager.getLogger(Controller.class);
 
 	/**
 	 * Initialization of a new game. Note that the model is initialized with the
@@ -290,7 +290,21 @@ public class Controller implements Observer {
 		 * If a noise is passed, notify the players of that noise.
 		 */
 		if (arg instanceof Noise) {
-			this.writeToAll(new ResponseNoise(model.getLastNoiseEntry()));
+			Noise noise = model.getLastNoiseEntry();
+			this.writeToAll(new ResponseNoise(noise));
+			if (noise instanceof EscapeSectorNoise) {
+				Player player = noise.getPlayer();
+				if (player.getState().equals(PlayerState.ESCAPED)) {
+					this.writeToAll(new ResponsePrivate(
+							player.getName()
+									+ " has found a working escape hatch and saved his life!"));
+				} else {
+					this.writeToAll(new ResponsePrivate(
+							player.getName()
+									+ " has found a broken escape hatch. He can't escape!"));
+				}
+			}
+
 		}
 
 		/**
@@ -366,9 +380,11 @@ public class Controller implements Observer {
 			 * Notify every player about their state.
 			 */
 			for (Player p : model.getPlayers()) {
-				this.writeToPlayer(p, new ResponseState(p.getName(), p
-						.getCharacter().toString(), p.getState().toString(), p
-						.getLastPosition(), model.getRoundNumber()));
+				this.writeToPlayer(
+						p,
+						new ResponseState(p.getName(), p.getCharacter()
+								.toString(), p.getState().toString(), p
+								.getLastPosition(), model.getRoundNumber()));
 			}
 			/**
 			 * Communicate to the current player the cards he's holding.
