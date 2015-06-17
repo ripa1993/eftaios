@@ -3,7 +3,7 @@ package it.polimi.ingsw.cg_8.model.map;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import it.polimi.ingsw.cg_8.model.exceptions.NotAValidCoordinateException;
-import it.polimi.ingsw.cg_8.model.map.creator.FermiCreatorXML;
+import it.polimi.ingsw.cg_8.model.map.creator.FermiCreator;
 import it.polimi.ingsw.cg_8.model.map.creator.MapCreator;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 import it.polimi.ingsw.cg_8.model.sectors.Sector;
@@ -24,7 +24,7 @@ public class FermiMapTest {
 	
 	@Before
 	public void init(){
-		mapCreator=new FermiCreatorXML();
+		mapCreator=new FermiCreator();
 		testMap = mapCreator.createMap();
 	}
 	

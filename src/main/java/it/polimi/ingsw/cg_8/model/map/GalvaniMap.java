@@ -1,19 +1,9 @@
-//package it.polimi.ingsw.cg_8.model.map;
-//
-//import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
-///**
-// * Galvani map
-// * @author Simone
-// * @version 1.0
-// */
-//public class GalvaniMap extends GameMap {
-//	/**
-//	 * Constructor
-//	 * @param humanSpawn human spawn coordinate
-//	 * @param alienSpawn alien spawn coordinate
-//	 */
-//	public GalvaniMap(Coordinate humanSpawn, Coordinate alienSpawn) {
-//		super(humanSpawn, alienSpawn);
-//	}
-//
-//}
+package it.polimi.ingsw.cg_8.model.map;
+
+import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
+
+public class GalvaniMap extends GameMap {
+	public GalvaniMap() {
+		super();
+	}
+}
