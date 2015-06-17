@@ -25,7 +25,8 @@ public class GalileiCreator extends MapCreator {
 	/**
 	 * Log4j logger
 	 */
-	private static final Logger LOGGER = LogManager.getLogger(GalileiCreator.class);
+	private static final Logger LOGGER = LogManager
+			.getLogger(GalileiCreator.class);
 
 	/**
 	 * Constructor
@@ -42,17 +43,14 @@ public class GalileiCreator extends MapCreator {
 			JAXBContext jc = JAXBContext.newInstance(GameMapSet.class);
 
 			Unmarshaller unmarshaller = jc.createUnmarshaller();
-			GameMapSet sectorSet = (GameMapSet) unmarshaller
-					.unmarshal(new File(Resource.GALILEI_XML));
 
-			return sectorSet;
+			return (GameMapSet) unmarshaller.unmarshal(new File(
+					Resource.GALILEI_XML));
 
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
 			return new GameMapSet();
 		}
 	}
-
-
 
 }

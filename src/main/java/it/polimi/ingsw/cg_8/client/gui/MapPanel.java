@@ -449,8 +449,7 @@ public class MapPanel extends JLayeredPane {
 
 		}
 		// calculate col and row size
-		float columnWidth = (mapImageWidth / NUM_COLUMN) * 4 / 3;
-		return columnWidth;
+		return (mapImageWidth / NUM_COLUMN) * 4 / 3;
 	}
 
 	/**
@@ -477,7 +476,6 @@ public class MapPanel extends JLayeredPane {
 
 		}
 		// calculate col and row size
-		float rowHeigth = mapImageHeight / NUM_ROW;
-		return rowHeigth;
+		return mapImageHeight / NUM_ROW;
 	}
 }

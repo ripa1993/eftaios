@@ -43,10 +43,8 @@ public class FermiCreator extends MapCreator {
 			JAXBContext jc = JAXBContext.newInstance(GameMapSet.class);
 
 			Unmarshaller unmarshaller = jc.createUnmarshaller();
-			GameMapSet sectorSet = (GameMapSet) unmarshaller
-					.unmarshal(new File(Resource.FERMI_XML));
-
-			return sectorSet;
+			return (GameMapSet) unmarshaller.unmarshal(new File(
+					Resource.FERMI_XML));
 
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);

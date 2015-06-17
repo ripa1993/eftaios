@@ -42,10 +42,9 @@ public class GalvaniCreator extends MapCreator {
 			JAXBContext jc = JAXBContext.newInstance(GameMapSet.class);
 
 			Unmarshaller unmarshaller = jc.createUnmarshaller();
-			GameMapSet sectorSet = (GameMapSet) unmarshaller
-					.unmarshal(new File(Resource.GALVANI_XML));
 
-			return sectorSet;
+			return (GameMapSet) unmarshaller
+					.unmarshal(new File(Resource.GALVANI_XML));
 
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
