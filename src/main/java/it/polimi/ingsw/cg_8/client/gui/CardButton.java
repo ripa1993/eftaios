@@ -218,6 +218,7 @@ public class CardButton extends JPanel {
 		layeredPane.setLayer(invisButton, 3);
 		invisButton.setOpaque(false);
 		invisButton.setContentAreaFilled(false);
+		invisButton.setFocusPainted(false);
 		invisButton.setBorderPainted(false);
 
 		/**

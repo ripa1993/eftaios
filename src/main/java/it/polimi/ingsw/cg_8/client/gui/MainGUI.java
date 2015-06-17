@@ -34,6 +34,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 import org.apache.logging.log4j.LogManager;
@@ -41,9 +42,9 @@ import org.apache.logging.log4j.Logger;
 
 /**
  * Main class for client graphic user interface. It uses a swing frame to
- * receive user inputs. The user can choose a username, a connection method
- * between rmi and socket, a vote for the map choiche (fermi, galvani and
- * galilei) and if the background music is enabled
+ * receive user inputs. The user can choose a user-name, a connection method
+ * between RMI and socket, a vote for the map choice (Fermi, Galvani and
+ * Galilei) and if the background music is enabled
  * 
  * @author Simone
  * @version 1.0
@@ -303,7 +304,7 @@ public class MainGUI implements Runnable {
 		playerTextField = new JTextField();
 		playerTextField.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		playerTextField.setHorizontalAlignment(SwingConstants.CENTER);
-		playerTextField.setBackground(Color.WHITE);
+		playerTextField.setBackground(new Color(214, 217, 223));
 		playerTextField.setText("Player");
 		GridBagConstraints gbcTxtAsd = new GridBagConstraints();
 		gbcTxtAsd.insets = new Insets(0, 0, 5, 0);
@@ -325,7 +326,6 @@ public class MainGUI implements Runnable {
 		centerPanel.add(connectionTypeLabel, gbcLblConnectionType);
 
 		JPanel panel1 = new JPanel();
-		panel1.setOpaque(false);
 		GridBagConstraints gbcPanel1 = new GridBagConstraints();
 		gbcPanel1.anchor = GridBagConstraints.NORTH;
 		gbcPanel1.insets = new Insets(0, 0, 5, 0);
@@ -336,12 +336,12 @@ public class MainGUI implements Runnable {
 		panel1.setLayout(new GridLayout(1, 2, 0, 0));
 
 		rmiRadioButton = new JRadioButton("RMI");
-		rmiRadioButton.setBackground(Color.WHITE);
+		rmiRadioButton.setBackground(new Color(214, 217, 223));
 		rmiRadioButton.setSelected(true);
 		panel1.add(rmiRadioButton);
 
 		socketRadioButton = new JRadioButton("Socket");
-		socketRadioButton.setBackground(Color.WHITE);
+		socketRadioButton.setBackground(new Color(214, 217, 223));
 		panel1.add(socketRadioButton);
 
 		JLabel mapSelectLabel = new JLabel("SELECT YOUR PREFERRED MAP:");
@@ -365,16 +365,16 @@ public class MainGUI implements Runnable {
 		panel2.setLayout(new GridLayout(0, 3, 0, 0));
 
 		fermiRadioButton = new JRadioButton("Fermi");
-		fermiRadioButton.setBackground(Color.WHITE);
+		fermiRadioButton.setBackground(new Color(214, 217, 223));
 		fermiRadioButton.setSelected(true);
 		panel2.add(fermiRadioButton);
 
 		galileiRadioButton = new JRadioButton("Galilei");
-		galileiRadioButton.setBackground(Color.WHITE);
+		galileiRadioButton.setBackground(new Color(214, 217, 223));
 		panel2.add(galileiRadioButton);
 
 		galvaniRadioButton = new JRadioButton("Galvani");
-		galvaniRadioButton.setBackground(Color.WHITE);
+		galvaniRadioButton.setBackground(new Color(214, 217, 223));
 		panel2.add(galvaniRadioButton);
 
 		JLabel lblEnjoySomeCreepy = new JLabel("ENJOY SOME CREEPY ALIEN MUSIC:");
@@ -398,12 +398,12 @@ public class MainGUI implements Runnable {
 		panel3.setLayout(new GridLayout(1, 2, 0, 0));
 
 		yesMusicRadioButton = new JRadioButton("Sure");
-		yesMusicRadioButton.setBackground(Color.WHITE);
+		yesMusicRadioButton.setBackground(new Color(214, 217, 223));
 		yesMusicRadioButton.setSelected(true);
 		panel3.add(yesMusicRadioButton);
 
 		noMusicRadioButton = new JRadioButton("Nope");
-		noMusicRadioButton.setBackground(Color.WHITE);
+		noMusicRadioButton.setBackground(new Color(214, 217, 223));
 		panel3.add(noMusicRadioButton);
 
 		connectionGroup = new ButtonGroup();
@@ -418,7 +418,6 @@ public class MainGUI implements Runnable {
 		musicGroup.add(noMusicRadioButton);
 
 		playButton = new JButton("PLAY");
-		playButton.setBackground(Color.WHITE);
 		GridBagConstraints gbcBtnPlay = new GridBagConstraints();
 		gbcBtnPlay.insets = new Insets(0, 0, 5, 0);
 		gbcBtnPlay.gridx = 0;
@@ -440,7 +439,8 @@ public class MainGUI implements Runnable {
 		eastPanel.setPreferredSize(new Dimension(400, 10));
 		eastPanel.setOpaque(false);
 		panel.add(eastPanel, BorderLayout.EAST);
-
+		ImageIcon img = new ImageIcon(Resource.LOGO);
+		main.setIconImage(img.getImage());
 		main.setVisible(true);
 		main.setSize(1280, 720);
 	}
@@ -458,6 +458,11 @@ public class MainGUI implements Runnable {
 	 *            parameters
 	 */
 	public static void main(String[] args) {
+		try {
+			UIManager.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeel");
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);
+		}
 		SwingUtilities.invokeLater(new MainGUI());
 	}
 }

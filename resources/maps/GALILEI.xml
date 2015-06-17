@@ -1,0 +1,1386 @@
+
+<map>
+    <name>Galilei</name>
+	
+    <sectorList>
+		<safeSector>
+			<x>4</x>
+			<y>11</y>
+		</safeSector>
+
+		<safeSector>
+			<x>22</x>
+			<y>3</y>
+		</safeSector>
+
+		<safeSector>
+			<x>22</x>
+			<y>4</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>4</x>
+			<y>12</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>22</x>
+			<y>1</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>22</x>
+			<y>2</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>4</x>
+			<y>7</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>4</x>
+			<y>8</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>4</x>
+			<y>9</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>4</x>
+			<y>10</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>4</x>
+			<y>3</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>4</x>
+			<y>4</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>4</x>
+			<y>5</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>5</x>
+			<y>1</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>5</x>
+			<y>0</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>5</x>
+			<y>3</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>5</x>
+			<y>2</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>22</x>
+			<y>13</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>22</x>
+			<y>8</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>22</x>
+			<y>5</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>22</x>
+			<y>12</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>22</x>
+			<y>11</y>
+		</safeSector>
+
+		<safeSector>
+			<x>22</x>
+			<y>10</y>
+		</safeSector>
+
+		<safeSector>
+			<x>22</x>
+			<y>9</y>
+		</safeSector>
+
+		<safeSector>
+			<x>21</x>
+			<y>0</y>
+		</safeSector>
+
+		<escapeHatchSector>
+			<x>21</x>
+			<y>1</y>
+		</escapeHatchSector>
+
+		<dangerousSector>
+			<x>21</x>
+			<y>2</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>21</x>
+			<y>3</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>5</x>
+			<y>10</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>5</x>
+			<y>8</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>5</x>
+			<y>9</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>5</x>
+			<y>6</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>5</x>
+			<y>7</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>5</x>
+			<y>4</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>5</x>
+			<y>5</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>6</x>
+			<y>4</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>21</x>
+			<y>13</y>
+		</dangerousSector>
+
+		<escapeHatchSector>
+			<x>21</x>
+			<y>12</y>
+		</escapeHatchSector>
+
+		<dangerousSector>
+			<x>6</x>
+			<y>3</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>6</x>
+			<y>2</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>6</x>
+			<y>1</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>6</x>
+			<y>0</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>21</x>
+			<y>5</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>21</x>
+			<y>4</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>21</x>
+			<y>7</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>21</x>
+			<y>9</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>21</x>
+			<y>8</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>21</x>
+			<y>11</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>21</x>
+			<y>10</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>2</x>
+			<y>9</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>20</x>
+			<y>1</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>2</x>
+			<y>10</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>20</x>
+			<y>2</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>2</x>
+			<y>11</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>20</x>
+			<y>0</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>2</x>
+			<y>12</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>2</x>
+			<y>13</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>2</x>
+			<y>1</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>2</x>
+			<y>2</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>2</x>
+			<y>3</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>2</x>
+			<y>4</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>2</x>
+			<y>5</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>2</x>
+			<y>6</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>2</x>
+			<y>7</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>2</x>
+			<y>8</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>20</x>
+			<y>13</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>3</x>
+			<y>1</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>20</x>
+			<y>12</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>20</x>
+			<y>11</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>20</x>
+			<y>10</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>20</x>
+			<y>9</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>20</x>
+			<y>8</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>20</x>
+			<y>7</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>20</x>
+			<y>6</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>20</x>
+			<y>5</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>20</x>
+			<y>4</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>20</x>
+			<y>3</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>3</x>
+			<y>12</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>3</x>
+			<y>13</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>3</x>
+			<y>10</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>3</x>
+			<y>11</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>19</x>
+			<y>1</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>3</x>
+			<y>4</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>3</x>
+			<y>2</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>3</x>
+			<y>8</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>3</x>
+			<y>9</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>3</x>
+			<y>7</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>4</x>
+			<y>2</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>19</x>
+			<y>11</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>4</x>
+			<y>1</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>19</x>
+			<y>10</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>19</x>
+			<y>13</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>19</x>
+			<y>12</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>19</x>
+			<y>7</y>
+		</safeSector>
+
+		<safeSector>
+			<x>19</x>
+			<y>6</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>19</x>
+			<y>5</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>19</x>
+			<y>4</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>8</x>
+			<y>12</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>8</x>
+			<y>13</y>
+		</safeSector>
+
+		<safeSector>
+			<x>8</x>
+			<y>8</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>8</x>
+			<y>7</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>8</x>
+			<y>10</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>8</x>
+			<y>9</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>9</x>
+			<y>4</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>9</x>
+			<y>5</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>9</x>
+			<y>7</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>9</x>
+			<y>0</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>9</x>
+			<y>1</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>9</x>
+			<y>2</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>9</x>
+			<y>3</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>9</x>
+			<y>13</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>9</x>
+			<y>12</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>9</x>
+			<y>10</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>9</x>
+			<y>9</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>9</x>
+			<y>8</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>10</x>
+			<y>0</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>10</x>
+			<y>7</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>10</x>
+			<y>8</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>10</x>
+			<y>5</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>10</x>
+			<y>3</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>10</x>
+			<y>4</y>
+		</safeSector>
+
+		<safeSector>
+			<x>10</x>
+			<y>1</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>10</x>
+			<y>2</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>6</x>
+			<y>6</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>6</x>
+			<y>5</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>6</x>
+			<y>8</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>6</x>
+			<y>7</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>6</x>
+			<y>10</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>6</x>
+			<y>9</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>6</x>
+			<y>12</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>6</x>
+			<y>11</y>
+		</safeSector>
+
+		<safeSector>
+			<x>6</x>
+			<y>13</y>
+		</safeSector>
+
+		<safeSector>
+			<x>7</x>
+			<y>0</y>
+		</safeSector>
+
+		<safeSector>
+			<x>7</x>
+			<y>1</y>
+		</safeSector>
+
+		<safeSector>
+			<x>7</x>
+			<y>2</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>7</x>
+			<y>3</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>7</x>
+			<y>5</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>7</x>
+			<y>8</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>7</x>
+			<y>7</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>7</x>
+			<y>6</y>
+		</safeSector>
+
+		<safeSector>
+			<x>7</x>
+			<y>13</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>7</x>
+			<y>12</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>7</x>
+			<y>11</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>8</x>
+			<y>1</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>8</x>
+			<y>2</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>8</x>
+			<y>0</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>8</x>
+			<y>6</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>8</x>
+			<y>3</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>8</x>
+			<y>4</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>13</x>
+			<y>11</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>13</x>
+			<y>10</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>13</x>
+			<y>9</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>13</x>
+			<y>8</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>13</x>
+			<y>7</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>13</x>
+			<y>5</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>13</x>
+			<y>4</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>13</x>
+			<y>3</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>13</x>
+			<y>2</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>13</x>
+			<y>1</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>13</x>
+			<y>0</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>12</x>
+			<y>13</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>12</x>
+			<y>11</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>12</x>
+			<y>12</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>14</x>
+			<y>10</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>14</x>
+			<y>9</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>14</x>
+			<y>12</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>14</x>
+			<y>11</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>14</x>
+			<y>6</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>14</x>
+			<y>5</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>14</x>
+			<y>8</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>14</x>
+			<y>7</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>14</x>
+			<y>1</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>14</x>
+			<y>4</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>13</x>
+			<y>12</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>13</x>
+			<y>13</y>
+		</safeSector>
+
+		<alienSector>
+			<x>11</x>
+			<y>5</y>
+		</alienSector>
+
+		<dangerousSector>
+			<x>11</x>
+			<y>4</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>11</x>
+			<y>3</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>11</x>
+			<y>2</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>11</x>
+			<y>9</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>11</x>
+			<y>8</y>
+		</safeSector>
+
+		<humanSector>
+			<x>11</x>
+			<y>7</y>
+		</humanSector>
+
+		<safeSector>
+			<x>11</x>
+			<y>1</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>11</x>
+			<y>0</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>10</x>
+			<y>11</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>10</x>
+			<y>9</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>10</x>
+			<y>10</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>10</x>
+			<y>13</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>12</x>
+			<y>4</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>12</x>
+			<y>3</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>12</x>
+			<y>5</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>12</x>
+			<y>8</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>12</x>
+			<y>7</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>12</x>
+			<y>10</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>12</x>
+			<y>9</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>12</x>
+			<y>0</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>12</x>
+			<y>2</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>12</x>
+			<y>1</y>
+		</safeSector>
+
+		<safeSector>
+			<x>11</x>
+			<y>10</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>11</x>
+			<y>11</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>11</x>
+			<y>12</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>11</x>
+			<y>13</y>
+		</safeSector>
+
+		<safeSector>
+			<x>17</x>
+			<y>6</y>
+		</safeSector>
+
+		<safeSector>
+			<x>17</x>
+			<y>7</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>17</x>
+			<y>4</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>17</x>
+			<y>5</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>17</x>
+			<y>2</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>17</x>
+			<y>3</y>
+		</safeSector>
+
+		<safeSector>
+			<x>17</x>
+			<y>0</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>17</x>
+			<y>1</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>17</x>
+			<y>12</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>17</x>
+			<y>11</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>17</x>
+			<y>8</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>18</x>
+			<y>5</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>18</x>
+			<y>6</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>18</x>
+			<y>7</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>18</x>
+			<y>8</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>18</x>
+			<y>1</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>18</x>
+			<y>3</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>18</x>
+			<y>4</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>18</x>
+			<y>11</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>18</x>
+			<y>12</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>15</x>
+			<y>0</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>15</x>
+			<y>1</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>15</x>
+			<y>4</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>15</x>
+			<y>5</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>15</x>
+			<y>2</y>
+		</safeSector>
+
+		<safeSector>
+			<x>2</x>
+			<y>0</y>
+		</safeSector>
+
+		<safeSector>
+			<x>15</x>
+			<y>3</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>15</x>
+			<y>8</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>15</x>
+			<y>9</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>15</x>
+			<y>6</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>15</x>
+			<y>7</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>15</x>
+			<y>12</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>15</x>
+			<y>13</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>15</x>
+			<y>10</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>15</x>
+			<y>11</y>
+		</safeSector>
+
+		<safeSector>
+			<x>1</x>
+			<y>9</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>1</x>
+			<y>8</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>1</x>
+			<y>11</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>14</x>
+			<y>13</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>1</x>
+			<y>10</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>1</x>
+			<y>13</y>
+		</dangerousSector>
+
+		<escapeHatchSector>
+			<x>1</x>
+			<y>12</y>
+		</escapeHatchSector>
+
+		<escapeHatchSector>
+			<x>1</x>
+			<y>1</y>
+		</escapeHatchSector>
+
+		<dangerousSector>
+			<x>1</x>
+			<y>0</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>1</x>
+			<y>3</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>1</x>
+			<y>2</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>1</x>
+			<y>5</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>1</x>
+			<y>4</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>1</x>
+			<y>7</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>16</x>
+			<y>0</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>16</x>
+			<y>1</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>16</x>
+			<y>2</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>16</x>
+			<y>3</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>16</x>
+			<y>4</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>16</x>
+			<y>5</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>16</x>
+			<y>6</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>16</x>
+			<y>7</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>16</x>
+			<y>8</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>16</x>
+			<y>9</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>16</x>
+			<y>10</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>16</x>
+			<y>11</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>16</x>
+			<y>12</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>16</x>
+			<y>13</y>
+		</safeSector>
+
+		<safeSector>
+			<x>0</x>
+			<y>10</y>
+		</safeSector>
+
+		<safeSector>
+			<x>0</x>
+			<y>9</y>
+		</safeSector>
+
+		<safeSector>
+			<x>0</x>
+			<y>8</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>0</x>
+			<y>13</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>0</x>
+			<y>12</y>
+		</safeSector>
+
+		<safeSector>
+			<x>0</x>
+			<y>11</y>
+		</safeSector>
+
+		<dangerousSector>
+			<x>0</x>
+			<y>2</y>
+		</dangerousSector>
+
+		<dangerousSector>
+			<x>0</x>
+			<y>1</y>
+		</dangerousSector>
+
+		<safeSector>
+			<x>0</x>
+			<y>5</y>
+		</safeSector>
+
+		<safeSector>
+			<x>0</x>
+			<y>4</y>
+		</safeSector>
+
+		<safeSector>
+			<x>0</x>
+			<y>3</y>
+		</safeSector>
+	</sectorList>
+</map>

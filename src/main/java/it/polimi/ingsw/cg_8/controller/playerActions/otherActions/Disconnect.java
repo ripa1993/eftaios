@@ -12,8 +12,17 @@ import it.polimi.ingsw.cg_8.model.player.PlayerState;
  */
 public class Disconnect implements PlayerAction {
 	/**
+	 * Constructor
+	 */
+	private Disconnect() {
+
+	}
+
+	/**
 	 * Disconnect the player.
-	 * @param player The player who wants to leave the game.
+	 * 
+	 * @param player
+	 *            The player who wants to leave the game.
 	 */
 	public static void disconnect(Player player) {
 		if (player.getState() != PlayerState.DISCONNECTED

@@ -1,5 +1,8 @@
 package it.polimi.ingsw.cg_8.model.sectors.normal;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+
 import it.polimi.ingsw.cg_8.model.sectors.Sector;
 
 /**
@@ -9,6 +12,7 @@ import it.polimi.ingsw.cg_8.model.sectors.Sector;
  * @author Simone
  * @version 1.0
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 public abstract class NormalSector extends Sector {
 	/**
 	 * 
@@ -16,7 +20,8 @@ public abstract class NormalSector extends Sector {
 	private static final long serialVersionUID = -3925058303611953264L;
 
 	/**
-	 * Default constructor for normal sector
+	 * Default constructor for normal sector, used to perform checks and
+	 * validations.
 	 * 
 	 * @param x
 	 *            column number
@@ -25,6 +30,13 @@ public abstract class NormalSector extends Sector {
 	 */
 	public NormalSector(int x, int y) {
 		super(x, y);
+	}
+
+	/**
+	 * Default constructor used in the XML parsing.
+	 */
+	public NormalSector() {
+		super();
 	}
 
 }

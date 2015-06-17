@@ -22,6 +22,13 @@ import java.util.List;
  */
 public class UseItemCardValidator {
 	/**
+	 * Constructor
+	 */
+	private UseItemCardValidator() {
+
+	}
+
+	/**
 	 * Check if the player has the card he is trying to use, and if so, removes
 	 * it. It also prevent the player from using a card when he is already
 	 * upgraded with a card of the same type.
@@ -46,8 +53,7 @@ public class UseItemCardValidator {
 		if (card instanceof AttackCard && player.isAttackAllowed()) {
 			return false;
 		}
-		if (card instanceof SedativesCard
-				&& !player.hasToDrawSectorCard()) {
+		if (card instanceof SedativesCard && !player.hasToDrawSectorCard()) {
 			return false;
 		}
 		Sector playerPosition = model.getMap().getSectors()

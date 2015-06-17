@@ -64,19 +64,26 @@ public class StateMachine {
 			.getLogger(StateMachine.class);
 
 	/**
+	 * Constructor
+	 */
+	private StateMachine() {
+
+	}
+
+	/**
 	 * This method evaluates an action created by a player though a client.
 	 * 
 	 * @param controller
 	 *            reference to the game
-	 * @param a
+	 * @param action
 	 *            action that needs to be evaluated
 	 * @param player
 	 *            player that submitted the action
 	 * @return true, if the action has been validated<br>
 	 *         false, if the action has been refused
 	 */
-	public static boolean evaluateAction(Controller controller, ClientAction a,
-			Player player) {
+	public static boolean evaluateAction(Controller controller,
+			ClientAction action, Player player) {
 
 		// local variables, calculated every time a new evaluation is launched
 		Model model = controller.getModel();
@@ -94,13 +101,13 @@ public class StateMachine {
 		}
 
 		// handles chat and disconnect action, always true
-		if (a instanceof ActionChat) {
-			String message = ((ActionChat) a).getMessage();
+		if (action instanceof ActionChat) {
+			String message = ((ActionChat) action).getMessage();
 			controller.writeToAll(new ResponseChat(player.getName(), message));
 			return true;
 		}
 
-		if (a instanceof ActionDisconnect) {
+		if (action instanceof ActionDisconnect) {
 			Disconnect.disconnect(player);
 			if (player.equals(model.getCurrentPlayerReference())) {
 				model.nextPlayer();
@@ -114,19 +121,19 @@ public class StateMachine {
 
 		if (!(model.getTurnPhase() == TurnPhase.GAME_SETUP)
 				|| !(model.getTurnPhase() == TurnPhase.GAME_END)) {
-			if (a instanceof ActionGetReachableCoordinates) {
+			if (action instanceof ActionGetReachableCoordinates) {
 				controller.writeToPlayer(
 						player,
 						new ResponsePrivate(GetReachableSectors
 								.printReachableSectors(model, player)));
 				return true;
 			}
-			if (a instanceof ActionGetHand) {
+			if (action instanceof ActionGetHand) {
 				controller.writeToPlayer(player, new ResponseCard(player
 						.getHand().getHeldCards()));
 				return true;
 			}
-			if (a instanceof ActionGetAvailableAction) {
+			if (action instanceof ActionGetAvailableAction) {
 				controller.writeToPlayer(player, new ResponsePrivate(
 						GetAllowedActions.printActions()));
 				return true;
@@ -142,9 +149,9 @@ public class StateMachine {
 
 			// movement
 
-			if (a instanceof ActionMove) {
+			if (action instanceof ActionMove) {
 				// validate movement
-				Coordinate destination = ((ActionMove) a).getCoordinate();
+				Coordinate destination = ((ActionMove) action).getCoordinate();
 				if (rules.movementValidator(model, destination)) {
 					// execute movement
 					Movement move = new Movement(model, destination);
@@ -184,9 +191,10 @@ public class StateMachine {
 
 			// use item card
 
-			if (a instanceof ActionUseCard) {
-				ItemCard card = ((ActionUseCard) a).getItemCard();
-				Coordinate coordinate = ((ActionUseCard) a).getCoordinate();
+			if (action instanceof ActionUseCard) {
+				ItemCard card = ((ActionUseCard) action).getItemCard();
+				Coordinate coordinate = ((ActionUseCard) action)
+						.getCoordinate();
 				if (card instanceof AdrenalineCard) {
 					return StateMachine.useAdrenalineCard(card, player,
 							controller);
@@ -216,22 +224,22 @@ public class StateMachine {
 			/**
 			 * Attack
 			 */
-			if (a instanceof ActionAttack) {
+			if (action instanceof ActionAttack) {
 				return StateMachine.attackMove(rules, model, controller);
 			}
 
 			// end turn
 
-			if (a instanceof ActionEndTurn) {
+			if (action instanceof ActionEndTurn) {
 				endTurn(controller, model, player);
 				return true;
 			}
 
 			// use card
 
-			if (a instanceof ActionUseCard) {
+			if (action instanceof ActionUseCard) {
 
-				return actionUseCardFull(controller, a, player);
+				return actionUseCardFull(controller, action, player);
 			}
 			return false;
 		}
@@ -242,13 +250,13 @@ public class StateMachine {
 			/**
 			 * Attack
 			 */
-			if (a instanceof ActionAttack) {
+			if (action instanceof ActionAttack) {
 				return StateMachine.attackMove(rules, model, controller);
 			}
 
 			// draw card
 
-			if (a instanceof ActionDrawCard) {
+			if (action instanceof ActionDrawCard) {
 				DrawDangerousSectorCard draw = new DrawDangerousSectorCard(
 						model);
 				boolean hasToMakeFakeNoise = false;
@@ -306,10 +314,16 @@ public class StateMachine {
 
 			// use item card
 
-			if (a instanceof ActionUseCard) {
-				return actionUseCardFull(controller, a, player);
+			if (action instanceof ActionUseCard) {
+				return actionUseCardFull(controller, action, player);
 			}
 
+			if (action instanceof ActionEndTurn
+					&& !player.getCharacter().hasToDrawSectorCard()) {
+				EndTurn.endTurn(model);
+				return true;
+
+			}
 		}
 
 		// handle ATTACK_PHASE
@@ -317,23 +331,23 @@ public class StateMachine {
 
 			// end turn
 
-			if (a instanceof ActionEndTurn) {
+			if (action instanceof ActionEndTurn) {
 				endTurn(controller, model, player);
 				return true;
 			}
 
 			// use item card
 
-			if (a instanceof ActionUseCard) {
-				return actionUseCardTelAndSpot(controller, a, player);
+			if (action instanceof ActionUseCard) {
+				return actionUseCardTelAndSpot(controller, action, player);
 			}
 		}
 
 		// handle WAITING_FAKE_NOISE
 		if (turnPhase == TurnPhase.WAITING_FAKE_NOISE
-				&& a instanceof ActionFakeNoise) {
+				&& action instanceof ActionFakeNoise) {
 
-			Coordinate target = ((ActionFakeNoise) a).getCoordinate();
+			Coordinate target = ((ActionFakeNoise) action).getCoordinate();
 			if (model.getMap().getSectors().keySet().contains(target)) {
 				FakeNoise.fakeNoise(model, target);
 				model.setTurnPhase(TurnPhase.DRAWN_CARD);
@@ -347,15 +361,15 @@ public class StateMachine {
 
 			// end turn
 
-			if (a instanceof ActionEndTurn) {
+			if (action instanceof ActionEndTurn) {
 				endTurn(controller, model, player);
 				return true;
 			}
 
 			// use item card
 
-			if (a instanceof ActionUseCard) {
-				return actionUseCardTelAndSpot(controller, a, player);
+			if (action instanceof ActionUseCard) {
+				return actionUseCardTelAndSpot(controller, action, player);
 			}
 		}
 		// other cases
@@ -589,7 +603,7 @@ public class StateMachine {
 					+ " has used a Sedatives Card"));
 			controller.writeToPlayer(player, new ResponseCard(player.getHand()
 					.getHeldCards()));
-			controller.getModel().setTurnPhase(TurnPhase.MOVEMENT_DONE_NOT_DS);
+
 			return true;
 		}
 		return false;

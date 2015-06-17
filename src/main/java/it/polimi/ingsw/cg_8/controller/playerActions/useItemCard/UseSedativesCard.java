@@ -12,7 +12,6 @@ import it.polimi.ingsw.cg_8.model.player.character.human.Human;
  * @version 1.0
  */
 public class UseSedativesCard extends UseItemCard {
-
 	/**
 	 * Allows a player to not draw a dangerous sector card
 	 */

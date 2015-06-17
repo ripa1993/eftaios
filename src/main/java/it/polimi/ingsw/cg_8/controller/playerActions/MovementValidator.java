@@ -1,15 +1,21 @@
 package it.polimi.ingsw.cg_8.controller.playerActions;
 
 import it.polimi.ingsw.cg_8.model.Model;
+import it.polimi.ingsw.cg_8.model.exceptions.NotAValidCoordinateException;
 import it.polimi.ingsw.cg_8.model.map.GameMap;
 import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.player.character.alien.Alien;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
+import it.polimi.ingsw.cg_8.model.sectors.Sector;
+import it.polimi.ingsw.cg_8.model.sectors.normal.SecureSector;
 import it.polimi.ingsw.cg_8.model.sectors.special.escapehatch.EscapeHatchSector;
 import it.polimi.ingsw.cg_8.model.sectors.special.spawn.SpawnSector;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Contains method that are used in order to evaluate a player movement
@@ -18,7 +24,22 @@ import java.util.Set;
  * @version 1.0
  */
 public class MovementValidator {
+	
 
+	/**
+	 * Log4j logger
+	 */
+	private static final Logger LOGGER = LogManager
+			.getLogger(MovementValidator.class);
+
+	/**
+	 * Constructor
+	 * 
+	 **/
+
+	private MovementValidator() {
+
+	}
 	/**
 	 * Validates the movement for the current player in model to the destination
 	 * coordinate
@@ -46,11 +67,22 @@ public class MovementValidator {
 		 * How far the player can move
 		 */
 		int maxDistance = player.getCharacter().getMaxAllowedMovement();
+		/**
+		 * The sector targeted by the movement action.
+		 */
+		Sector destinationSector = new SecureSector();
 
 		Set<Coordinate> allowedCoordinates = setAllowedCoordinates(gameMap,
 				startingSector, maxDistance);
 
-		if (checkMovement(player, startingSector, destination)) {
+		try {
+			destinationSector = model.getMap().getSectorByCoordinates(
+					destination);
+		} catch (NotAValidCoordinateException e) {
+			LOGGER.error(e.getMessage(), e);
+			return false;
+		}
+		if (checkMovement(player, startingSector, destinationSector)) {
 			return allowedCoordinates.contains(destination);
 		} else {
 			return false;
@@ -65,23 +97,25 @@ public class MovementValidator {
 	 *            player that is moving
 	 * @param startingSector
 	 *            starting coordinate
-	 * @param destination
+	 * @param destinationSector
 	 *            destination coordinate
 	 * @return true, if the player can move to the destination<br>
 	 *         false, if not
 	 */
 	private static boolean checkMovement(Player player,
-			Coordinate startingSector, Coordinate destination) {
-		if (destination.equals(startingSector)) {
+			Coordinate startingSector, Sector destinationSector) {
+		if (destinationSector.equals(startingSector)) {
 			return false;
 		}
-		if (destination instanceof SpawnSector) {
+		if (destinationSector instanceof SpawnSector) {
 			return false;
 		}
-		if ((player.getCharacter() instanceof Alien)
-				&& (destination instanceof EscapeHatchSector)) {
+		if (player.getCharacter() instanceof Alien
+				&& destinationSector instanceof EscapeHatchSector) {
+
 			return false;
 		}
+
 		return true;
 	}
 

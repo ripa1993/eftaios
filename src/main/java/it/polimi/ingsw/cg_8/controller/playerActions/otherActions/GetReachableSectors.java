@@ -14,6 +14,12 @@ import java.util.Set;
  * @version 1.0
  */
 public class GetReachableSectors implements PlayerAction {
+	/**
+	 * Private constructor
+	 */
+	private GetReachableSectors() {
+
+	}
 
 	/**
 	 * Returns the reachable Coordinate for the player in the current game model

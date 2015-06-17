@@ -63,10 +63,12 @@ public class StateMachineTest {
 			response = message;
 		}
 
+
 		// @Override
 		// public void update(Observable o, Object arg) {
 		//
 		// }
+
 
 	}
 
@@ -174,6 +176,7 @@ public class StateMachineTest {
 				new ActionGetReachableCoordinates(), p);
 		assertTrue(result);
 	}
+
 
 	@Test
 	public void alienCardUsageTest() {
@@ -695,5 +698,4 @@ public class StateMachineTest {
 		assertTrue(result);
 	}
 
-	
 }

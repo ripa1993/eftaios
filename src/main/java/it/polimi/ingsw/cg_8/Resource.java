@@ -9,6 +9,7 @@ import java.io.File;
  * @version 1.0
  */
 public class Resource {
+
 	/**
 	 * images literal
 	 */
@@ -17,6 +18,15 @@ public class Resource {
 	 * resources literal
 	 */
 	private static final String RESOURCES_LITERAL = "resources";
+	/**
+	 * resources literal
+	 */
+	private static final String MAPS_LITERAL = "maps";
+	/**
+	 * XML Maps folder
+	 */
+	private static final String MAPS_FOLDER = RESOURCES_LITERAL
+			+ File.separatorChar + MAPS_LITERAL + File.separatorChar;
 	/**
 	 * Images folder
 	 */
@@ -275,7 +285,7 @@ public class Resource {
 	 */
 	public static final String IMG_ART_ALIEN = IMAGES_FOLDER + "art_alien.png";
 	/**
-	 * Transparent red overlay
+	 * <<<<<<< HEAD Transparent red overlay
 	 */
 	public static final String IMG_RED_OVER = IMAGES_FOLDER + "red_overlay.png";
 	/**
@@ -293,5 +303,28 @@ public class Resource {
 	 */
 	public static final String IMG_GREEN_OVER = IMAGES_FOLDER
 			+ "green_overlay.png";
+	/**
+	 * Logo
+	 */
+	public static final String LOGO = IMAGES_FOLDER + "eftaios_logo.png";
+	/**
+	 * XML document of FERMI
+	 */
+	public static final String FERMI_XML = MAPS_FOLDER + "FERMI.xml";
+	/**
+	 * XML document of GALILEI
+	 */
+	public static final String GALILEI_XML = MAPS_FOLDER + "GALILEI.xml";
+	/**
+	 * XML document of FERMI
+	 */
+	public static final String GALVANI_XML = MAPS_FOLDER + "GALVANI.xml";
+
+	/**
+	 * Constructor
+	 */
+	private Resource() {
+
+	}
 
 }

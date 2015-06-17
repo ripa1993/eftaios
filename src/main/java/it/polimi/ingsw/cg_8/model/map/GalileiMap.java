@@ -1,19 +1,22 @@
 package it.polimi.ingsw.cg_8.model.map;
 
-import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
+import it.polimi.ingsw.cg_8.model.map.creator.MapCreator;
+
 /**
- * Galilei map
- * @author Simone
- * @version 1.0
+ * Class for the map "Galilei". After instantiating a new empty map, it is
+ * necessary to instance the corresponding constructor {@link MapCreator} to
+ * populate the map through the {@link MapCreator#createMap()}.
+ * 
+ * @author Alberto Parravicini
+ * @version 1.1
  */
 public class GalileiMap extends GameMap {
-	/**
-	 * Constructor
-	 * @param humanSpawn human spawn coordinate
-	 * @param alienSpawn alien spawn coordinate
-	 */
-	public GalileiMap(Coordinate humanSpawn, Coordinate alienSpawn) {
-		super(humanSpawn, alienSpawn);
-	}
 
+	/**
+	 * Empty constructor for the map, instantiating the coordinates of thwe map
+	 * is done by the {@link MapCreator}
+	 */
+	public GalileiMap() {
+		super();
+	}
 }

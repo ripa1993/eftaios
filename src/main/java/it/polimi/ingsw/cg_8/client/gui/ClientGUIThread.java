@@ -41,11 +41,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.FontFormatException;
-import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Point;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -57,9 +54,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
@@ -70,7 +69,6 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -103,32 +101,37 @@ public class ClientGUIThread implements Runnable, Observer {
 		public void mouseReleased(MouseEvent e) {
 			if (matchStarted) {
 				Coordinate coordinate = mapPanel.getCoordinate(e);
-				if (coordinate.getX() >= 0 && coordinate.getY() >= 0
-						&& coordinate.getX() < MapPanel.NUM_COLUMN
-						&& coordinate.getY() < MapPanel.NUM_ROW) {
-					Object[] options = { "Movement", SPOTLIGHT_TEXT,
-							"Do Fake Noise" };
-					int result = JOptionPane.showOptionDialog(null,
-							"This is sector " + coordinate,
-							"What would you like to do?",
-							JOptionPane.DEFAULT_OPTION,
-							JOptionPane.QUESTION_MESSAGE, null, options,
-							options[0]);
-					LOGGER.debug("Result: " + result);
-					LOGGER.debug("Options: " + options);
-					if (result == 0) {
-						LOGGER.debug("Choose: move");
-						connectionManager.send(new ActionMove(coordinate));
-					} else if (result == 1) {
-						LOGGER.debug("Choose: spotlight");
-						connectionManager.send(new ActionUseCard(
-								new SpotlightCard(), coordinate));
-					} else if (result == 2) {
-						LOGGER.debug("Choose: fake noise");
-						connectionManager.send(new ActionFakeNoise(coordinate));
+
+				if (coordinateSet.contains(coordinate)) {
+
+					if (coordinate.getX() >= 0 && coordinate.getY() >= 0
+							&& coordinate.getX() < MapPanel.NUM_COLUMN
+							&& coordinate.getY() < MapPanel.NUM_ROW) {
+						Object[] options = { "Movement", SPOTLIGHT_TEXT,
+								"Do Fake Noise" };
+						int result = JOptionPane.showOptionDialog(null,
+								"This is sector " + coordinate,
+								"What would you like to do?",
+								JOptionPane.DEFAULT_OPTION,
+								JOptionPane.QUESTION_MESSAGE, null, options,
+								options[0]);
+						LOGGER.debug("Result: " + result);
+						LOGGER.debug("Options: " + options);
+						if (result == 0) {
+							LOGGER.debug("Choose: move");
+							connectionManager.send(new ActionMove(coordinate));
+						} else if (result == 1) {
+							LOGGER.debug("Choose: spotlight");
+							connectionManager.send(new ActionUseCard(
+									new SpotlightCard(), coordinate));
+						} else if (result == 2) {
+							LOGGER.debug("Choose: fake noise");
+							connectionManager.send(new ActionFakeNoise(
+									coordinate));
+						}
+
 					}
 				}
-
 			}
 		}
 	}
@@ -267,9 +270,12 @@ public class ClientGUIThread implements Runnable, Observer {
 						JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
 				JDialog dialog = optionPane.createDialog("End turn");
 				dialog.setVisible(true);
-				int selection = ((Integer) optionPane.getValue()).intValue();
-				if (selection == JOptionPane.YES_OPTION) {
-					connectionManager.send(new ActionEndTurn());
+				if (optionPane.getValue() != null) {
+					int selection = ((Integer) optionPane.getValue())
+							.intValue();
+					if (selection == JOptionPane.YES_OPTION) {
+						connectionManager.send(new ActionEndTurn());
+					}
 				} else {
 					// do nothing
 				}
@@ -320,9 +326,13 @@ public class ClientGUIThread implements Runnable, Observer {
 				JDialog dialog = optionPane
 						.createDialog("Draw a dangerous sector card");
 				dialog.setVisible(true);
-				int selection = ((Integer) optionPane.getValue()).intValue();
-				if (selection == JOptionPane.YES_OPTION) {
-					connectionManager.send(new ActionDrawCard());
+				if (optionPane.getValue() != null) {
+					int selection = ((Integer) optionPane.getValue())
+							.intValue();
+					if (selection == JOptionPane.YES_OPTION) {
+						connectionManager.send(new ActionDrawCard());
+					}
+
 				} else {
 					// do nothing
 				}
@@ -345,9 +355,14 @@ public class ClientGUIThread implements Runnable, Observer {
 						JOptionPane.YES_NO_OPTION);
 				JDialog dialog = optionPane.createDialog(ATTACK_TEXT);
 				dialog.setVisible(true);
-				int selection = ((Integer) optionPane.getValue()).intValue();
-				if (selection == JOptionPane.YES_OPTION) {
-					connectionManager.send(new ActionAttack());
+
+				if (optionPane.getValue() != null) {
+					int selection = ((Integer) optionPane.getValue())
+							.intValue();
+					if (selection == JOptionPane.YES_OPTION) {
+						connectionManager.send(new ActionAttack());
+					}
+
 				} else {
 					// do nothing
 				}
@@ -478,6 +493,13 @@ public class ClientGUIThread implements Runnable, Observer {
 	private boolean playerImageSet;
 
 	/**
+	 * Sets containing the coordinates of the current map, used to allow the
+	 * user to click only on the actual coordinates of the map, and not on the
+	 * empty spaces.
+	 */
+	private Set<Coordinate> coordinateSet;
+
+	/**
 	 * Constructor, create the main frame for the gui. Instead of the map shows
 	 * a temp image that changes when the game starts and the server
 	 * communicates the game map. Player can click on the sectors on the left
@@ -520,8 +542,8 @@ public class ClientGUIThread implements Runnable, Observer {
 		} catch (IOException e) {
 			LOGGER.error(e.getMessage(), e);
 		}
-		mainFrame.getContentPane().setBackground(Color.PINK);
 		mainFrame.setBackground(new Color(255, 255, 255));
+
 		chatPanel = new JPanel();
 		chatPanel.setOpaque(false);
 		chatPanel.setBackground(Color.WHITE);
@@ -567,8 +589,13 @@ public class ClientGUIThread implements Runnable, Observer {
 		mainFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
 		// setup map panel
+
 		mapPanel = new MapPanel();
-		mapPanel.setBackground(Color.WHITE);
+
+		// TODO : fix artifacts.
+		// mapPanel.setBackground(new Color(100, 100, 100, 100));
+		mapPanel.setOpaque(false);
+
 		mapPanel.setVisible(true);
 		mapPanel.setMapImage(Resource.IMG_MAP_BG);
 		// set layouts
@@ -585,6 +612,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		// set borders
 		chatPanel2.setBorder(new EmptyBorder(10, 10, 10, 10));
 		infoPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+
 		commandsPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
 		// set up commands jpanel
@@ -682,7 +710,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		cardPanel.setOpaque(false);
 		cardPanel.setBackground(Color.WHITE);
 		panel2.add(cardPanel, BorderLayout.SOUTH);
-		cardPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		cardPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 35, 5));
 
 		cardButton1 = new CardButton();
 		cardButton1.setBackground(Color.WHITE);
@@ -752,6 +780,8 @@ public class ClientGUIThread implements Runnable, Observer {
 		chatPanel.setVisible(true);
 		infoPanel.setVisible(true);
 		mapPanel.setVisible(true);
+		ImageIcon img = new ImageIcon(Resource.LOGO);
+		mainFrame.setIconImage(img.getImage());
 		mainFrame.setVisible(true);
 		mainFrame.setSize(1280, 720);
 
@@ -893,6 +923,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		chatTextField.addKeyListener(new ChatKeyListener());
 
 		mapPanel.addMouseListener(new MapMouseInputAdapter());
+
 	}
 
 	/**
@@ -1043,16 +1074,25 @@ public class ClientGUIThread implements Runnable, Observer {
 		} else if ("Map".equals(arg)) {
 			ResponseMap response = clientData.getMap();
 			GameMapName mapName = response.getMapName();
+			coordinateSet = new HashSet<Coordinate>();
+
 			if (mapName.equals(GameMapName.FERMI)) {
 				mapPanel.setMapImage(Resource.IMG_FERMI_MAP);
-				LOGGER.debug("Map changed to fermi");
+				coordinateSet.addAll(MapParserClient.parse(Resource.FERMI_XML));
+				LOGGER.info("Map changed to fermi");
 			} else if (mapName.equals(GameMapName.GALILEI)) {
 				mapPanel.setMapImage(Resource.IMG_GALILEI_MAP);
+				coordinateSet.addAll(MapParserClient
+						.parse(Resource.GALILEI_XML));
 				LOGGER.debug("Map changed to galilei");
 			} else if (mapName.equals(GameMapName.GALVANI)) {
 				mapPanel.setMapImage(Resource.IMG_GALVANI_MAP);
+				coordinateSet.addAll(MapParserClient
+						.parse(Resource.GALVANI_XML));
 				LOGGER.debug("Map changed to galvani");
 			}
+			mainFrame.revalidate();
+			mapPanel.revalidate();
 			mapPanel.repaint();
 			matchStarted = true;
 		} else if ("Ack".equals(arg)) {

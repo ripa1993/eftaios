@@ -2,12 +2,17 @@ package it.polimi.ingsw.cg_8.model.sectors;
 
 import java.io.Serializable;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+
 /**
  * Coordinate is used to identify a sector position inside the map
  * 
  * @author Simone
  * @version 1.0
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Coordinate implements Serializable {
 	/**
 	 * 
@@ -16,14 +21,17 @@ public class Coordinate implements Serializable {
 	/**
 	 * Column number
 	 */
-	final int x;
+	@XmlElement
+	protected int x;
 	/**
 	 * Row number
 	 */
-	final int y;
+	@XmlElement
+	protected int y;
 
 	/**
-	 * Constructor for {@link Coordinate}
+	 * Constructor for {@link Coordinate}, used performs checks and validations
+	 * on existing coordinates.
 	 * 
 	 * @param x
 	 *            column number
@@ -40,12 +48,11 @@ public class Coordinate implements Serializable {
 	}
 
 	/**
-	 * Default constructor for {@link Coordinate}, creates a non valid
-	 * coordinate (negative value)
+	 * Default constructor for {@link Coordinate}, used when parsing the XML
+	 * document.
 	 */
 	public Coordinate() {
-		x = -1;
-		y = -1;
+
 	}
 
 	/**

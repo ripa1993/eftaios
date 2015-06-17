@@ -25,6 +25,79 @@ import javax.swing.Timer;
  */
 public class MapPanel extends JLayeredPane {
 	/**
+	 * Auxiliary class used to calculate map image width and height and panel
+	 * border width and height. These values are calculated when the object is
+	 * created
+	 * 
+	 * @author Simone
+	 *
+	 */
+	private class AuxiliaryUtils {
+		/**
+		 * Auxiliary variables
+		 */
+		private float mapImageWidth, mapImageHeight, panelBorderWidth,
+				panelBorderHeight;
+
+		/**
+		 * Calculates the auxiliary variables
+		 */
+		public AuxiliaryUtils() {
+			int mapPanelWidth = getWidth();
+			int mapPanelHeight = getHeight();
+			// get image size, resized
+			mapImageWidth = mapPanelWidth;
+			mapImageHeight = mapPanelHeight;
+
+			if (mapImageWidth - backgroundImageScaled.getWidth(null) > mapImageHeight
+					- backgroundImageScaled.getHeight(null)) {
+				mapImageWidth = mapImageHeight
+						* backgroundImageScaled.getWidth(null)
+						/ backgroundImageScaled.getHeight(null);
+			} else {
+				mapImageHeight = mapImageWidth
+						* backgroundImageScaled.getHeight(null)
+						/ backgroundImageScaled.getWidth(null);
+			}
+			// get border sizes
+			panelBorderWidth = (mapPanelWidth - mapImageWidth) / 2;
+			panelBorderHeight = (mapPanelHeight - mapImageHeight) / 2;
+		}
+
+		/**
+		 * 
+		 * @return map image width
+		 */
+		public float getMapImageWidth() {
+			return mapImageWidth;
+		}
+
+		/**
+		 * 
+		 * @return map image height
+		 */
+		public float getMapImageHeight() {
+			return mapImageHeight;
+		}
+
+		/**
+		 * 
+		 * @return panel border width
+		 */
+		public float getPanelBorderWidth() {
+			return panelBorderWidth;
+		}
+
+		/**
+		 * 
+		 * @return panel border height
+		 */
+		public float getPanelBorderHeight() {
+			return panelBorderHeight;
+		}
+	}
+
+	/**
 	 * Player jlabel that show its position on the map
 	 * 
 	 * @author Simone
@@ -62,56 +135,6 @@ public class MapPanel extends JLayeredPane {
 					(int) (getColumnWidth()), (int) (getRowHeight() * 2), null);
 
 		}
-	}
-
-	/**
-	 * Auxiliary method that calculates column width in the map
-	 * 
-	 * @return
-	 */
-	private float getColumnWidth() {
-		int mapPanelWidth = this.getWidth();
-		int mapPanelHeight = this.getHeight();
-		// background image sizes
-		float mapImageWidth = mapPanelWidth;
-		float mapImageHeight = mapPanelHeight;
-		if (mapImageWidth - backgroundImageScaled.getWidth(null) > mapImageHeight
-				- backgroundImageScaled.getHeight(null)) {
-			mapImageWidth = mapImageHeight
-					* backgroundImageScaled.getWidth(null)
-					/ backgroundImageScaled.getHeight(null);
-		} else {
-			mapImageHeight = mapImageWidth
-					* backgroundImageScaled.getHeight(null)
-					/ backgroundImageScaled.getWidth(null);
-
-		}
-		// calculate col and row size
-		float columnWidth = (mapImageWidth / NUM_COLUMN) * 4 / 3;
-		return columnWidth;
-	}
-
-	public float getRowHeight() {
-		// get map panel size
-		int mapPanelWidth = this.getWidth();
-		int mapPanelHeight = this.getHeight();
-		// background image sizes
-		float mapImageWidth = mapPanelWidth;
-		float mapImageHeight = mapPanelHeight;
-		if (mapImageWidth - backgroundImageScaled.getWidth(null) > mapImageHeight
-				- backgroundImageScaled.getHeight(null)) {
-			mapImageWidth = mapImageHeight
-					* backgroundImageScaled.getWidth(null)
-					/ backgroundImageScaled.getHeight(null);
-		} else {
-			mapImageHeight = mapImageWidth
-					* backgroundImageScaled.getHeight(null)
-					/ backgroundImageScaled.getWidth(null);
-
-		}
-		// calculate col and row size
-		float rowHeigth = mapImageHeight / NUM_ROW;
-		return rowHeigth;
 	}
 
 	/**
@@ -201,13 +224,13 @@ public class MapPanel extends JLayeredPane {
 		int updatedWidth = this.getWidth();
 		int updatedHeight = this.getHeight();
 
-		if (this.getWidth() - backgroundImageScaled.getWidth(null) > this
-				.getHeight() - backgroundImageScaled.getHeight(null)) {
+		if ((float) this.getWidth() / backgroundImageScaled.getWidth(null) > (float) this
+				.getHeight() / backgroundImageScaled.getHeight(null)) {
 			updatedWidth = updatedHeight * backgroundImageScaled.getWidth(null)
 					/ backgroundImageScaled.getHeight(null);
 		}
-		if (this.getWidth() - backgroundImageScaled.getWidth(null) < this
-				.getHeight() - backgroundImageScaled.getHeight(null)) {
+		if ((float) this.getWidth() / backgroundImageScaled.getWidth(null) < (float) this
+				.getHeight() / backgroundImageScaled.getHeight(null)) {
 			updatedHeight = updatedWidth
 					* backgroundImageScaled.getHeight(null)
 					/ backgroundImageScaled.getWidth(null);
@@ -215,6 +238,9 @@ public class MapPanel extends JLayeredPane {
 
 		int x = (this.getWidth() - updatedWidth) / 2;
 		int y = (this.getHeight() - updatedHeight) / 2;
+		backgroundImageScaled = new ImageIcon(backgroundImage.getImage()
+				.getScaledInstance(updatedWidth, -1, Image.SCALE_SMOOTH))
+				.getImage();
 		g.drawImage(backgroundImageScaled, x, y, updatedWidth, updatedHeight,
 				null);
 	}
@@ -228,7 +254,8 @@ public class MapPanel extends JLayeredPane {
 	void setMapImage(String path) {
 		backgroundImage = new ImageIcon(path);
 		backgroundImageScaled = new ImageIcon(backgroundImage.getImage()
-				.getScaledInstance(1000, -1, Image.SCALE_SMOOTH)).getImage();
+				.getScaledInstance(5000, -1, Image.SCALE_SMOOTH)).getImage();
+
 	}
 
 	/**
@@ -291,33 +318,14 @@ public class MapPanel extends JLayeredPane {
 		// click coordinates
 		int mouseX = e.getX();
 		int mouseY = e.getY();
-		// mapPanel sizes
-		int mapPanelWidth = this.getWidth();
-		int mapPanelHeight = this.getHeight();
-		// background image sizes
-		float mapImageWidth = mapPanelWidth;
-		float mapImageHeight = mapPanelHeight;
-		if (mapImageWidth - backgroundImageScaled.getWidth(null) > mapImageHeight
-				- backgroundImageScaled.getHeight(null)) {
-			mapImageWidth = mapImageHeight
-					* backgroundImageScaled.getWidth(null)
-					/ backgroundImageScaled.getHeight(null);
-		} else {
-			mapImageHeight = mapImageWidth
-					* backgroundImageScaled.getHeight(null)
-					/ backgroundImageScaled.getWidth(null);
-
-		}
-		// border sizes
-		float panelBorderWidth = (mapPanelWidth - mapImageWidth) / 2;
-		float panelBorderHeigth = (mapPanelHeight - mapImageHeight) / 2;
+		AuxiliaryUtils utils = new AuxiliaryUtils();
 		// calculate col and row size
-		float columnWidth = mapImageWidth / NUM_COLUMN;
-		float rowHeigth = mapImageHeight / NUM_ROW;
+		float columnWidth = utils.getMapImageWidth() / NUM_COLUMN;
+		float rowHeigth = utils.getMapImageHeight() / NUM_ROW;
 
 		// calculate coordinate
-		float imageMouseX = mouseX - panelBorderWidth;
-		float imageMouseY = mouseY - panelBorderHeigth;
+		float imageMouseX = mouseX - utils.getPanelBorderWidth();
+		float imageMouseY = mouseY - utils.getPanelBorderHeight();
 
 		// calculate column
 		for (int i = 0; i <= NUM_COLUMN; i++) {
@@ -416,5 +424,58 @@ public class MapPanel extends JLayeredPane {
 	public void setPath(String path) {
 		this.path = path;
 
+	}
+
+	/**
+	 * Auxiliary method that calculates column width in the map
+	 * 
+	 * @return column width in the map
+	 */
+	private float getColumnWidth() {
+		int mapPanelWidth = this.getWidth();
+		int mapPanelHeight = this.getHeight();
+		// background image sizes
+		float mapImageWidth = mapPanelWidth;
+		float mapImageHeight = mapPanelHeight;
+		if (mapImageWidth - backgroundImageScaled.getWidth(null) > mapImageHeight
+				- backgroundImageScaled.getHeight(null)) {
+			mapImageWidth = mapImageHeight
+					* backgroundImageScaled.getWidth(null)
+					/ backgroundImageScaled.getHeight(null);
+		} else {
+			mapImageHeight = mapImageWidth
+					* backgroundImageScaled.getHeight(null)
+					/ backgroundImageScaled.getWidth(null);
+
+		}
+		// calculate col and row size
+		return (mapImageWidth / NUM_COLUMN) * 4 / 3;
+	}
+
+	/**
+	 * Auxiliary method that calculates row heigh in the map
+	 * 
+	 * @return row heigh in the map
+	 */
+	public float getRowHeight() {
+		// get map panel size
+		int mapPanelWidth = this.getWidth();
+		int mapPanelHeight = this.getHeight();
+		// background image sizes
+		float mapImageWidth = mapPanelWidth;
+		float mapImageHeight = mapPanelHeight;
+		if (mapImageWidth - backgroundImageScaled.getWidth(null) > mapImageHeight
+				- backgroundImageScaled.getHeight(null)) {
+			mapImageWidth = mapImageHeight
+					* backgroundImageScaled.getWidth(null)
+					/ backgroundImageScaled.getHeight(null);
+		} else {
+			mapImageHeight = mapImageWidth
+					* backgroundImageScaled.getHeight(null)
+					/ backgroundImageScaled.getWidth(null);
+
+		}
+		// calculate col and row size
+		return mapImageHeight / NUM_ROW;
 	}
 }

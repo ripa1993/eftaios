@@ -1,6 +1,7 @@
 package it.polimi.ingsw.cg_8.model.map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import it.polimi.ingsw.cg_8.model.exceptions.NotAValidCoordinateException;
 import it.polimi.ingsw.cg_8.model.map.creator.GalileiCreator;
 import it.polimi.ingsw.cg_8.model.map.creator.MapCreator;
