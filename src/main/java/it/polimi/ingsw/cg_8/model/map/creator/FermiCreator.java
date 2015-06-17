@@ -1,11 +1,5 @@
 package it.polimi.ingsw.cg_8.model.map.creator;
 
-import java.io.File;
-import java.util.Iterator;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Unmarshaller;
-
 import it.polimi.ingsw.cg_8.Resource;
 import it.polimi.ingsw.cg_8.model.map.FermiMap;
 import it.polimi.ingsw.cg_8.model.map.GameMap;
@@ -13,12 +7,33 @@ import it.polimi.ingsw.cg_8.model.map.GameMapSet;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 import it.polimi.ingsw.cg_8.model.sectors.Sector;
 
+import java.io.File;
+import java.util.Iterator;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Unmarshaller;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+/**
+ * Creator for the map "Fermi". Given a new empty Fermi map, this class
+ * allows to populate the map with the right coordinates, by parsing an XML
+ * document representing the map itself.
+ * 
+ * @author Alberto Parravicini
+ * @version 1.1
+ */
 public class FermiCreator extends MapCreator {
 
 	/**
 	 * Map that is going to be populated
 	 */
 	private final GameMap fermiMap;
+	/**
+	 * Log4j logger
+	 */
+	private static final Logger LOGGER = LogManager.getLogger(FermiCreator.class);
 
 	/**
 	 * Constructor
@@ -41,8 +56,8 @@ public class FermiCreator extends MapCreator {
 			return sectorSet;
 
 		} catch (Exception e) {
-			e.printStackTrace(System.out);
-			return null;
+			LOGGER.error(e.getMessage(), e);
+			return new GameMapSet();
 		}
 	}
 

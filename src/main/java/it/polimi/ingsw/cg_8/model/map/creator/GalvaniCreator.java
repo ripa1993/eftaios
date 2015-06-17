@@ -1,7 +1,6 @@
 package it.polimi.ingsw.cg_8.model.map.creator;
 
 import it.polimi.ingsw.cg_8.Resource;
-import it.polimi.ingsw.cg_8.model.map.FermiMap;
 import it.polimi.ingsw.cg_8.model.map.GalvaniMap;
 import it.polimi.ingsw.cg_8.model.map.GameMap;
 import it.polimi.ingsw.cg_8.model.map.GameMapSet;
@@ -14,11 +13,26 @@ import java.util.Iterator;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+/**
+ * Creator for the map "Galvani". Given a new empty Galvani map, this class
+ * allows to populate the map with the right coordinates, by parsing an XML
+ * document representing the map itself.
+ * 
+ * @author Alberto Parravicini
+ * @version 1.1
+ */
 public class GalvaniCreator extends MapCreator {
 	/**
 	 * Map that is going to be populated
 	 */
 	private final GameMap galvaniMap;
+	/**
+	 * Log4j logger
+	 */
+	private static final Logger LOGGER = LogManager.getLogger(GalvaniCreator.class);
 
 	/**
 	 * Constructor
@@ -41,8 +55,8 @@ public class GalvaniCreator extends MapCreator {
 			return sectorSet;
 
 		} catch (Exception e) {
-			e.printStackTrace(System.out);
-			return null;
+			LOGGER.error(e.getMessage(), e);
+			return new GameMapSet();
 		}
 	}
 
@@ -57,8 +71,6 @@ public class GalvaniCreator extends MapCreator {
 			int y = currentSector.getY();
 			addSector(new Coordinate(x, y), currentSector);
 		}
-		//galvaniMap.setAlienSpawn(sectorList.getAlienSpawnSector());
-		//galvaniMap.setHumanSpawn(sectorList.getHumanSpawnSector());
 		return galvaniMap;
 		
 	}

@@ -42,9 +42,9 @@ import org.apache.logging.log4j.Logger;
 
 /**
  * Main class for client graphic user interface. It uses a swing frame to
- * receive user inputs. The user can choose a username, a connection method
- * between rmi and socket, a vote for the map choiche (fermi, galvani and
- * galilei) and if the background music is enabled
+ * receive user inputs. The user can choose a user-name, a connection method
+ * between RMI and socket, a vote for the map choice (Fermi, Galvani and
+ * Galilei) and if the background music is enabled
  * 
  * @author Simone
  * @version 1.0

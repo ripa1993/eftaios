@@ -13,11 +13,26 @@ import java.util.Iterator;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+/**
+ * Creator for the map "Galilei". Given a new empty Galilei map, this class
+ * allows to populate the map with the right coordinates, by parsing an XML
+ * document representing the map itself.
+ * 
+ * @author Alberto Parravicini
+ * @version 1.1
+ */
 public class GalileiCreator extends MapCreator {
 	/**
 	 * Map that is going to be populated
 	 */
 	private final GameMap galileiMap;
+	/**
+	 * Log4j logger
+	 */
+	private static final Logger LOGGER = LogManager.getLogger(GalileiCreator.class);
 
 	/**
 	 * Constructor
@@ -40,15 +55,15 @@ public class GalileiCreator extends MapCreator {
 			return sectorSet;
 
 		} catch (Exception e) {
-			e.printStackTrace(System.out);
-			return null;
+			LOGGER.error(e.getMessage(), e);
+			return new GameMapSet();
 		}
 	}
 
 	@Override
 	public GameMap createMap() {
 		GameMapSet sectorList = this.sectorParser();
-		
+
 		Iterator<Sector> iterator = sectorList.getSectorList().iterator();
 		while (iterator.hasNext()) {
 			Sector currentSector = iterator.next();
@@ -56,10 +71,8 @@ public class GalileiCreator extends MapCreator {
 			int y = currentSector.getY();
 			addSector(new Coordinate(x, y), currentSector);
 		}
-		//galileiMap.setAlienSpawn(sectorList.getAlienSpawnSector());
-		//galileiMap.setHumanSpawn(sectorList.getHumanSpawnSector());
 		return galileiMap;
-		
+
 	}
 
 }

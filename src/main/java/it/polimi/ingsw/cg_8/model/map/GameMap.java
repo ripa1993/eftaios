@@ -13,7 +13,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 /**
- * Abstract class that represents a map
+ * Abstract class that represents a map; the class also contais methods useful
+ * to operate in the map itself.
  * 
  * @author Simone
  * @version 1.0
@@ -27,13 +28,16 @@ public abstract class GameMap implements ReachableCoordinatesInterface {
 	 * Reference to the map proxy related to this map
 	 */
 	private final MapProxy mapProxy;
-	
-	
+
+	/**
+	 * Default creator for the map, also used by the Concrete maps (Fermi,
+	 * Galvani, etc...)
+	 */
 	public GameMap() {
 
 		this.sectors = new HashMap<Coordinate, Sector>();
 		mapProxy = new MapProxy(this);
-	
+
 	}
 
 	/**
@@ -42,15 +46,17 @@ public abstract class GameMap implements ReachableCoordinatesInterface {
 	 * @return coordinate of human spawn
 	 */
 	public Coordinate getHumanSpawn() {
-		Iterator<Entry<Coordinate, Sector>> entries = sectors.entrySet().iterator();
+		Iterator<Entry<Coordinate, Sector>> entries = sectors.entrySet()
+				.iterator();
 		while (entries.hasNext()) {
-			Entry<Coordinate, Sector> thisEntry = (Entry<Coordinate, Sector>) entries.next();
-			  Coordinate key = (Coordinate) thisEntry.getKey();
-			  if (thisEntry.getValue() instanceof HumanSector) {
-				  return key;
-			  }
+			Entry<Coordinate, Sector> thisEntry = (Entry<Coordinate, Sector>) entries
+					.next();
+			Coordinate key = (Coordinate) thisEntry.getKey();
+			if (thisEntry.getValue() instanceof HumanSector) {
+				return key;
+			}
 		}
-		return null;	
+		return null;
 	}
 
 	/**
@@ -59,15 +65,17 @@ public abstract class GameMap implements ReachableCoordinatesInterface {
 	 * @return coordinate of alien spawn
 	 */
 	public Coordinate getAlienSpawn() {
-		Iterator<Entry<Coordinate, Sector>> entries = sectors.entrySet().iterator();
+		Iterator<Entry<Coordinate, Sector>> entries = sectors.entrySet()
+				.iterator();
 		while (entries.hasNext()) {
-			Entry<Coordinate, Sector> thisEntry = (Entry<Coordinate, Sector>) entries.next();
-			  Coordinate key = (Coordinate) thisEntry.getKey();
-			  if (thisEntry.getValue() instanceof AlienSector) {
-				  return key;
-			  }
+			Entry<Coordinate, Sector> thisEntry = (Entry<Coordinate, Sector>) entries
+					.next();
+			Coordinate key = (Coordinate) thisEntry.getKey();
+			if (thisEntry.getValue() instanceof AlienSector) {
+				return key;
+			}
 		}
-		return null;	
+		return null;
 	}
 
 	/**
@@ -96,9 +104,9 @@ public abstract class GameMap implements ReachableCoordinatesInterface {
 	public Set<Coordinate> getReachableCoordinates(Coordinate c, Integer depth) {
 		return mapProxy.getReachableCoordinates(c, depth);
 	}
-	
+
 	@Override
-	public Set<Coordinate> getConnectedCoordinates(Coordinate c){
+	public Set<Coordinate> getConnectedCoordinates(Coordinate c) {
 		return mapProxy.getConnectedCoordinates(c);
 	}
 

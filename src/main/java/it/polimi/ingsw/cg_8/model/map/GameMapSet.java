@@ -29,6 +29,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class GameMapSet {
 
+	/**
+	 * Set of the sectors of a given map, divided by their type.
+	 */
 	@XmlElementWrapper(name = "sectorList")
 	@XmlElements({
 			@XmlElement(name = "safeSector", type = SecureSector.class),
@@ -38,10 +41,18 @@ public class GameMapSet {
 			@XmlElement(name = "alienSector", type = AlienSector.class), })
 	private Set<Sector> sectorSet;
 
+	/**
+	 * Return the set of the Sectors of the map.
+	 * @return the Sectors of the map.
+	 */
 	public Set<Sector> getSectorList() {
 		return this.sectorSet;
 	}
 
+	/**
+	 * Return the set of the Safe Sectors of the map.
+	 * @return the Safe Sectors of the map.
+	 */
 	public Set<Sector> getSafeSectors() {
 		Set<Sector> safeSectorList = new HashSet<Sector>();
 		for (Sector sec : this.sectorSet) {
@@ -52,6 +63,10 @@ public class GameMapSet {
 		return safeSectorList;
 	}
 
+	/**
+	 * Return the set of the Dangerous Sectors of the map.
+	 * @return the Dangerous Sectors of the map.
+	 */
 	public Set<Sector> getDangerousSectors() {
 		Set<Sector> dangerousSectorList = new HashSet<Sector>();
 		for (Sector sec : this.sectorSet) {
@@ -62,6 +77,10 @@ public class GameMapSet {
 		return dangerousSectorList;
 	}
 
+	/**
+	 * Return the set of the Escape Hatch Sectors of the map.
+	 * @return the Escape Hatch Sectors of the map.
+	 */
 	public Set<Sector> getEscapeHatchSectors() {
 		Set<Sector> escapeHatchSectorList = new HashSet<Sector>();
 		for (Sector sec : this.sectorSet) {
@@ -72,6 +91,10 @@ public class GameMapSet {
 		return escapeHatchSectorList;
 	}
 
+	/**
+	 * Return the set of the Human Spawn Sectors of the map.
+	 * @return the Human Spawn Sectors of the map.
+	 */
 	public Sector getHumanSpawnSector() {
 		Sector humanSector = new HumanSector();
 		for (Sector sec : this.sectorSet) {
@@ -82,6 +105,10 @@ public class GameMapSet {
 		return humanSector;
 	}
 
+	/**
+	 * Return the set of the Alien Spawn Sectors of the map.
+	 * @return the Alien Spawn Sectors of the map.
+	 */
 	public Sector getAlienSpawnSector() {
 		Sector alienSector = new AlienSector();
 		for (Sector sec : this.sectorSet) {
