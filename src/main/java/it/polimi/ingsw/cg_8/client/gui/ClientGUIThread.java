@@ -531,6 +531,7 @@ public class ClientGUIThread implements Runnable, Observer {
 			LOGGER.error(e.getMessage(), e);
 		}
 		mainFrame.setBackground(new Color(255, 255, 255));
+
 		chatPanel = new JPanel();
 		chatPanel.setOpaque(false);
 		chatPanel.setBackground(Color.WHITE);
@@ -576,11 +577,13 @@ public class ClientGUIThread implements Runnable, Observer {
 		mainFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
 		// setup map panel
+
 		mapPanel = new MapPanel();
 		
 		//TODO : fix artifacts.
 		//mapPanel.setBackground(new Color(100, 100, 100, 100));
 		mapPanel.setOpaque(false);
+
 		mapPanel.setVisible(true);
 		mapPanel.setMapImage(Resource.IMG_MAP_BG);
 		// set layouts
@@ -597,6 +600,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		// set borders
 		chatPanel2.setBorder(new EmptyBorder(10, 10, 10, 10));
 		infoPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+
 		commandsPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
 		// set up commands jpanel
@@ -906,7 +910,9 @@ public class ClientGUIThread implements Runnable, Observer {
 		// send chat message when enter is pressed
 		chatTextField.addKeyListener(new ChatKeyListener());
 
+
 		mapPanel.addMouseListener(new MapMouseInputAdapter());
+
 	}
 
 	/**

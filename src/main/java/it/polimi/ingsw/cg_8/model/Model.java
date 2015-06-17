@@ -17,9 +17,9 @@ import it.polimi.ingsw.cg_8.model.exceptions.GameAlreadyRunningException;
 import it.polimi.ingsw.cg_8.model.exceptions.NotAValidMapException;
 import it.polimi.ingsw.cg_8.model.map.GameMap;
 import it.polimi.ingsw.cg_8.model.map.GameMapName;
-import it.polimi.ingsw.cg_8.model.map.creator.FermiCreator;
-import it.polimi.ingsw.cg_8.model.map.creator.GalileiCreator;
-import it.polimi.ingsw.cg_8.model.map.creator.GalvaniCreator;
+import it.polimi.ingsw.cg_8.model.map.creator.FermiCreatorXML;
+import it.polimi.ingsw.cg_8.model.map.creator.GalileiCreatorXML;
+import it.polimi.ingsw.cg_8.model.map.creator.GalvaniCreatorXML;
 import it.polimi.ingsw.cg_8.model.map.creator.MapCreator;
 import it.polimi.ingsw.cg_8.model.noises.Noise;
 import it.polimi.ingsw.cg_8.model.player.Player;
@@ -123,13 +123,13 @@ public class Model extends Observable {
 		itemDeck = new ItemDeck();
 		// initialize map
 		if (mapName == GameMapName.FERMI) {
-			MapCreator mc = new FermiCreator();
+			MapCreator mc = new FermiCreatorXML();
 			map = mc.createMap();
 		} else if (mapName == GameMapName.GALILEI) {
-			MapCreator mc = new GalileiCreator();
+			MapCreator mc = new GalileiCreatorXML();
 			map = mc.createMap();
 		} else if (mapName == GameMapName.GALVANI) {
-			MapCreator mc = new GalvaniCreator();
+			MapCreator mc = new GalvaniCreatorXML();
 			map = mc.createMap();
 		} else {
 			throw new NotAValidMapException(mapName + NOT_VALID_MAP);
@@ -511,13 +511,13 @@ public class Model extends Observable {
 	 */
 	public void setMap(GameMapName chosenMap) {
 		if (chosenMap == GameMapName.FERMI) {
-			MapCreator mc = new FermiCreator();
+			MapCreator mc = new FermiCreatorXML();
 			map = mc.createMap();
 		} else if (chosenMap == GameMapName.GALILEI) {
-			MapCreator mc = new GalileiCreator();
+			MapCreator mc = new GalileiCreatorXML();
 			map = mc.createMap();
 		} else if (chosenMap == GameMapName.GALVANI) {
-			MapCreator mc = new GalvaniCreator();
+			MapCreator mc = new GalvaniCreatorXML();
 			map = mc.createMap();
 		} else {
 			try {

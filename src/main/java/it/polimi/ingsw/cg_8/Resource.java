@@ -285,6 +285,7 @@ public class Resource {
 	 */
 	public static final String IMG_ART_ALIEN = IMAGES_FOLDER + "art_alien.png";
 	/**
+<<<<<<< HEAD
 	 * Transparent red overlay
 	 */
 	public static final String IMG_RED_OVER = IMAGES_FOLDER + "red_overlay.png";

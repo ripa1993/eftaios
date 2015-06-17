@@ -19,25 +19,25 @@ public class BackgroundPanel extends JComponent {
 	/**
 	 * Background image
 	 */
-	private transient Image image;
+	private transient Image myImage;
 	/**
 	 * Constructor
 	 * @param image background image
 	 */
-	public BackgroundPanel(Image image) {
-		this.image = image;
+	public BackgroundPanel(Image myImage) {
+		this.myImage = myImage;
 	}
 
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		// fills background repeating the image
-		int iw = image.getWidth(this);
-		int ih = image.getHeight(this);
+		int iw = myImage.getWidth(this);
+		int ih = myImage.getHeight(this);
 		if (iw > 0 && ih > 0) {
 			for (int x = 0; x < getWidth(); x += iw) {
 				for (int y = 0; y < getHeight(); y += ih) {
-					g.drawImage(image, x, y, iw, ih, this);
+					g.drawImage(myImage, x, y, iw, ih, this);
 				}
 			}
 		}
