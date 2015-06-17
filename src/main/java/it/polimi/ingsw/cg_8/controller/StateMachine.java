@@ -1,10 +1,5 @@
 package it.polimi.ingsw.cg_8.controller;
 
-import it.polimi.ingsw.cg_8.controller.playerActions.Attack;
-import it.polimi.ingsw.cg_8.controller.playerActions.DrawDangerousSectorCard;
-import it.polimi.ingsw.cg_8.controller.playerActions.EndTurn;
-import it.polimi.ingsw.cg_8.controller.playerActions.FakeNoise;
-import it.polimi.ingsw.cg_8.controller.playerActions.Movement;
 import it.polimi.ingsw.cg_8.controller.playerActions.other.Disconnect;
 import it.polimi.ingsw.cg_8.controller.playerActions.other.GetAllowedActions;
 import it.polimi.ingsw.cg_8.controller.playerActions.other.GetReachableSectors;
@@ -13,6 +8,11 @@ import it.polimi.ingsw.cg_8.controller.playerActions.useitemcard.UseAttackCard;
 import it.polimi.ingsw.cg_8.controller.playerActions.useitemcard.UseSedativesCard;
 import it.polimi.ingsw.cg_8.controller.playerActions.useitemcard.UseSpotlightCard;
 import it.polimi.ingsw.cg_8.controller.playerActions.useitemcard.UseTeleportCard;
+import it.polimi.ingsw.cg_8.controller.playeraction.Attack;
+import it.polimi.ingsw.cg_8.controller.playeraction.DrawDangerousSectorCard;
+import it.polimi.ingsw.cg_8.controller.playeraction.EndTurn;
+import it.polimi.ingsw.cg_8.controller.playeraction.FakeNoise;
+import it.polimi.ingsw.cg_8.controller.playeraction.Movement;
 import it.polimi.ingsw.cg_8.model.Model;
 import it.polimi.ingsw.cg_8.model.TurnPhase;
 import it.polimi.ingsw.cg_8.model.cards.item.AdrenalineCard;

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.cg_8.controller.playerActions;
+package it.polimi.ingsw.cg_8.controller.playeraction;
 
 import it.polimi.ingsw.cg_8.controller.Controller;
 import it.polimi.ingsw.cg_8.controller.Rules;

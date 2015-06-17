@@ -6,6 +6,7 @@ import it.polimi.ingsw.cg_8.controller.DefaultRules;
 import it.polimi.ingsw.cg_8.controller.Rules;
 import it.polimi.ingsw.cg_8.controller.StateMachine;
 import it.polimi.ingsw.cg_8.controller.playerActions.other.GetAllowedActions;
+import it.polimi.ingsw.cg_8.controller.playeraction.EndTurn;
 import it.polimi.ingsw.cg_8.model.TurnPhase;
 import it.polimi.ingsw.cg_8.model.cards.item.AdrenalineCard;
 import it.polimi.ingsw.cg_8.model.cards.item.AttackCard;

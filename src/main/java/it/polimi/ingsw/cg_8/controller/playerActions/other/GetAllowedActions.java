@@ -1,6 +1,6 @@
 package it.polimi.ingsw.cg_8.controller.playerActions.other;
 
-import it.polimi.ingsw.cg_8.controller.playerActions.PlayerAction;
+import it.polimi.ingsw.cg_8.controller.playeraction.PlayerAction;
 
 /**
  * This action lists all the available commands in a CLI
