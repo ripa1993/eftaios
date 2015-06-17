@@ -1,6 +1,5 @@
 package it.polimi.ingsw.cg_8.controller.playerActions;
 
-import it.polimi.ingsw.cg_8.controller.Controller;
 import it.polimi.ingsw.cg_8.model.Model;
 import it.polimi.ingsw.cg_8.model.exceptions.NotAValidCoordinateException;
 import it.polimi.ingsw.cg_8.model.map.GameMap;

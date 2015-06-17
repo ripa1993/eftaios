@@ -74,7 +74,7 @@ public class EscapeHatchSector extends SpecialSector {
 	 */
 	public boolean allowEscape() {
 
-		if (used == false) {
+		if (!used) {
 			this.setUsed();
 			return true;
 		}
