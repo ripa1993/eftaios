@@ -9,6 +9,12 @@ import java.io.File;
  * @version 1.0
  */
 public class Resource {
+	/**
+	 * Constructor
+	 */
+	private Resource() {
+
+	}
 
 	/**
 	 * images literal
@@ -21,7 +27,7 @@ public class Resource {
 	/**
 	 * resources literal
 	 */
-	private static final String MAPS_LITERAL = "maps";	
+	private static final String MAPS_LITERAL = "maps";
 	/**
 	 * XML Maps folder
 	 */
@@ -285,8 +291,7 @@ public class Resource {
 	 */
 	public static final String IMG_ART_ALIEN = IMAGES_FOLDER + "art_alien.png";
 	/**
-<<<<<<< HEAD
-	 * Transparent red overlay
+	 * <<<<<<< HEAD Transparent red overlay
 	 */
 	public static final String IMG_RED_OVER = IMAGES_FOLDER + "red_overlay.png";
 	/**

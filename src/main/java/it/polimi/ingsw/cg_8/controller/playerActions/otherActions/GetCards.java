@@ -13,6 +13,12 @@ import java.util.List;
  * @version 1.0
  */
 public class GetCards implements PlayerAction {
+	/**
+	 * Constructor
+	 */
+	private GetCards() {
+
+	}
 
 	/**
 	 * This method gives the hand of the player as a list of ItemCard

@@ -34,6 +34,13 @@ public class MapParserClient {
 			.getLogger(MapParserClient.class);
 
 	/**
+	 * Constructor
+	 */
+	private MapParserClient() {
+
+	}
+
+	/**
 	 * Private class containing the set of the coordinates of the map.
 	 * 
 	 * @author Alberto

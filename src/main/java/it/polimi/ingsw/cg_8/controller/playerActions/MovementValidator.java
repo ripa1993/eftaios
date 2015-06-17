@@ -25,12 +25,22 @@ import org.apache.logging.log4j.Logger;
  * @version 1.0
  */
 public class MovementValidator {
+	
+
 	/**
 	 * Log4j logger
 	 */
 	private static final Logger LOGGER = LogManager
 			.getLogger(MovementValidator.class);
 
+	/**
+	 * Constructor
+	 * 
+	 **/
+
+	private MovementValidator() {
+
+	}
 	/**
 	 * Validates the movement for the current player in model to the destination
 	 * coordinate

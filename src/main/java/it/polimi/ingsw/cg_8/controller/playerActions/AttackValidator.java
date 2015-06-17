@@ -13,6 +13,12 @@ import it.polimi.ingsw.cg_8.model.sectors.special.spawn.SpawnSector;
  * @version 1.0
  */
 public class AttackValidator {
+	/**
+	 * Constructor
+	 */
+	private AttackValidator() {
+
+	}
 
 	/**
 	 * Checks if the attack is valid: if the player is a human, he had to use an

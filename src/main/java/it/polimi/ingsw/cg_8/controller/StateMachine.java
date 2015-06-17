@@ -64,6 +64,13 @@ public class StateMachine {
 			.getLogger(StateMachine.class);
 
 	/**
+	 * Constructor
+	 */
+	private StateMachine() {
+
+	}
+
+	/**
 	 * This method evaluates an action created by a player though a client.
 	 * 
 	 * @param controller

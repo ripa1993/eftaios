@@ -11,6 +11,12 @@ import it.polimi.ingsw.cg_8.model.player.PlayerState;
  * @version 1.0
  */
 public class EndTurn implements PlayerAction {
+	/**
+	 * Constructor
+	 */
+	private EndTurn() {
+
+	}
 
 	/**
 	 * Change the current player status to {@link PlayerState#ALIVE_WAITING};

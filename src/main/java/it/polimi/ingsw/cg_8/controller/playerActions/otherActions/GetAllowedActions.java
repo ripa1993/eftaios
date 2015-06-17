@@ -10,6 +10,12 @@ import it.polimi.ingsw.cg_8.controller.playerActions.PlayerAction;
  */
 public class GetAllowedActions implements PlayerAction {
 	/**
+	 * Constructor
+	 */
+	private GetAllowedActions(){
+		
+	}
+	/**
 	 * List of all recognized commands
 	 * 
 	 * @param player
