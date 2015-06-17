@@ -24,6 +24,14 @@ import javax.swing.Timer;
  * @version 1.0
  */
 public class MapPanel extends JLayeredPane {
+	/**
+	 * Auxiliary class used to calculate map image width and height and panel
+	 * border width and height. These values are calculated when the object is
+	 * created
+	 * 
+	 * @author Simone
+	 *
+	 */
 	private class AuxiliaryUtils {
 		/**
 		 * Auxiliary variables
@@ -56,18 +64,34 @@ public class MapPanel extends JLayeredPane {
 			panelBorderHeight = (mapPanelHeight - mapImageHeight) / 2;
 		}
 
+		/**
+		 * 
+		 * @return map image width
+		 */
 		public float getMapImageWidth() {
 			return mapImageWidth;
 		}
 
+		/**
+		 * 
+		 * @return map image height
+		 */
 		public float getMapImageHeight() {
 			return mapImageHeight;
 		}
 
+		/**
+		 * 
+		 * @return panel border width
+		 */
 		public float getPanelBorderWidth() {
 			return panelBorderWidth;
 		}
 
+		/**
+		 * 
+		 * @return panel border height
+		 */
 		public float getPanelBorderHeight() {
 			return panelBorderHeight;
 		}
