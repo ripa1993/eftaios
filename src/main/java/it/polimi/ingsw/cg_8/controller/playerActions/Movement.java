@@ -7,10 +7,13 @@ import it.polimi.ingsw.cg_8.model.cards.Card;
 import it.polimi.ingsw.cg_8.model.cards.escapeHatchCards.GreenEhCard;
 import it.polimi.ingsw.cg_8.model.decks.EscapeHatchDeck;
 import it.polimi.ingsw.cg_8.model.exceptions.EmptyDeckException;
+import it.polimi.ingsw.cg_8.model.exceptions.NotAValidCoordinateException;
 import it.polimi.ingsw.cg_8.model.noises.EscapeSectorNoise;
 import it.polimi.ingsw.cg_8.model.noises.Noise;
 import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
+import it.polimi.ingsw.cg_8.model.sectors.Sector;
+import it.polimi.ingsw.cg_8.model.sectors.normal.SecureSector;
 import it.polimi.ingsw.cg_8.model.sectors.special.escapehatch.EscapeHatchSector;
 
 import org.apache.logging.log4j.LogManager;
@@ -37,6 +40,10 @@ public class Movement implements PlayerAction {
 	 */
 	private final Coordinate destination;
 	/**
+	 * Sector targeted my the movement action.
+	 */
+	private Sector destinationSector;
+	/**
 	 * Current game
 	 */
 	private final Model model;
@@ -57,6 +64,7 @@ public class Movement implements PlayerAction {
 		this.player = model.getCurrentPlayerReference();
 		this.destination = destination;
 		this.model = model;
+		this.destinationSector = new SecureSector();
 	}
 
 	/**
@@ -66,6 +74,12 @@ public class Movement implements PlayerAction {
 
 		int lastModelTurn = model.getRoundNumber();
 		int lastPlayerTurn = player.getRoundNumber();
+		
+		try {
+			destinationSector = model.getMap().getSectorByCoordinates(destination);
+		} catch (NotAValidCoordinateException e1) {
+			LOGGER.error(e1.getMessage(), e1);
+		}
 
 		/**
 		 * If the player used a teleport card, the position is changed using
@@ -81,12 +95,12 @@ public class Movement implements PlayerAction {
 		 * Depending on the type of the reached sector, different actions are
 		 * performed.
 		 */
-		if (destination instanceof EscapeHatchSector) {
+		if (destinationSector instanceof EscapeHatchSector) {
 
 			Noise escapeSectorNoise = new EscapeSectorNoise(
 					model.getRoundNumber(), player, player.getLastPosition());
 			model.addNoise(escapeSectorNoise);
-			if (((EscapeHatchSector) destination).allowEscape()) {
+			if (((EscapeHatchSector) destinationSector).allowEscape()) {
 				Card escapeCard;
 				try {
 					escapeCard = drawEHSectorCard();

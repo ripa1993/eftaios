@@ -1,10 +1,13 @@
 package it.polimi.ingsw.cg_8.controller.playerActions;
 
 import it.polimi.ingsw.cg_8.model.Model;
+import it.polimi.ingsw.cg_8.model.exceptions.NotAValidCoordinateException;
 import it.polimi.ingsw.cg_8.model.map.GameMap;
 import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.player.character.alien.Alien;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
+import it.polimi.ingsw.cg_8.model.sectors.Sector;
+import it.polimi.ingsw.cg_8.model.sectors.normal.SecureSector;
 import it.polimi.ingsw.cg_8.model.sectors.special.escapehatch.EscapeHatchSector;
 import it.polimi.ingsw.cg_8.model.sectors.special.spawn.SpawnSector;
 
@@ -46,11 +49,21 @@ public class MovementValidator {
 		 * How far the player can move
 		 */
 		int maxDistance = player.getCharacter().getMaxAllowedMovement();
+		/**
+		 * The sector targeted by the movement action.
+		 */
+		Sector destinationSector = new SecureSector();
 
 		Set<Coordinate> allowedCoordinates = setAllowedCoordinates(gameMap,
 				startingSector, maxDistance);
 
-		if (checkMovement(player, startingSector, destination)) {
+		
+		try {
+			 destinationSector = model.getMap().getSectorByCoordinates(destination);
+		} catch (NotAValidCoordinateException e) {
+			return false;
+		}
+		if (checkMovement(player, startingSector, destinationSector)) {
 			return allowedCoordinates.contains(destination);
 		} else {
 			return false;
@@ -65,23 +78,26 @@ public class MovementValidator {
 	 *            player that is moving
 	 * @param startingSector
 	 *            starting coordinate
-	 * @param destination
+	 * @param destinationSector
 	 *            destination coordinate
 	 * @return true, if the player can move to the destination<br>
 	 *         false, if not
 	 */
 	private static boolean checkMovement(Player player,
-			Coordinate startingSector, Coordinate destination) {
-		if (destination.equals(startingSector)) {
+			Coordinate startingSector, Sector destinationSector) {
+		if (destinationSector.equals(startingSector)) {
 			return false;
 		}
-		if (destination instanceof SpawnSector) {
+		if (destinationSector instanceof SpawnSector) {
 			return false;
 		}
-		if ((player.getCharacter() instanceof Alien)
-				&& (destination instanceof EscapeHatchSector)) {
-			return false;
+		if (player.getCharacter() instanceof Alien) {
+			if (destinationSector instanceof EscapeHatchSector) {
+				
+				return false;
+			}
 		}
+
 		return true;
 	}
 
