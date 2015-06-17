@@ -2,13 +2,9 @@ package it.polimi.ingsw.cg_8.model.map.creator;
 
 import it.polimi.ingsw.cg_8.Resource;
 import it.polimi.ingsw.cg_8.model.map.GalvaniMap;
-import it.polimi.ingsw.cg_8.model.map.GameMap;
 import it.polimi.ingsw.cg_8.model.map.GameMapSet;
-import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
-import it.polimi.ingsw.cg_8.model.sectors.Sector;
 
 import java.io.File;
-import java.util.Iterator;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
@@ -25,10 +21,7 @@ import org.apache.logging.log4j.Logger;
  * @version 1.1
  */
 public class GalvaniCreator extends MapCreator {
-	/**
-	 * Map that is going to be populated
-	 */
-	private final GameMap galvaniMap;
+
 	/**
 	 * Log4j logger
 	 */
@@ -39,7 +32,7 @@ public class GalvaniCreator extends MapCreator {
 	 */
 	public GalvaniCreator() {
 		super(new GalvaniMap());
-		galvaniMap = this.getGm();
+
 	}
 
 	@Override
@@ -60,19 +53,6 @@ public class GalvaniCreator extends MapCreator {
 		}
 	}
 
-	@Override
-	public GameMap createMap() {
-		GameMapSet sectorList = this.sectorParser();
-		
-		Iterator<Sector> iterator = sectorList.getSectorList().iterator();
-		while (iterator.hasNext()) {
-			Sector currentSector = iterator.next();
-			int x = currentSector.getX();
-			int y = currentSector.getY();
-			addSector(new Coordinate(x, y), currentSector);
-		}
-		return galvaniMap;
-		
-	}
+
 
 }

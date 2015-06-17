@@ -5,6 +5,7 @@ import it.polimi.ingsw.cg_8.model.map.GameMapSet;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 import it.polimi.ingsw.cg_8.model.sectors.Sector;
 
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -21,7 +22,7 @@ public abstract class MapCreator {
 	/**
 	 * GameMap that is going to be created
 	 */
-	private final GameMap gm;
+	private final GameMap gameMap;
 	/**
 	 * Sectors of this game map
 	 */
@@ -34,7 +35,7 @@ public abstract class MapCreator {
 	 *            GameMap
 	 */
 	public MapCreator(GameMap gm) {
-		this.gm = gm;
+		this.gameMap = gm;
 		sectors = gm.getSectors();
 	}
 
@@ -45,7 +46,7 @@ public abstract class MapCreator {
 	 */
 
 	public GameMap getGm() {
-		return gm;
+		return gameMap;
 	}
 	
 	/**
@@ -71,11 +72,23 @@ public abstract class MapCreator {
 	 * 
 	 * @return complete map
 	 */
-	public abstract GameMap createMap();
-
+	public GameMap createMap() {
+		GameMapSet sectorList = this.sectorParser();
+		
+		Iterator<Sector> iterator = sectorList.getSectorList().iterator();
+		while (iterator.hasNext()) {
+			Sector currentSector = iterator.next();
+			int x = currentSector.getX();
+			int y = currentSector.getY();
+			addSector(new Coordinate(x, y), currentSector);
+		}
+		return gameMap;
+		
+	}
+	
 	@Override
 	public String toString() {
-		return "MapCreator [gm=" + gm + ", sectors=" + sectors + "]";
+		return "MapCreator [gm=" + gameMap + ", sectors=" + sectors + "]";
 	}
 
 }
