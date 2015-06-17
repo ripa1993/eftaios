@@ -8,8 +8,8 @@ package it.polimi.ingsw.cg_8.model.cards.item;
  */
 public class DefenseCard extends ItemCard {
     /**
-	 * 
-	 */
+     * 
+     */
     private static final long serialVersionUID = -996735326205272440L;
 
     /**
