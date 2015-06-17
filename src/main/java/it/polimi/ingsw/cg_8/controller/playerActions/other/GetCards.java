@@ -1,6 +1,6 @@
 package it.polimi.ingsw.cg_8.controller.playerActions.other;
 
-import it.polimi.ingsw.cg_8.controller.playeraction.PlayerAction;
+import it.polimi.ingsw.cg_8.controller.playerActions.PlayerAction;
 import it.polimi.ingsw.cg_8.model.cards.item.ItemCard;
 import it.polimi.ingsw.cg_8.model.player.Player;
 

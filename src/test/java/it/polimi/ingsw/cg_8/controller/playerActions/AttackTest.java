@@ -1,9 +1,6 @@
 package it.polimi.ingsw.cg_8.controller.playerActions;
 
 import static org.junit.Assert.assertTrue;
-import it.polimi.ingsw.cg_8.controller.playeraction.Attack;
-import it.polimi.ingsw.cg_8.controller.playeraction.AttackValidator;
-import it.polimi.ingsw.cg_8.controller.playeraction.EndTurn;
 import it.polimi.ingsw.cg_8.model.Model;
 import it.polimi.ingsw.cg_8.model.cards.item.AttackCard;
 import it.polimi.ingsw.cg_8.model.cards.item.DefenseCard;

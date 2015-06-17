@@ -2,7 +2,7 @@ package it.polimi.ingsw.cg_8.model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import it.polimi.ingsw.cg_8.controller.playeraction.EndTurn;
+import it.polimi.ingsw.cg_8.controller.playerActions.EndTurn;
 import it.polimi.ingsw.cg_8.model.decks.DangerousSectorDeck;
 import it.polimi.ingsw.cg_8.model.decks.EscapeHatchDeck;
 import it.polimi.ingsw.cg_8.model.decks.ItemDeck;

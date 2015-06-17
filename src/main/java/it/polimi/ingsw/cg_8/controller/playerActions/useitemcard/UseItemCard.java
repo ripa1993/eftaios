@@ -1,6 +1,6 @@
 package it.polimi.ingsw.cg_8.controller.playerActions.useitemcard;
 
-import it.polimi.ingsw.cg_8.controller.playeraction.PlayerAction;
+import it.polimi.ingsw.cg_8.controller.playerActions.PlayerAction;
 
 /**
  * Action that use an item card. It is extend by specific item card types:

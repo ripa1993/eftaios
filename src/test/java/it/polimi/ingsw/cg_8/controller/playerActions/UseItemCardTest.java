@@ -9,7 +9,6 @@ import it.polimi.ingsw.cg_8.controller.playerActions.useitemcard.UseDefenseCard;
 import it.polimi.ingsw.cg_8.controller.playerActions.useitemcard.UseSedativesCard;
 import it.polimi.ingsw.cg_8.controller.playerActions.useitemcard.UseSpotlightCard;
 import it.polimi.ingsw.cg_8.controller.playerActions.useitemcard.UseTeleportCard;
-import it.polimi.ingsw.cg_8.controller.playeraction.EndTurn;
 import it.polimi.ingsw.cg_8.model.Model;
 import it.polimi.ingsw.cg_8.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.cg_8.model.exceptions.GameAlreadyRunningException;
