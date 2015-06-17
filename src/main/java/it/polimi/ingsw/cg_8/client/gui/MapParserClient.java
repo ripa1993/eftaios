@@ -1,5 +1,7 @@
 package it.polimi.ingsw.cg_8.client.gui;
 
+import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
+
 import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
@@ -46,12 +48,12 @@ public class MapParserClient {
 		 */
 		@XmlElementWrapper(name = "sectorList")
 		@XmlElements({
-				@XmlElement(name = "safeSector", type = ClientCoordinate.class),
-				@XmlElement(name = "dangerousSector", type = ClientCoordinate.class),
-				@XmlElement(name = "escapeHatchSector", type = ClientCoordinate.class),
-				@XmlElement(name = "humanSector", type = ClientCoordinate.class),
-				@XmlElement(name = "alienSector", type = ClientCoordinate.class), })
-		private Set<ClientCoordinate> sectorSet;
+				@XmlElement(name = "safeSector", type = Coordinate.class),
+				@XmlElement(name = "dangerousSector", type = Coordinate.class),
+				@XmlElement(name = "escapeHatchSector", type = Coordinate.class),
+				@XmlElement(name = "humanSector", type = Coordinate.class),
+				@XmlElement(name = "alienSector", type = Coordinate.class), })
+		private Set<Coordinate> sectorSet;
 
 		/**
 		 * Return the coordinates of the current map
@@ -59,7 +61,7 @@ public class MapParserClient {
 		 * @return the coordinates of the map referred by the document used as
 		 *         input in the parsing.
 		 */
-		public Set<ClientCoordinate> getSectorList() {
+		public Set<Coordinate> getSectorList() {
 			return this.sectorSet;
 		}
 	}
@@ -71,7 +73,7 @@ public class MapParserClient {
 	 *            the reference to the XML document of the current map.
 	 * @return the coordinates of the current map.
 	 */
-	public static Set<ClientCoordinate> parse(String mapName) {
+	public static Set<Coordinate> parse(String mapName) {
 
 		try {
 			JAXBContext jc = JAXBContext.newInstance(GameMapSet.class);
@@ -84,7 +86,7 @@ public class MapParserClient {
 
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
-			return new HashSet<ClientCoordinate>();
+			return new HashSet<Coordinate>();
 		}
 	}
 }

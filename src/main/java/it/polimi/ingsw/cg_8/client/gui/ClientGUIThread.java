@@ -101,10 +101,8 @@ public class ClientGUIThread implements Runnable, Observer {
 		public void mouseReleased(MouseEvent e) {
 			if (matchStarted) {
 				Coordinate coordinate = mapPanel.getCoordinate(e);
-				ClientCoordinate dummyCoordinate = new ClientCoordinate(
-						coordinate);
 
-				if (coordinateSet.contains(dummyCoordinate)) {
+				if (coordinateSet.contains(coordinate)) {
 
 					if (coordinate.getX() >= 0 && coordinate.getY() >= 0
 							&& coordinate.getX() < MapPanel.NUM_COLUMN
@@ -499,7 +497,7 @@ public class ClientGUIThread implements Runnable, Observer {
 	 * user to click only on the actual coordinates of the map, and not on the
 	 * empty spaces.
 	 */
-	private Set<ClientCoordinate> coordinateSet;
+	private Set<Coordinate> coordinateSet;
 
 	/**
 	 * Constructor, create the main frame for the gui. Instead of the map shows
@@ -1076,7 +1074,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		} else if ("Map".equals(arg)) {
 			ResponseMap response = clientData.getMap();
 			GameMapName mapName = response.getMapName();
-			coordinateSet = new HashSet<ClientCoordinate>();
+			coordinateSet = new HashSet<Coordinate>();
 
 			if (mapName.equals(GameMapName.FERMI)) {
 				mapPanel.setMapImage(Resource.IMG_FERMI_MAP);
