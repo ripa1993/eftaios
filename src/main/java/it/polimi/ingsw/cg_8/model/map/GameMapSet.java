@@ -7,7 +7,6 @@ import it.polimi.ingsw.cg_8.model.sectors.special.escapehatch.EscapeHatchSector;
 import it.polimi.ingsw.cg_8.model.sectors.special.spawn.AlienSector;
 import it.polimi.ingsw.cg_8.model.sectors.special.spawn.HumanSector;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -47,76 +46,6 @@ public class GameMapSet {
 	 */
 	public Set<Sector> getSectorList() {
 		return this.sectorSet;
-	}
-
-	/**
-	 * Return the set of the Safe Sectors of the map.
-	 * @return the Safe Sectors of the map.
-	 */
-	public Set<Sector> getSafeSectors() {
-		Set<Sector> safeSectorList = new HashSet<Sector>();
-		for (Sector sec : this.sectorSet) {
-			if (sec instanceof SecureSector) {
-				safeSectorList.add(sec);
-			}
-		}
-		return safeSectorList;
-	}
-
-	/**
-	 * Return the set of the Dangerous Sectors of the map.
-	 * @return the Dangerous Sectors of the map.
-	 */
-	public Set<Sector> getDangerousSectors() {
-		Set<Sector> dangerousSectorList = new HashSet<Sector>();
-		for (Sector sec : this.sectorSet) {
-			if (sec instanceof DangerousSector) {
-				dangerousSectorList.add(sec);
-			}
-		}
-		return dangerousSectorList;
-	}
-
-	/**
-	 * Return the set of the Escape Hatch Sectors of the map.
-	 * @return the Escape Hatch Sectors of the map.
-	 */
-	public Set<Sector> getEscapeHatchSectors() {
-		Set<Sector> escapeHatchSectorList = new HashSet<Sector>();
-		for (Sector sec : this.sectorSet) {
-			if (sec instanceof EscapeHatchSector) {
-				escapeHatchSectorList.add(sec);
-			}
-		}
-		return escapeHatchSectorList;
-	}
-
-	/**
-	 * Return the set of the Human Spawn Sectors of the map.
-	 * @return the Human Spawn Sectors of the map.
-	 */
-	public Sector getHumanSpawnSector() {
-		Sector humanSector = new HumanSector();
-		for (Sector sec : this.sectorSet) {
-			if (sec instanceof HumanSector) {
-				humanSector = sec;
-			}
-		}
-		return humanSector;
-	}
-
-	/**
-	 * Return the set of the Alien Spawn Sectors of the map.
-	 * @return the Alien Spawn Sectors of the map.
-	 */
-	public Sector getAlienSpawnSector() {
-		Sector alienSector = new AlienSector();
-		for (Sector sec : this.sectorSet) {
-			if (sec instanceof AlienSector) {
-				alienSector = sec;
-			}
-		}
-		return alienSector;
 	}
 
 	@Override
