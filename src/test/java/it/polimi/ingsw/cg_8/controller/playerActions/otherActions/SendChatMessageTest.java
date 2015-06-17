@@ -1,7 +1,7 @@
 package it.polimi.ingsw.cg_8.controller.playerActions.otherActions;
 
 import static org.junit.Assert.assertEquals;
-import it.polimi.ingsw.cg_8.controller.playerActions.other.SendChatMessage;
+import it.polimi.ingsw.cg_8.controller.playeraction.other.SendChatMessage;
 
 import org.junit.Test;
 

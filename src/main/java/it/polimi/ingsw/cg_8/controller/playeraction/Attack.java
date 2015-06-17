@@ -1,7 +1,7 @@
-package it.polimi.ingsw.cg_8.controller.playerActions;
+package it.polimi.ingsw.cg_8.controller.playeraction;
 
 import it.polimi.ingsw.cg_8.controller.Rules;
-import it.polimi.ingsw.cg_8.controller.playerActions.useitemcard.UseDefenseCard;
+import it.polimi.ingsw.cg_8.controller.playeraction.useitemcard.UseDefenseCard;
 import it.polimi.ingsw.cg_8.model.Model;
 import it.polimi.ingsw.cg_8.model.cards.Card;
 import it.polimi.ingsw.cg_8.model.cards.item.DefenseCard;

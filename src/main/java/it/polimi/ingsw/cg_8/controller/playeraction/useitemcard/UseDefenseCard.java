@@ -1,4 +1,4 @@
-package it.polimi.ingsw.cg_8.controller.playerActions.useitemcard;
+package it.polimi.ingsw.cg_8.controller.playeraction.useitemcard;
 
 import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.player.character.human.Human;

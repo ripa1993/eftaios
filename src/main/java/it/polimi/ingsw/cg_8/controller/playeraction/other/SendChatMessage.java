@@ -1,4 +1,4 @@
-package it.polimi.ingsw.cg_8.controller.playerActions.other;
+package it.polimi.ingsw.cg_8.controller.playeraction.other;
 
 import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
 

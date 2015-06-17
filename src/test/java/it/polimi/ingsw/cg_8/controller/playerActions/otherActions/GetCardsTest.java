@@ -1,7 +1,7 @@
 package it.polimi.ingsw.cg_8.controller.playerActions.otherActions;
 
 import static org.junit.Assert.assertEquals;
-import it.polimi.ingsw.cg_8.controller.playerActions.other.GetCards;
+import it.polimi.ingsw.cg_8.controller.playeraction.other.GetCards;
 import it.polimi.ingsw.cg_8.model.Model;
 import it.polimi.ingsw.cg_8.model.cards.item.AttackCard;
 import it.polimi.ingsw.cg_8.model.cards.item.ItemCard;

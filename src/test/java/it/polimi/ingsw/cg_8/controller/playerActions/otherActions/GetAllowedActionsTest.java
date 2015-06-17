@@ -1,7 +1,7 @@
 package it.polimi.ingsw.cg_8.controller.playerActions.otherActions;
 
 import static org.junit.Assert.*;
-import it.polimi.ingsw.cg_8.controller.playerActions.other.GetAllowedActions;
+import it.polimi.ingsw.cg_8.controller.playeraction.other.GetAllowedActions;
 
 import org.junit.Test;
 
