@@ -1,6 +1,6 @@
 package it.polimi.ingsw.cg_8.model.player.character.alien;
 
-import it.polimi.ingsw.cg_8.model.cards.characterCards.CharacterCard;
+import it.polimi.ingsw.cg_8.model.cards.character.CharacterCard;
 import it.polimi.ingsw.cg_8.model.player.character.InGameCharacter;
 
 /**

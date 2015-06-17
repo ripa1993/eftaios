@@ -1,7 +1,7 @@
 package it.polimi.ingsw.cg_8.model.noise;
 
 import static org.junit.Assert.*;
-import it.polimi.ingsw.cg_8.model.cards.characterCards.AlienCard;
+import it.polimi.ingsw.cg_8.model.cards.character.AlienCard;
 import it.polimi.ingsw.cg_8.model.noises.AttackNoise;
 import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.player.character.alien.Alien;

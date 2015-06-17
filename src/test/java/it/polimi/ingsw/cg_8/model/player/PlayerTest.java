@@ -1,9 +1,9 @@
 package it.polimi.ingsw.cg_8.model.player;
 
 import static org.junit.Assert.*;
-import it.polimi.ingsw.cg_8.model.cards.characterCards.AlienCard;
-import it.polimi.ingsw.cg_8.model.cards.characterCards.CharacterCard;
-import it.polimi.ingsw.cg_8.model.cards.characterCards.HumanCard;
+import it.polimi.ingsw.cg_8.model.cards.character.AlienCard;
+import it.polimi.ingsw.cg_8.model.cards.character.CharacterCard;
+import it.polimi.ingsw.cg_8.model.cards.character.HumanCard;
 import it.polimi.ingsw.cg_8.model.player.character.InGameCharacter;
 import it.polimi.ingsw.cg_8.model.player.character.alien.Alien;
 import it.polimi.ingsw.cg_8.model.player.character.alien.AlienBehaviour;

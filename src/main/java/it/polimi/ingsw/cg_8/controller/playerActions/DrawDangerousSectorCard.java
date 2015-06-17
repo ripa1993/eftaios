@@ -2,9 +2,9 @@ package it.polimi.ingsw.cg_8.controller.playerActions;
 
 import it.polimi.ingsw.cg_8.model.Model;
 import it.polimi.ingsw.cg_8.model.cards.Card;
-import it.polimi.ingsw.cg_8.model.cards.dangerousSectorCards.DangerousSectorCard;
-import it.polimi.ingsw.cg_8.model.cards.dangerousSectorCards.NoiseCard;
-import it.polimi.ingsw.cg_8.model.cards.itemCards.ItemCard;
+import it.polimi.ingsw.cg_8.model.cards.dangeroussector.DangerousSectorCard;
+import it.polimi.ingsw.cg_8.model.cards.dangeroussector.NoiseCard;
+import it.polimi.ingsw.cg_8.model.cards.item.ItemCard;
 import it.polimi.ingsw.cg_8.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.cg_8.model.exceptions.TooManyCardsException;
 import it.polimi.ingsw.cg_8.model.noises.MovementNoise;

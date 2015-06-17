@@ -4,10 +4,10 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import it.polimi.ingsw.cg_8.model.cards.dangerousSectorCards.FakeNoise;
-import it.polimi.ingsw.cg_8.model.cards.dangerousSectorCards.NoiseCard;
-import it.polimi.ingsw.cg_8.model.cards.dangerousSectorCards.NoiseWithItem;
-import it.polimi.ingsw.cg_8.model.cards.dangerousSectorCards.NormalNoise;
+import it.polimi.ingsw.cg_8.model.cards.dangeroussector.FakeNoise;
+import it.polimi.ingsw.cg_8.model.cards.dangeroussector.NoiseCard;
+import it.polimi.ingsw.cg_8.model.cards.dangeroussector.NoiseWithItem;
+import it.polimi.ingsw.cg_8.model.cards.dangeroussector.NormalNoise;
 
 public class DangerousSectorTest {
 

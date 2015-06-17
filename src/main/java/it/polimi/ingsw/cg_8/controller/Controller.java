@@ -1,6 +1,6 @@
 package it.polimi.ingsw.cg_8.controller;
 
-import it.polimi.ingsw.cg_8.controller.playerActions.otherActions.Disconnect;
+import it.polimi.ingsw.cg_8.controller.playerActions.other.Disconnect;
 import it.polimi.ingsw.cg_8.model.Model;
 import it.polimi.ingsw.cg_8.model.TurnPhase;
 import it.polimi.ingsw.cg_8.model.exceptions.EmptyDeckException;

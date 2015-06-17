@@ -1,10 +1,10 @@
 package it.polimi.ingsw.cg_8.view.server;
 
 import static org.junit.Assert.*;
-import it.polimi.ingsw.cg_8.model.cards.itemCards.AttackCard;
-import it.polimi.ingsw.cg_8.model.cards.itemCards.ItemCard;
-import it.polimi.ingsw.cg_8.model.cards.itemCards.SpotlightCard;
-import it.polimi.ingsw.cg_8.model.cards.itemCards.TeleportCard;
+import it.polimi.ingsw.cg_8.model.cards.item.AttackCard;
+import it.polimi.ingsw.cg_8.model.cards.item.ItemCard;
+import it.polimi.ingsw.cg_8.model.cards.item.SpotlightCard;
+import it.polimi.ingsw.cg_8.model.cards.item.TeleportCard;
 
 import java.util.ArrayList;
 import java.util.List;

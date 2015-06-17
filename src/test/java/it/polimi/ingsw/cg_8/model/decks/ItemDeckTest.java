@@ -2,8 +2,8 @@ package it.polimi.ingsw.cg_8.model.decks;
 
 import static org.junit.Assert.assertTrue;
 import it.polimi.ingsw.cg_8.model.cards.Card;
-import it.polimi.ingsw.cg_8.model.cards.itemCards.ItemCard;
-import it.polimi.ingsw.cg_8.model.decks.deckCreators.ItemDeckCreator;
+import it.polimi.ingsw.cg_8.model.cards.item.ItemCard;
+import it.polimi.ingsw.cg_8.model.decks.creators.ItemDeckCreator;
 import it.polimi.ingsw.cg_8.model.exceptions.EmptyDeckException;
 
 import org.junit.Before;

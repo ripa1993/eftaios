@@ -1,6 +1,6 @@
 package it.polimi.ingsw.cg_8.view.server;
 
-import it.polimi.ingsw.cg_8.model.cards.itemCards.ItemCard;
+import it.polimi.ingsw.cg_8.model.cards.item.ItemCard;
 
 import java.io.Serializable;
 import java.util.List;

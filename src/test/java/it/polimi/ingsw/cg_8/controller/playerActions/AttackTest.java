@@ -2,8 +2,8 @@ package it.polimi.ingsw.cg_8.controller.playerActions;
 
 import static org.junit.Assert.assertTrue;
 import it.polimi.ingsw.cg_8.model.Model;
-import it.polimi.ingsw.cg_8.model.cards.itemCards.AttackCard;
-import it.polimi.ingsw.cg_8.model.cards.itemCards.DefenseCard;
+import it.polimi.ingsw.cg_8.model.cards.item.AttackCard;
+import it.polimi.ingsw.cg_8.model.cards.item.DefenseCard;
 import it.polimi.ingsw.cg_8.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.cg_8.model.exceptions.GameAlreadyRunningException;
 import it.polimi.ingsw.cg_8.model.exceptions.NotAValidMapException;

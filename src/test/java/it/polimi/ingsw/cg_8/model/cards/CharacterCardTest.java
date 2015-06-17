@@ -3,9 +3,9 @@ package it.polimi.ingsw.cg_8.model.cards;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import it.polimi.ingsw.cg_8.model.cards.characterCards.AlienCard;
-import it.polimi.ingsw.cg_8.model.cards.characterCards.CharacterCard;
-import it.polimi.ingsw.cg_8.model.cards.characterCards.HumanCard;
+import it.polimi.ingsw.cg_8.model.cards.character.AlienCard;
+import it.polimi.ingsw.cg_8.model.cards.character.CharacterCard;
+import it.polimi.ingsw.cg_8.model.cards.character.HumanCard;
 
 import org.junit.Before;
 import org.junit.Test;

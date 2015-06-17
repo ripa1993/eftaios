@@ -1,10 +1,10 @@
 package it.polimi.ingsw.cg_8.view.client;
 
 import static org.junit.Assert.*;
-import it.polimi.ingsw.cg_8.model.cards.itemCards.AdrenalineCard;
-import it.polimi.ingsw.cg_8.model.cards.itemCards.AttackCard;
-import it.polimi.ingsw.cg_8.model.cards.itemCards.SedativesCard;
-import it.polimi.ingsw.cg_8.model.cards.itemCards.TeleportCard;
+import it.polimi.ingsw.cg_8.model.cards.item.AdrenalineCard;
+import it.polimi.ingsw.cg_8.model.cards.item.AttackCard;
+import it.polimi.ingsw.cg_8.model.cards.item.SedativesCard;
+import it.polimi.ingsw.cg_8.model.cards.item.TeleportCard;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionUseCard;
 import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;

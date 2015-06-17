@@ -1,6 +1,6 @@
 package it.polimi.ingsw.cg_8.model.player;
 
-import it.polimi.ingsw.cg_8.model.cards.itemCards.ItemCard;
+import it.polimi.ingsw.cg_8.model.cards.item.ItemCard;
 import it.polimi.ingsw.cg_8.model.exceptions.TooManyCardsException;
 
 import java.util.ArrayList;

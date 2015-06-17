@@ -4,7 +4,7 @@ import it.polimi.ingsw.cg_8.controller.playerActions.AttackValidator;
 import it.polimi.ingsw.cg_8.controller.playerActions.MovementValidator;
 import it.polimi.ingsw.cg_8.controller.playerActions.UseItemCardValidator;
 import it.polimi.ingsw.cg_8.model.Model;
-import it.polimi.ingsw.cg_8.model.cards.itemCards.ItemCard;
+import it.polimi.ingsw.cg_8.model.cards.item.ItemCard;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 
 /**

@@ -1,8 +1,8 @@
 package it.polimi.ingsw.cg_8.model.player;
 
 import static org.junit.Assert.*;
-import it.polimi.ingsw.cg_8.model.cards.characterCards.CharacterCard;
-import it.polimi.ingsw.cg_8.model.cards.characterCards.HumanCard;
+import it.polimi.ingsw.cg_8.model.cards.character.CharacterCard;
+import it.polimi.ingsw.cg_8.model.cards.character.HumanCard;
 import it.polimi.ingsw.cg_8.model.player.character.human.Human;
 
 import org.junit.Before;

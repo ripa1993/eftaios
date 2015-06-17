@@ -1,17 +1,17 @@
 package it.polimi.ingsw.cg_8.model;
 
-import it.polimi.ingsw.cg_8.model.cards.characterCards.AlienCard;
-import it.polimi.ingsw.cg_8.model.cards.characterCards.CharacterCard;
-import it.polimi.ingsw.cg_8.model.cards.characterCards.HumanCard;
+import it.polimi.ingsw.cg_8.model.cards.character.AlienCard;
+import it.polimi.ingsw.cg_8.model.cards.character.CharacterCard;
+import it.polimi.ingsw.cg_8.model.cards.character.HumanCard;
 import it.polimi.ingsw.cg_8.model.decks.CharacterDeck;
 import it.polimi.ingsw.cg_8.model.decks.DangerousSectorDeck;
 import it.polimi.ingsw.cg_8.model.decks.Deck;
 import it.polimi.ingsw.cg_8.model.decks.EscapeHatchDeck;
 import it.polimi.ingsw.cg_8.model.decks.ItemDeck;
-import it.polimi.ingsw.cg_8.model.decks.deckCreators.CharacterDeckCreator;
-import it.polimi.ingsw.cg_8.model.decks.deckCreators.DangerousSectorDeckCreator;
-import it.polimi.ingsw.cg_8.model.decks.deckCreators.EscapeHatchDeckCreator;
-import it.polimi.ingsw.cg_8.model.decks.deckCreators.ItemDeckCreator;
+import it.polimi.ingsw.cg_8.model.decks.creators.CharacterDeckCreator;
+import it.polimi.ingsw.cg_8.model.decks.creators.DangerousSectorDeckCreator;
+import it.polimi.ingsw.cg_8.model.decks.creators.EscapeHatchDeckCreator;
+import it.polimi.ingsw.cg_8.model.decks.creators.ItemDeckCreator;
 import it.polimi.ingsw.cg_8.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.cg_8.model.exceptions.GameAlreadyRunningException;
 import it.polimi.ingsw.cg_8.model.exceptions.NotAValidMapException;

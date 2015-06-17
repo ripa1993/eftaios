@@ -4,7 +4,7 @@ import it.polimi.ingsw.cg_8.controller.Controller;
 import it.polimi.ingsw.cg_8.controller.Rules;
 import it.polimi.ingsw.cg_8.model.Model;
 import it.polimi.ingsw.cg_8.model.cards.Card;
-import it.polimi.ingsw.cg_8.model.cards.escapeHatchCards.GreenEhCard;
+import it.polimi.ingsw.cg_8.model.cards.escapehatch.GreenEhCard;
 import it.polimi.ingsw.cg_8.model.decks.EscapeHatchDeck;
 import it.polimi.ingsw.cg_8.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.cg_8.model.exceptions.NotAValidCoordinateException;

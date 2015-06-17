@@ -2,10 +2,10 @@ package it.polimi.ingsw.cg_8.model.decks;
 
 import static org.junit.Assert.assertTrue;
 import it.polimi.ingsw.cg_8.model.cards.Card;
-import it.polimi.ingsw.cg_8.model.cards.characterCards.AlienCard;
-import it.polimi.ingsw.cg_8.model.cards.dangerousSectorCards.DangerousSectorCard;
-import it.polimi.ingsw.cg_8.model.cards.dangerousSectorCards.SilenceCard;
-import it.polimi.ingsw.cg_8.model.decks.deckCreators.DangerousSectorDeckCreator;
+import it.polimi.ingsw.cg_8.model.cards.character.AlienCard;
+import it.polimi.ingsw.cg_8.model.cards.dangeroussector.DangerousSectorCard;
+import it.polimi.ingsw.cg_8.model.cards.dangeroussector.SilenceCard;
+import it.polimi.ingsw.cg_8.model.decks.creators.DangerousSectorDeckCreator;
 
 import org.junit.Before;
 import org.junit.Test;

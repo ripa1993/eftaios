@@ -1,9 +1,10 @@
 package it.polimi.ingsw.cg_8.controller.playerActions.otherActions;
 
 import static org.junit.Assert.assertEquals;
+import it.polimi.ingsw.cg_8.controller.playerActions.other.GetCards;
 import it.polimi.ingsw.cg_8.model.Model;
-import it.polimi.ingsw.cg_8.model.cards.itemCards.AttackCard;
-import it.polimi.ingsw.cg_8.model.cards.itemCards.ItemCard;
+import it.polimi.ingsw.cg_8.model.cards.item.AttackCard;
+import it.polimi.ingsw.cg_8.model.cards.item.ItemCard;
 import it.polimi.ingsw.cg_8.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.cg_8.model.exceptions.GameAlreadyRunningException;
 import it.polimi.ingsw.cg_8.model.exceptions.NotAValidMapException;

@@ -3,7 +3,7 @@ package it.polimi.ingsw.cg_8;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import it.polimi.ingsw.cg_8.client.ClientData;
-import it.polimi.ingsw.cg_8.model.cards.itemCards.ItemCard;
+import it.polimi.ingsw.cg_8.model.cards.item.ItemCard;
 import it.polimi.ingsw.cg_8.model.map.GameMapName;
 import it.polimi.ingsw.cg_8.model.noises.MovementNoise;
 import it.polimi.ingsw.cg_8.model.player.Player;

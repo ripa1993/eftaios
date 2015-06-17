@@ -5,9 +5,9 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import it.polimi.ingsw.cg_8.model.cards.escapeHatchCards.EscapeHatchCard;
-import it.polimi.ingsw.cg_8.model.cards.escapeHatchCards.GreenEhCard;
-import it.polimi.ingsw.cg_8.model.cards.escapeHatchCards.RedEhCard;
+import it.polimi.ingsw.cg_8.model.cards.escapehatch.EscapeHatchCard;
+import it.polimi.ingsw.cg_8.model.cards.escapehatch.GreenEhCard;
+import it.polimi.ingsw.cg_8.model.cards.escapehatch.RedEhCard;
 
 public class EscapeHatchCardTest {
 

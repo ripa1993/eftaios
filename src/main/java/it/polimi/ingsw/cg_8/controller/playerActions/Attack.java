@@ -1,10 +1,10 @@
 package it.polimi.ingsw.cg_8.controller.playerActions;
 
 import it.polimi.ingsw.cg_8.controller.Rules;
-import it.polimi.ingsw.cg_8.controller.playerActions.useItemCard.UseDefenseCard;
+import it.polimi.ingsw.cg_8.controller.playerActions.useitemcard.UseDefenseCard;
 import it.polimi.ingsw.cg_8.model.Model;
 import it.polimi.ingsw.cg_8.model.cards.Card;
-import it.polimi.ingsw.cg_8.model.cards.itemCards.DefenseCard;
+import it.polimi.ingsw.cg_8.model.cards.item.DefenseCard;
 import it.polimi.ingsw.cg_8.model.noises.AttackNoise;
 import it.polimi.ingsw.cg_8.model.noises.DefenseNoise;
 import it.polimi.ingsw.cg_8.model.noises.Noise;

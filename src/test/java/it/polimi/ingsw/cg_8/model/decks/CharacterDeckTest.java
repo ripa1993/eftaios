@@ -4,9 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import it.polimi.ingsw.cg_8.model.cards.Card;
-import it.polimi.ingsw.cg_8.model.cards.characterCards.AlienCard;
-import it.polimi.ingsw.cg_8.model.cards.characterCards.CharacterCard;
-import it.polimi.ingsw.cg_8.model.decks.deckCreators.CharacterDeckCreator;
+import it.polimi.ingsw.cg_8.model.cards.character.AlienCard;
+import it.polimi.ingsw.cg_8.model.cards.character.CharacterCard;
+import it.polimi.ingsw.cg_8.model.decks.creators.CharacterDeckCreator;
 import it.polimi.ingsw.cg_8.model.exceptions.EmptyDeckException;
 
 import java.util.ArrayList;

@@ -1,11 +1,11 @@
 package it.polimi.ingsw.cg_8.controller.playerActions;
 
 import it.polimi.ingsw.cg_8.model.Model;
-import it.polimi.ingsw.cg_8.model.cards.itemCards.AdrenalineCard;
-import it.polimi.ingsw.cg_8.model.cards.itemCards.AttackCard;
-import it.polimi.ingsw.cg_8.model.cards.itemCards.ItemCard;
-import it.polimi.ingsw.cg_8.model.cards.itemCards.SedativesCard;
-import it.polimi.ingsw.cg_8.model.cards.itemCards.TeleportCard;
+import it.polimi.ingsw.cg_8.model.cards.item.AdrenalineCard;
+import it.polimi.ingsw.cg_8.model.cards.item.AttackCard;
+import it.polimi.ingsw.cg_8.model.cards.item.ItemCard;
+import it.polimi.ingsw.cg_8.model.cards.item.SedativesCard;
+import it.polimi.ingsw.cg_8.model.cards.item.TeleportCard;
 import it.polimi.ingsw.cg_8.model.player.character.alien.Alien;
 import it.polimi.ingsw.cg_8.model.player.character.human.Human;
 import it.polimi.ingsw.cg_8.model.sectors.Sector;
