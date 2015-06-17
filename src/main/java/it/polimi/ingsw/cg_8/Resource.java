@@ -9,12 +9,6 @@ import java.io.File;
  * @version 1.0
  */
 public class Resource {
-	/**
-	 * Constructor
-	 */
-	private Resource() {
-
-	}
 
 	/**
 	 * images literal
@@ -325,5 +319,12 @@ public class Resource {
 	 * XML document of FERMI
 	 */
 	public static final String GALVANI_XML = MAPS_FOLDER + "GALVANI.xml";
+
+	/**
+	 * Constructor
+	 */
+	private Resource() {
+
+	}
 
 }

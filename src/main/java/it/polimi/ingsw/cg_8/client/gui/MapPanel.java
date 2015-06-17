@@ -138,61 +138,6 @@ public class MapPanel extends JLayeredPane {
 	}
 
 	/**
-	 * Auxiliary method that calculates column width in the map
-	 * 
-	 * @return column width in the map
-	 */
-	private float getColumnWidth() {
-		int mapPanelWidth = this.getWidth();
-		int mapPanelHeight = this.getHeight();
-		// background image sizes
-		float mapImageWidth = mapPanelWidth;
-		float mapImageHeight = mapPanelHeight;
-		if (mapImageWidth - backgroundImageScaled.getWidth(null) > mapImageHeight
-				- backgroundImageScaled.getHeight(null)) {
-			mapImageWidth = mapImageHeight
-					* backgroundImageScaled.getWidth(null)
-					/ backgroundImageScaled.getHeight(null);
-		} else {
-			mapImageHeight = mapImageWidth
-					* backgroundImageScaled.getHeight(null)
-					/ backgroundImageScaled.getWidth(null);
-
-		}
-		// calculate col and row size
-		float columnWidth = (mapImageWidth / NUM_COLUMN) * 4 / 3;
-		return columnWidth;
-	}
-
-	/**
-	 * Auxiliary method that calculates row heigh in the map
-	 * 
-	 * @return row heigh in the map
-	 */
-	public float getRowHeight() {
-		// get map panel size
-		int mapPanelWidth = this.getWidth();
-		int mapPanelHeight = this.getHeight();
-		// background image sizes
-		float mapImageWidth = mapPanelWidth;
-		float mapImageHeight = mapPanelHeight;
-		if (mapImageWidth - backgroundImageScaled.getWidth(null) > mapImageHeight
-				- backgroundImageScaled.getHeight(null)) {
-			mapImageWidth = mapImageHeight
-					* backgroundImageScaled.getWidth(null)
-					/ backgroundImageScaled.getHeight(null);
-		} else {
-			mapImageHeight = mapImageWidth
-					* backgroundImageScaled.getHeight(null)
-					/ backgroundImageScaled.getWidth(null);
-
-		}
-		// calculate col and row size
-		float rowHeigth = mapImageHeight / NUM_ROW;
-		return rowHeigth;
-	}
-
-	/**
 	 * JLabel that show an event on the map, it blinks
 	 * 
 	 * @author Simone
@@ -479,5 +424,60 @@ public class MapPanel extends JLayeredPane {
 	public void setPath(String path) {
 		this.path = path;
 
+	}
+
+	/**
+	 * Auxiliary method that calculates column width in the map
+	 * 
+	 * @return column width in the map
+	 */
+	private float getColumnWidth() {
+		int mapPanelWidth = this.getWidth();
+		int mapPanelHeight = this.getHeight();
+		// background image sizes
+		float mapImageWidth = mapPanelWidth;
+		float mapImageHeight = mapPanelHeight;
+		if (mapImageWidth - backgroundImageScaled.getWidth(null) > mapImageHeight
+				- backgroundImageScaled.getHeight(null)) {
+			mapImageWidth = mapImageHeight
+					* backgroundImageScaled.getWidth(null)
+					/ backgroundImageScaled.getHeight(null);
+		} else {
+			mapImageHeight = mapImageWidth
+					* backgroundImageScaled.getHeight(null)
+					/ backgroundImageScaled.getWidth(null);
+
+		}
+		// calculate col and row size
+		float columnWidth = (mapImageWidth / NUM_COLUMN) * 4 / 3;
+		return columnWidth;
+	}
+
+	/**
+	 * Auxiliary method that calculates row heigh in the map
+	 * 
+	 * @return row heigh in the map
+	 */
+	public float getRowHeight() {
+		// get map panel size
+		int mapPanelWidth = this.getWidth();
+		int mapPanelHeight = this.getHeight();
+		// background image sizes
+		float mapImageWidth = mapPanelWidth;
+		float mapImageHeight = mapPanelHeight;
+		if (mapImageWidth - backgroundImageScaled.getWidth(null) > mapImageHeight
+				- backgroundImageScaled.getHeight(null)) {
+			mapImageWidth = mapImageHeight
+					* backgroundImageScaled.getWidth(null)
+					/ backgroundImageScaled.getHeight(null);
+		} else {
+			mapImageHeight = mapImageWidth
+					* backgroundImageScaled.getHeight(null)
+					/ backgroundImageScaled.getWidth(null);
+
+		}
+		// calculate col and row size
+		float rowHeigth = mapImageHeight / NUM_ROW;
+		return rowHeigth;
 	}
 }
