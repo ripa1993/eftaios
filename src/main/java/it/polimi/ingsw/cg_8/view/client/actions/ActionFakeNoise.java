@@ -12,31 +12,31 @@ import java.io.Serializable;
  */
 public class ActionFakeNoise implements ClientAction, Serializable {
 
-	/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = -906260420042139525L;
-	/**
-	 * Fake noise coordinate
-	 */
-	private final Coordinate coordinate;
+    private static final long serialVersionUID = -906260420042139525L;
+    /**
+     * Fake noise coordinate
+     */
+    private final Coordinate coordinate;
 
-	/**
-	 * Constructor
-	 * 
-	 * @param coordinate
-	 *            fake noise coordinate
-	 */
-	public ActionFakeNoise(Coordinate coordinate) {
-		this.coordinate = coordinate;
-	}
+    /**
+     * Constructor
+     * 
+     * @param coordinate
+     *            fake noise coordinate
+     */
+    public ActionFakeNoise(Coordinate coordinate) {
+        this.coordinate = coordinate;
+    }
 
-	/**
-	 * Getter
-	 * 
-	 * @return fake noise coordinate
-	 */
-	public Coordinate getCoordinate() {
-		return this.coordinate;
-	}
+    /**
+     * Getter
+     * 
+     * @return fake noise coordinate
+     */
+    public Coordinate getCoordinate() {
+        return this.coordinate;
+    }
 }

@@ -9,18 +9,18 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class ResponseNoiseTest {
-	ResponseNoise response;
-	MovementNoise noise;
+    ResponseNoise response;
+    MovementNoise noise;
 
-	@Before
-	public void init() {
-		noise = new MovementNoise(1, new Player("test"), new Coordinate(1, 1));
-		response = new ResponseNoise(noise);
-	}
+    @Before
+    public void init() {
+        noise = new MovementNoise(1, new Player("test"), new Coordinate(1, 1));
+        response = new ResponseNoise(noise);
+    }
 
-	@Test
-	public void test() {
-		assertEquals(noise, response.getNoise());
-	}
+    @Test
+    public void test() {
+        assertEquals(noise, response.getNoise());
+    }
 
 }

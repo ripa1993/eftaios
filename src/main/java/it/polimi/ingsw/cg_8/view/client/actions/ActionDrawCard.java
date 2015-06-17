@@ -10,16 +10,16 @@ import java.io.Serializable;
  */
 public class ActionDrawCard implements ClientAction, Serializable {
 
-	/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = -7782431889542680365L;
+    private static final long serialVersionUID = -7782431889542680365L;
 
-	/**
-	 * Constructor
-	 */
-	public ActionDrawCard() {
+    /**
+     * Constructor
+     */
+    public ActionDrawCard() {
 
-	}
+    }
 
 }

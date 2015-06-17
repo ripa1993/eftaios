@@ -8,15 +8,15 @@ package it.polimi.ingsw.cg_8.model.cards.dangerousSectorCards;
  *
  */
 public interface NoiseCard {
-	/**
-	 * @return true, if the noise is fake<br>
-	 *         false, if the noise is real
-	 */
-	public abstract boolean hasToMakeFakeNoise();
+    /**
+     * @return true, if the noise is fake<br>
+     *         false, if the noise is real
+     */
+    public abstract boolean hasToMakeFakeNoise();
 
-	/**
-	 * @return true, if the player has to draw an item card<br>
-	 *         false, if he doesn't have to
-	 */
-	public abstract boolean hasToDrawItem();
+    /**
+     * @return true, if the player has to draw an item card<br>
+     *         false, if he doesn't have to
+     */
+    public abstract boolean hasToDrawItem();
 }

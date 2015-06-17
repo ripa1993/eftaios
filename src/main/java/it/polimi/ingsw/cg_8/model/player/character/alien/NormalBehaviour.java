@@ -7,19 +7,19 @@ package it.polimi.ingsw.cg_8.model.player.character.alien;
  * @version 1.0
  */
 public class NormalBehaviour implements AlienBehaviour {
-	/**
-	 * Max allowed distance
-	 */
-	private static final int DISTANCE = 2;
+    /**
+     * Max allowed distance
+     */
+    private static final int DISTANCE = 2;
 
-	@Override
-	public int getMaxMovementDistance() {
-		return DISTANCE;
-	}
+    @Override
+    public int getMaxMovementDistance() {
+        return DISTANCE;
+    }
 
-	@Override
-	public String toString() {
-		return "NormalBehaviour";
-	}
+    @Override
+    public String toString() {
+        return "NormalBehaviour";
+    }
 
 }

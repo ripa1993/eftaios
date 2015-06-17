@@ -10,15 +10,15 @@ import java.io.Serializable;
  */
 public class ActionDisconnect implements ClientAction, Serializable {
 
-	/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = -7139001266016828263L;
+    private static final long serialVersionUID = -7139001266016828263L;
 
-	/**
-	 * Constructor
-	 */
-	public ActionDisconnect() {
+    /**
+     * Constructor
+     */
+    public ActionDisconnect() {
 
-	}
+    }
 }

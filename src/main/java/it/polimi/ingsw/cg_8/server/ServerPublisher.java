@@ -10,11 +10,11 @@ import it.polimi.ingsw.cg_8.view.server.ServerResponse;
  */
 public abstract class ServerPublisher {
 
-	/**
-	 * Used by the server to send messages to the client.
-	 * 
-	 * @param message
-	 *            A {@link ServerResponse} given by the server.
-	 */
-	public abstract void dispatchMessage(ServerResponse message);
+    /**
+     * Used by the server to send messages to the client.
+     * 
+     * @param message
+     *            A {@link ServerResponse} given by the server.
+     */
+    public abstract void dispatchMessage(ServerResponse message);
 }

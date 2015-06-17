@@ -14,42 +14,42 @@ import org.junit.Test;
 
 public class OtherNoisesTest {
 
-	private Player player;
-	private Coordinate coordinate;
+    private Player player;
+    private Coordinate coordinate;
 
-	@Before
-	public void init() {
-		player = new Player("a");
-		coordinate = new Coordinate(0, 0);
-	}
+    @Before
+    public void init() {
+        player = new Player("a");
+        coordinate = new Coordinate(0, 0);
+    }
 
-	@Test
-	public void testEscapeSectorNoise() {
-		EscapeSectorNoise noise = new EscapeSectorNoise(1, player, coordinate);
-		assertEquals(1, noise.getTurnNumber());
-	}
+    @Test
+    public void testEscapeSectorNoise() {
+        EscapeSectorNoise noise = new EscapeSectorNoise(1, player, coordinate);
+        assertEquals(1, noise.getTurnNumber());
+    }
 
-	@Test
-	public void testMovementNoise() {
-		MovementNoise noise = new MovementNoise(1, player, coordinate);
-		assertEquals(1, noise.getTurnNumber());
-	}
+    @Test
+    public void testMovementNoise() {
+        MovementNoise noise = new MovementNoise(1, player, coordinate);
+        assertEquals(1, noise.getTurnNumber());
+    }
 
-	@Test
-	public void testTeleportNoise() {
-		TeleportNoise noise = new TeleportNoise(1, player, coordinate);
-		assertEquals(1, noise.getTurnNumber());
-	}
+    @Test
+    public void testTeleportNoise() {
+        TeleportNoise noise = new TeleportNoise(1, player, coordinate);
+        assertEquals(1, noise.getTurnNumber());
+    }
 
-	@Test
-	public void testDefenseNoise() {
-		DefenseNoise noise = new DefenseNoise(1, player, coordinate);
-		assertEquals(1, noise.getTurnNumber());
-	}
+    @Test
+    public void testDefenseNoise() {
+        DefenseNoise noise = new DefenseNoise(1, player, coordinate);
+        assertEquals(1, noise.getTurnNumber());
+    }
 
-	@Test
-	public void testSpotlightNoise() {
-		SpotlightNoise noise = new SpotlightNoise(1, player, coordinate);
-		assertEquals(1, noise.getTurnNumber());
-	}
+    @Test
+    public void testSpotlightNoise() {
+        SpotlightNoise noise = new SpotlightNoise(1, player, coordinate);
+        assertEquals(1, noise.getTurnNumber());
+    }
 }

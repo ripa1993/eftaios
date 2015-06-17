@@ -12,27 +12,27 @@ import org.junit.Test;
 
 public class DangerousDeckTest {
 
-	DangerousSectorDeck cards;
-	DangerousSectorDeckCreator creator;
+    DangerousSectorDeck cards;
+    DangerousSectorDeckCreator creator;
 
-	@Before
-	public void init() {
-		creator = new DangerousSectorDeckCreator();
-		cards = creator.createDeck();
-	}
+    @Before
+    public void init() {
+        creator = new DangerousSectorDeckCreator();
+        cards = creator.createDeck();
+    }
 
-	@Test
-	public void testConstructor() {
-		assertTrue(cards.drawCard() instanceof DangerousSectorCard);
-	}
+    @Test
+    public void testConstructor() {
+        assertTrue(cards.drawCard() instanceof DangerousSectorCard);
+    }
 
-	@Test
-	public void reshuffleTest() {
-		Card c = new SilenceCard();
-		for (int i = 0; i < 200; i++) {
-			c = cards.drawCard();
-			cards.addUsedCard(c);
-		}
-		assertTrue(c instanceof DangerousSectorCard);
-	}
+    @Test
+    public void reshuffleTest() {
+        Card c = new SilenceCard();
+        for (int i = 0; i < 200; i++) {
+            c = cards.drawCard();
+            cards.addUsedCard(c);
+        }
+        assertTrue(c instanceof DangerousSectorCard);
+    }
 }

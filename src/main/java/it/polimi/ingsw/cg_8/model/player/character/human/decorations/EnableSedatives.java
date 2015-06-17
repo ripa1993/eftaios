@@ -9,24 +9,24 @@ import it.polimi.ingsw.cg_8.model.player.character.human.HumanBehaviour;
  * @version 1.0
  */
 public class EnableSedatives extends HumanDecorator {
-	/**
-	 * Constructor
-	 * 
-	 * @param humanBehaviourToBeDecorated
-	 *            behaviour to be decorated
-	 */
-	public EnableSedatives(HumanBehaviour humanBehaviourToBeDecorated) {
-		super(humanBehaviourToBeDecorated);
+    /**
+     * Constructor
+     * 
+     * @param humanBehaviourToBeDecorated
+     *            behaviour to be decorated
+     */
+    public EnableSedatives(HumanBehaviour humanBehaviourToBeDecorated) {
+        super(humanBehaviourToBeDecorated);
 
-	}
+    }
 
-	@Override
-	public boolean hasToDrawSectorCard() {
-		return false;
-	}
+    @Override
+    public boolean hasToDrawSectorCard() {
+        return false;
+    }
 
-	@Override
-	public String toString() {
-		return "EnableSedatives " + humanBehaviourToBeDecorated.toString();
-	}
+    @Override
+    public String toString() {
+        return "EnableSedatives " + humanBehaviourToBeDecorated.toString();
+    }
 }

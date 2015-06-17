@@ -7,15 +7,15 @@ package it.polimi.ingsw.cg_8.model.cards.escapeHatchCards;
  *
  */
 public class GreenEhCard extends EscapeHatchCard {
-	/**
-	 * Constructor
-	 */
-	public GreenEhCard() {
-		super();
-	}
+    /**
+     * Constructor
+     */
+    public GreenEhCard() {
+        super();
+    }
 
-	@Override
-	public String toString() {
-		return "GreenEhCard";
-	}
+    @Override
+    public String toString() {
+        return "GreenEhCard";
+    }
 }

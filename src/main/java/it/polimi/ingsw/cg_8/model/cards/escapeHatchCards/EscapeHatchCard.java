@@ -10,10 +10,10 @@ import it.polimi.ingsw.cg_8.model.cards.Card;
  *
  */
 public abstract class EscapeHatchCard extends Card {
-	/**
-	 * Constructor
-	 */
-	public EscapeHatchCard() {
-		super();
-	}
+    /**
+     * Constructor
+     */
+    public EscapeHatchCard() {
+        super();
+    }
 }

@@ -16,19 +16,19 @@ import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
  */
 public class DefaultRules implements Rules {
 
-	@Override
-	public boolean movementValidator(Model model, Coordinate destination) {
-		return MovementValidator.validateMove(model, destination);
-	}
+    @Override
+    public boolean movementValidator(Model model, Coordinate destination) {
+        return MovementValidator.validateMove(model, destination);
+    }
 
-	@Override
-	public boolean attackValidator(Model model) {
-		return AttackValidator.validateAttack(model);
-	}
+    @Override
+    public boolean attackValidator(Model model) {
+        return AttackValidator.validateAttack(model);
+    }
 
-	@Override
-	public boolean useItemCardValidator(Model model, ItemCard card) {
-		return UseItemCardValidator.validateItemCardUsage(model, card);
-	}
+    @Override
+    public boolean useItemCardValidator(Model model, ItemCard card) {
+        return UseItemCardValidator.validateItemCardUsage(model, card);
+    }
 
 }

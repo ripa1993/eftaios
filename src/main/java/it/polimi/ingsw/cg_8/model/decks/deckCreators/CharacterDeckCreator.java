@@ -16,41 +16,41 @@ import java.util.List;
  * @version 1.0
  */
 public class CharacterDeckCreator extends DeckCreator {
-	/**
-	 * Creates a character deck
-	 * 
-	 * @param numPlayer
-	 *            number of players in the game [2..8]
-	 * @return a complete character deck
-	 */
-	public CharacterDeck createDeck(int numPlayer) {
-		CharacterDeck charDeck = new CharacterDeck();
-		List<Card> aliens = new ArrayList<Card>();
-		List<Card> humans = new ArrayList<Card>();
+    /**
+     * Creates a character deck
+     * 
+     * @param numPlayer
+     *            number of players in the game [2..8]
+     * @return a complete character deck
+     */
+    public CharacterDeck createDeck(int numPlayer) {
+        CharacterDeck charDeck = new CharacterDeck();
+        List<Card> aliens = new ArrayList<Card>();
+        List<Card> humans = new ArrayList<Card>();
 
-		humans.add(new HumanCard("Ennio Maria Dominoni", null, "The Captain"));
-		humans.add(new HumanCard("Julia Niguloti", "Cabal", "The Pilot"));
-		humans.add(new HumanCard("Silvano Porpora", null, "The Psychologist"));
-		humans.add(new HumanCard("Tuccio Brendon", "Piri", "The Soldier"));
-		aliens.add(new AlienCard("Piero Ceccarella", null, "The First Alien"));
-		aliens.add(new AlienCard("Vittorio Martana", null, "The Second Alien"));
-		aliens.add(new AlienCard("Maria Galbani", null, "The Third Alien"));
-		aliens.add(new AlienCard("Paolo Landon", null, "The Fourth Alien"));
+        humans.add(new HumanCard("Ennio Maria Dominoni", null, "The Captain"));
+        humans.add(new HumanCard("Julia Niguloti", "Cabal", "The Pilot"));
+        humans.add(new HumanCard("Silvano Porpora", null, "The Psychologist"));
+        humans.add(new HumanCard("Tuccio Brendon", "Piri", "The Soldier"));
+        aliens.add(new AlienCard("Piero Ceccarella", null, "The First Alien"));
+        aliens.add(new AlienCard("Vittorio Martana", null, "The Second Alien"));
+        aliens.add(new AlienCard("Maria Galbani", null, "The Third Alien"));
+        aliens.add(new AlienCard("Paolo Landon", null, "The Fourth Alien"));
 
-		for (int i = 0; i < Math.floor((double) numPlayer / 2); i++) {
-			charDeck.addCard(humans.get(i));
-		}
+        for (int i = 0; i < Math.floor((double) numPlayer / 2); i++) {
+            charDeck.addCard(humans.get(i));
+        }
 
-		for (int i = 0; i < Math.ceil((double) numPlayer / 2); i++) {
-			charDeck.addCard(aliens.get(i));
-		}
+        for (int i = 0; i < Math.ceil((double) numPlayer / 2); i++) {
+            charDeck.addCard(aliens.get(i));
+        }
 
-		return charDeck;
-	}
+        return charDeck;
+    }
 
-	@Override
-	public Deck createDeck() {
-		return createDeck(8);
-	}
+    @Override
+    public Deck createDeck() {
+        return createDeck(8);
+    }
 
 }

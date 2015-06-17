@@ -13,31 +13,31 @@ import java.io.Serializable;
  */
 public class SendChatMessage implements ClientAction, Serializable {
 
-	/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = -17380136986634452L;
-	/**
-	 * Chat message
-	 */
-	private final String message;
+    private static final long serialVersionUID = -17380136986634452L;
+    /**
+     * Chat message
+     */
+    private final String message;
 
-	/**
-	 * Constructor
-	 * 
-	 * @param message
-	 *            message to be sent
-	 */
-	public SendChatMessage(String message) {
-		this.message = message;
-	}
+    /**
+     * Constructor
+     * 
+     * @param message
+     *            message to be sent
+     */
+    public SendChatMessage(String message) {
+        this.message = message;
+    }
 
-	/**
-	 * 
-	 * @return message to be sent
-	 */
-	public String getMessage() {
-		return message;
-	}
+    /**
+     * 
+     * @return message to be sent
+     */
+    public String getMessage() {
+        return message;
+    }
 
 }

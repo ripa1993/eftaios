@@ -29,30 +29,30 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class GameMapSet {
 
-	/**
-	 * Set of the sectors of a given map, divided by their type.
-	 */
-	@XmlElementWrapper(name = "sectorList")
-	@XmlElements({
-	        @XmlElement(name = "safeSector", type = SecureSector.class),
-	        @XmlElement(name = "dangerousSector", type = DangerousSector.class),
-	        @XmlElement(name = "escapeHatchSector", type = EscapeHatchSector.class),
-	        @XmlElement(name = "humanSector", type = HumanSector.class),
-	        @XmlElement(name = "alienSector", type = AlienSector.class), })
-	private Set<Sector> sectorSet;
+    /**
+     * Set of the sectors of a given map, divided by their type.
+     */
+    @XmlElementWrapper(name = "sectorList")
+    @XmlElements({
+            @XmlElement(name = "safeSector", type = SecureSector.class),
+            @XmlElement(name = "dangerousSector", type = DangerousSector.class),
+            @XmlElement(name = "escapeHatchSector", type = EscapeHatchSector.class),
+            @XmlElement(name = "humanSector", type = HumanSector.class),
+            @XmlElement(name = "alienSector", type = AlienSector.class), })
+    private Set<Sector> sectorSet;
 
-	/**
-	 * Return the set of the Sectors of the map.
-	 * 
-	 * @return the Sectors of the map.
-	 */
-	public Set<Sector> getSectorList() {
-		return this.sectorSet;
-	}
+    /**
+     * Return the set of the Sectors of the map.
+     * 
+     * @return the Sectors of the map.
+     */
+    public Set<Sector> getSectorList() {
+        return this.sectorSet;
+    }
 
-	@Override
-	public String toString() {
-		return "SectorSet \n[" + sectorSet + "]";
-	}
+    @Override
+    public String toString() {
+        return "SectorSet \n[" + sectorSet + "]";
+    }
 
 }

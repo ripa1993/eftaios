@@ -9,30 +9,30 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class HandTest {
-	Hand hand;
+    Hand hand;
 
-	@Before
-	public void init() {
-		hand = new Hand();
-		hand.addItemCard(new AdrenalineCard());
-	}
+    @Before
+    public void init() {
+        hand = new Hand();
+        hand.addItemCard(new AdrenalineCard());
+    }
 
-	@Test
-	public void testGetHeldCards() {
-		assertTrue((hand.getHeldCards()).get(0) instanceof AdrenalineCard);
-	}
+    @Test
+    public void testGetHeldCards() {
+        assertTrue((hand.getHeldCards()).get(0) instanceof AdrenalineCard);
+    }
 
-	@Test
-	public void testGetCard() {
-		assertTrue((hand.getCard(0) instanceof AdrenalineCard));
-	}
+    @Test
+    public void testGetCard() {
+        assertTrue((hand.getCard(0) instanceof AdrenalineCard));
+    }
 
-	@Test
-	public void testAddItemCard() {
-		hand.addItemCard(new SpotlightCard());
-		hand.addItemCard(new SpotlightCard());
-		assertFalse(hand.addItemCard(new AdrenalineCard()));
+    @Test
+    public void testAddItemCard() {
+        hand.addItemCard(new SpotlightCard());
+        hand.addItemCard(new SpotlightCard());
+        assertFalse(hand.addItemCard(new AdrenalineCard()));
 
-	}
+    }
 
 }

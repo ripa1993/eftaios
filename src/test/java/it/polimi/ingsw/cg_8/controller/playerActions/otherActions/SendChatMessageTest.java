@@ -6,9 +6,9 @@ import org.junit.Test;
 
 public class SendChatMessageTest {
 
-	@Test
-	public void testGetMessage() {
-		SendChatMessage msg = new SendChatMessage("ciao");
-		assertEquals("ciao", msg.getMessage());
-	}
+    @Test
+    public void testGetMessage() {
+        SendChatMessage msg = new SendChatMessage("ciao");
+        assertEquals("ciao", msg.getMessage());
+    }
 }

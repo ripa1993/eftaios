@@ -7,24 +7,24 @@ package it.polimi.ingsw.cg_8.model.sectors;
  * @version 1.0
  */
 public enum SectorType {
-	/**
-	 * Dangerous sector
-	 */
-	DANGEROUS_SECTOR,
-	/**
-	 * Secure sector
-	 */
-	SECURE_SECTOR,
-	/**
-	 * Human spawn sector
-	 */
-	HUMAN_SECTOR,
-	/**
-	 * Alien spawn sector
-	 */
-	ALIEN_SECTOR,
-	/**
-	 * Escape hatch sector
-	 */
-	EH_SECTOR;
+    /**
+     * Dangerous sector
+     */
+    DANGEROUS_SECTOR,
+    /**
+     * Secure sector
+     */
+    SECURE_SECTOR,
+    /**
+     * Human spawn sector
+     */
+    HUMAN_SECTOR,
+    /**
+     * Alien spawn sector
+     */
+    ALIEN_SECTOR,
+    /**
+     * Escape hatch sector
+     */
+    EH_SECTOR;
 }

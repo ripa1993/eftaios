@@ -9,24 +9,24 @@ import it.polimi.ingsw.cg_8.model.player.character.human.HumanBehaviour;
  * @version 1.0
  */
 public class EnableDefense extends HumanDecorator {
-	/**
-	 * Constructor
-	 * 
-	 * @param humanBehaviourToBeDecorated
-	 *            behaviour to be decorated
-	 */
-	public EnableDefense(HumanBehaviour humanBehaviourToBeDecorated) {
-		super(humanBehaviourToBeDecorated);
-	}
+    /**
+     * Constructor
+     * 
+     * @param humanBehaviourToBeDecorated
+     *            behaviour to be decorated
+     */
+    public EnableDefense(HumanBehaviour humanBehaviourToBeDecorated) {
+        super(humanBehaviourToBeDecorated);
+    }
 
-	@Override
-	public boolean isDefendAllowed() {
-		return true;
-	}
+    @Override
+    public boolean isDefendAllowed() {
+        return true;
+    }
 
-	@Override
-	public String toString() {
-		return "EnableDefense " + humanBehaviourToBeDecorated.toString();
-	}
+    @Override
+    public String toString() {
+        return "EnableDefense " + humanBehaviourToBeDecorated.toString();
+    }
 
 }

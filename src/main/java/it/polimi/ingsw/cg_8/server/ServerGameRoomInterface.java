@@ -15,16 +15,16 @@ import java.rmi.RemoteException;
  */
 public interface ServerGameRoomInterface extends Remote {
 
-	/**
-	 * 
-	 * @param clientId
-	 *            The client Id
-	 * @param action
-	 *            The action sent by the client
-	 * @return Whether the action was accepted or not.
-	 * @throws RemoteException
-	 */
-	public boolean makeAction(int clientId, ClientAction action)
-	        throws RemoteException;
+    /**
+     * 
+     * @param clientId
+     *            The client Id
+     * @param action
+     *            The action sent by the client
+     * @return Whether the action was accepted or not.
+     * @throws RemoteException
+     */
+    public boolean makeAction(int clientId, ClientAction action)
+            throws RemoteException;
 
 }

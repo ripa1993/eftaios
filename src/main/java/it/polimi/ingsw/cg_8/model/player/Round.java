@@ -10,49 +10,49 @@ import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
  * @version 1.0
  */
 public class Round {
-	/**
-	 * Turn number
-	 */
-	private final int number;
-	/**
-	 * Ending position in the current turn
-	 */
-	private final Coordinate coordinate;
+    /**
+     * Turn number
+     */
+    private final int number;
+    /**
+     * Ending position in the current turn
+     */
+    private final Coordinate coordinate;
 
-	/**
-	 * Constructor for round
-	 * 
-	 * @param number
-	 *            round number
-	 * @param coordinate
-	 *            ending position
-	 */
-	public Round(int number, Coordinate coordinate) {
-		this.number = number;
-		this.coordinate = coordinate;
-	}
+    /**
+     * Constructor for round
+     * 
+     * @param number
+     *            round number
+     * @param coordinate
+     *            ending position
+     */
+    public Round(int number, Coordinate coordinate) {
+        this.number = number;
+        this.coordinate = coordinate;
+    }
 
-	/**
-	 * Getter for round number
-	 * 
-	 * @return round number
-	 */
-	public int getNumber() {
-		return number;
-	}
+    /**
+     * Getter for round number
+     * 
+     * @return round number
+     */
+    public int getNumber() {
+        return number;
+    }
 
-	/**
-	 * Getter for ending position coordinate
-	 * 
-	 * @return round coordinate
-	 */
-	public Coordinate getCoordinate() {
-		return coordinate;
-	}
+    /**
+     * Getter for ending position coordinate
+     * 
+     * @return round coordinate
+     */
+    public Coordinate getCoordinate() {
+        return coordinate;
+    }
 
-	@Override
-	public String toString() {
-		return "Round [number=" + number + ", coordinate=" + coordinate + "]";
-	}
+    @Override
+    public String toString() {
+        return "Round [number=" + number + ", coordinate=" + coordinate + "]";
+    }
 
 }

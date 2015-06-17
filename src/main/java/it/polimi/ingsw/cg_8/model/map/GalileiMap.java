@@ -12,11 +12,11 @@ import it.polimi.ingsw.cg_8.model.map.creator.MapCreator;
  */
 public class GalileiMap extends GameMap {
 
-	/**
-	 * Empty constructor for the map, instantiating the coordinates of thwe map
-	 * is done by the {@link MapCreator}
-	 */
-	public GalileiMap() {
-		super();
-	}
+    /**
+     * Empty constructor for the map, instantiating the coordinates of thwe map
+     * is done by the {@link MapCreator}
+     */
+    public GalileiMap() {
+        super();
+    }
 }

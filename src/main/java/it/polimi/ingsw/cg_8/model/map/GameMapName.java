@@ -9,16 +9,16 @@ import java.io.Serializable;
  * @version 1.0
  */
 public enum GameMapName implements Serializable {
-	/**
-	 * Fermi map
-	 */
-	FERMI,
-	/**
-	 * Galilei map
-	 */
-	GALILEI,
-	/**
-	 * Galvani map
-	 */
-	GALVANI;
+    /**
+     * Fermi map
+     */
+    FERMI,
+    /**
+     * Galilei map
+     */
+    GALILEI,
+    /**
+     * Galvani map
+     */
+    GALVANI;
 }

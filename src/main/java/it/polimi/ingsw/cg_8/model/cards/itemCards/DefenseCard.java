@@ -7,20 +7,20 @@ package it.polimi.ingsw.cg_8.model.cards.itemCards;
  *
  */
 public class DefenseCard extends ItemCard {
-	/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = -996735326205272440L;
+    private static final long serialVersionUID = -996735326205272440L;
 
-	/**
-	 * Constructor
-	 */
-	public DefenseCard() {
-		super();
-	}
+    /**
+     * Constructor
+     */
+    public DefenseCard() {
+        super();
+    }
 
-	@Override
-	public String toString() {
-		return "DefenseCard";
-	}
+    @Override
+    public String toString() {
+        return "DefenseCard";
+    }
 }

@@ -22,34 +22,34 @@ import org.apache.logging.log4j.Logger;
  */
 public class FermiCreator extends MapCreator {
 
-	/**
-	 * Log4j logger
-	 */
-	private static final Logger LOGGER = LogManager
-	        .getLogger(FermiCreator.class);
+    /**
+     * Log4j logger
+     */
+    private static final Logger LOGGER = LogManager
+            .getLogger(FermiCreator.class);
 
-	/**
-	 * Constructor
-	 */
-	public FermiCreator() {
-		super(new FermiMap());
+    /**
+     * Constructor
+     */
+    public FermiCreator() {
+        super(new FermiMap());
 
-	}
+    }
 
-	@Override
-	protected GameMapSet sectorParser() {
+    @Override
+    protected GameMapSet sectorParser() {
 
-		try {
-			JAXBContext jc = JAXBContext.newInstance(GameMapSet.class);
+        try {
+            JAXBContext jc = JAXBContext.newInstance(GameMapSet.class);
 
-			Unmarshaller unmarshaller = jc.createUnmarshaller();
-			return (GameMapSet) unmarshaller.unmarshal(new File(
-			        Resource.FERMI_XML));
+            Unmarshaller unmarshaller = jc.createUnmarshaller();
+            return (GameMapSet) unmarshaller.unmarshal(new File(
+                    Resource.FERMI_XML));
 
-		} catch (Exception e) {
-			LOGGER.error(e.getMessage(), e);
-			return new GameMapSet();
-		}
-	}
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage(), e);
+            return new GameMapSet();
+        }
+    }
 
 }

@@ -15,37 +15,37 @@ import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
  */
 
 public interface Rules {
-	/**
-	 * Validates the movement action, according to the implemented rule set
-	 * 
-	 * @param model
-	 *            game where the action takes place
-	 * @param destination
-	 *            movement coordinate
-	 * @return true, if the action has been validated<br>
-	 *         false, if not
-	 */
-	public boolean movementValidator(Model model, Coordinate destination);
+    /**
+     * Validates the movement action, according to the implemented rule set
+     * 
+     * @param model
+     *            game where the action takes place
+     * @param destination
+     *            movement coordinate
+     * @return true, if the action has been validated<br>
+     *         false, if not
+     */
+    public boolean movementValidator(Model model, Coordinate destination);
 
-	/**
-	 * Validates the attack action, according to the implemented rule set
-	 * 
-	 * @param model
-	 *            game where the action takes place
-	 * @return true, if the action has been validated<br>
-	 *         false, if not
-	 */
-	public boolean attackValidator(Model model);
+    /**
+     * Validates the attack action, according to the implemented rule set
+     * 
+     * @param model
+     *            game where the action takes place
+     * @return true, if the action has been validated<br>
+     *         false, if not
+     */
+    public boolean attackValidator(Model model);
 
-	/**
-	 * Validates the use of an item card, accord to the implemented rule set
-	 * 
-	 * @param model
-	 *            game where the action takes place
-	 * @param card
-	 *            item card that the player wants to use
-	 * @return true, if the action has been validated<br>
-	 *         false, if not
-	 */
-	public boolean useItemCardValidator(Model model, ItemCard card);
+    /**
+     * Validates the use of an item card, accord to the implemented rule set
+     * 
+     * @param model
+     *            game where the action takes place
+     * @param card
+     *            item card that the player wants to use
+     * @return true, if the action has been validated<br>
+     *         false, if not
+     */
+    public boolean useItemCardValidator(Model model, ItemCard card);
 }

@@ -31,98 +31,98 @@ import org.apache.logging.log4j.Logger;
 
 public class Movement implements PlayerAction {
 
-	/**
-	 * The player who is moving
-	 */
-	private final Player player;
-	/**
-	 * Where the player would like to move
-	 */
-	private final Coordinate destination;
-	/**
-	 * Sector targeted my the movement action.
-	 */
-	private Sector destinationSector;
-	/**
-	 * Current game
-	 */
-	private final Model model;
-	/**
-	 * Log4j logger
-	 */
-	private static final Logger LOGGER = LogManager.getLogger(Movement.class);
+    /**
+     * The player who is moving
+     */
+    private final Player player;
+    /**
+     * Where the player would like to move
+     */
+    private final Coordinate destination;
+    /**
+     * Sector targeted my the movement action.
+     */
+    private Sector destinationSector;
+    /**
+     * Current game
+     */
+    private final Model model;
+    /**
+     * Log4j logger
+     */
+    private static final Logger LOGGER = LogManager.getLogger(Movement.class);
 
-	/**
-	 * Constructor
-	 * 
-	 * @param model
-	 *            current game
-	 * @param destination
-	 *            coordinate of destination
-	 */
-	public Movement(Model model, Coordinate destination) {
-		this.player = model.getCurrentPlayerReference();
-		this.destination = destination;
-		this.model = model;
-		this.destinationSector = new SecureSector();
-	}
+    /**
+     * Constructor
+     * 
+     * @param model
+     *            current game
+     * @param destination
+     *            coordinate of destination
+     */
+    public Movement(Model model, Coordinate destination) {
+        this.player = model.getCurrentPlayerReference();
+        this.destination = destination;
+        this.model = model;
+        this.destinationSector = new SecureSector();
+    }
 
-	/**
-	 * Changes the position of the player inside the model
-	 */
-	public void makeMove() {
+    /**
+     * Changes the position of the player inside the model
+     */
+    public void makeMove() {
 
-		int lastModelTurn = model.getRoundNumber();
-		int lastPlayerTurn = player.getRoundNumber();
+        int lastModelTurn = model.getRoundNumber();
+        int lastPlayerTurn = player.getRoundNumber();
 
-		try {
-			destinationSector = model.getMap().getSectorByCoordinates(
-			        destination);
-		} catch (NotAValidCoordinateException e1) {
-			LOGGER.error(e1.getMessage(), e1);
-		}
+        try {
+            destinationSector = model.getMap().getSectorByCoordinates(
+                    destination);
+        } catch (NotAValidCoordinateException e1) {
+            LOGGER.error(e1.getMessage(), e1);
+        }
 
-		/**
-		 * If the player used a teleport card, the position is changed using
-		 * editLastPosition(Coordinate);
-		 */
-		if (lastPlayerTurn == lastModelTurn - 1) {
-			player.setPosition(destination);
-		} else if (lastPlayerTurn <= lastModelTurn) {
-			player.editLastPosition(destination);
-		}
+        /**
+         * If the player used a teleport card, the position is changed using
+         * editLastPosition(Coordinate);
+         */
+        if (lastPlayerTurn == lastModelTurn - 1) {
+            player.setPosition(destination);
+        } else if (lastPlayerTurn <= lastModelTurn) {
+            player.editLastPosition(destination);
+        }
 
-		/**
-		 * Depending on the type of the reached sector, different actions are
-		 * performed.
-		 */
+        /**
+         * Depending on the type of the reached sector, different actions are
+         * performed.
+         */
 
-		if (destinationSector instanceof EscapeHatchSector
-		        && ((EscapeHatchSector) destinationSector).allowEscape()) {
-			// noise only if the escape hatch is usable
-			Noise escapeSectorNoise = new EscapeSectorNoise(
-			        model.getRoundNumber(), player, player.getLastPosition());
-			Card escapeCard;
-			try {
-				escapeCard = drawEHSectorCard();
-				if (escapeCard instanceof GreenEhCard) {
-					player.setEscaped();
-				}
-			} catch (EmptyDeckException e) {
-				LOGGER.error(e.getMessage(), e);
-			}
-			model.addNoise(escapeSectorNoise);
-		}
+        if (destinationSector instanceof EscapeHatchSector
+                && ((EscapeHatchSector) destinationSector).allowEscape()) {
+            // noise only if the escape hatch is usable
+            Noise escapeSectorNoise = new EscapeSectorNoise(
+                    model.getRoundNumber(), player, player.getLastPosition());
+            Card escapeCard;
+            try {
+                escapeCard = drawEHSectorCard();
+                if (escapeCard instanceof GreenEhCard) {
+                    player.setEscaped();
+                }
+            } catch (EmptyDeckException e) {
+                LOGGER.error(e.getMessage(), e);
+            }
+            model.addNoise(escapeSectorNoise);
+        }
 
-	}
+    }
 
-	/**
-	 * Draw a card from the {@link EscapeHatchDeck}
-	 * 
-	 * @return an EscapeHatchCard
-	 * @throws EmptyDeckException
-	 */
-	private Card drawEHSectorCard() throws EmptyDeckException {
-		return model.getEscapeHatchDeck().drawCard();
-	}
+    /**
+     * Draw a card from the {@link EscapeHatchDeck}
+     * 
+     * @return an EscapeHatchCard
+     * @throws EmptyDeckException
+     */
+    private Card drawEHSectorCard() throws EmptyDeckException {
+        return model.getEscapeHatchDeck().drawCard();
+    }
 }

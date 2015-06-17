@@ -12,15 +12,15 @@ import java.io.Serializable;
  *
  */
 public abstract class ItemCard extends Card implements Serializable {
-	/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = -2439914640637572125L;
+    private static final long serialVersionUID = -2439914640637572125L;
 
-	/**
-	 * Constructor
-	 */
-	public ItemCard() {
-		super();
-	}
+    /**
+     * Constructor
+     */
+    public ItemCard() {
+        super();
+    }
 }

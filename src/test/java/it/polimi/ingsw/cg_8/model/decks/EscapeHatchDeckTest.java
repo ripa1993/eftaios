@@ -10,18 +10,18 @@ import org.junit.Test;
 
 public class EscapeHatchDeckTest {
 
-	EscapeHatchDeck cards;
-	EscapeHatchDeckCreator creator;
+    EscapeHatchDeck cards;
+    EscapeHatchDeckCreator creator;
 
-	@Before
-	public void init() {
-		creator = new EscapeHatchDeckCreator();
-		cards = creator.createDeck();
-	}
+    @Before
+    public void init() {
+        creator = new EscapeHatchDeckCreator();
+        cards = creator.createDeck();
+    }
 
-	@Test
-	public void testConstructor() throws EmptyDeckException {
-		assertTrue(cards.drawCard() instanceof EscapeHatchCard);
-	}
+    @Test
+    public void testConstructor() throws EmptyDeckException {
+        assertTrue(cards.drawCard() instanceof EscapeHatchCard);
+    }
 
 }

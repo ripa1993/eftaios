@@ -13,18 +13,18 @@ import it.polimi.ingsw.cg_8.model.player.character.human.Human;
  */
 public class UseAttackCard extends UseItemCard {
 
-	/**
-	 * Enable attack to current player
-	 * 
-	 * @param model
-	 *            game
-	 */
-	public static void useCard(Model model) {
-		Player currentPlayer = model.getCurrentPlayerReference();
-		// Assume that the player is a human by hypothesis
-		Human currentPlayerCharacter = (Human) currentPlayer.getCharacter();
+    /**
+     * Enable attack to current player
+     * 
+     * @param model
+     *            game
+     */
+    public static void useCard(Model model) {
+        Player currentPlayer = model.getCurrentPlayerReference();
+        // Assume that the player is a human by hypothesis
+        Human currentPlayerCharacter = (Human) currentPlayer.getCharacter();
 
-		currentPlayerCharacter.enableAttack();
+        currentPlayerCharacter.enableAttack();
 
-	}
+    }
 }

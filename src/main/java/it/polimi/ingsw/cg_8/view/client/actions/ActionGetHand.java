@@ -9,15 +9,15 @@ import java.io.Serializable;
  *
  */
 public class ActionGetHand implements ClientAction, Serializable {
-	/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = -5275946206511000648L;
+    private static final long serialVersionUID = -5275946206511000648L;
 
-	/**
-	 * Constructor
-	 */
-	public ActionGetHand() {
+    /**
+     * Constructor
+     */
+    public ActionGetHand() {
 
-	}
+    }
 }

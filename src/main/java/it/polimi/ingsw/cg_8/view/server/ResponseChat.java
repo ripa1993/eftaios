@@ -11,50 +11,50 @@ import java.io.Serializable;
  */
 public class ResponseChat implements ServerResponse, Serializable {
 
-	/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = 4477669407364086500L;
-	/**
-	 * Sender's name
-	 */
-	private final String playerName;
-	/**
-	 * Sender's message
-	 */
-	private final String message;
+    private static final long serialVersionUID = 4477669407364086500L;
+    /**
+     * Sender's name
+     */
+    private final String playerName;
+    /**
+     * Sender's message
+     */
+    private final String message;
 
-	/**
-	 * Builds a server response chat with the given player name and message
-	 * 
-	 * @param playerName
-	 *            sender's name
-	 * @param message
-	 *            sender's message
-	 */
-	public ResponseChat(String playerName, String message) {
-		this.playerName = playerName;
-		this.message = message;
-	}
+    /**
+     * Builds a server response chat with the given player name and message
+     * 
+     * @param playerName
+     *            sender's name
+     * @param message
+     *            sender's message
+     */
+    public ResponseChat(String playerName, String message) {
+        this.playerName = playerName;
+        this.message = message;
+    }
 
-	/**
-	 * 
-	 * @return sender's name
-	 */
-	public String getPlayerName() {
-		return playerName;
-	}
+    /**
+     * 
+     * @return sender's name
+     */
+    public String getPlayerName() {
+        return playerName;
+    }
 
-	/**
-	 * 
-	 * @return sender's message
-	 */
-	public String getMessage() {
-		return message;
-	}
+    /**
+     * 
+     * @return sender's message
+     */
+    public String getMessage() {
+        return message;
+    }
 
-	@Override
-	public String toString() {
-		return playerName + ": " + message;
-	}
+    @Override
+    public String toString() {
+        return playerName + ": " + message;
+    }
 }

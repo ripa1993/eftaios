@@ -11,11 +11,11 @@ import it.polimi.ingsw.cg_8.model.exceptions.EmptyDeckException;
  */
 public class ItemDeck extends Deck {
 
-	@Override
-	public Card drawCard() throws EmptyDeckException {
-		if (isDeckEmpty()) {
-			this.reshuffle();
-		}
-		return this.getCards().remove(0);
-	}
+    @Override
+    public Card drawCard() throws EmptyDeckException {
+        if (isDeckEmpty()) {
+            this.reshuffle();
+        }
+        return this.getCards().remove(0);
+    }
 }

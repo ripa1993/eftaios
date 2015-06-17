@@ -14,90 +14,90 @@ import it.polimi.ingsw.cg_8.model.player.character.human.decorations.EnableSedat
  * @version 1.0
  */
 public class Human extends InGameCharacter {
-	/**
-	 * Implementation of the strategy pattern, there are two kind of strategy:
-	 * {@link NormalHuman Normal} and {@link decorations.HumanDecorator
-	 * Decorated} (with special powers)
-	 */
-	private HumanBehaviour currentBehaviour;
+    /**
+     * Implementation of the strategy pattern, there are two kind of strategy:
+     * {@link NormalHuman Normal} and {@link decorations.HumanDecorator
+     * Decorated} (with special powers)
+     */
+    private HumanBehaviour currentBehaviour;
 
-	/**
-	 * Constructor for human. By default the human's strategy is the normal one
-	 * 
-	 * @param characterCard
-	 *            human character card
-	 */
-	public Human(CharacterCard characterCard) {
-		super(characterCard);
-		this.currentBehaviour = new NormalHuman();
-	}
+    /**
+     * Constructor for human. By default the human's strategy is the normal one
+     * 
+     * @param characterCard
+     *            human character card
+     */
+    public Human(CharacterCard characterCard) {
+        super(characterCard);
+        this.currentBehaviour = new NormalHuman();
+    }
 
-	/**
-	 * Decorates the human, allowing the attack
-	 */
-	public void enableAttack() {
-		HumanBehaviour tempBehaviour = new EnableAttack(currentBehaviour);
-		setBehaviour(tempBehaviour);
-	}
+    /**
+     * Decorates the human, allowing the attack
+     */
+    public void enableAttack() {
+        HumanBehaviour tempBehaviour = new EnableAttack(currentBehaviour);
+        setBehaviour(tempBehaviour);
+    }
 
-	/**
-	 * Decorates the human, allowing the defense
-	 */
-	public void enableDefend() {
-		HumanBehaviour tempBehaviour = new EnableDefense(currentBehaviour);
-		setBehaviour(tempBehaviour);
-	}
+    /**
+     * Decorates the human, allowing the defense
+     */
+    public void enableDefend() {
+        HumanBehaviour tempBehaviour = new EnableDefense(currentBehaviour);
+        setBehaviour(tempBehaviour);
+    }
 
-	/**
-	 * Decorates the human, using sedatives, allowing to not draw dangerous
-	 * sector card
-	 */
-	public void enableSedatives() {
-		HumanBehaviour tempBehaviour = new EnableSedatives(currentBehaviour);
-		setBehaviour(tempBehaviour);
-	}
+    /**
+     * Decorates the human, using sedatives, allowing to not draw dangerous
+     * sector card
+     */
+    public void enableSedatives() {
+        HumanBehaviour tempBehaviour = new EnableSedatives(currentBehaviour);
+        setBehaviour(tempBehaviour);
+    }
 
-	/**
-	 * Decorates the human, using adrenaline, allowing to more further distances
-	 */
-	public void enableAdrenaline() {
-		HumanBehaviour tempBehaviour = new EnableAdrenaline(currentBehaviour);
-		setBehaviour(tempBehaviour);
-	}
+    /**
+     * Decorates the human, using adrenaline, allowing to more further distances
+     */
+    public void enableAdrenaline() {
+        HumanBehaviour tempBehaviour = new EnableAdrenaline(currentBehaviour);
+        setBehaviour(tempBehaviour);
+    }
 
-	/**
-	 * Changes the behaviour of the humna
-	 * 
-	 * @param hb
-	 *            new behaviour
-	 */
-	public void setBehaviour(HumanBehaviour hb) {
-		this.currentBehaviour = hb;
-	}
+    /**
+     * Changes the behaviour of the humna
+     * 
+     * @param hb
+     *            new behaviour
+     */
+    public void setBehaviour(HumanBehaviour hb) {
+        this.currentBehaviour = hb;
+    }
 
-	@Override
-	public boolean isAttackAllowed() {
-		return currentBehaviour.isAttackAllowed();
-	}
+    @Override
+    public boolean isAttackAllowed() {
+        return currentBehaviour.isAttackAllowed();
+    }
 
-	@Override
-	public boolean isDefendAllowed() {
-		return currentBehaviour.isDefendAllowed();
-	}
+    @Override
+    public boolean isDefendAllowed() {
+        return currentBehaviour.isDefendAllowed();
+    }
 
-	@Override
-	public int getMaxAllowedMovement() {
-		return currentBehaviour.getMaxAllowedMovement();
-	}
+    @Override
+    public int getMaxAllowedMovement() {
+        return currentBehaviour.getMaxAllowedMovement();
+    }
 
-	@Override
-	public boolean hasToDrawSectorCard() {
-		return currentBehaviour.hasToDrawSectorCard();
-	}
+    @Override
+    public boolean hasToDrawSectorCard() {
+        return currentBehaviour.hasToDrawSectorCard();
+    }
 
-	@Override
-	public String toString() {
-		return "Human";
-	}
+    @Override
+    public String toString() {
+        return "Human";
+    }
 
 }

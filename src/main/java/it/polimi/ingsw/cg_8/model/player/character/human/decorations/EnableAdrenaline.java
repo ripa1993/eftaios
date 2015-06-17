@@ -9,24 +9,24 @@ import it.polimi.ingsw.cg_8.model.player.character.human.HumanBehaviour;
  * @version 1.0
  */
 public class EnableAdrenaline extends HumanDecorator {
-	/**
-	 * Constructor
-	 * 
-	 * @param humanBehaviourToBeDecorated
-	 *            behaviour to be decorated
-	 */
-	public EnableAdrenaline(HumanBehaviour humanBehaviourToBeDecorated) {
-		super(humanBehaviourToBeDecorated);
-	}
+    /**
+     * Constructor
+     * 
+     * @param humanBehaviourToBeDecorated
+     *            behaviour to be decorated
+     */
+    public EnableAdrenaline(HumanBehaviour humanBehaviourToBeDecorated) {
+        super(humanBehaviourToBeDecorated);
+    }
 
-	@Override
-	public int getMaxAllowedMovement() {
-		return 2;
-	}
+    @Override
+    public int getMaxAllowedMovement() {
+        return 2;
+    }
 
-	@Override
-	public String toString() {
-		return "EnableAdrenaline " + humanBehaviourToBeDecorated.toString();
-	}
+    @Override
+    public String toString() {
+        return "EnableAdrenaline " + humanBehaviourToBeDecorated.toString();
+    }
 
 }

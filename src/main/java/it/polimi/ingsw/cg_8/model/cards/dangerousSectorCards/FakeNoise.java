@@ -7,25 +7,25 @@ package it.polimi.ingsw.cg_8.model.cards.dangerousSectorCards;
  *
  */
 public class FakeNoise extends NoiseDecorator {
-	/**
-	 * Constructor
-	 * 
-	 * @param decoratedNoise
-	 */
-	public FakeNoise(NoiseCard decoratedNoise) {
-		super(decoratedNoise);
-	}
+    /**
+     * Constructor
+     * 
+     * @param decoratedNoise
+     */
+    public FakeNoise(NoiseCard decoratedNoise) {
+        super(decoratedNoise);
+    }
 
-	@Override
-	public boolean hasToMakeFakeNoise() {
-		return true;
-	}
+    @Override
+    public boolean hasToMakeFakeNoise() {
+        return true;
+    }
 
-	@Override
-	public String toString() {
-		if (decoratedNoise.hasToDrawItem()) {
-			return "Fake noise with item";
-		}
-		return "Fake noise with no item";
-	}
+    @Override
+    public String toString() {
+        if (decoratedNoise.hasToDrawItem()) {
+            return "Fake noise with item";
+        }
+        return "Fake noise with no item";
+    }
 }

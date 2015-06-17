@@ -9,13 +9,13 @@ import org.junit.Test;
 
 public class GameMapTest {
 
-	@Test
-	public void equals() {
-		MapCreator mc1 = new GalvaniCreator();
-		GameMap map1 = mc1.createMap();
-		MapCreator mc2 = new FermiCreator();
-		GameMap map2 = mc2.createMap();
-		assertFalse(map1.equals(map2));
-	}
+    @Test
+    public void equals() {
+        MapCreator mc1 = new GalvaniCreator();
+        GameMap map1 = mc1.createMap();
+        MapCreator mc2 = new FermiCreator();
+        GameMap map2 = mc2.createMap();
+        assertFalse(map1.equals(map2));
+    }
 
 }

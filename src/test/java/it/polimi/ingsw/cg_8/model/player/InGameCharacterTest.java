@@ -10,25 +10,25 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class InGameCharacterTest {
-	CharacterCard cc;
-	Player player;
-	Alien alien;
+    CharacterCard cc;
+    Player player;
+    Alien alien;
 
-	@Before
-	public void init() {
-		cc = new AlienCard("Ciao", "test", "boh");
-		player = new Player("test");
-		Alien alien = new Alien(cc);
-		player.init(alien, new Coordinate(0, 0));
-	}
+    @Before
+    public void init() {
+        cc = new AlienCard("Ciao", "test", "boh");
+        player = new Player("test");
+        Alien alien = new Alien(cc);
+        player.init(alien, new Coordinate(0, 0));
+    }
 
-	@Test
-	public void charCardTest() {
-		assertTrue(player.getCharacter().getCharacterCard() instanceof CharacterCard);
-	}
+    @Test
+    public void charCardTest() {
+        assertTrue(player.getCharacter().getCharacterCard() instanceof CharacterCard);
+    }
 
-	@Test
-	public void toStringTest() {
-		assertTrue(player.getCharacter().toString() instanceof String);
-	}
+    @Test
+    public void toStringTest() {
+        assertTrue(player.getCharacter().toString() instanceof String);
+    }
 }

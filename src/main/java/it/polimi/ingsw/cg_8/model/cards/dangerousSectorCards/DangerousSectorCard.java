@@ -11,10 +11,10 @@ import it.polimi.ingsw.cg_8.model.cards.Card;
  *
  */
 public abstract class DangerousSectorCard extends Card {
-	/**
-	 * Constructor
-	 */
-	public DangerousSectorCard() {
-		super();
-	}
+    /**
+     * Constructor
+     */
+    public DangerousSectorCard() {
+        super();
+    }
 }

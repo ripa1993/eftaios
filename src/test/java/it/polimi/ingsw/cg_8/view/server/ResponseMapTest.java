@@ -7,16 +7,16 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class ResponseMapTest {
-	ResponseMap response;
+    ResponseMap response;
 
-	@Before
-	public void init() {
-		response = new ResponseMap(GameMapName.FERMI);
-	}
+    @Before
+    public void init() {
+        response = new ResponseMap(GameMapName.FERMI);
+    }
 
-	@Test
-	public void testGetMapName() {
-		assertEquals(GameMapName.FERMI, response.getMapName());
-	}
+    @Test
+    public void testGetMapName() {
+        assertEquals(GameMapName.FERMI, response.getMapName());
+    }
 
 }

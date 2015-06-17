@@ -13,9 +13,9 @@ import it.polimi.ingsw.cg_8.controller.playerActions.PlayerAction;
  */
 public abstract class UseItemCard implements PlayerAction {
 
-	/**
-	 * Constructor
-	 */
-	public UseItemCard() {
-	}
+    /**
+     * Constructor
+     */
+    public UseItemCard() {
+    }
 }

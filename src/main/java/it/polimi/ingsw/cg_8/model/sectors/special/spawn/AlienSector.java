@@ -13,34 +13,34 @@ import javax.xml.bind.annotation.XmlAccessorType;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AlienSector extends SpawnSector {
 
-	/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = 8065999857578160970L;
+    private static final long serialVersionUID = 8065999857578160970L;
 
-	/**
-	 * Constructor for {@link AlienSector}, used to performs checks and
-	 * validations.
-	 * 
-	 * @param x
-	 *            column number
-	 * @param y
-	 *            row number
-	 */
-	public AlienSector(int x, int y) {
-		super(x, y);
-	}
+    /**
+     * Constructor for {@link AlienSector}, used to performs checks and
+     * validations.
+     * 
+     * @param x
+     *            column number
+     * @param y
+     *            row number
+     */
+    public AlienSector(int x, int y) {
+        super(x, y);
+    }
 
-	/**
-	 * Default constructor used in the XML parsing.
-	 */
-	public AlienSector() {
-		super();
-	}
+    /**
+     * Default constructor used in the XML parsing.
+     */
+    public AlienSector() {
+        super();
+    }
 
-	@Override
-	public String toString() {
-		return "AS";
-	}
+    @Override
+    public String toString() {
+        return "AS";
+    }
 
 }

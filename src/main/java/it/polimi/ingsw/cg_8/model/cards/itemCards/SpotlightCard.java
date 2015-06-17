@@ -8,20 +8,20 @@ package it.polimi.ingsw.cg_8.model.cards.itemCards;
  *
  */
 public class SpotlightCard extends ItemCard {
-	/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = 8182033384869101083L;
+    private static final long serialVersionUID = 8182033384869101083L;
 
-	/**
-	 * Constructor
-	 */
-	public SpotlightCard() {
-		super();
-	}
+    /**
+     * Constructor
+     */
+    public SpotlightCard() {
+        super();
+    }
 
-	@Override
-	public String toString() {
-		return "SpotlightCard";
-	}
+    @Override
+    public String toString() {
+        return "SpotlightCard";
+    }
 }

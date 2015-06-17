@@ -19,59 +19,59 @@ import java.util.Set;
  */
 public class UseSpotlightCard extends UseItemCard {
 
-	/**
-	 * Adds to {@link #spotlightTarget} the starting coordinate ({@link #target}
-	 * ) and the surrounding six
-	 */
-	private static Set<Coordinate> findSpotlightTarget(Model model,
-	        Coordinate target) {
-		Set<Coordinate> spotlightTarget = new HashSet<Coordinate>();
-		spotlightTarget.add(target);
-		spotlightTarget.addAll(model.getMap().getConnectedCoordinates(target));
-		return spotlightTarget;
-	}
+    /**
+     * Adds to {@link #spotlightTarget} the starting coordinate ({@link #target}
+     * ) and the surrounding six
+     */
+    private static Set<Coordinate> findSpotlightTarget(Model model,
+            Coordinate target) {
+        Set<Coordinate> spotlightTarget = new HashSet<Coordinate>();
+        spotlightTarget.add(target);
+        spotlightTarget.addAll(model.getMap().getConnectedCoordinates(target));
+        return spotlightTarget;
+    }
 
-	/**
-	 * Adds the players that are in {@link #spotlightTarget} in
-	 * {@link #foundPlayers}
-	 */
-	private static Set<Player> findPlayers(Model model, Set<Coordinate> target) {
-		Set<Player> foundPlayers = new HashSet<Player>();
-		for (Player p : model.getPlayers()) {
-			if (!p.getState().equals(PlayerState.DEAD)
-			        && target.contains(p.getLastPosition())) {
+    /**
+     * Adds the players that are in {@link #spotlightTarget} in
+     * {@link #foundPlayers}
+     */
+    private static Set<Player> findPlayers(Model model, Set<Coordinate> target) {
+        Set<Player> foundPlayers = new HashSet<Player>();
+        for (Player p : model.getPlayers()) {
+            if (!p.getState().equals(PlayerState.DEAD)
+                    && target.contains(p.getLastPosition())) {
 
-				foundPlayers.add(p);
+                foundPlayers.add(p);
 
-			}
-		}
-		return foundPlayers;
-	}
+            }
+        }
+        return foundPlayers;
+    }
 
-	/**
-	 * For every player in {@link #foundPlayers} generates a
-	 * {@link SpotlightNoise} and adds it to the noise logger in model
-	 */
-	private static void makeNoise(Model model, Set<Player> foundPlayers) {
-		Iterator<Player> it = foundPlayers.iterator();
-		while (it.hasNext()) {
-			Player currentPlayer = it.next();
-			Noise spotlightNoise = new SpotlightNoise(model.getRoundNumber(),
-			        currentPlayer, currentPlayer.getLastPosition());
-			model.addNoise(spotlightNoise);
-		}
-	}
+    /**
+     * For every player in {@link #foundPlayers} generates a
+     * {@link SpotlightNoise} and adds it to the noise logger in model
+     */
+    private static void makeNoise(Model model, Set<Player> foundPlayers) {
+        Iterator<Player> it = foundPlayers.iterator();
+        while (it.hasNext()) {
+            Player currentPlayer = it.next();
+            Noise spotlightNoise = new SpotlightNoise(model.getRoundNumber(),
+                    currentPlayer, currentPlayer.getLastPosition());
+            model.addNoise(spotlightNoise);
+        }
+    }
 
-	/**
-	 * Spots players in the targeted location
-	 */
-	public static Set<Player> useCard(Model model, Coordinate coordinate) {
-		Set<Coordinate> target = findSpotlightTarget(model, coordinate);
-		Set<Player> foundPlayers = findPlayers(model, target);
-		makeNoise(model, foundPlayers);
+    /**
+     * Spots players in the targeted location
+     */
+    public static Set<Player> useCard(Model model, Coordinate coordinate) {
+        Set<Coordinate> target = findSpotlightTarget(model, coordinate);
+        Set<Player> foundPlayers = findPlayers(model, target);
+        makeNoise(model, foundPlayers);
 
-		// might be needed in future
-		return foundPlayers;
+        // might be needed in future
+        return foundPlayers;
 
-	}
+    }
 }

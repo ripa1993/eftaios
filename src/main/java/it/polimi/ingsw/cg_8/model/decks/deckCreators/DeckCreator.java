@@ -9,11 +9,11 @@ import it.polimi.ingsw.cg_8.model.decks.Deck;
  * @version 1.0
  */
 public abstract class DeckCreator {
-	/**
-	 * Populates the deck
-	 * 
-	 * @return a complete deck
-	 */
-	public abstract Deck createDeck();
+    /**
+     * Populates the deck
+     * 
+     * @return a complete deck
+     */
+    public abstract Deck createDeck();
 
 }

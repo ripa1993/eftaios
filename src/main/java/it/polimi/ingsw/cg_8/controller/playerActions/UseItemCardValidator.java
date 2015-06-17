@@ -21,57 +21,57 @@ import java.util.List;
  * @version 1.0
  */
 public class UseItemCardValidator {
-	/**
-	 * Constructor
-	 */
-	private UseItemCardValidator() {
+    /**
+     * Constructor
+     */
+    private UseItemCardValidator() {
 
-	}
+    }
 
-	/**
-	 * Check if the player has the card he is trying to use, and if so, removes
-	 * it. It also prevent the player from using a card when he is already
-	 * upgraded with a card of the same type.
-	 * 
-	 * @param model
-	 *            The state of the game
-	 * @param card
-	 *            The card that the player is trying to use.
-	 * @return Whether the card can be used or not.
-	 */
-	public static boolean validateItemCardUsage(Model model, ItemCard card) {
+    /**
+     * Check if the player has the card he is trying to use, and if so, removes
+     * it. It also prevent the player from using a card when he is already
+     * upgraded with a card of the same type.
+     * 
+     * @param model
+     *            The state of the game
+     * @param card
+     *            The card that the player is trying to use.
+     * @return Whether the card can be used or not.
+     */
+    public static boolean validateItemCardUsage(Model model, ItemCard card) {
 
-		if (model.getCurrentPlayerReference().getCharacter() instanceof Alien) {
-			return false;
-		}
+        if (model.getCurrentPlayerReference().getCharacter() instanceof Alien) {
+            return false;
+        }
 
-		Human player = (Human) model.getCurrentPlayerReference().getCharacter();
-		if (card instanceof AdrenalineCard
-		        && player.getMaxAllowedMovement() == 2) {
-			return false;
-		}
-		if (card instanceof AttackCard && player.isAttackAllowed()) {
-			return false;
-		}
-		if (card instanceof SedativesCard && !player.hasToDrawSectorCard()) {
-			return false;
-		}
-		Sector playerPosition = model.getMap().getSectors()
-		        .get(model.getCurrentPlayerReference().getLastPosition());
-		if (card instanceof TeleportCard
-		        && playerPosition instanceof SpawnSector) {
-			return false;
-		}
+        Human player = (Human) model.getCurrentPlayerReference().getCharacter();
+        if (card instanceof AdrenalineCard
+                && player.getMaxAllowedMovement() == 2) {
+            return false;
+        }
+        if (card instanceof AttackCard && player.isAttackAllowed()) {
+            return false;
+        }
+        if (card instanceof SedativesCard && !player.hasToDrawSectorCard()) {
+            return false;
+        }
+        Sector playerPosition = model.getMap().getSectors()
+                .get(model.getCurrentPlayerReference().getLastPosition());
+        if (card instanceof TeleportCard
+                && playerPosition instanceof SpawnSector) {
+            return false;
+        }
 
-		List<ItemCard> heldCards = model.getCurrentPlayerReference().getHand()
-		        .getHeldCards();
-		for (ItemCard i : heldCards) {
-			if ((card.getClass()).equals(i.getClass())) {
-				heldCards.remove(i);
-				return true;
-			}
-		}
-		return false;
+        List<ItemCard> heldCards = model.getCurrentPlayerReference().getHand()
+                .getHeldCards();
+        for (ItemCard i : heldCards) {
+            if ((card.getClass()).equals(i.getClass())) {
+                heldCards.remove(i);
+                return true;
+            }
+        }
+        return false;
 
-	}
+    }
 }

@@ -12,33 +12,33 @@ import javax.xml.bind.annotation.XmlAccessorType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DangerousSector extends NormalSector {
-	/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = 7964533045952694323L;
+    private static final long serialVersionUID = 7964533045952694323L;
 
-	/**
-	 * Constructor for dangerous sector, used to perform checks and validations.
-	 * 
-	 * @param x
-	 *            column number
-	 * @param y
-	 *            row number
-	 */
-	public DangerousSector(int x, int y) {
-		super(x, y);
-	}
+    /**
+     * Constructor for dangerous sector, used to perform checks and validations.
+     * 
+     * @param x
+     *            column number
+     * @param y
+     *            row number
+     */
+    public DangerousSector(int x, int y) {
+        super(x, y);
+    }
 
-	/**
-	 * Default constructor used in the XML parsing.
-	 */
-	public DangerousSector() {
-		super();
-	}
+    /**
+     * Default constructor used in the XML parsing.
+     */
+    public DangerousSector() {
+        super();
+    }
 
-	@Override
-	public String toString() {
-		return "DS";
-	}
+    @Override
+    public String toString() {
+        return "DS";
+    }
 
 }

@@ -13,41 +13,41 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class ResponseCardTest {
-	ResponseCard response;
+    ResponseCard response;
 
-	@Before
-	public void init() {
-		List<ItemCard> list = new ArrayList<ItemCard>();
-		list.add(new TeleportCard());
-		list.add(new SpotlightCard());
-		list.add(new AttackCard());
-		response = new ResponseCard(list);
-	}
+    @Before
+    public void init() {
+        List<ItemCard> list = new ArrayList<ItemCard>();
+        list.add(new TeleportCard());
+        list.add(new SpotlightCard());
+        list.add(new AttackCard());
+        response = new ResponseCard(list);
+    }
 
-	@Test
-	public void testGetHand() {
-		assertEquals("TeleportCard SpotlightCard AttackCard",
-		        response.getHand());
-	}
+    @Test
+    public void testGetHand() {
+        assertEquals("TeleportCard SpotlightCard AttackCard",
+                response.getHand());
+    }
 
-	@Test
-	public void testGetCard1() {
-		assertEquals("TeleportCard", response.getCard1());
-	}
+    @Test
+    public void testGetCard1() {
+        assertEquals("TeleportCard", response.getCard1());
+    }
 
-	@Test
-	public void testGetCard2() {
-		assertEquals("SpotlightCard", response.getCard2());
-	}
+    @Test
+    public void testGetCard2() {
+        assertEquals("SpotlightCard", response.getCard2());
+    }
 
-	@Test
-	public void testGetCard3() {
-		assertEquals("AttackCard", response.getCard3());
-	}
+    @Test
+    public void testGetCard3() {
+        assertEquals("AttackCard", response.getCard3());
+    }
 
-	@Test
-	public void testNullCard() {
-		ResponseCard response2 = new ResponseCard(new ArrayList<ItemCard>());
-		assertEquals("No Card", response2.getCard1());
-	}
+    @Test
+    public void testNullCard() {
+        ResponseCard response2 = new ResponseCard(new ArrayList<ItemCard>());
+        assertEquals("No Card", response2.getCard1());
+    }
 }

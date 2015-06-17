@@ -12,33 +12,33 @@ import javax.xml.bind.annotation.XmlAccessorType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 public class SecureSector extends NormalSector {
-	/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = -8710341825606799472L;
+    private static final long serialVersionUID = -8710341825606799472L;
 
-	/**
-	 * Secure sector constructor, used to perform checks and validations.
-	 * 
-	 * @param x
-	 *            column number
-	 * @param y
-	 *            row number
-	 */
-	public SecureSector(int x, int y) {
-		super(x, y);
-	}
+    /**
+     * Secure sector constructor, used to perform checks and validations.
+     * 
+     * @param x
+     *            column number
+     * @param y
+     *            row number
+     */
+    public SecureSector(int x, int y) {
+        super(x, y);
+    }
 
-	/**
-	 * Default constructor used in the XML parsing.
-	 */
-	public SecureSector() {
-		super();
-	}
+    /**
+     * Default constructor used in the XML parsing.
+     */
+    public SecureSector() {
+        super();
+    }
 
-	@Override
-	public String toString() {
-		return "SS";
-	}
+    @Override
+    public String toString() {
+        return "SS";
+    }
 
 }

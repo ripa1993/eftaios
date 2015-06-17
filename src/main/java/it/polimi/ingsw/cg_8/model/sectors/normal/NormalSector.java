@@ -14,29 +14,29 @@ import it.polimi.ingsw.cg_8.model.sectors.Sector;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 public abstract class NormalSector extends Sector {
-	/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = -3925058303611953264L;
+    private static final long serialVersionUID = -3925058303611953264L;
 
-	/**
-	 * Default constructor for normal sector, used to perform checks and
-	 * validations.
-	 * 
-	 * @param x
-	 *            column number
-	 * @param y
-	 *            row number
-	 */
-	public NormalSector(int x, int y) {
-		super(x, y);
-	}
+    /**
+     * Default constructor for normal sector, used to perform checks and
+     * validations.
+     * 
+     * @param x
+     *            column number
+     * @param y
+     *            row number
+     */
+    public NormalSector(int x, int y) {
+        super(x, y);
+    }
 
-	/**
-	 * Default constructor used in the XML parsing.
-	 */
-	public NormalSector() {
-		super();
-	}
+    /**
+     * Default constructor used in the XML parsing.
+     */
+    public NormalSector() {
+        super();
+    }
 
 }

@@ -7,18 +7,18 @@ package it.polimi.ingsw.cg_8.model.player.character.alien;
  * @version 1.0
  */
 public class FedBehaviour implements AlienBehaviour {
-	/**
-	 * Max allowed distance
-	 */
-	private static final int DISTANCE = 3;
+    /**
+     * Max allowed distance
+     */
+    private static final int DISTANCE = 3;
 
-	@Override
-	public int getMaxMovementDistance() {
-		return DISTANCE;
-	}
+    @Override
+    public int getMaxMovementDistance() {
+        return DISTANCE;
+    }
 
-	@Override
-	public String toString() {
-		return "FedBehaviour";
-	}
+    @Override
+    public String toString() {
+        return "FedBehaviour";
+    }
 }

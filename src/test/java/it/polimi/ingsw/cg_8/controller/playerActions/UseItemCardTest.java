@@ -24,64 +24,64 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class UseItemCardTest {
-	Model model;
-	Player currentPlayer;
+    Model model;
+    Player currentPlayer;
 
-	@Before
-	public void init() throws NotAValidMapException,
-	        GameAlreadyRunningException, EmptyDeckException {
-		model = new Model(GameMapName.FERMI);
-		model.addPlayer("pippo");
-		model.addPlayer("pluto");
-		model.initGame();
-		currentPlayer = model.getPlayers().get(model.getCurrentPlayer());
-		if (currentPlayer.getCharacter() instanceof Alien) {
-			EndTurn.endTurn(model);
-			currentPlayer = model.getPlayers().get(model.getCurrentPlayer());
-		}
-	}
+    @Before
+    public void init() throws NotAValidMapException,
+            GameAlreadyRunningException, EmptyDeckException {
+        model = new Model(GameMapName.FERMI);
+        model.addPlayer("pippo");
+        model.addPlayer("pluto");
+        model.initGame();
+        currentPlayer = model.getPlayers().get(model.getCurrentPlayer());
+        if (currentPlayer.getCharacter() instanceof Alien) {
+            EndTurn.endTurn(model);
+            currentPlayer = model.getPlayers().get(model.getCurrentPlayer());
+        }
+    }
 
-	@Test
-	public void testUseAdrenalineCard() {
-		UseAdrenalineCard.useCard(model);
-		assertEquals(2, currentPlayer.getCharacter().getMaxAllowedMovement());
-	}
+    @Test
+    public void testUseAdrenalineCard() {
+        UseAdrenalineCard.useCard(model);
+        assertEquals(2, currentPlayer.getCharacter().getMaxAllowedMovement());
+    }
 
-	@Test
-	public void testUseAttackCard() {
-		UseAttackCard.useCard(model);
-		assertTrue(currentPlayer.getCharacter().isAttackAllowed());
-	}
+    @Test
+    public void testUseAttackCard() {
+        UseAttackCard.useCard(model);
+        assertTrue(currentPlayer.getCharacter().isAttackAllowed());
+    }
 
-	@Test
-	public void testUseDefenseCard() {
-		UseDefenseCard.useCard(currentPlayer);
-		assertTrue(currentPlayer.getCharacter().isDefendAllowed());
-	}
+    @Test
+    public void testUseDefenseCard() {
+        UseDefenseCard.useCard(currentPlayer);
+        assertTrue(currentPlayer.getCharacter().isDefendAllowed());
+    }
 
-	@Test
-	public void testUseSedativesCard() {
-		UseSedativesCard.useCard(model);
-		assertFalse(currentPlayer.getCharacter().hasToDrawSectorCard());
-	}
+    @Test
+    public void testUseSedativesCard() {
+        UseSedativesCard.useCard(model);
+        assertFalse(currentPlayer.getCharacter().hasToDrawSectorCard());
+    }
 
-	@Test
-	public void testUseTeleportCard() {
-		UseTeleportCard.useCard(model);
-		assertEquals(model.getMap().getHumanSpawn(),
-		        currentPlayer.getLastPosition());
-	}
+    @Test
+    public void testUseTeleportCard() {
+        UseTeleportCard.useCard(model);
+        assertEquals(model.getMap().getHumanSpawn(),
+                currentPlayer.getLastPosition());
+    }
 
-	@Test
-	public void testUseSpotlightCard() {
-		Set<Player> foundPlayers = UseSpotlightCard.useCard(model,
-		        new Coordinate(model.getMap().getHumanSpawn().getX(), model
-		                .getMap().getHumanSpawn().getY()));
-		System.out.println(model.getCurrentPlayerReference().getLastPosition()
-		        .toString());
-		System.out.println(foundPlayers);
+    @Test
+    public void testUseSpotlightCard() {
+        Set<Player> foundPlayers = UseSpotlightCard.useCard(model,
+                new Coordinate(model.getMap().getHumanSpawn().getX(), model
+                        .getMap().getHumanSpawn().getY()));
+        System.out.println(model.getCurrentPlayerReference().getLastPosition()
+                .toString());
+        System.out.println(foundPlayers);
 
-		System.out.println(model.getPlayers());
-		assertTrue(foundPlayers.containsAll(model.getPlayers()));
-	}
+        System.out.println(model.getPlayers());
+        assertTrue(foundPlayers.containsAll(model.getPlayers()));
+    }
 }

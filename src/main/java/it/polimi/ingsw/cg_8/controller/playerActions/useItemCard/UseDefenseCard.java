@@ -12,16 +12,16 @@ import it.polimi.ingsw.cg_8.model.player.character.human.Human;
  */
 public class UseDefenseCard extends UseItemCard {
 
-	/**
-	 * Defends a player
-	 * 
-	 * @param player
-	 *            player to be defended
-	 */
+    /**
+     * Defends a player
+     * 
+     * @param player
+     *            player to be defended
+     */
 
-	public static void useCard(Player player) {
-		// Assume that the player is a human by hypothesis
-		Human currentPlayerCharacter = (Human) player.getCharacter();
-		currentPlayerCharacter.enableDefend();
-	}
+    public static void useCard(Player player) {
+        // Assume that the player is a human by hypothesis
+        Human currentPlayerCharacter = (Human) player.getCharacter();
+        currentPlayerCharacter.enableDefend();
+    }
 }

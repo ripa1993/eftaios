@@ -7,15 +7,15 @@ package it.polimi.ingsw.cg_8.model.cards.dangerousSectorCards;
  *
  */
 public class SilenceCard extends DangerousSectorCard {
-	/**
-	 * Constructor
-	 */
-	public SilenceCard() {
-		super();
-	}
+    /**
+     * Constructor
+     */
+    public SilenceCard() {
+        super();
+    }
 
-	@Override
-	public String toString() {
-		return "SilenceCard";
-	}
+    @Override
+    public String toString() {
+        return "SilenceCard";
+    }
 }
