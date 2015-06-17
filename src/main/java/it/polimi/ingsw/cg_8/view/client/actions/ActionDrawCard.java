@@ -1,8 +1,10 @@
 package it.polimi.ingsw.cg_8.view.client.actions;
 
 import java.io.Serializable;
+
 /**
  * Action: draw a dangerous sector card from its deck
+ * 
  * @author Simone
  *
  */

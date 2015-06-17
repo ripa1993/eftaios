@@ -52,7 +52,7 @@ public class ResponseState implements ServerResponse, Serializable {
 	 *            player round number
 	 */
 	public ResponseState(String playerName, String character, String state,
-			Coordinate position, int roundNumber) {
+	        Coordinate position, int roundNumber) {
 		this.playerName = playerName;
 		this.character = character;
 		this.state = state;
@@ -103,8 +103,8 @@ public class ResponseState implements ServerResponse, Serializable {
 	@Override
 	public String toString() {
 		return "Your State - Player: " + playerName + ", Character: "
-				+ character + ", State: " + state + ", Position: " + position
-				+ ", Round Number: " + roundNumber;
+		        + character + ", State: " + state + ", Position: " + position
+		        + ", Round Number: " + roundNumber;
 	}
 
 }

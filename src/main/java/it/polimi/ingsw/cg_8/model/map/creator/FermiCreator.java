@@ -26,7 +26,7 @@ public class FermiCreator extends MapCreator {
 	 * Log4j logger
 	 */
 	private static final Logger LOGGER = LogManager
-			.getLogger(FermiCreator.class);
+	        .getLogger(FermiCreator.class);
 
 	/**
 	 * Constructor
@@ -44,7 +44,7 @@ public class FermiCreator extends MapCreator {
 
 			Unmarshaller unmarshaller = jc.createUnmarshaller();
 			return (GameMapSet) unmarshaller.unmarshal(new File(
-					Resource.FERMI_XML));
+			        Resource.FERMI_XML));
 
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);

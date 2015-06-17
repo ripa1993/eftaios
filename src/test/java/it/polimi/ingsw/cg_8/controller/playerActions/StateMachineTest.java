@@ -63,12 +63,10 @@ public class StateMachineTest {
 			response = message;
 		}
 
-
 		// @Override
 		// public void update(Observable o, Object arg) {
 		//
 		// }
-
 
 	}
 
@@ -93,10 +91,10 @@ public class StateMachineTest {
 		boolean result = false;
 		if (p.getCharacter() instanceof Human) {
 			result = StateMachine.evaluateAction(controller, new ActionMove(
-					new Coordinate(12, 10)), p);
+			        new Coordinate(12, 10)), p);
 		} else {
 			result = StateMachine.evaluateAction(controller, new ActionMove(
-					new Coordinate(12, 7)), p);
+			        new Coordinate(12, 7)), p);
 		}
 		assertTrue(result);
 	}
@@ -107,10 +105,10 @@ public class StateMachineTest {
 		boolean result = false;
 		if (p.getCharacter() instanceof Human) {
 			result = StateMachine.evaluateAction(controller, new ActionMove(
-					new Coordinate(12, 11)), p);
+			        new Coordinate(12, 11)), p);
 		} else {
 			result = StateMachine.evaluateAction(controller, new ActionMove(
-					new Coordinate(12, 8)), p);
+			        new Coordinate(12, 8)), p);
 		}
 		assertFalse(result);
 	}
@@ -135,15 +133,15 @@ public class StateMachineTest {
 		while (controller.getModel().getCurrentPlayerReference().getCharacter() instanceof Human) {
 
 			StateMachine.evaluateAction(controller, new ActionMove(
-					new Coordinate(12, 10)), currPlayer);
+			        new Coordinate(12, 10)), currPlayer);
 			StateMachine.evaluateAction(controller, new ActionEndTurn(),
-					currPlayer);
+			        currPlayer);
 			currPlayer = controller.getModel().getCurrentPlayerReference();
 		}
 		StateMachine.evaluateAction(controller, new ActionMove(new Coordinate(
-				12, 7)), currPlayer);
+		        12, 7)), currPlayer);
 		result = StateMachine.evaluateAction(controller, new ActionAttack(),
-				currPlayer);
+		        currPlayer);
 		assertTrue(result);
 	}
 
@@ -153,7 +151,7 @@ public class StateMachineTest {
 		boolean result = false;
 
 		result = StateMachine.evaluateAction(controller, new ActionChat(
-				"asdasdasd"), p);
+		        "asdasdasd"), p);
 		assertTrue(result);
 	}
 
@@ -163,7 +161,7 @@ public class StateMachineTest {
 		boolean result = false;
 
 		result = StateMachine.evaluateAction(controller,
-				new ActionGetAvailableAction(), p);
+		        new ActionGetAvailableAction(), p);
 		assertTrue(result);
 	}
 
@@ -173,10 +171,9 @@ public class StateMachineTest {
 		boolean result = false;
 
 		result = StateMachine.evaluateAction(controller,
-				new ActionGetReachableCoordinates(), p);
+		        new ActionGetReachableCoordinates(), p);
 		assertTrue(result);
 	}
-
 
 	@Test
 	public void alienCardUsageTest() {
@@ -189,14 +186,14 @@ public class StateMachineTest {
 		while (controller.getModel().getCurrentPlayerReference().getCharacter() instanceof Human) {
 
 			StateMachine.evaluateAction(controller, new ActionMove(
-					new Coordinate(12, 10)), currPlayer);
+			        new Coordinate(12, 10)), currPlayer);
 			StateMachine.evaluateAction(controller, new ActionEndTurn(),
-					currPlayer);
+			        currPlayer);
 			currPlayer = controller.getModel().getCurrentPlayerReference();
 		}
 		currPlayer.getHand().addItemCard(new SedativesCard());
 		result = StateMachine.evaluateAction(controller, new ActionUseCard(
-				new SedativesCard()), currPlayer);
+		        new SedativesCard()), currPlayer);
 		assertFalse(result);
 	}
 
@@ -211,14 +208,14 @@ public class StateMachineTest {
 		while (controller.getModel().getCurrentPlayerReference().getCharacter() instanceof Alien) {
 
 			StateMachine.evaluateAction(controller, new ActionMove(
-					new Coordinate(12, 7)), currPlayer);
+			        new Coordinate(12, 7)), currPlayer);
 			StateMachine.evaluateAction(controller, new ActionEndTurn(),
-					currPlayer);
+			        currPlayer);
 			currPlayer = controller.getModel().getCurrentPlayerReference();
 		}
 		currPlayer.getHand().addItemCard(new AdrenalineCard());
 		result = StateMachine.evaluateAction(controller, new ActionUseCard(
-				new AdrenalineCard()), currPlayer);
+		        new AdrenalineCard()), currPlayer);
 		assertTrue(result);
 	}
 
@@ -233,16 +230,16 @@ public class StateMachineTest {
 		while (controller.getModel().getCurrentPlayerReference().getCharacter() instanceof Alien) {
 
 			StateMachine.evaluateAction(controller, new ActionMove(
-					new Coordinate(12, 7)), currPlayer);
+			        new Coordinate(12, 7)), currPlayer);
 			StateMachine.evaluateAction(controller, new ActionEndTurn(),
-					currPlayer);
+			        currPlayer);
 			currPlayer = controller.getModel().getCurrentPlayerReference();
 		}
 		currPlayer.getHand().addItemCard(new AdrenalineCard());
 		StateMachine.evaluateAction(controller, new ActionMove(new Coordinate(
-				12, 10)), currPlayer);
+		        12, 10)), currPlayer);
 		result = StateMachine.evaluateAction(controller, new ActionUseCard(
-				new AdrenalineCard()), currPlayer);
+		        new AdrenalineCard()), currPlayer);
 		assertFalse(result);
 	}
 
@@ -257,14 +254,14 @@ public class StateMachineTest {
 		while (controller.getModel().getCurrentPlayerReference().getCharacter() instanceof Alien) {
 
 			StateMachine.evaluateAction(controller, new ActionMove(
-					new Coordinate(12, 7)), currPlayer);
+			        new Coordinate(12, 7)), currPlayer);
 			StateMachine.evaluateAction(controller, new ActionEndTurn(),
-					currPlayer);
+			        currPlayer);
 			currPlayer = controller.getModel().getCurrentPlayerReference();
 		}
 		currPlayer.getHand().addItemCard(new SpotlightCard());
 		result = StateMachine.evaluateAction(controller, new ActionUseCard(
-				new SpotlightCard(), new Coordinate(12, 10)), currPlayer);
+		        new SpotlightCard(), new Coordinate(12, 10)), currPlayer);
 		assertTrue(result);
 	}
 
@@ -279,16 +276,16 @@ public class StateMachineTest {
 		while (controller.getModel().getCurrentPlayerReference().getCharacter() instanceof Alien) {
 
 			StateMachine.evaluateAction(controller, new ActionMove(
-					new Coordinate(12, 7)), currPlayer);
+			        new Coordinate(12, 7)), currPlayer);
 			StateMachine.evaluateAction(controller, new ActionEndTurn(),
-					currPlayer);
+			        currPlayer);
 			currPlayer = controller.getModel().getCurrentPlayerReference();
 		}
 		currPlayer.getHand().addItemCard(new SpotlightCard());
 		StateMachine.evaluateAction(controller, new ActionMove(new Coordinate(
-				12, 10)), currPlayer);
+		        12, 10)), currPlayer);
 		result = StateMachine.evaluateAction(controller, new ActionUseCard(
-				new SpotlightCard(), new Coordinate(12, 10)), currPlayer);
+		        new SpotlightCard(), new Coordinate(12, 10)), currPlayer);
 		assertTrue(result);
 	}
 
@@ -303,14 +300,14 @@ public class StateMachineTest {
 		while (controller.getModel().getCurrentPlayerReference().getCharacter() instanceof Alien) {
 
 			StateMachine.evaluateAction(controller, new ActionMove(
-					new Coordinate(12, 7)), currPlayer);
+			        new Coordinate(12, 7)), currPlayer);
 			StateMachine.evaluateAction(controller, new ActionEndTurn(),
-					currPlayer);
+			        currPlayer);
 			currPlayer = controller.getModel().getCurrentPlayerReference();
 		}
 		currPlayer.getHand().addItemCard(new SedativesCard());
 		result = StateMachine.evaluateAction(controller, new ActionUseCard(
-				new SedativesCard()), currPlayer);
+		        new SedativesCard()), currPlayer);
 		assertTrue(result);
 	}
 
@@ -325,16 +322,16 @@ public class StateMachineTest {
 		while (controller.getModel().getCurrentPlayerReference().getCharacter() instanceof Alien) {
 
 			StateMachine.evaluateAction(controller, new ActionMove(
-					new Coordinate(12, 7)), currPlayer);
+			        new Coordinate(12, 7)), currPlayer);
 			StateMachine.evaluateAction(controller, new ActionEndTurn(),
-					currPlayer);
+			        currPlayer);
 			currPlayer = controller.getModel().getCurrentPlayerReference();
 		}
 		currPlayer.getHand().addItemCard(new SedativesCard());
 		StateMachine.evaluateAction(controller, new ActionMove(new Coordinate(
-				12, 10)), currPlayer);
+		        12, 10)), currPlayer);
 		result = StateMachine.evaluateAction(controller, new ActionUseCard(
-				new SedativesCard()), currPlayer);
+		        new SedativesCard()), currPlayer);
 		assertTrue(result);
 	}
 
@@ -349,14 +346,14 @@ public class StateMachineTest {
 		while (controller.getModel().getCurrentPlayerReference().getCharacter() instanceof Alien) {
 
 			StateMachine.evaluateAction(controller, new ActionMove(
-					new Coordinate(12, 7)), currPlayer);
+			        new Coordinate(12, 7)), currPlayer);
 			StateMachine.evaluateAction(controller, new ActionEndTurn(),
-					currPlayer);
+			        currPlayer);
 			currPlayer = controller.getModel().getCurrentPlayerReference();
 		}
 		currPlayer.getHand().addItemCard(new AttackCard());
 		result = StateMachine.evaluateAction(controller, new ActionUseCard(
-				new AttackCard()), currPlayer);
+		        new AttackCard()), currPlayer);
 		assertTrue(result);
 	}
 
@@ -370,16 +367,16 @@ public class StateMachineTest {
 		while (controller.getModel().getCurrentPlayerReference().getCharacter() instanceof Alien) {
 
 			StateMachine.evaluateAction(controller, new ActionMove(
-					new Coordinate(12, 7)), currPlayer);
+			        new Coordinate(12, 7)), currPlayer);
 			StateMachine.evaluateAction(controller, new ActionEndTurn(),
-					currPlayer);
+			        currPlayer);
 			currPlayer = controller.getModel().getCurrentPlayerReference();
 		}
 		currPlayer.getHand().addItemCard(new TeleportCard());
 		StateMachine.evaluateAction(controller, new ActionMove(new Coordinate(
-				12, 10)), currPlayer);
+		        12, 10)), currPlayer);
 		StateMachine.evaluateAction(controller, new ActionUseCard(
-				new TeleportCard()), currPlayer);
+		        new TeleportCard()), currPlayer);
 
 		assertTrue(currPlayer.getLastPosition().equals(new Coordinate(11, 9)));
 	}
@@ -395,15 +392,15 @@ public class StateMachineTest {
 		while (controller.getModel().getCurrentPlayerReference().getCharacter() instanceof Alien) {
 
 			StateMachine.evaluateAction(controller, new ActionMove(
-					new Coordinate(12, 7)), currPlayer);
+			        new Coordinate(12, 7)), currPlayer);
 			StateMachine.evaluateAction(controller, new ActionEndTurn(),
-					currPlayer);
+			        currPlayer);
 			currPlayer = controller.getModel().getCurrentPlayerReference();
 		}
 		StateMachine.evaluateAction(controller, new ActionMove(new Coordinate(
-				12, 10)), currPlayer);
+		        12, 10)), currPlayer);
 		result = StateMachine.evaluateAction(controller, new ActionEndTurn(),
-				currPlayer);
+		        currPlayer);
 		assertTrue(result);
 	}
 
@@ -421,21 +418,21 @@ public class StateMachineTest {
 		while (controller.getModel().getCurrentPlayerReference().getCharacter() instanceof Alien) {
 
 			StateMachine.evaluateAction(controller, new ActionMove(
-					new Coordinate(12, 7)), currPlayer);
+			        new Coordinate(12, 7)), currPlayer);
 			StateMachine.evaluateAction(controller, new ActionEndTurn(),
-					currPlayer);
+			        currPlayer);
 			currPlayer = controller.getModel().getCurrentPlayerReference();
 		}
 		result = StateMachine.evaluateAction(controller, new ActionEndTurn(),
-				currPlayer);
+		        currPlayer);
 		assertFalse(result);
 	}
 
 	@Test
 	public void getHandTest() {
 		boolean result = StateMachine.evaluateAction(controller,
-				new ActionGetAvailableAction(), controller.getModel()
-						.getCurrentPlayerReference());
+		        new ActionGetAvailableAction(), controller.getModel()
+		                .getCurrentPlayerReference());
 		assertTrue(result);
 	}
 
@@ -444,7 +441,7 @@ public class StateMachineTest {
 		Player oldPlayer = controller.getModel().getCurrentPlayerReference();
 		EndTurn.endTurn(controller.getModel());
 		boolean result = StateMachine.evaluateAction(controller,
-				new ActionMove(new Coordinate(1, 1)), oldPlayer);
+		        new ActionMove(new Coordinate(1, 1)), oldPlayer);
 		assertFalse(result);
 	}
 
@@ -455,12 +452,12 @@ public class StateMachineTest {
 		}
 		controller.getModel().setTurnPhase(TurnPhase.TURN_BEGIN);
 		controller.getModel().getCurrentPlayerReference()
-				.setPosition(new Coordinate(1, 1));
+		        .setPosition(new Coordinate(1, 1));
 		controller.getModel().getCurrentPlayerReference().getHand()
-				.addItemCard(new TeleportCard());
+		        .addItemCard(new TeleportCard());
 		boolean result = StateMachine.evaluateAction(controller,
-				new ActionUseCard(new TeleportCard()), controller.getModel()
-						.getCurrentPlayerReference());
+		        new ActionUseCard(new TeleportCard()), controller.getModel()
+		                .getCurrentPlayerReference());
 		assertTrue(result);
 	}
 
@@ -470,13 +467,13 @@ public class StateMachineTest {
 			EndTurn.endTurn(controller.getModel());
 		}
 		controller.getModel().getCurrentPlayerReference()
-				.setPosition(new Coordinate(1, 1));
+		        .setPosition(new Coordinate(1, 1));
 		controller.getModel().getCurrentPlayerReference().getHand()
-				.addItemCard(new AttackCard());
+		        .addItemCard(new AttackCard());
 		controller.getModel().setTurnPhase(TurnPhase.MOVEMENT_DONE_NOT_DS);
 		boolean result = StateMachine.evaluateAction(controller,
-				new ActionUseCard(new AttackCard()), controller.getModel()
-						.getCurrentPlayerReference());
+		        new ActionUseCard(new AttackCard()), controller.getModel()
+		                .getCurrentPlayerReference());
 		assertTrue(result);
 	}
 
@@ -486,11 +483,11 @@ public class StateMachineTest {
 			EndTurn.endTurn(controller.getModel());
 		}
 		controller.getModel().getCurrentPlayerReference()
-				.setPosition(new Coordinate(1, 1));
+		        .setPosition(new Coordinate(1, 1));
 		controller.getModel().setTurnPhase(TurnPhase.MOVEMENT_DONE_DS);
 		boolean result = StateMachine.evaluateAction(controller,
-				new ActionAttack(), controller.getModel()
-						.getCurrentPlayerReference());
+		        new ActionAttack(), controller.getModel()
+		                .getCurrentPlayerReference());
 		assertTrue(result);
 	}
 
@@ -500,11 +497,11 @@ public class StateMachineTest {
 			EndTurn.endTurn(controller.getModel());
 		}
 		controller.getModel().getCurrentPlayerReference()
-				.setPosition(new Coordinate(1, 1));
+		        .setPosition(new Coordinate(1, 1));
 		controller.getModel().setTurnPhase(TurnPhase.MOVEMENT_DONE_DS);
 		boolean result = StateMachine.evaluateAction(controller,
-				new ActionDrawCard(), controller.getModel()
-						.getCurrentPlayerReference());
+		        new ActionDrawCard(), controller.getModel()
+		                .getCurrentPlayerReference());
 		assertTrue(result);
 	}
 
@@ -514,11 +511,11 @@ public class StateMachineTest {
 			EndTurn.endTurn(controller.getModel());
 		}
 		controller.getModel().getCurrentPlayerReference()
-				.setPosition(new Coordinate(1, 1));
+		        .setPosition(new Coordinate(1, 1));
 		controller.getModel().setTurnPhase(TurnPhase.MOVEMENT_DONE_DS);
 		boolean result = StateMachine.evaluateAction(controller,
-				new ActionUseCard(new TeleportCard()), controller.getModel()
-						.getCurrentPlayerReference());
+		        new ActionUseCard(new TeleportCard()), controller.getModel()
+		                .getCurrentPlayerReference());
 		assertFalse(result);
 	}
 
@@ -528,13 +525,13 @@ public class StateMachineTest {
 			EndTurn.endTurn(controller.getModel());
 		}
 		controller.getModel().getCurrentPlayerReference()
-				.setPosition(new Coordinate(1, 1));
+		        .setPosition(new Coordinate(1, 1));
 		controller.getModel().getCurrentPlayerReference().getHand()
-				.addItemCard(new TeleportCard());
+		        .addItemCard(new TeleportCard());
 		controller.getModel().setTurnPhase(TurnPhase.MOVEMENT_DONE_DS);
 		boolean result = StateMachine.evaluateAction(controller,
-				new ActionUseCard(new TeleportCard()), controller.getModel()
-						.getCurrentPlayerReference());
+		        new ActionUseCard(new TeleportCard()), controller.getModel()
+		                .getCurrentPlayerReference());
 		assertTrue(result);
 	}
 
@@ -544,13 +541,13 @@ public class StateMachineTest {
 			EndTurn.endTurn(controller.getModel());
 		}
 		controller.getModel().getCurrentPlayerReference()
-				.setPosition(new Coordinate(1, 1));
+		        .setPosition(new Coordinate(1, 1));
 		controller.getModel().getCurrentPlayerReference().getHand()
-				.addItemCard(new SpotlightCard());
+		        .addItemCard(new SpotlightCard());
 		controller.getModel().setTurnPhase(TurnPhase.MOVEMENT_DONE_DS);
 		boolean result = StateMachine.evaluateAction(controller,
-				new ActionUseCard(new SpotlightCard(), new Coordinate(6, 6)),
-				controller.getModel().getCurrentPlayerReference());
+		        new ActionUseCard(new SpotlightCard(), new Coordinate(6, 6)),
+		        controller.getModel().getCurrentPlayerReference());
 		assertTrue(result);
 	}
 
@@ -560,13 +557,13 @@ public class StateMachineTest {
 			EndTurn.endTurn(controller.getModel());
 		}
 		controller.getModel().getCurrentPlayerReference()
-				.setPosition(new Coordinate(1, 1));
+		        .setPosition(new Coordinate(1, 1));
 		controller.getModel().getCurrentPlayerReference().getHand()
-				.addItemCard(new SedativesCard());
+		        .addItemCard(new SedativesCard());
 		controller.getModel().setTurnPhase(TurnPhase.MOVEMENT_DONE_DS);
 		boolean result = StateMachine.evaluateAction(controller,
-				new ActionUseCard(new SedativesCard()), controller.getModel()
-						.getCurrentPlayerReference());
+		        new ActionUseCard(new SedativesCard()), controller.getModel()
+		                .getCurrentPlayerReference());
 		assertTrue(result);
 	}
 
@@ -576,13 +573,13 @@ public class StateMachineTest {
 			EndTurn.endTurn(controller.getModel());
 		}
 		controller.getModel().getCurrentPlayerReference()
-				.setPosition(new Coordinate(1, 1));
+		        .setPosition(new Coordinate(1, 1));
 		controller.getModel().getCurrentPlayerReference().getHand()
-				.addItemCard(new AttackCard());
+		        .addItemCard(new AttackCard());
 		controller.getModel().setTurnPhase(TurnPhase.MOVEMENT_DONE_DS);
 		boolean result = StateMachine.evaluateAction(controller,
-				new ActionUseCard(new AttackCard()), controller.getModel()
-						.getCurrentPlayerReference());
+		        new ActionUseCard(new AttackCard()), controller.getModel()
+		                .getCurrentPlayerReference());
 		assertTrue(result);
 	}
 
@@ -592,13 +589,13 @@ public class StateMachineTest {
 			EndTurn.endTurn(controller.getModel());
 		}
 		controller.getModel().getCurrentPlayerReference()
-				.setPosition(new Coordinate(1, 1));
+		        .setPosition(new Coordinate(1, 1));
 		controller.getModel().getCurrentPlayerReference().getHand()
-				.addItemCard(new AttackCard());
+		        .addItemCard(new AttackCard());
 		controller.getModel().setTurnPhase(TurnPhase.ATTACK_DONE);
 		boolean result = StateMachine.evaluateAction(controller,
-				new ActionEndTurn(), controller.getModel()
-						.getCurrentPlayerReference());
+		        new ActionEndTurn(), controller.getModel()
+		                .getCurrentPlayerReference());
 		assertTrue(result);
 	}
 
@@ -608,13 +605,13 @@ public class StateMachineTest {
 			EndTurn.endTurn(controller.getModel());
 		}
 		controller.getModel().getCurrentPlayerReference()
-				.setPosition(new Coordinate(1, 1));
+		        .setPosition(new Coordinate(1, 1));
 		controller.getModel().getCurrentPlayerReference().getHand()
-				.addItemCard(new TeleportCard());
+		        .addItemCard(new TeleportCard());
 		controller.getModel().setTurnPhase(TurnPhase.ATTACK_DONE);
 		boolean result = StateMachine.evaluateAction(controller,
-				new ActionUseCard(new TeleportCard()), controller.getModel()
-						.getCurrentPlayerReference());
+		        new ActionUseCard(new TeleportCard()), controller.getModel()
+		                .getCurrentPlayerReference());
 		assertTrue(result);
 	}
 
@@ -624,13 +621,13 @@ public class StateMachineTest {
 			EndTurn.endTurn(controller.getModel());
 		}
 		controller.getModel().getCurrentPlayerReference()
-				.setPosition(new Coordinate(1, 1));
+		        .setPosition(new Coordinate(1, 1));
 		controller.getModel().getCurrentPlayerReference().getHand()
-				.addItemCard(new SpotlightCard());
+		        .addItemCard(new SpotlightCard());
 		controller.getModel().setTurnPhase(TurnPhase.ATTACK_DONE);
 		boolean result = StateMachine.evaluateAction(controller,
-				new ActionUseCard(new SpotlightCard(), new Coordinate(6, 6)),
-				controller.getModel().getCurrentPlayerReference());
+		        new ActionUseCard(new SpotlightCard(), new Coordinate(6, 6)),
+		        controller.getModel().getCurrentPlayerReference());
 		assertTrue(result);
 	}
 
@@ -640,13 +637,13 @@ public class StateMachineTest {
 			EndTurn.endTurn(controller.getModel());
 		}
 		controller.getModel().getCurrentPlayerReference()
-				.setPosition(new Coordinate(1, 1));
+		        .setPosition(new Coordinate(1, 1));
 		controller.getModel().getCurrentPlayerReference().getHand()
-				.addItemCard(new SpotlightCard());
+		        .addItemCard(new SpotlightCard());
 		controller.getModel().setTurnPhase(TurnPhase.WAITING_FAKE_NOISE);
 		boolean result = StateMachine.evaluateAction(controller,
-				new ActionFakeNoise(new Coordinate(9, 9)), controller
-						.getModel().getCurrentPlayerReference());
+		        new ActionFakeNoise(new Coordinate(9, 9)), controller
+		                .getModel().getCurrentPlayerReference());
 		assertTrue(result);
 	}
 
@@ -656,13 +653,13 @@ public class StateMachineTest {
 			EndTurn.endTurn(controller.getModel());
 		}
 		controller.getModel().getCurrentPlayerReference()
-				.setPosition(new Coordinate(1, 1));
+		        .setPosition(new Coordinate(1, 1));
 		controller.getModel().getCurrentPlayerReference().getHand()
-				.addItemCard(new SpotlightCard());
+		        .addItemCard(new SpotlightCard());
 		controller.getModel().setTurnPhase(TurnPhase.DRAWN_CARD);
 		boolean result = StateMachine.evaluateAction(controller,
-				new ActionEndTurn(), controller.getModel()
-						.getCurrentPlayerReference());
+		        new ActionEndTurn(), controller.getModel()
+		                .getCurrentPlayerReference());
 		assertTrue(result);
 	}
 
@@ -672,13 +669,13 @@ public class StateMachineTest {
 			EndTurn.endTurn(controller.getModel());
 		}
 		controller.getModel().getCurrentPlayerReference()
-				.setPosition(new Coordinate(1, 1));
+		        .setPosition(new Coordinate(1, 1));
 		controller.getModel().getCurrentPlayerReference().getHand()
-				.addItemCard(new TeleportCard());
+		        .addItemCard(new TeleportCard());
 		controller.getModel().setTurnPhase(TurnPhase.DRAWN_CARD);
 		boolean result = StateMachine.evaluateAction(controller,
-				new ActionUseCard(new TeleportCard()), controller.getModel()
-						.getCurrentPlayerReference());
+		        new ActionUseCard(new TeleportCard()), controller.getModel()
+		                .getCurrentPlayerReference());
 		assertTrue(result);
 	}
 
@@ -688,13 +685,13 @@ public class StateMachineTest {
 			EndTurn.endTurn(controller.getModel());
 		}
 		controller.getModel().getCurrentPlayerReference()
-				.setPosition(new Coordinate(1, 1));
+		        .setPosition(new Coordinate(1, 1));
 		controller.getModel().getCurrentPlayerReference().getHand()
-				.addItemCard(new SpotlightCard());
+		        .addItemCard(new SpotlightCard());
 		controller.getModel().setTurnPhase(TurnPhase.DRAWN_CARD);
 		boolean result = StateMachine.evaluateAction(controller,
-				new ActionUseCard(new SpotlightCard(), new Coordinate(6, 6)),
-				controller.getModel().getCurrentPlayerReference());
+		        new ActionUseCard(new SpotlightCard(), new Coordinate(6, 6)),
+		        controller.getModel().getCurrentPlayerReference());
 		assertTrue(result);
 	}
 

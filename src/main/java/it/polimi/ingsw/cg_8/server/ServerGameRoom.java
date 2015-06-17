@@ -20,7 +20,7 @@ import org.apache.logging.log4j.Logger;
  * @version 1.0
  */
 public class ServerGameRoom extends ServerPublisher implements
-		ServerGameRoomInterface {
+        ServerGameRoomInterface {
 	/**
 	 * Reference to the client assigned to a specific instance of this class,
 	 * used to send messages to it.
@@ -30,7 +30,7 @@ public class ServerGameRoom extends ServerPublisher implements
 	 * Log4j logger
 	 */
 	private static final Logger LOGGER = LogManager
-			.getLogger(ServerGameRoom.class);
+	        .getLogger(ServerGameRoom.class);
 
 	/**
 	 * The class has to be exported to be used by the client.
@@ -56,11 +56,11 @@ public class ServerGameRoom extends ServerPublisher implements
 	 */
 	@Override
 	public boolean makeAction(int clientId, ClientAction action)
-			throws RemoteException {
+	        throws RemoteException {
 
 		Controller controller = Server.getId2Controller().get(clientId);
 		boolean result = StateMachine.evaluateAction(controller, action,
-				controller.getPlayerById(clientId));
+		        controller.getPlayerById(clientId));
 		LOGGER.debug(result);
 		/**
 		 * Can be used to print the action result on the client, for debugging

@@ -27,7 +27,7 @@ public class DrawDangerousSectorCardTest {
 			model.addPlayer("C");
 			model.initGame();
 		} catch (GameAlreadyRunningException | NotAValidMapException
-				| EmptyDeckException e) {
+		        | EmptyDeckException e) {
 			System.err.println(e.getMessage());
 		}
 
@@ -63,11 +63,9 @@ public class DrawDangerousSectorCardTest {
 					result = draw.isDiscardedItemCard();
 				}
 			}
-		}while (!drawnItem);
-		assertTrue(result);	
+		} while (!drawnItem);
+		assertTrue(result);
 	}
-
-
 
 	@Test
 	public void testIsEmptyItemDeck() {
@@ -76,12 +74,12 @@ public class DrawDangerousSectorCardTest {
 		currPlayer.getHand().addItemCard(new TeleportCard());
 		currPlayer.getHand().addItemCard(new TeleportCard());
 		ItemDeck id = (ItemDeck) model.getItemDeck();
-		for(int i = 0; i<30; i++){
-				try {
-					id.drawCard();
-				} catch (EmptyDeckException e) {
+		for (int i = 0; i < 30; i++) {
+			try {
+				id.drawCard();
+			} catch (EmptyDeckException e) {
 
-				}
+			}
 		}
 		boolean drawnItem = false;
 		boolean result = false;
@@ -95,7 +93,7 @@ public class DrawDangerousSectorCardTest {
 					result = draw.isEmptyItemDeck();
 				}
 			}
-		}while (!drawnItem);
+		} while (!drawnItem);
 		assertTrue(result);
 	}
 

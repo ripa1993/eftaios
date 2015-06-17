@@ -19,37 +19,38 @@ public class MovementValidatorTest {
 
 	@Before
 	public void init() throws NotAValidMapException,
-			GameAlreadyRunningException, EmptyDeckException {
+	        GameAlreadyRunningException, EmptyDeckException {
 		model = new Model(GameMapName.FERMI);
 		model.addPlayer("player1");
 		model.addPlayer("player2");
 		model.initGame();
 		currentPlayer = model.getPlayers().get(model.getCurrentPlayer());
-		//currentPlayer.cycleState();
+		// currentPlayer.cycleState();
 		System.out.println("Turn0" + model.getPlayers());
 	}
-	
-	
+
 	@Test
 	public void validMoveHuman() {
 		boolean check = false;
-		if(currentPlayer.getCharacter() instanceof Human) {
-			check = MovementValidator.validateMove(model, new Coordinate(11,10));
-		}
-		else {
-			check = MovementValidator.validateMove(model, new Coordinate(11,7));
+		if (currentPlayer.getCharacter() instanceof Human) {
+			check = MovementValidator.validateMove(model,
+			        new Coordinate(11, 10));
+		} else {
+			check = MovementValidator
+			        .validateMove(model, new Coordinate(11, 7));
 		}
 		assertTrue(check);
 	}
-	
+
 	@Test
 	public void notValidMoveHuman() {
 		boolean check = true;
-		if(currentPlayer.getCharacter() instanceof Human) {
-			check = MovementValidator.validateMove(model, new Coordinate(14,8));
-		}
-		else {
-			check = MovementValidator.validateMove(model, new Coordinate(11,118));
+		if (currentPlayer.getCharacter() instanceof Human) {
+			check = MovementValidator
+			        .validateMove(model, new Coordinate(14, 8));
+		} else {
+			check = MovementValidator.validateMove(model, new Coordinate(11,
+			        118));
 		}
 		assertFalse(check);
 	}

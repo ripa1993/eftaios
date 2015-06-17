@@ -11,12 +11,14 @@ public class AdrenalineCard extends ItemCard {
 	 * 
 	 */
 	private static final long serialVersionUID = -622452092576988230L;
+
 	/**
 	 * Constructor
 	 */
 	public AdrenalineCard() {
 		super();
 	}
+
 	@Override
 	public String toString() {
 		return "AdrenalineCard";

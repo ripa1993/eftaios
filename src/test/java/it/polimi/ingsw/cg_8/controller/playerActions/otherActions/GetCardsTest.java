@@ -20,7 +20,7 @@ public class GetCardsTest {
 
 	@Before
 	public void init() throws GameAlreadyRunningException,
-			NotAValidMapException, EmptyDeckException {
+	        NotAValidMapException, EmptyDeckException {
 		model = new Model(GameMapName.FERMI);
 		model.addPlayer("a");
 		model.addPlayer("b");
@@ -34,12 +34,12 @@ public class GetCardsTest {
 		list.add(card);
 		model.getCurrentPlayerReference().getHand().addItemCard(card);
 		assertEquals(list,
-				GetCards.getHeldCards(model.getCurrentPlayerReference()));
+		        GetCards.getHeldCards(model.getCurrentPlayerReference()));
 	}
 
 	@Test
 	public void testPrintHeldCards() {
 		assertEquals("[]",
-				GetCards.printHeldCards(model.getCurrentPlayerReference()));
+		        GetCards.printHeldCards(model.getCurrentPlayerReference()));
 	}
 }

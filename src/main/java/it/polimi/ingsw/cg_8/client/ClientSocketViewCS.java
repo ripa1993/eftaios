@@ -49,7 +49,7 @@ public class ClientSocketViewCS implements Runnable {
 	 * Log4j logger
 	 */
 	private static final Logger LOGGER = LogManager
-			.getLogger(ClientSocketViewCS.class);
+	        .getLogger(ClientSocketViewCS.class);
 
 	/**
 	 * 
@@ -70,14 +70,14 @@ public class ClientSocketViewCS implements Runnable {
 	 *            location where the ack will be saved
 	 */
 	public ClientSocketViewCS(String serverIP, int serverResponsePort,
-			ClientAction input, int clientId, ClientData clientData) {
+	        ClientAction input, int clientId, ClientData clientData) {
 
 		try {
 			this.clientId = clientId;
 			this.action = input;
 			this.requestSocket = new Socket(serverIP, serverResponsePort);
 			this.output = new ObjectOutputStream(
-					requestSocket.getOutputStream());
+			        requestSocket.getOutputStream());
 			this.input = new ObjectInputStream(requestSocket.getInputStream());
 			this.clientData = clientData;
 		} catch (IOException e) {

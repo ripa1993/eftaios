@@ -30,7 +30,7 @@ public class BackgroundMusicThread implements Runnable {
 	 * Log4j logger
 	 */
 	private static final Logger LOGGER = LogManager
-			.getLogger(BackgroundMusicThread.class);
+	        .getLogger(BackgroundMusicThread.class);
 
 	/**
 	 * Empty constructor
@@ -52,7 +52,7 @@ public class BackgroundMusicThread implements Runnable {
 			player.play();
 
 		} catch (Exception e) {
-			LOGGER.error(e.getMessage(),e);
+			LOGGER.error(e.getMessage(), e);
 
 		}
 	}

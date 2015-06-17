@@ -28,7 +28,7 @@ public class SecureSector extends NormalSector {
 	public SecureSector(int x, int y) {
 		super(x, y);
 	}
-	
+
 	/**
 	 * Default constructor used in the XML parsing.
 	 */

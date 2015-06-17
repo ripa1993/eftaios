@@ -47,7 +47,7 @@ public class UseItemCardValidator {
 
 		Human player = (Human) model.getCurrentPlayerReference().getCharacter();
 		if (card instanceof AdrenalineCard
-				&& player.getMaxAllowedMovement() == 2) {
+		        && player.getMaxAllowedMovement() == 2) {
 			return false;
 		}
 		if (card instanceof AttackCard && player.isAttackAllowed()) {
@@ -57,14 +57,14 @@ public class UseItemCardValidator {
 			return false;
 		}
 		Sector playerPosition = model.getMap().getSectors()
-				.get(model.getCurrentPlayerReference().getLastPosition());
+		        .get(model.getCurrentPlayerReference().getLastPosition());
 		if (card instanceof TeleportCard
-				&& playerPosition instanceof SpawnSector) {
+		        && playerPosition instanceof SpawnSector) {
 			return false;
 		}
 
 		List<ItemCard> heldCards = model.getCurrentPlayerReference().getHand()
-				.getHeldCards();
+		        .getHeldCards();
 		for (ItemCard i : heldCards) {
 			if ((card.getClass()).equals(i.getClass())) {
 				heldCards.remove(i);

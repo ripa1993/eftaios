@@ -48,7 +48,7 @@ public abstract class MapCreator {
 	public GameMap getGm() {
 		return gameMap;
 	}
-	
+
 	/**
 	 * Constructor for GameMap. Creates a new HashMap of sector, a new MapProxy
 	 * and spawn coordinate
@@ -74,7 +74,7 @@ public abstract class MapCreator {
 	 */
 	public GameMap createMap() {
 		GameMapSet sectorList = this.sectorParser();
-		
+
 		Iterator<Sector> iterator = sectorList.getSectorList().iterator();
 		while (iterator.hasNext()) {
 			Sector currentSector = iterator.next();
@@ -83,9 +83,9 @@ public abstract class MapCreator {
 			addSector(new Coordinate(x, y), currentSector);
 		}
 		return gameMap;
-		
+
 	}
-	
+
 	@Override
 	public String toString() {
 		return "MapCreator [gm=" + gameMap + ", sectors=" + sectors + "]";

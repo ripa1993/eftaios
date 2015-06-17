@@ -13,7 +13,7 @@ public class InGameCharacterTest {
 	CharacterCard cc;
 	Player player;
 	Alien alien;
-	
+
 	@Before
 	public void init() {
 		cc = new AlienCard("Ciao", "test", "boh");
@@ -21,12 +21,12 @@ public class InGameCharacterTest {
 		Alien alien = new Alien(cc);
 		player.init(alien, new Coordinate(0, 0));
 	}
-	
-	@Test 
+
+	@Test
 	public void charCardTest() {
 		assertTrue(player.getCharacter().getCharacterCard() instanceof CharacterCard);
 	}
-	
+
 	@Test
 	public void toStringTest() {
 		assertTrue(player.getCharacter().toString() instanceof String);

@@ -158,7 +158,7 @@ public class Controller implements Observer {
 	 *             if the player is trying to join an already started game
 	 */
 	public void addClientSocket(Integer id, String playerName,
-			ServerSocketPublisherThread pub) throws GameAlreadyRunningException {
+	        ServerSocketPublisherThread pub) throws GameAlreadyRunningException {
 		Player tempPlayer = model.addPlayer(playerName);
 		id2Player.put(id, tempPlayer);
 		player2Id.put(tempPlayer, id);
@@ -179,7 +179,7 @@ public class Controller implements Observer {
 	 *             if the player is trying to join an already started game
 	 */
 	public void addClientRMI(int id, String playerName, ServerGameRoom view)
-			throws GameAlreadyRunningException {
+	        throws GameAlreadyRunningException {
 		Player tempPlayer = model.addPlayer(playerName);
 		id2Player.put(id, tempPlayer);
 		player2Id.put(tempPlayer, id);
@@ -197,7 +197,7 @@ public class Controller implements Observer {
 			this.writeToAll(new ResponseMap(mapName));
 			for (Player p : this.model.getPlayers()) {
 				this.writeToPlayer(p, new ResponsePrivate(
-						"You will be playing as: " + p.getCharacter()));
+				        "You will be playing as: " + p.getCharacter()));
 			}
 
 		} catch (EmptyDeckException e) {
@@ -296,12 +296,12 @@ public class Controller implements Observer {
 				Player player = noise.getPlayer();
 				if (player.getState().equals(PlayerState.ESCAPED)) {
 					this.writeToAll(new ResponsePrivate(
-							player.getName()
-									+ " has found a working escape hatch and saved his life!"));
+					        player.getName()
+					                + " has found a working escape hatch and saved his life!"));
 				} else {
 					this.writeToAll(new ResponsePrivate(
-							player.getName()
-									+ " has found a broken escape hatch. He can't escape!"));
+					        player.getName()
+					                + " has found a broken escape hatch. He can't escape!"));
 				}
 			}
 
@@ -317,32 +317,32 @@ public class Controller implements Observer {
 			this.writeToAll(new ResponsePrivate("GAME OVER"));
 			if (this.model.checkGameEndRound()) {
 				this.writeToAll(new ResponsePrivate(
-						"The game reached its conclusion"));
+				        "The game reached its conclusion"));
 			}
 			if (this.model.checkGameEndNoEH()) {
 				this.writeToAll(new ResponsePrivate(
-						"There are no Escape Hatches left to use"));
+				        "There are no Escape Hatches left to use"));
 			}
 
 			for (Player p : playerList) {
 				double random = Math.random();
 				if (p.getCharacter() instanceof Human
-						&& p.getState().equals(PlayerState.DEAD)) {
+				        && p.getState().equals(PlayerState.DEAD)) {
 					if (random < 0.5) {
 						this.writeToAll(new ResponsePrivate(p.getName()
-								+ " has met a terrible fate."));
+						        + " has met a terrible fate."));
 					} else {
 						this.writeToAll(new ResponsePrivate(p.getName()
-								+ " was slain in the darkness."));
+						        + " was slain in the darkness."));
 					}
 				} else if (p.getCharacter() instanceof Human
-						&& p.getState().equals(PlayerState.ESCAPED)) {
+				        && p.getState().equals(PlayerState.ESCAPED)) {
 					this.writeToAll(new ResponsePrivate(p.getName()
-							+ " managed to escape."));
+					        + " managed to escape."));
 				} else if (p.getState().equals(PlayerState.DISCONNECTED)) {
 					this.writeToAll(new ResponsePrivate(
-							p.getName()
-									+ " left the game prematurely. Nobody will miss him."));
+					        p.getName()
+					                + " left the game prematurely. Nobody will miss him."));
 				}
 			}
 			/**
@@ -373,34 +373,34 @@ public class Controller implements Observer {
 
 			// communicate the new player to clients
 			this.writeToAll(new ResponsePrivate("Next player is: "
-					+ model.getCurrentPlayerReference().getName()));
+			        + model.getCurrentPlayerReference().getName()));
 			this.writeToPlayer(model.getCurrentPlayerReference(),
-					new ResponsePrivate("IT'S YOUR TURN"));
+			        new ResponsePrivate("IT'S YOUR TURN"));
 			/**
 			 * Notify every player about their state.
 			 */
 			for (Player p : model.getPlayers()) {
 				this.writeToPlayer(
-						p,
-						new ResponseState(p.getName(), p.getCharacter()
-								.toString(), p.getState().toString(), p
-								.getLastPosition(), model.getRoundNumber()));
+				        p,
+				        new ResponseState(p.getName(), p.getCharacter()
+				                .toString(), p.getState().toString(), p
+				                .getLastPosition(), model.getRoundNumber()));
 			}
 			/**
 			 * Communicate to the current player the cards he's holding.
 			 */
 			for (Player p : model.getPlayers()) {
 				ResponseCard response = new ResponseCard(p.getHand()
-						.getHeldCards());
+				        .getHeldCards());
 				this.writeToPlayer(p, response);
 			}
 
 			LOGGER.info("Timeout started for player "
-					+ ((Player) arg).getName() + ". He has " + (TIMEOUT / 1000)
-					+ "s to complete his turn.");
+			        + ((Player) arg).getName() + ". He has " + (TIMEOUT / 1000)
+			        + "s to complete his turn.");
 			this.writeToAll(new ResponsePrivate("Timeout started for player "
-					+ ((Player) arg).getName() + ". He has " + (TIMEOUT / 1000)
-					+ "s to complete his turn."));
+			        + ((Player) arg).getName() + ". He has " + (TIMEOUT / 1000)
+			        + "s to complete his turn."));
 			// start new timer task
 			taskCompleted = false;
 			timer = new Timer();
@@ -410,12 +410,12 @@ public class Controller implements Observer {
 				public void run() {
 					synchronized (this) {
 						LOGGER.info("Time is over, disconnecting player "
-								+ playerName);
+						        + playerName);
 						writeToAll(new ResponsePrivate(
-								"Time is over, disconnecting player "
-										+ playerName));
+						        "Time is over, disconnecting player "
+						                + playerName));
 						Disconnect
-								.disconnect(model.getCurrentPlayerReference());
+						        .disconnect(model.getCurrentPlayerReference());
 						taskCompleted = true;
 						model.nextPlayer();
 						model.setTurnPhase(TurnPhase.TURN_BEGIN);

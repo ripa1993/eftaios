@@ -1,13 +1,15 @@
 package it.polimi.ingsw.cg_8.model.cards.dangerousSectorCards;
+
 /**
  * Normal noise, player makes real noise
+ * 
  * @author Simone
  *
  */
 public class NormalNoise extends DangerousSectorCard implements NoiseCard {
 
 	@Override
-	public boolean hasToMakeFakeNoise() {	
+	public boolean hasToMakeFakeNoise() {
 		return false;
 	}
 

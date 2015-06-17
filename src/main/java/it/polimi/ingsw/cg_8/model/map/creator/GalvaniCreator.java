@@ -25,7 +25,8 @@ public class GalvaniCreator extends MapCreator {
 	/**
 	 * Log4j logger
 	 */
-	private static final Logger LOGGER = LogManager.getLogger(GalvaniCreator.class);
+	private static final Logger LOGGER = LogManager
+	        .getLogger(GalvaniCreator.class);
 
 	/**
 	 * Constructor
@@ -43,15 +44,13 @@ public class GalvaniCreator extends MapCreator {
 
 			Unmarshaller unmarshaller = jc.createUnmarshaller();
 
-			return (GameMapSet) unmarshaller
-					.unmarshal(new File(Resource.GALVANI_XML));
+			return (GameMapSet) unmarshaller.unmarshal(new File(
+			        Resource.GALVANI_XML));
 
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
 			return new GameMapSet();
 		}
 	}
-
-
 
 }

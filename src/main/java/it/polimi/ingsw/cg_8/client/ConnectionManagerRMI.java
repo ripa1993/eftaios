@@ -26,7 +26,7 @@ import org.apache.logging.log4j.Logger;
  * @version 1.0
  */
 public class ConnectionManagerRMI extends ConnectionManager implements
-		Serializable, SubscriberInterface {
+        Serializable, SubscriberInterface {
 	/**
 	 * 
 	 */
@@ -52,7 +52,7 @@ public class ConnectionManagerRMI extends ConnectionManager implements
 	 * Log4j logger
 	 */
 	private static final Logger LOGGER = LogManager
-			.getLogger(ConnectionManagerRMI.class);
+	        .getLogger(ConnectionManagerRMI.class);
 
 	/**
 	 * The constructor is the same as the parent class.
@@ -79,7 +79,7 @@ public class ConnectionManagerRMI extends ConnectionManager implements
 			LOGGER.debug("Successfully registered");
 		} catch (NotBoundException | RemoteException | AlreadyBoundException e) {
 			LOGGER.error(
-					"Failed to connect to the RMI Server: " + e.getMessage(), e);
+			        "Failed to connect to the RMI Server: " + e.getMessage(), e);
 		}
 	}
 
@@ -126,13 +126,13 @@ public class ConnectionManagerRMI extends ConnectionManager implements
 	 * 
 	 */
 	public ServerGameRoomInterface initializeRMI() throws RemoteException,
-			NotBoundException, AlreadyBoundException {
+	        NotBoundException, AlreadyBoundException {
 		LOGGER.debug("Connecting to the registry...");
 		Registry registry = LocateRegistry.getRegistry(SERVER_ADDRESS,
-				REGISTRATION_PORT);
+		        REGISTRATION_PORT);
 		LOGGER.debug("Connecting to the registration room...");
 		ServerRMIRegistrationViewRemote registrationRoom = (ServerRMIRegistrationViewRemote) registry
-				.lookup(REGISTRATION_ROOM_NAME);
+		        .lookup(REGISTRATION_ROOM_NAME);
 
 		LOGGER.debug("Trying to get a clientID...");
 		while (this.clientID == 0) {
@@ -159,8 +159,8 @@ public class ConnectionManagerRMI extends ConnectionManager implements
 		LOGGER.debug("Trying to register...");
 
 		return registrationRoom
-				.register((SubscriberInterface) UnicastRemoteObject
-						.exportObject(this, 0));
+		        .register((SubscriberInterface) UnicastRemoteObject
+		                .exportObject(this, 0));
 
 	}
 }

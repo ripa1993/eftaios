@@ -65,28 +65,28 @@ public class MainGUI implements Runnable {
 			String playerName = playerTextField.getText();
 			if (rmiRadioButton.isSelected() && fermiRadioButton.isSelected()) {
 				connectionManager = new ConnectionManagerRMI(playerName,
-						GameMapName.FERMI);
+				        GameMapName.FERMI);
 			} else if (rmiRadioButton.isSelected()
-					&& galvaniRadioButton.isSelected()) {
+			        && galvaniRadioButton.isSelected()) {
 				connectionManager = new ConnectionManagerRMI(playerName,
-						GameMapName.GALVANI);
+				        GameMapName.GALVANI);
 			} else if (rmiRadioButton.isSelected()
-					&& galileiRadioButton.isSelected()) {
+			        && galileiRadioButton.isSelected()) {
 				connectionManager = new ConnectionManagerRMI(playerName,
-						GameMapName.GALILEI);
+				        GameMapName.GALILEI);
 			} else if (socketRadioButton.isSelected()
-					&& fermiRadioButton.isSelected()) {
+			        && fermiRadioButton.isSelected()) {
 				connectionManager = new ConnectionManagerSocket(playerName,
-						GameMapName.FERMI);
+				        GameMapName.FERMI);
 			} else if (socketRadioButton.isSelected()
-					&& galvaniRadioButton.isSelected()) {
+			        && galvaniRadioButton.isSelected()) {
 				connectionManager = new ConnectionManagerSocket(playerName,
-						GameMapName.GALVANI);
+				        GameMapName.GALVANI);
 			} else {
 				// socket and galilei is the default if some weird bug
 				// happens
 				connectionManager = new ConnectionManagerSocket(playerName,
-						GameMapName.GALILEI);
+				        GameMapName.GALILEI);
 			}
 			LOGGER.debug("Connection manager created");
 
@@ -130,22 +130,22 @@ public class MainGUI implements Runnable {
 			int updatedHeight = this.getHeight();
 
 			if (this.getWidth() - eastPanelImageScaled.getWidth(null) > this
-					.getHeight() - eastPanelImageScaled.getHeight(null)) {
+			        .getHeight() - eastPanelImageScaled.getHeight(null)) {
 				updatedWidth = updatedHeight
-						* eastPanelImageScaled.getWidth(null)
-						/ eastPanelImageScaled.getHeight(null);
+				        * eastPanelImageScaled.getWidth(null)
+				        / eastPanelImageScaled.getHeight(null);
 			}
 			if (this.getWidth() - eastPanelImageScaled.getWidth(null) < this
-					.getHeight() - eastPanelImageScaled.getHeight(null)) {
+			        .getHeight() - eastPanelImageScaled.getHeight(null)) {
 				updatedHeight = updatedWidth
-						* eastPanelImageScaled.getHeight(null)
-						/ eastPanelImageScaled.getWidth(null);
+				        * eastPanelImageScaled.getHeight(null)
+				        / eastPanelImageScaled.getWidth(null);
 			}
 
 			int x = (this.getWidth() - updatedWidth) / 2;
 			int y = (this.getHeight() - updatedHeight) / 2;
 			g.drawImage(eastPanelImageScaled, x, y, updatedWidth,
-					updatedHeight, null);
+			        updatedHeight, null);
 		}
 	}
 
@@ -165,22 +165,22 @@ public class MainGUI implements Runnable {
 			int updatedHeight = this.getHeight();
 
 			if (this.getWidth() - westPanelImageScaled.getWidth(null) > this
-					.getHeight() - westPanelImageScaled.getHeight(null)) {
+			        .getHeight() - westPanelImageScaled.getHeight(null)) {
 				updatedWidth = updatedHeight
-						* westPanelImageScaled.getWidth(null)
-						/ westPanelImageScaled.getHeight(null);
+				        * westPanelImageScaled.getWidth(null)
+				        / westPanelImageScaled.getHeight(null);
 			}
 			if (this.getWidth() - westPanelImageScaled.getWidth(null) < this
-					.getHeight() - westPanelImageScaled.getHeight(null)) {
+			        .getHeight() - westPanelImageScaled.getHeight(null)) {
 				updatedHeight = updatedWidth
-						* westPanelImageScaled.getHeight(null)
-						/ westPanelImageScaled.getWidth(null);
+				        * westPanelImageScaled.getHeight(null)
+				        / westPanelImageScaled.getWidth(null);
 			}
 
 			int x = (this.getWidth() - updatedWidth) / 2;
 			int y = (this.getHeight() - updatedHeight) / 2;
 			g.drawImage(westPanelImageScaled, x, y, updatedWidth,
-					updatedHeight, null);
+			        updatedHeight, null);
 		}
 	}
 
@@ -224,8 +224,8 @@ public class MainGUI implements Runnable {
 	 * RadioButtons used during the setup phase
 	 */
 	private JRadioButton galvaniRadioButton, galileiRadioButton,
-			fermiRadioButton, socketRadioButton, rmiRadioButton,
-			yesMusicRadioButton, noMusicRadioButton;
+	        fermiRadioButton, socketRadioButton, rmiRadioButton,
+	        yesMusicRadioButton, noMusicRadioButton;
 	/**
 	 * Log4j logger
 	 */
@@ -242,8 +242,8 @@ public class MainGUI implements Runnable {
 
 		try {
 			fontTitilliumBoldUpright = Font.createFont(Font.TRUETYPE_FONT,
-					new FileInputStream(Resource.FONT_TITILLIUM_BOLD_UPRIGHT))
-					.deriveFont((float) 20);
+			        new FileInputStream(Resource.FONT_TITILLIUM_BOLD_UPRIGHT))
+			        .deriveFont((float) 20);
 		} catch (FontFormatException | IOException e) {
 			LOGGER.error(e.getMessage(), e);
 		}
@@ -273,11 +273,11 @@ public class MainGUI implements Runnable {
 		GridBagLayout gblCenterPanel = new GridBagLayout();
 		gblCenterPanel.columnWidths = new int[] { 474, 0 };
 		gblCenterPanel.rowHeights = new int[] { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-				0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 		gblCenterPanel.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
 		gblCenterPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0,
-				0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-				0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		        0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+		        0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		centerPanel.setLayout(gblCenterPanel);
 
 		JLabel logoLabel = new JLabel();
@@ -315,7 +315,7 @@ public class MainGUI implements Runnable {
 		playerTextField.setColumns(10);
 
 		JLabel connectionTypeLabel = new JLabel(
-				"SELECT YOUR PREFERRED CONNECTION METHOD:");
+		        "SELECT YOUR PREFERRED CONNECTION METHOD:");
 		connectionTypeLabel.setBorder(new EmptyBorder(10, 0, 0, 0));
 		connectionTypeLabel.setFont(fontTitilliumBoldUpright);
 		connectionTypeLabel.setForeground(Color.WHITE);
@@ -426,7 +426,7 @@ public class MainGUI implements Runnable {
 
 		westPanelImage = new ImageIcon(Resource.IMG_ART_HUMAN);
 		westPanelImageScaled = new ImageIcon(westPanelImage.getImage()
-				.getScaledInstance(5000, -1, Image.SCALE_SMOOTH)).getImage();
+		        .getScaledInstance(5000, -1, Image.SCALE_SMOOTH)).getImage();
 
 		JPanel westPanel = new WestJPanel();
 		westPanel.setPreferredSize(new Dimension(400, 10));
@@ -434,7 +434,7 @@ public class MainGUI implements Runnable {
 		panel.add(westPanel, BorderLayout.WEST);
 		eastPanelImage = new ImageIcon(Resource.IMG_ART_ALIEN);
 		eastPanelImageScaled = new ImageIcon(eastPanelImage.getImage()
-				.getScaledInstance(5000, -1, Image.SCALE_SMOOTH)).getImage();
+		        .getScaledInstance(5000, -1, Image.SCALE_SMOOTH)).getImage();
 		JPanel eastPanel = new EastJPanel();
 		eastPanel.setPreferredSize(new Dimension(400, 10));
 		eastPanel.setOpaque(false);

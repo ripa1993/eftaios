@@ -23,7 +23,8 @@ public abstract class SpecialSector extends Sector {
 	private static final long serialVersionUID = 7154800729832222232L;
 
 	/**
-	 * Constructor for {@link SpecialSector}, used to make checks and validations.
+	 * Constructor for {@link SpecialSector}, used to make checks and
+	 * validations.
 	 * 
 	 * @param x
 	 *            column number
@@ -33,6 +34,7 @@ public abstract class SpecialSector extends Sector {
 	public SpecialSector(int x, int y) {
 		super(x, y);
 	}
+
 	/**
 	 * Default constructor, used in the XML parsing.
 	 */

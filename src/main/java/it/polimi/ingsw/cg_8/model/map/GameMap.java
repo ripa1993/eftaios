@@ -47,10 +47,10 @@ public abstract class GameMap implements ReachableCoordinatesInterface {
 	 */
 	public Coordinate getHumanSpawn() {
 		Iterator<Entry<Coordinate, Sector>> entries = sectors.entrySet()
-				.iterator();
+		        .iterator();
 		while (entries.hasNext()) {
 			Entry<Coordinate, Sector> thisEntry = (Entry<Coordinate, Sector>) entries
-					.next();
+			        .next();
 			Coordinate key = (Coordinate) thisEntry.getKey();
 			if (thisEntry.getValue() instanceof HumanSector) {
 				return key;
@@ -66,10 +66,10 @@ public abstract class GameMap implements ReachableCoordinatesInterface {
 	 */
 	public Coordinate getAlienSpawn() {
 		Iterator<Entry<Coordinate, Sector>> entries = sectors.entrySet()
-				.iterator();
+		        .iterator();
 		while (entries.hasNext()) {
 			Entry<Coordinate, Sector> thisEntry = (Entry<Coordinate, Sector>) entries
-					.next();
+			        .next();
 			Coordinate key = (Coordinate) thisEntry.getKey();
 			if (thisEntry.getValue() instanceof AlienSector) {
 				return key;
@@ -119,10 +119,10 @@ public abstract class GameMap implements ReachableCoordinatesInterface {
 	 * @throws NotAValidCoordinateException
 	 */
 	public Sector getSectorByCoordinates(Coordinate c)
-			throws NotAValidCoordinateException {
+	        throws NotAValidCoordinateException {
 		if (!verifySectorExistance(c)) {
 			throw new NotAValidCoordinateException(
-					"This coordinate is not in the map");
+			        "This coordinate is not in the map");
 		} else {
 			return sectors.get(c);
 		}

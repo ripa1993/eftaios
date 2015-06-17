@@ -79,10 +79,10 @@ public class CardButton extends JPanel {
 			width = cardButtonImage.getWidth();
 			height = cardButtonImage.getHeight();
 			cardButtonImage
-					.setSize((int) (1.05 * width), (int) (1.05 * height));
+			        .setSize((int) (1.05 * width), (int) (1.05 * height));
 			cardButtonImage.repaint();
 			cardButtonOverlay.setSize((int) (1.05 * width),
-					(int) (1.05 * height));
+			        (int) (1.05 * height));
 
 			cardButtonOverlay.repaint();
 		}
@@ -178,10 +178,10 @@ public class CardButton extends JPanel {
 		 */
 		try {
 			fontTitilliumSemiboldUpright = Font.createFont(
-					Font.TRUETYPE_FONT,
-					new FileInputStream(
-							Resource.FONT_TITILLIUM_SEMIBOLD_UPRIGHT))
-					.deriveFont((float) 20);
+			        Font.TRUETYPE_FONT,
+			        new FileInputStream(
+			                Resource.FONT_TITILLIUM_SEMIBOLD_UPRIGHT))
+			        .deriveFont((float) 20);
 		} catch (FontFormatException | IOException e) {
 			LOGGER.error(e.getMessage(), e);
 		}
@@ -274,43 +274,43 @@ public class CardButton extends JPanel {
 			this.setImage(Resource.IMG_ITEM);
 			this.setText("No Card");
 			this.invisButton
-					.setToolTipText("<html>This is an <b>empty slot</b> for item card</html>");
+			        .setToolTipText("<html>This is an <b>empty slot</b> for item card</html>");
 		} else if (this.cardType.equals(CardType.ADRENALINE)) {
 			this.setImage(Resource.IMG_ADRENALINE);
 			this.setText("Adrenaline");
 			this.invisButton
-					.setToolTipText("<html>This card allows you to <b>move two Sectors</b> this turn.</html>");
+			        .setToolTipText("<html>This card allows you to <b>move two Sectors</b> this turn.</html>");
 		} else if (this.cardType.equals(CardType.ATTACK)) {
 			this.setImage(Resource.IMG_ATTACK);
 			this.setText("Attack");
 			this.invisButton
-					.setToolTipText("<html>This card allows you to <b>attack</b>, using the same rules as the Aliens.<br>"
-							+ "Note: the Human character can still move only one Sector.</html>");
+			        .setToolTipText("<html>This card allows you to <b>attack</b>, using the same rules as the Aliens.<br>"
+			                + "Note: the Human character can still move only one Sector.</html>");
 		} else if (this.cardType.equals(CardType.DEFENSE)) {
 			this.setImage(Resource.IMG_DEFENSE);
 			this.setText("Defense");
 			this.invisButton
-					.setToolTipText("<html>Play this card immediately when an Alien attacks you.<br>"
-							+ "You are  <b>not affected</b> by the attack.</html>");
+			        .setToolTipText("<html>Play this card immediately when an Alien attacks you.<br>"
+			                + "You are  <b>not affected</b> by the attack.</html>");
 		} else if (this.cardType.equals(CardType.SEDATIVES)) {
 			this.setImage(Resource.IMG_SEDATIVES);
 			this.setText("Sedatives");
 			this.invisButton
-					.setToolTipText("<html>If you play this card  <b>you do not draw </b> a Dangerous Sector Card this turn,<br>"
-							+ "even if you move into a Dangerous Sector.</html>");
+			        .setToolTipText("<html>If you play this card  <b>you do not draw </b> a Dangerous Sector Card this turn,<br>"
+			                + "even if you move into a Dangerous Sector.</html>");
 		} else if (this.cardType.equals(CardType.SPOTLIGHT)) {
 			this.setImage(Resource.IMG_SPOTLIGHT);
 			this.setText("Spotlight");
 			this.invisButton
-					.setToolTipText("<html>When you play this card, name any Sector. Any players (including you)<br>"
-							+ "that are in the named Sector or in any of the six adjacent Sectors must immediately<br>"
-							+ " <b>announce their exact location </b> Coordinates. This card affects both Humans and Aliens.<html>");
+			        .setToolTipText("<html>When you play this card, name any Sector. Any players (including you)<br>"
+			                + "that are in the named Sector or in any of the six adjacent Sectors must immediately<br>"
+			                + " <b>announce their exact location </b> Coordinates. This card affects both Humans and Aliens.<html>");
 		} else if (this.cardType.equals(CardType.TELEPORT)) {
 			this.setImage(Resource.IMG_TELEPORT);
 			this.setText("Teleport");
 			this.invisButton
-					.setToolTipText("<html>This card allows you to  <b>move directly </b> to the Human Sector from any part of the ship.<br>"
-							+ "This is in addition to your normal movement which can happen before or after you use the item.</html>");
+			        .setToolTipText("<html>This card allows you to  <b>move directly </b> to the Human Sector from any part of the ship.<br>"
+			                + "This is in addition to your normal movement which can happen before or after you use the item.</html>");
 		}
 	}
 
@@ -326,7 +326,7 @@ public class CardButton extends JPanel {
 		try {
 			Image tempImage = ImageIO.read(new File(pathToImage));
 			Image cardImage = tempImage.getScaledInstance(100, -1,
-					Image.SCALE_SMOOTH);
+			        Image.SCALE_SMOOTH);
 			cardButtonImage.setIcon(new ImageIcon(cardImage));
 
 		} catch (IOException ex) {
@@ -346,7 +346,7 @@ public class CardButton extends JPanel {
 		try {
 			Image tempOverlay = ImageIO.read(new File(pathToImage));
 			cardOverlay = tempOverlay.getScaledInstance(100, -1,
-					Image.SCALE_SMOOTH);
+			        Image.SCALE_SMOOTH);
 
 		} catch (IOException ex) {
 			LOGGER.error(ex.getMessage(), ex);
@@ -405,15 +405,15 @@ public class CardButton extends JPanel {
 			return new ActionUseCard(new SedativesCard());
 		} else if (this.cardType.equals(CardType.SPOTLIGHT)) {
 			String coordinateString = JOptionPane.showInputDialog(getParent(),
-					"Insert target coordinate", "Coordinate");
+			        "Insert target coordinate", "Coordinate");
 			try {
 				Coordinate coordinate = ActionParser
-						.parseCoordinate(coordinateString);
+				        .parseCoordinate(coordinateString);
 				return new ActionUseCard(new SpotlightCard(), coordinate);
 			} catch (NotAValidInput e1) {
 				LOGGER.error(e1.getMessage(), e1);
 				JOptionPane
-						.showMessageDialog(getParent(), "Not a valid input!");
+				        .showMessageDialog(getParent(), "Not a valid input!");
 				return null;
 			}
 

@@ -24,7 +24,7 @@ public class UseSpotlightCard extends UseItemCard {
 	 * ) and the surrounding six
 	 */
 	private static Set<Coordinate> findSpotlightTarget(Model model,
-			Coordinate target) {
+	        Coordinate target) {
 		Set<Coordinate> spotlightTarget = new HashSet<Coordinate>();
 		spotlightTarget.add(target);
 		spotlightTarget.addAll(model.getMap().getConnectedCoordinates(target));
@@ -39,7 +39,7 @@ public class UseSpotlightCard extends UseItemCard {
 		Set<Player> foundPlayers = new HashSet<Player>();
 		for (Player p : model.getPlayers()) {
 			if (!p.getState().equals(PlayerState.DEAD)
-					&& target.contains(p.getLastPosition())) {
+			        && target.contains(p.getLastPosition())) {
 
 				foundPlayers.add(p);
 
@@ -57,7 +57,7 @@ public class UseSpotlightCard extends UseItemCard {
 		while (it.hasNext()) {
 			Player currentPlayer = it.next();
 			Noise spotlightNoise = new SpotlightNoise(model.getRoundNumber(),
-					currentPlayer, currentPlayer.getLastPosition());
+			        currentPlayer, currentPlayer.getLastPosition());
 			model.addNoise(spotlightNoise);
 		}
 	}

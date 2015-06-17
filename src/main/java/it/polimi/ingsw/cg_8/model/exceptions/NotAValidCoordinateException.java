@@ -14,11 +14,12 @@ public class NotAValidCoordinateException extends Exception {
 
 	/**
 	 * Creates an exception with message
-	 * @param string message
+	 * 
+	 * @param string
+	 *            message
 	 */
 	public NotAValidCoordinateException(String string) {
 		super(string);
 	}
 
-	
 }

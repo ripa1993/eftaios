@@ -37,7 +37,7 @@ public class ServerSocketRRThread implements Runnable {
 	 * Log4j logger
 	 */
 	private static final Logger LOGGER = LogManager
-			.getLogger(ServerSocketRRThread.class);
+	        .getLogger(ServerSocketRRThread.class);
 
 	/**
 	 * It starts both RR and PS server on the given ports
@@ -50,13 +50,13 @@ public class ServerSocketRRThread implements Runnable {
 	 *             if one of the server cannot be started
 	 */
 	public ServerSocketRRThread(int serverSocketRRPort, int serverSocketPSPort)
-			throws IOException {
+	        throws IOException {
 		serverRR = new ServerSocket(serverSocketRRPort);
 		LOGGER.info("Server socket (request-response) running on port: "
-				+ serverSocketRRPort);
+		        + serverSocketRRPort);
 		serverPS = new ServerSocket(serverSocketPSPort);
 		LOGGER.info("Server socket (publisher-subscribe) running on port: "
-				+ serverSocketPSPort);
+		        + serverSocketPSPort);
 
 	}
 
@@ -72,9 +72,9 @@ public class ServerSocketRRThread implements Runnable {
 				Socket client = serverRR.accept();
 				LOGGER.info("Connection accepted");
 				ObjectInputStream input = new ObjectInputStream(
-						client.getInputStream());
+				        client.getInputStream());
 				ObjectOutputStream output = new ObjectOutputStream(
-						client.getOutputStream());
+				        client.getOutputStream());
 				// read client id
 				Integer clientId = (Integer) input.readObject();
 				LOGGER.info("ClientId is: " + clientId);
@@ -99,7 +99,7 @@ public class ServerSocketRRThread implements Runnable {
 					LOGGER.debug("Vote given to " + chosenMap);
 					Server.addVote(chosenMap);
 					output.writeObject(new String("MAP CHOSEN: "
-							+ chosenMap.toString()));
+					        + chosenMap.toString()));
 					output.flush();
 
 					// get reference to the starting game
@@ -113,9 +113,9 @@ public class ServerSocketRRThread implements Runnable {
 						// add player to the game
 						Socket subscriber = serverPS.accept();
 						ServerSocketPublisherThread publisher = new ServerSocketPublisherThread(
-								subscriber);
+						        subscriber);
 						nextGame.addClientSocket(newClientId, playerName,
-								publisher);
+						        publisher);
 						Server.addClient(newClientId);
 					}
 				} else {
@@ -125,14 +125,14 @@ public class ServerSocketRRThread implements Runnable {
 					ClientAction action = (ClientAction) input.readObject();
 					LOGGER.debug("Received client action: " + action);
 					Controller controller = Server.getId2Controller().get(
-							clientId);
+					        clientId);
 					LOGGER.debug("Client is assigned to controller: "
-							+ controller);
+					        + controller);
 					LOGGER.debug("Client is player: "
-							+ controller.getPlayerById(clientId));
+					        + controller.getPlayerById(clientId));
 
 					boolean result = StateMachine.evaluateAction(controller,
-							action, controller.getPlayerById(clientId));
+					        action, controller.getPlayerById(clientId));
 					LOGGER.debug("Validation output is: " + result);
 					output.writeObject(result);
 					output.flush();
@@ -149,11 +149,13 @@ public class ServerSocketRRThread implements Runnable {
 				}
 
 			} catch (IOException e) {
-				LOGGER.error("Cannot connect to the client",e);
+				LOGGER.error("Cannot connect to the client", e);
 			} catch (ClassNotFoundException e) {
-				LOGGER.error("Cannot read from the input stream",e);
+				LOGGER.error("Cannot read from the input stream", e);
 			} catch (GameAlreadyRunningException e) {
-				LOGGER.error("Game already running, can't add the player to this game",e);
+				LOGGER.error(
+				        "Game already running, can't add the player to this game",
+				        e);
 			}
 		}
 	}

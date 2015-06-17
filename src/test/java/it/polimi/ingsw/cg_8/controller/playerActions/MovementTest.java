@@ -45,6 +45,6 @@ public class MovementTest {
 		Movement move = new Movement(model, new Coordinate(12, 10));
 		move.makeMove();
 		assertEquals(model.getCurrentPlayerReference().getLastPosition(),
-				new Coordinate(12, 10));
+		        new Coordinate(12, 10));
 	}
 }

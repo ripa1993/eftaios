@@ -77,7 +77,7 @@ public class Movement implements PlayerAction {
 
 		try {
 			destinationSector = model.getMap().getSectorByCoordinates(
-					destination);
+			        destination);
 		} catch (NotAValidCoordinateException e1) {
 			LOGGER.error(e1.getMessage(), e1);
 		}
@@ -98,10 +98,10 @@ public class Movement implements PlayerAction {
 		 */
 
 		if (destinationSector instanceof EscapeHatchSector
-				&& ((EscapeHatchSector) destinationSector).allowEscape()) {
+		        && ((EscapeHatchSector) destinationSector).allowEscape()) {
 			// noise only if the escape hatch is usable
 			Noise escapeSectorNoise = new EscapeSectorNoise(
-					model.getRoundNumber(), player, player.getLastPosition());
+			        model.getRoundNumber(), player, player.getLastPosition());
 			Card escapeCard;
 			try {
 				escapeCard = drawEHSectorCard();

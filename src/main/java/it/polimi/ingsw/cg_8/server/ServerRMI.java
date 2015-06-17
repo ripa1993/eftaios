@@ -42,10 +42,10 @@ public class ServerRMI implements Runnable {
 	public void run() {
 
 		ServerRMIRegistrationViewRemote gameRegistration = new ServerRMIRegistrationView(
-				this);
+		        this);
 		try {
 			ServerRMIRegistrationViewRemote gameRemoteRegistration = (ServerRMIRegistrationViewRemote) UnicastRemoteObject
-					.exportObject(gameRegistration, 0);
+			        .exportObject(gameRegistration, 0);
 			LOGGER.info("Binding server implementation to registry...");
 
 			server.getRegistry().bind(Server.getName(), gameRemoteRegistration);
@@ -64,8 +64,8 @@ public class ServerRMI implements Runnable {
 	 * @throws RemoteException
 	 */
 	public synchronized void addRMIClient(SubscriberInterface client,
-			ServerGameRoom view) throws GameAlreadyRunningException,
-			RemoteException {
+	        ServerGameRoom view) throws GameAlreadyRunningException,
+	        RemoteException {
 
 		Controller nextGame = Server.getStartingGame();
 		if (nextGame == null) {
@@ -74,7 +74,7 @@ public class ServerRMI implements Runnable {
 		synchronized (Server.getStartingGame()) {
 
 			nextGame.addClientRMI(client.getClientId(), client.getPlayerName(),
-					view);
+			        view);
 
 			/**
 			 * Check if the game has to start.

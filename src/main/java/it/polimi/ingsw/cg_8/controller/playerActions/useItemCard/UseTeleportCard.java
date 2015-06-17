@@ -38,7 +38,7 @@ public class UseTeleportCard extends UseItemCard {
 		}
 		// make noise
 		Noise teleportNoise = new TeleportNoise(model.getRoundNumber(),
-				currentPlayer, model.getMap().getHumanSpawn());
+		        currentPlayer, model.getMap().getHumanSpawn());
 		model.addNoise(teleportNoise);
 
 	}

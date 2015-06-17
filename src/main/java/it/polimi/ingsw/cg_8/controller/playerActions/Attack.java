@@ -86,8 +86,8 @@ public class Attack implements PlayerAction {
 						UseDefenseCard.useCard(p);
 						heldCards.getHeldCards().remove(c);
 						DefenseNoise defenseNoise = new DefenseNoise(
-								model.getRoundNumber(), p,
-								attacker.getLastPosition());
+						        model.getRoundNumber(), p,
+						        attacker.getLastPosition());
 						survivors.add(p);
 						model.addNoise(defenseNoise);
 						break;
@@ -97,7 +97,7 @@ public class Attack implements PlayerAction {
 			if (!p.getCharacter().isDefendAllowed()) {
 				this.killPlayer(p);
 				if (attacker.getCharacter() instanceof Alien
-						&& p.getCharacter() instanceof Human) {
+				        && p.getCharacter() instanceof Human) {
 					((Alien) attacker.getCharacter()).feedAlien();
 				}
 			} else {
@@ -105,7 +105,7 @@ public class Attack implements PlayerAction {
 			}
 		}
 		Noise attackNoise = new AttackNoise(model.getRoundNumber(), attacker,
-				attacker.getLastPosition());
+		        attacker.getLastPosition());
 		model.addNoise(attackNoise);
 	}
 
@@ -119,8 +119,8 @@ public class Attack implements PlayerAction {
 		List<Player> playerList = model.getPlayers();
 		for (Player p : playerList) {
 			if (p.getLastPosition().equals(target)
-					&& p.getState().equals(PlayerState.ALIVE)
-					&& !(model.getCurrentPlayerReference().equals(p))) {
+			        && p.getState().equals(PlayerState.ALIVE)
+			        && !(model.getCurrentPlayerReference().equals(p))) {
 				playersInSector.add(p);
 			}
 		}

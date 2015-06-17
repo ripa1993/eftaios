@@ -26,7 +26,7 @@ public class Disconnect implements PlayerAction {
 	 */
 	public static void disconnect(Player player) {
 		if (player.getState() != PlayerState.DISCONNECTED
-				|| player.getState() != PlayerState.CONNECTING) {
+		        || player.getState() != PlayerState.CONNECTING) {
 			player.setDisconnected();
 		}
 	}

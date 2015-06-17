@@ -22,7 +22,7 @@ public class AttackTest {
 
 	@Before
 	public void init() throws NotAValidMapException,
-			GameAlreadyRunningException, EmptyDeckException {
+	        GameAlreadyRunningException, EmptyDeckException {
 		model = new Model(GameMapName.FERMI);
 		model.addPlayer("a");
 		model.addPlayer("b");
@@ -63,7 +63,7 @@ public class AttackTest {
 	public void attackSuccessfulHumanTest() {
 		EndTurn.endTurn(model);
 		model.getCurrentPlayerReference().getHand()
-				.addItemCard(new AttackCard());
+		        .addItemCard(new AttackCard());
 		Attack attack = new Attack(model);
 		attack.makeAttack();
 		assertTrue((attack.getVictims().get(0)).getCharacter() instanceof Alien);
@@ -73,7 +73,7 @@ public class AttackTest {
 	public void attackUnsuccessfulHumanDefendTest() {
 		EndTurn.endTurn(model);
 		model.getCurrentPlayerReference().getHand()
-				.addItemCard(new DefenseCard());
+		        .addItemCard(new DefenseCard());
 		EndTurn.endTurn(model);
 		Attack attack = new Attack(model);
 

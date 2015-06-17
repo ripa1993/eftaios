@@ -37,7 +37,7 @@ public class MapPanel extends JLayeredPane {
 		 * Auxiliary variables
 		 */
 		private float mapImageWidth, mapImageHeight, panelBorderWidth,
-				panelBorderHeight;
+		        panelBorderHeight;
 
 		/**
 		 * Calculates the auxiliary variables
@@ -50,14 +50,14 @@ public class MapPanel extends JLayeredPane {
 			mapImageHeight = mapPanelHeight;
 
 			if (mapImageWidth - backgroundImageScaled.getWidth(null) > mapImageHeight
-					- backgroundImageScaled.getHeight(null)) {
+			        - backgroundImageScaled.getHeight(null)) {
 				mapImageWidth = mapImageHeight
-						* backgroundImageScaled.getWidth(null)
-						/ backgroundImageScaled.getHeight(null);
+				        * backgroundImageScaled.getWidth(null)
+				        / backgroundImageScaled.getHeight(null);
 			} else {
 				mapImageHeight = mapImageWidth
-						* backgroundImageScaled.getHeight(null)
-						/ backgroundImageScaled.getWidth(null);
+				        * backgroundImageScaled.getHeight(null)
+				        / backgroundImageScaled.getWidth(null);
 			}
 			// get border sizes
 			panelBorderWidth = (mapPanelWidth - mapImageWidth) / 2;
@@ -128,11 +128,11 @@ public class MapPanel extends JLayeredPane {
 		public void paintComponent(Graphics g) {
 			ImageIcon image = new ImageIcon(path);
 			Image imageScaled = new ImageIcon(image.getImage()
-					.getScaledInstance(100, -1, Image.SCALE_SMOOTH)).getImage();
+			        .getScaledInstance(100, -1, Image.SCALE_SMOOTH)).getImage();
 			// get the point where the top left edge of the artifact is
 			Point p = getPoint(coord);
 			g.drawImage(imageScaled, (int) p.getX(), (int) p.getY(),
-					(int) (getColumnWidth()), (int) (getRowHeight() * 2), null);
+			        (int) (getColumnWidth()), (int) (getRowHeight() * 2), null);
 
 		}
 	}
@@ -175,11 +175,11 @@ public class MapPanel extends JLayeredPane {
 		public void paintComponent(Graphics g) {
 			ImageIcon image = new ImageIcon(imageFile);
 			Image imageScaled = new ImageIcon(image.getImage()
-					.getScaledInstance(100, -1, Image.SCALE_SMOOTH)).getImage();
+			        .getScaledInstance(100, -1, Image.SCALE_SMOOTH)).getImage();
 			// get the point where the top left edge of the artifact is
 			Point p = getPoint(coord);
 			g.drawImage(imageScaled, (int) p.getX(), (int) p.getY(),
-					(int) (getColumnWidth()), (int) (getRowHeight() * 2), null);
+			        (int) (getColumnWidth()), (int) (getRowHeight() * 2), null);
 
 		}
 	}
@@ -225,24 +225,24 @@ public class MapPanel extends JLayeredPane {
 		int updatedHeight = this.getHeight();
 
 		if ((float) this.getWidth() / backgroundImageScaled.getWidth(null) > (float) this
-				.getHeight() / backgroundImageScaled.getHeight(null)) {
+		        .getHeight() / backgroundImageScaled.getHeight(null)) {
 			updatedWidth = updatedHeight * backgroundImageScaled.getWidth(null)
-					/ backgroundImageScaled.getHeight(null);
+			        / backgroundImageScaled.getHeight(null);
 		}
 		if ((float) this.getWidth() / backgroundImageScaled.getWidth(null) < (float) this
-				.getHeight() / backgroundImageScaled.getHeight(null)) {
+		        .getHeight() / backgroundImageScaled.getHeight(null)) {
 			updatedHeight = updatedWidth
-					* backgroundImageScaled.getHeight(null)
-					/ backgroundImageScaled.getWidth(null);
+			        * backgroundImageScaled.getHeight(null)
+			        / backgroundImageScaled.getWidth(null);
 		}
 
 		int x = (this.getWidth() - updatedWidth) / 2;
 		int y = (this.getHeight() - updatedHeight) / 2;
 		backgroundImageScaled = new ImageIcon(backgroundImage.getImage()
-				.getScaledInstance(updatedWidth, -1, Image.SCALE_SMOOTH))
-				.getImage();
+		        .getScaledInstance(updatedWidth, -1, Image.SCALE_SMOOTH))
+		        .getImage();
 		g.drawImage(backgroundImageScaled, x, y, updatedWidth, updatedHeight,
-				null);
+		        null);
 	}
 
 	/**
@@ -254,7 +254,7 @@ public class MapPanel extends JLayeredPane {
 	void setMapImage(String path) {
 		backgroundImage = new ImageIcon(path);
 		backgroundImageScaled = new ImageIcon(backgroundImage.getImage()
-				.getScaledInstance(5000, -1, Image.SCALE_SMOOTH)).getImage();
+		        .getScaledInstance(5000, -1, Image.SCALE_SMOOTH)).getImage();
 
 	}
 
@@ -277,14 +277,14 @@ public class MapPanel extends JLayeredPane {
 		float mapImageHeight = mapPanelHeight;
 
 		if (mapImageWidth - backgroundImageScaled.getWidth(null) > mapImageHeight
-				- backgroundImageScaled.getHeight(null)) {
+		        - backgroundImageScaled.getHeight(null)) {
 			mapImageWidth = mapImageHeight
-					* backgroundImageScaled.getWidth(null)
-					/ backgroundImageScaled.getHeight(null);
+			        * backgroundImageScaled.getWidth(null)
+			        / backgroundImageScaled.getHeight(null);
 		} else {
 			mapImageHeight = mapImageWidth
-					* backgroundImageScaled.getHeight(null)
-					/ backgroundImageScaled.getWidth(null);
+			        * backgroundImageScaled.getHeight(null)
+			        / backgroundImageScaled.getWidth(null);
 		}
 		// get border sizes
 		float panelBorderWidth = (mapPanelWidth - mapImageWidth) / 2;
@@ -330,7 +330,7 @@ public class MapPanel extends JLayeredPane {
 		// calculate column
 		for (int i = 0; i <= NUM_COLUMN; i++) {
 			if (imageMouseX >= i * columnWidth
-					&& imageMouseX <= (i + 1) * columnWidth) {
+			        && imageMouseX <= (i + 1) * columnWidth) {
 				col = i;
 				break;
 			}
@@ -338,7 +338,7 @@ public class MapPanel extends JLayeredPane {
 		// calculate row
 		for (int i = 0; i <= NUM_ROW; i++) {
 			if (imageMouseY >= i * rowHeigth
-					&& imageMouseY <= (i + 1) * rowHeigth) {
+			        && imageMouseY <= (i + 1) * rowHeigth) {
 				row = i;
 				break;
 			}
@@ -368,7 +368,7 @@ public class MapPanel extends JLayeredPane {
 	 * @throws IOException
 	 */
 	public void createArtifact(Coordinate coordinate, String imagefile,
-			int milliseconds, final int repetitions) throws IOException {
+	        int milliseconds, final int repetitions) throws IOException {
 		final JLabel jlabel = new ArtifactJLabel(coordinate, imagefile);
 		add(jlabel);
 		setLayer(jlabel, JLayeredPane.POPUP_LAYER + 1);
@@ -438,14 +438,14 @@ public class MapPanel extends JLayeredPane {
 		float mapImageWidth = mapPanelWidth;
 		float mapImageHeight = mapPanelHeight;
 		if (mapImageWidth - backgroundImageScaled.getWidth(null) > mapImageHeight
-				- backgroundImageScaled.getHeight(null)) {
+		        - backgroundImageScaled.getHeight(null)) {
 			mapImageWidth = mapImageHeight
-					* backgroundImageScaled.getWidth(null)
-					/ backgroundImageScaled.getHeight(null);
+			        * backgroundImageScaled.getWidth(null)
+			        / backgroundImageScaled.getHeight(null);
 		} else {
 			mapImageHeight = mapImageWidth
-					* backgroundImageScaled.getHeight(null)
-					/ backgroundImageScaled.getWidth(null);
+			        * backgroundImageScaled.getHeight(null)
+			        / backgroundImageScaled.getWidth(null);
 
 		}
 		// calculate col and row size
@@ -465,14 +465,14 @@ public class MapPanel extends JLayeredPane {
 		float mapImageWidth = mapPanelWidth;
 		float mapImageHeight = mapPanelHeight;
 		if (mapImageWidth - backgroundImageScaled.getWidth(null) > mapImageHeight
-				- backgroundImageScaled.getHeight(null)) {
+		        - backgroundImageScaled.getHeight(null)) {
 			mapImageWidth = mapImageHeight
-					* backgroundImageScaled.getWidth(null)
-					/ backgroundImageScaled.getHeight(null);
+			        * backgroundImageScaled.getWidth(null)
+			        / backgroundImageScaled.getHeight(null);
 		} else {
 			mapImageHeight = mapImageWidth
-					* backgroundImageScaled.getHeight(null)
-					/ backgroundImageScaled.getWidth(null);
+			        * backgroundImageScaled.getHeight(null)
+			        / backgroundImageScaled.getWidth(null);
 
 		}
 		// calculate col and row size

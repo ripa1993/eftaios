@@ -1,8 +1,10 @@
 package it.polimi.ingsw.cg_8.view.client.actions;
 
 import java.io.Serializable;
+
 /**
  * Action: query the server for the player's hand
+ * 
  * @author Simone
  *
  */
@@ -15,7 +17,7 @@ public class ActionGetHand implements ClientAction, Serializable {
 	/**
 	 * Constructor
 	 */
-	public ActionGetHand(){
-		
+	public ActionGetHand() {
+
 	}
 }

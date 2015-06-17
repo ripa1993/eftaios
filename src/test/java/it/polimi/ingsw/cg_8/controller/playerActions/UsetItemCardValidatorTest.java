@@ -26,7 +26,8 @@ public class UsetItemCardValidatorTest {
 
 	@Before
 	public void init() throws NotAValidMapException,
-			GameAlreadyRunningException, EmptyDeckException, TooManyCardsException {
+	        GameAlreadyRunningException, EmptyDeckException,
+	        TooManyCardsException {
 		model = new Model(GameMapName.FERMI);
 		model.addPlayer("Ann");
 		model.addPlayer("Bob");
@@ -37,29 +38,33 @@ public class UsetItemCardValidatorTest {
 			currentPlayer = model.getPlayers().get(model.getCurrentPlayer());
 		}
 		currentPlayer.getHand().addItemCard(new AttackCard());
-		currentPlayer.getHand().addItemCard(new AdrenalineCard());		
+		currentPlayer.getHand().addItemCard(new AdrenalineCard());
 	}
-	
+
 	@Test
 	public void testCardUsage() {
-		assertTrue(UseItemCardValidator.validateItemCardUsage(model, new AdrenalineCard()));
+		assertTrue(UseItemCardValidator.validateItemCardUsage(model,
+		        new AdrenalineCard()));
 	}
-	
+
 	@Test
 	public void testCardUsage2() {
-		assertTrue(UseItemCardValidator.validateItemCardUsage(model, new AttackCard()));
+		assertTrue(UseItemCardValidator.validateItemCardUsage(model,
+		        new AttackCard()));
 	}
+
 	@Test
 	public void testCardUsage3() {
-		assertFalse(UseItemCardValidator.validateItemCardUsage(model, new SedativesCard()));
+		assertFalse(UseItemCardValidator.validateItemCardUsage(model,
+		        new SedativesCard()));
 	}
-	
+
 	@Test
 	public void testCardRemoval() {
 		boolean removalCheck = false;
 		UseItemCardValidator.validateItemCardUsage(model, new AdrenalineCard());
 		List<ItemCard> heldCards = currentPlayer.getHand().getHeldCards();
-		for ( ItemCard c : heldCards) {
+		for (ItemCard c : heldCards) {
 			if (c instanceof AdrenalineCard) {
 				removalCheck = true;
 			}

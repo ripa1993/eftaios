@@ -47,7 +47,7 @@ public class DrawDangerousSectorCard implements PlayerAction {
 	 * Log4j logger
 	 */
 	private static final Logger LOGGER = LogManager
-			.getLogger(DrawDangerousSectorCard.class);
+	        .getLogger(DrawDangerousSectorCard.class);
 
 	/**
 	 * The class is not static so that it is possible to keep trace of the cards
@@ -83,7 +83,7 @@ public class DrawDangerousSectorCard implements PlayerAction {
 
 		try {
 			this.dangerousSectorCard = model.getDangerousSectorDeck()
-					.drawCard();
+			        .drawCard();
 		} catch (EmptyDeckException e) {
 			/**
 			 * This exception never occurs, the deck is always re-shuffled when
@@ -97,7 +97,7 @@ public class DrawDangerousSectorCard implements PlayerAction {
 			// what kind of noise?
 			if (!((NoiseCard) dangerousSectorCard).hasToMakeFakeNoise()) {
 				Noise movementNoise = new MovementNoise(model.getRoundNumber(),
-						player, player.getLastPosition());
+				        player, player.getLastPosition());
 				model.addNoise(movementNoise);
 				hasToMakeFakeNoise = false;
 			} else {
@@ -117,7 +117,7 @@ public class DrawDangerousSectorCard implements PlayerAction {
 					 * Add the card to the player's hand, if possible.
 					 */
 					discardedItemCard = !(player.getHand()
-							.addItemCard(itemCard));
+					        .addItemCard(itemCard));
 
 					if (discardedItemCard) {
 						model.getItemDeck().addUsedCard(itemCard);

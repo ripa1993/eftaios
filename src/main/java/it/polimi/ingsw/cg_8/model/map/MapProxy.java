@@ -30,7 +30,9 @@ public class MapProxy implements ReachableCoordinatesInterface {
 
 	/**
 	 * HashMap < StartingCoords, HashMap <Depth, Set<ReachableCoords>>>
-	 * @param map related map
+	 * 
+	 * @param map
+	 *            related map
 	 */
 	public MapProxy(GameMap map) {
 		reachableCoordinates = new HashMap<Coordinate, Map<Integer, Set<Coordinate>>>();
@@ -68,45 +70,45 @@ public class MapProxy implements ReachableCoordinatesInterface {
 		if ((currentX & 1) == 1) {
 			if (map.verifySectorExistance(new Coordinate(currentX + 1, currentY))) {
 				connectedCoordinates
-						.add(new Coordinate(currentX + 1, currentY));
+				        .add(new Coordinate(currentX + 1, currentY));
 
 			}
 			if (map.verifySectorExistance(new Coordinate(currentX + 1,
-					currentY + 1))) {
+			        currentY + 1))) {
 				connectedCoordinates.add(new Coordinate(currentX + 1,
-						currentY + 1));
+				        currentY + 1));
 			}
 			if (map.verifySectorExistance(new Coordinate(currentX - 1, currentY))) {
 				connectedCoordinates
-						.add(new Coordinate(currentX - 1, currentY));
+				        .add(new Coordinate(currentX - 1, currentY));
 			}
 			if (map.verifySectorExistance(new Coordinate(currentX - 1,
-					currentY + 1))) {
+			        currentY + 1))) {
 				connectedCoordinates.add(new Coordinate(currentX - 1,
-						currentY + 1));
+				        currentY + 1));
 			}
 		} else if ((currentX & 1) == 0) {
 			if (map.verifySectorExistance(new Coordinate(currentX + 1, currentY))) {
 				connectedCoordinates
-						.add(new Coordinate(currentX + 1, currentY));
+				        .add(new Coordinate(currentX + 1, currentY));
 
 			}
 			if (map.verifySectorExistance(new Coordinate(currentX + 1,
-					currentY - 1))) {
+			        currentY - 1))) {
 				connectedCoordinates.add(new Coordinate(currentX + 1,
-						currentY - 1));
+				        currentY - 1));
 			}
 			if (map.verifySectorExistance(new Coordinate(currentX - 1, currentY))) {
 				connectedCoordinates
-						.add(new Coordinate(currentX - 1, currentY));
+				        .add(new Coordinate(currentX - 1, currentY));
 			}
 			if (map.verifySectorExistance(new Coordinate(currentX - 1,
-					currentY - 1))) {
+			        currentY - 1))) {
 				connectedCoordinates.add(new Coordinate(currentX - 1,
-						currentY - 1));
+				        currentY - 1));
 			}
 		}
-		
+
 		return connectedCoordinates;
 	}
 
@@ -177,17 +179,16 @@ public class MapProxy implements ReachableCoordinatesInterface {
 
 	/**
 	 * Getter for GameMap related to this MapProxy
+	 * 
 	 * @return game map
 	 */
 	public GameMap getMap() {
 		return map;
 	}
 
-
-
 	@Override
 	public String toString() {
 		return "MapProxy [map=" + map + ", reachableCoordinates="
-				+ reachableCoordinates + "]";
+		        + reachableCoordinates + "]";
 	}
 }

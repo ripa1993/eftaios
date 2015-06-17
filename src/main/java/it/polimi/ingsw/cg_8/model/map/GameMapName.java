@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 /**
  * Allowed maps to be played
+ * 
  * @author Simone
  * @version 1.0
  */

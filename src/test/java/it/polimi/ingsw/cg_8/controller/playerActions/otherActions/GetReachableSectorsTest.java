@@ -21,7 +21,7 @@ public class GetReachableSectorsTest {
 
 	@Before
 	public void init() throws NotAValidMapException,
-			GameAlreadyRunningException, EmptyDeckException {
+	        GameAlreadyRunningException, EmptyDeckException {
 		model = new Model(GameMapName.FERMI);
 		model.addPlayer("a");
 		model.addPlayer("b");
@@ -32,7 +32,7 @@ public class GetReachableSectorsTest {
 	public void test() {
 		Player player = model.getCurrentPlayerReference();
 		Set<Coordinate> output = GetReachableSectors.getReachableSectors(model,
-				player);
+		        player);
 		Set<Coordinate> reachableAlien = new HashSet<Coordinate>();
 		reachableAlien.add(new Coordinate(11, 7));
 		reachableAlien.add(new Coordinate(11, 6));

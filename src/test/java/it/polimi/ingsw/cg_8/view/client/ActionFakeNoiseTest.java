@@ -15,7 +15,7 @@ public class ActionFakeNoiseTest {
 		String input = "NOISE B12";
 		ClientAction action = ActionParser.createEvent(input);
 		assertEquals(((ActionFakeNoise) action).getCoordinate(),
-				new Coordinate(1, 11));
+		        new Coordinate(1, 11));
 	}
 
 	@Test(expected = NotAValidInput.class)
@@ -23,18 +23,19 @@ public class ActionFakeNoiseTest {
 		String input = "NOISE nonvalid";
 		ClientAction action = ActionParser.createEvent(input);
 	}
-	
+
 	@Test(expected = NotAValidInput.class)
 	public void testException2() throws NotAValidInput {
 		String input = "NOISE Z01";
 		ClientAction action = ActionParser.createEvent(input);
 	}
-	
+
 	@Test(expected = NotAValidInput.class)
 	public void testException3() throws NotAValidInput {
 		String input = "NOISE B01 nope";
 		ClientAction action = ActionParser.createEvent(input);
 	}
+
 	@Test(expected = NotAValidInput.class)
 	public void testException4() throws NotAValidInput {
 		String input = "NOISE";

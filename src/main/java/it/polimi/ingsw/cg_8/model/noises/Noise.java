@@ -74,7 +74,7 @@ public abstract class Noise implements Serializable {
 	public String toString() {
 
 		return " Turn: " + turnNumber + " Player: " + player.getName()
-				+ " Coordinate: " + coordinate.toString();
+		        + " Coordinate: " + coordinate.toString();
 	}
 
 }

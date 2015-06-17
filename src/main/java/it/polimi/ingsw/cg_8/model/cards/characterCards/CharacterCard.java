@@ -70,7 +70,7 @@ public abstract class CharacterCard extends Card {
 	public String toString() {
 		if (this.nickname != null) {
 			return "Character: " + name + ", " + "\"" + nickname + "\""
-					+ ", as " + rank + "\n";
+			        + ", as " + rank + "\n";
 		} else
 			return "Character: " + name + ", as " + rank + "\n";
 	}
@@ -81,7 +81,7 @@ public abstract class CharacterCard extends Card {
 		int result = 1;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result
-				+ ((nickname == null) ? 0 : nickname.hashCode());
+		        + ((nickname == null) ? 0 : nickname.hashCode());
 		result = prime * result + ((rank == null) ? 0 : rank.hashCode());
 		return result;
 	}

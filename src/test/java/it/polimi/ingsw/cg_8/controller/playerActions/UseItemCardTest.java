@@ -29,7 +29,7 @@ public class UseItemCardTest {
 
 	@Before
 	public void init() throws NotAValidMapException,
-			GameAlreadyRunningException, EmptyDeckException {
+	        GameAlreadyRunningException, EmptyDeckException {
 		model = new Model(GameMapName.FERMI);
 		model.addPlayer("pippo");
 		model.addPlayer("pluto");
@@ -69,17 +69,18 @@ public class UseItemCardTest {
 	public void testUseTeleportCard() {
 		UseTeleportCard.useCard(model);
 		assertEquals(model.getMap().getHumanSpawn(),
-				currentPlayer.getLastPosition());
+		        currentPlayer.getLastPosition());
 	}
 
 	@Test
 	public void testUseSpotlightCard() {
 		Set<Player> foundPlayers = UseSpotlightCard.useCard(model,
-				new Coordinate(model.getMap().getHumanSpawn().getX(), model
-						.getMap().getHumanSpawn().getY()));
-		System.out.println(model.getCurrentPlayerReference().getLastPosition().toString());
+		        new Coordinate(model.getMap().getHumanSpawn().getX(), model
+		                .getMap().getHumanSpawn().getY()));
+		System.out.println(model.getCurrentPlayerReference().getLastPosition()
+		        .toString());
 		System.out.println(foundPlayers);
-		
+
 		System.out.println(model.getPlayers());
 		assertTrue(foundPlayers.containsAll(model.getPlayers()));
 	}

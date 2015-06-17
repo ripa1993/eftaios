@@ -19,8 +19,8 @@ public class HumanSector extends SpawnSector {
 	private static final long serialVersionUID = 3422910957939391661L;
 
 	/**
-	 * Constructor for {@link HumanSector}, used to performs checks
-	 * and validations.
+	 * Constructor for {@link HumanSector}, used to performs checks and
+	 * validations.
 	 * 
 	 * @param x
 	 *            column number
@@ -30,7 +30,7 @@ public class HumanSector extends SpawnSector {
 	public HumanSector(int x, int y) {
 		super(x, y);
 	}
-	
+
 	/**
 	 * Default constructor used in the XML parsing.
 	 */

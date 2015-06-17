@@ -34,7 +34,7 @@ public class ClientSocketViewSUB implements Runnable {
 	 * Log4j logger
 	 */
 	private static final Logger LOGGER = LogManager
-			.getLogger(ClientSocketViewSUB.class);
+	        .getLogger(ClientSocketViewSUB.class);
 
 	/**
 	 * Used in the GUI and CLI
@@ -44,13 +44,13 @@ public class ClientSocketViewSUB implements Runnable {
 	 * @param connectionManager
 	 */
 	public ClientSocketViewSUB(String serverIP, int serverPubPort,
-			ConnectionManagerSocket connectionManager) {
+	        ConnectionManagerSocket connectionManager) {
 		try {
 			this.subSocket = new Socket(serverIP, serverPubPort);
 			this.input = new ObjectInputStream(subSocket.getInputStream());
 			this.connectionManager = connectionManager;
 		} catch (IOException e) {
-			LOGGER.error(e.getMessage(),e);
+			LOGGER.error(e.getMessage(), e);
 		}
 	}
 
@@ -82,7 +82,7 @@ public class ClientSocketViewSUB implements Runnable {
 
 			return;
 		} catch (IOException | ClassNotFoundException e) {
-			LOGGER.error(e.getMessage(),e);
+			LOGGER.error(e.getMessage(), e);
 		}
 	}
 

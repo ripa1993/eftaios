@@ -60,7 +60,7 @@ public class ClientDataTest {
 	@Test
 	public void testStoreResponseNoise() {
 		cd.storeResponse(new ResponseNoise(new MovementNoise(0,
-				new Player("a"), new Coordinate(1, 1))));
+		        new Player("a"), new Coordinate(1, 1))));
 		while (!dummy.changed) {
 
 		}
@@ -88,7 +88,7 @@ public class ClientDataTest {
 	@Test
 	public void testStoreResponseState() {
 		cd.storeResponse(new ResponseState("a", "v", "a", new Coordinate(1, 1),
-				1));
+		        1));
 		while (!dummy.changed) {
 
 		}
@@ -139,7 +139,7 @@ public class ClientDataTest {
 	@Test
 	public void testGetState() {
 		cd.storeResponse(new ResponseState("a", "b", "c", new Coordinate(1, 1),
-				0));
+		        0));
 		ResponseState state = cd.getState();
 		assertEquals("0", state.getRoundNumber());
 	}
@@ -154,7 +154,7 @@ public class ClientDataTest {
 	@Test
 	public void testGetLastNoise() {
 		ResponseNoise chat = new ResponseNoise(new MovementNoise(0, new Player(
-				"a"), new Coordinate(1, 1)));
+		        "a"), new Coordinate(1, 1)));
 		cd.storeResponse(chat);
 		assertEquals(chat, cd.getLastNoise());
 	}

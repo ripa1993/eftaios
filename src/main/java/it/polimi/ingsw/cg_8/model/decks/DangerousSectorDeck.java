@@ -17,7 +17,7 @@ public class DangerousSectorDeck extends Deck {
 	 * Log4j logger
 	 */
 	private static final Logger LOGGER = LogManager
-			.getLogger(DangerousSectorDeck.class);
+	        .getLogger(DangerousSectorDeck.class);
 
 	@Override
 	public Card drawCard() {

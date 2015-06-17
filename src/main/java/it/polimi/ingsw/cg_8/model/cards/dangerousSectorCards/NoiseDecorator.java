@@ -8,15 +8,17 @@ package it.polimi.ingsw.cg_8.model.cards.dangerousSectorCards;
  *
  */
 public abstract class NoiseDecorator extends DangerousSectorCard implements
-		NoiseCard {
+        NoiseCard {
 	/**
 	 * Noise that is going to be decorated
 	 */
 	protected final NoiseCard decoratedNoise;
-	
+
 	/**
 	 * Constructor
-	 * @param decoratedNoise noise to be decorated
+	 * 
+	 * @param decoratedNoise
+	 *            noise to be decorated
 	 */
 	public NoiseDecorator(NoiseCard decoratedNoise) {
 		this.decoratedNoise = decoratedNoise;

@@ -31,7 +31,7 @@ public class MapParserClient {
 	 * Log4j logger
 	 */
 	private static final Logger LOGGER = LogManager
-			.getLogger(MapParserClient.class);
+	        .getLogger(MapParserClient.class);
 
 	/**
 	 * Constructor
@@ -55,11 +55,11 @@ public class MapParserClient {
 		 */
 		@XmlElementWrapper(name = "sectorList")
 		@XmlElements({
-				@XmlElement(name = "safeSector", type = Coordinate.class),
-				@XmlElement(name = "dangerousSector", type = Coordinate.class),
-				@XmlElement(name = "escapeHatchSector", type = Coordinate.class),
-				@XmlElement(name = "humanSector", type = Coordinate.class),
-				@XmlElement(name = "alienSector", type = Coordinate.class), })
+		        @XmlElement(name = "safeSector", type = Coordinate.class),
+		        @XmlElement(name = "dangerousSector", type = Coordinate.class),
+		        @XmlElement(name = "escapeHatchSector", type = Coordinate.class),
+		        @XmlElement(name = "humanSector", type = Coordinate.class),
+		        @XmlElement(name = "alienSector", type = Coordinate.class), })
 		private Set<Coordinate> sectorSet;
 
 		/**
@@ -87,7 +87,7 @@ public class MapParserClient {
 
 			Unmarshaller unmarshaller = jc.createUnmarshaller();
 			GameMapSet sectorSet = (GameMapSet) unmarshaller
-					.unmarshal(new File(mapName));
+			        .unmarshal(new File(mapName));
 
 			return sectorSet.getSectorList();
 

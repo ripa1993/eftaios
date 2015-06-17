@@ -18,7 +18,7 @@ public class AttackNoiseTest {
 	public void init() {
 		player = new Player("Test");
 		player.init(new Alien(new AlienCard("a", "b", "c")), new Coordinate(0,
-				0));
+		        0));
 		noise = new AttackNoise(1, player, new Coordinate(1, 1));
 	}
 
@@ -45,8 +45,8 @@ public class AttackNoiseTest {
 	@Test
 	public void testToString() {
 		assertEquals("Attack noise: " + " Turn: " + "1" + " Player: " + "Test"
-				+ " Coordinate: " + "B02" + " Character: " + "Alien",
-				noise.toString());
+		        + " Coordinate: " + "B02" + " Character: " + "Alien",
+		        noise.toString());
 	}
 
 }

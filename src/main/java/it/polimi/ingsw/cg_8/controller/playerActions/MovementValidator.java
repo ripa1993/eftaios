@@ -24,13 +24,12 @@ import org.apache.logging.log4j.Logger;
  * @version 1.0
  */
 public class MovementValidator {
-	
 
 	/**
 	 * Log4j logger
 	 */
 	private static final Logger LOGGER = LogManager
-			.getLogger(MovementValidator.class);
+	        .getLogger(MovementValidator.class);
 
 	/**
 	 * Constructor
@@ -40,6 +39,7 @@ public class MovementValidator {
 	private MovementValidator() {
 
 	}
+
 	/**
 	 * Validates the movement for the current player in model to the destination
 	 * coordinate
@@ -73,11 +73,11 @@ public class MovementValidator {
 		Sector destinationSector = new SecureSector();
 
 		Set<Coordinate> allowedCoordinates = setAllowedCoordinates(gameMap,
-				startingSector, maxDistance);
+		        startingSector, maxDistance);
 
 		try {
 			destinationSector = model.getMap().getSectorByCoordinates(
-					destination);
+			        destination);
 		} catch (NotAValidCoordinateException e) {
 			LOGGER.error(e.getMessage(), e);
 			return false;
@@ -103,7 +103,7 @@ public class MovementValidator {
 	 *         false, if not
 	 */
 	private static boolean checkMovement(Player player,
-			Coordinate startingSector, Sector destinationSector) {
+	        Coordinate startingSector, Sector destinationSector) {
 		if (destinationSector.equals(startingSector)) {
 			return false;
 		}
@@ -111,7 +111,7 @@ public class MovementValidator {
 			return false;
 		}
 		if (player.getCharacter() instanceof Alien
-				&& destinationSector instanceof EscapeHatchSector) {
+		        && destinationSector instanceof EscapeHatchSector) {
 
 			return false;
 		}
@@ -124,10 +124,10 @@ public class MovementValidator {
 	 * player.
 	 */
 	private static Set<Coordinate> setAllowedCoordinates(GameMap gameMap,
-			Coordinate startingSector, int maxDistance) {
+	        Coordinate startingSector, int maxDistance) {
 		Set<Coordinate> allowedCoordinates = new HashSet<Coordinate>();
 		allowedCoordinates.addAll(gameMap.getReachableCoordinates(
-				startingSector, maxDistance));
+		        startingSector, maxDistance));
 		return allowedCoordinates;
 	}
 }

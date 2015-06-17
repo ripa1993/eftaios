@@ -125,14 +125,14 @@ public class ModelTest {
 
 	@Test(expected = GameAlreadyRunningException.class)
 	public void addPlayerAfterInit() throws GameAlreadyRunningException,
-			EmptyDeckException {
+	        EmptyDeckException {
 		model.initGame();
 		model.addPlayer("asd");
 	}
 
 	@Test(expected = GameAlreadyRunningException.class)
 	public void removePlayerAfterInit() throws EmptyDeckException,
-			GameAlreadyRunningException {
+	        GameAlreadyRunningException {
 		model.initGame();
 		Player player = model.getCurrentPlayerReference();
 		model.removePlayer(player);

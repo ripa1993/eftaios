@@ -18,12 +18,12 @@ import org.apache.logging.log4j.Logger;
  * @version 1.0
  */
 public class ServerRMIRegistrationView implements
-		ServerRMIRegistrationViewRemote {
+        ServerRMIRegistrationViewRemote {
 	/**
 	 * Log4j logger
 	 */
 	private static final Logger LOGGER = LogManager
-			.getLogger(ServerRMIRegistrationView.class);
+	        .getLogger(ServerRMIRegistrationView.class);
 
 	/**
 	 * Required as i want to associate the clients with their respective
@@ -33,6 +33,7 @@ public class ServerRMIRegistrationView implements
 
 	/**
 	 * The server RMI is used to register the player.
+	 * 
 	 * @param server
 	 */
 	public ServerRMIRegistrationView(ServerRMI server) {
@@ -42,12 +43,13 @@ public class ServerRMIRegistrationView implements
 	/**
 	 * The client gets a new clientId, if it doesn't already have one. The
 	 * method is called at the beginning of the registration process.
+	 * 
 	 * @param clientId
 	 * @return clientId The new clientId
 	 */
 	@Override
 	public int getClientId(int clientId) throws RemoteException,
-			AlreadyBoundException {
+	        AlreadyBoundException {
 		LOGGER.info("ClientId is: " + clientId);
 		if (clientId == 0) {
 			Integer newClientId = Server.getClientId();
@@ -62,12 +64,13 @@ public class ServerRMIRegistrationView implements
 	/**
 	 * Method used by the client to communicate its name to the server, before
 	 * the start of the game.
+	 * 
 	 * @param playerName
 	 * @return If the name was accepted.
 	 */
 	@Override
 	public boolean sendPlayerName(String name) throws RemoteException,
-			AlreadyBoundException {
+	        AlreadyBoundException {
 
 		LOGGER.debug("Name accepted: " + name);
 		return true;
@@ -76,31 +79,37 @@ public class ServerRMIRegistrationView implements
 	/**
 	 * Method used by the client to communicate its chosen map to the server,
 	 * which will process the vote.
-	 * @param chosenMap The map chosen by the player.
+	 * 
+	 * @param chosenMap
+	 *            The map chosen by the player.
 	 */
 	@Override
 	public void sendMapVote(GameMapName chosenMap) throws RemoteException,
-	AlreadyBoundException {
+	        AlreadyBoundException {
 		LOGGER.debug("Vote given to " + chosenMap);
-		Server.addVote(chosenMap);	
+		Server.addVote(chosenMap);
 	}
-	
+
 	/**
 	 * Creates a {@link ServerGameRoom GameRoom} for the client so that it can
 	 * play the game. Add the client to a client list, so that the server can
 	 * identify it.
-	 * @param client A reference to the client which is registering.
+	 * 
+	 * @param client
+	 *            A reference to the client which is registering.
 	 * @return view A GameRoom usable by the player.
 	 */
 	@Override
 	public ServerGameRoomInterface register(SubscriberInterface client)
-			throws RemoteException, AlreadyBoundException {
+	        throws RemoteException, AlreadyBoundException {
 		ServerGameRoom view = new ServerGameRoom(client);
 
 		try {
 			serverRMI.addRMIClient(client, view);
 		} catch (GameAlreadyRunningException e) {
-			LOGGER.error("Game already running, can't add the player to this game", e);
+			LOGGER.error(
+			        "Game already running, can't add the player to this game",
+			        e);
 		}
 		return view;
 

@@ -20,9 +20,12 @@ public class BackgroundPanel extends JComponent {
 	 * Background image
 	 */
 	private transient Image myImage;
+
 	/**
 	 * Constructor
-	 * @param image background image
+	 * 
+	 * @param image
+	 *            background image
 	 */
 	public BackgroundPanel(Image myImage) {
 		this.myImage = myImage;

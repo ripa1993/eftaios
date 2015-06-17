@@ -24,6 +24,6 @@ public class AlienCard extends CharacterCard {
 	@Override
 	public String toString() {
 		return "AlienCard [getName()=" + getName() + ", getNickname()="
-				+ getNickname() + ", getRank()=" + getRank() + "]";
+		        + getNickname() + ", getRank()=" + getRank() + "]";
 	}
 }

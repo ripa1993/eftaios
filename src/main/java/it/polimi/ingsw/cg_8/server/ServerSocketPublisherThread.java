@@ -21,7 +21,7 @@ import org.apache.logging.log4j.Logger;
  *
  */
 public class ServerSocketPublisherThread extends ServerPublisher implements
-		Runnable {
+        Runnable {
 	/**
 	 * The output stream.
 	 */
@@ -35,7 +35,7 @@ public class ServerSocketPublisherThread extends ServerPublisher implements
 	 * Log4j logger
 	 */
 	private static final Logger LOGGER = LogManager
-			.getLogger(ServerSocketPublisherThread.class);
+	        .getLogger(ServerSocketPublisherThread.class);
 
 	/**
 	 * Creates a publisher for the current subscriber.

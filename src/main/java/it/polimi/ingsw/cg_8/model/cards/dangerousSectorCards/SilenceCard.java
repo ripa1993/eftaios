@@ -1,6 +1,8 @@
 package it.polimi.ingsw.cg_8.model.cards.dangerousSectorCards;
+
 /**
  * Silence card, player makes no noise
+ * 
  * @author Simone
  *
  */

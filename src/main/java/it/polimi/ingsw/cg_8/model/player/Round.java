@@ -17,19 +17,24 @@ public class Round {
 	/**
 	 * Ending position in the current turn
 	 */
-	private final Coordinate coordinate; 
+	private final Coordinate coordinate;
 
 	/**
 	 * Constructor for round
-	 * @param number round number
-	 * @param coordinate ending position
+	 * 
+	 * @param number
+	 *            round number
+	 * @param coordinate
+	 *            ending position
 	 */
 	public Round(int number, Coordinate coordinate) {
 		this.number = number;
 		this.coordinate = coordinate;
 	}
+
 	/**
 	 * Getter for round number
+	 * 
 	 * @return round number
 	 */
 	public int getNumber() {
@@ -38,6 +43,7 @@ public class Round {
 
 	/**
 	 * Getter for ending position coordinate
+	 * 
 	 * @return round coordinate
 	 */
 	public Coordinate getCoordinate() {

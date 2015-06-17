@@ -24,6 +24,6 @@ public class HumanCard extends CharacterCard {
 	@Override
 	public String toString() {
 		return "HumanCard [getName()=" + getName() + ", getNickname()="
-				+ getNickname() + ", getRank()=" + getRank() + "]";
+		        + getNickname() + ", getRank()=" + getRank() + "]";
 	}
 }

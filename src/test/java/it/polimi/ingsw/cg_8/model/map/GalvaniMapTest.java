@@ -86,7 +86,7 @@ public class GalvaniMapTest {
 			e.printStackTrace();
 			fail();
 		}
-		
+
 	}
 
 	// trying to get a null sector
@@ -105,7 +105,7 @@ public class GalvaniMapTest {
 	@Test
 	public void getReachableCoordinates() {
 		Set<Coordinate> reachableCoordinatesFound = testMap
-				.getReachableCoordinates(new Coordinate(10, 0), 1);
+		        .getReachableCoordinates(new Coordinate(10, 0), 1);
 		Set<Coordinate> reachableCoordinatesReal = new HashSet<Coordinate>();
 		reachableCoordinatesReal.add(new Coordinate(9, 0));
 		reachableCoordinatesReal.add(new Coordinate(11, 0));
@@ -116,7 +116,7 @@ public class GalvaniMapTest {
 	@Test
 	public void getReachableCoordinates2() {
 		Set<Coordinate> reachableCoordinatesFound = testMap
-				.getReachableCoordinates(new Coordinate(10, 0), 3);
+		        .getReachableCoordinates(new Coordinate(10, 0), 3);
 		assertFalse(reachableCoordinatesFound.contains(new Coordinate(15, 1)));
 	}
 }

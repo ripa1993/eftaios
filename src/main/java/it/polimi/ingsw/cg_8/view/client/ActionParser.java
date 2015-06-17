@@ -61,7 +61,7 @@ public class ActionParser {
 	 * @throws NotAValidInput
 	 */
 	public static Coordinate parseCoordinate(String input)
-			throws NotAValidInput {
+	        throws NotAValidInput {
 		char[] inputArray = input.toUpperCase().toCharArray();
 
 		if (inputArray[0] < 65 || inputArray[0] > 87 || inputArray[1] < 48) {
@@ -69,7 +69,7 @@ public class ActionParser {
 			// second number not in [0,9]
 			throw new NotAValidInput(NOT_VALID_COORD_TEXT);
 		} else if (inputArray[1] > 49 || inputArray[2] < 48
-				|| inputArray[2] > 57) {
+		        || inputArray[2] > 57) {
 			throw new NotAValidInput(NOT_VALID_COORD_TEXT);
 		}
 

@@ -11,31 +11,33 @@ import org.junit.Test;
 public class EscapeHatchSectorTest {
 
 	EscapeHatchSector ehs;
-	
+
 	@Before
-	public void init(){
+	public void init() {
 		ehs = new EscapeHatchSector(10, 20);
 	}
-	
-	
+
 	@Test
 	public void testGetX() {
-	
+
 		assertEquals(10, ehs.getX());
 	}
+
 	@Test
-	public void testGetY(){
+	public void testGetY() {
 
 		assertEquals(20, ehs.getY());
 	}
+
 	@Test
-	public void testAllowEscape(){
-	
+	public void testAllowEscape() {
+
 		assertTrue(ehs.allowEscape());
 	}
+
 	@Test
-	public void testAllowEscape2(){
-	
+	public void testAllowEscape2() {
+
 		assertFalse(ehs.allowEscape() == ehs.allowEscape());
 	}
 

@@ -24,7 +24,7 @@ public class FakeNoise implements PlayerAction {
 	 */
 	public static void fakeNoise(Model model, Coordinate coordinate) {
 		Noise fakeNoise = new MovementNoise(model.getRoundNumber(), model
-				.getPlayers().get(model.getCurrentPlayer()), coordinate);
+		        .getPlayers().get(model.getCurrentPlayer()), coordinate);
 		model.addNoise(fakeNoise);
 	}
 

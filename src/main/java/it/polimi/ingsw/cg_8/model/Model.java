@@ -151,7 +151,7 @@ public class Model extends Observable {
 			return tempPlayer;
 		} else {
 			throw new GameAlreadyRunningException(
-					"Game is already running, can't add a new player");
+			        "Game is already running, can't add a new player");
 		}
 	}
 
@@ -164,7 +164,7 @@ public class Model extends Observable {
 			players.remove(player);
 		} else {
 			throw new GameAlreadyRunningException(
-					"Game is already running, can't remove a player");
+			        "Game is already running, can't remove a player");
 		}
 
 	}
@@ -318,7 +318,7 @@ public class Model extends Observable {
 		int counterHumans = 0;
 		for (Player p : players) {
 			if (p.getCharacter() instanceof Human
-					&& (p.getState() == PlayerState.ALIVE)) {
+			        && (p.getState() == PlayerState.ALIVE)) {
 				counterHumans++;
 			}
 		}
@@ -531,11 +531,11 @@ public class Model extends Observable {
 	@Override
 	public String toString() {
 		return "Model [players=" + players + ", roundNumber=" + roundNumber
-				+ ", currentPlayer=" + currentPlayerIndex + ", startingPlayer="
-				+ startingPlayerIndex + ", turnPhase=" + turnPhase
-				+ ", characterDeck=" + characterDeck + ", dangerousSectorDeck="
-				+ dangerousSectorDeck + ", escapeHatchDeck=" + escapeHatchDeck
-				+ ", itemDeck=" + itemDeck + ", map=" + map + "]";
+		        + ", currentPlayer=" + currentPlayerIndex + ", startingPlayer="
+		        + startingPlayerIndex + ", turnPhase=" + turnPhase
+		        + ", characterDeck=" + characterDeck + ", dangerousSectorDeck="
+		        + dangerousSectorDeck + ", escapeHatchDeck=" + escapeHatchDeck
+		        + ", itemDeck=" + itemDeck + ", map=" + map + "]";
 	}
 
 }

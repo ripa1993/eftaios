@@ -186,7 +186,7 @@ public class Player implements Serializable {
 	@Override
 	public String toString() {
 		return "Player: " + name + ", Character: " + character + " "
-				+ ", State: " + state + ", Position: " + getLastPosition();
+		        + ", State: " + state + ", Position: " + getLastPosition();
 
 	}
 

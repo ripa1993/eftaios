@@ -164,9 +164,9 @@ public abstract class Deck {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((cardList == null) ? 0 : cardList.hashCode());
+		        + ((cardList == null) ? 0 : cardList.hashCode());
 		result = prime * result
-				+ ((usedCards == null) ? 0 : usedCards.hashCode());
+		        + ((usedCards == null) ? 0 : usedCards.hashCode());
 		return result;
 	}
 

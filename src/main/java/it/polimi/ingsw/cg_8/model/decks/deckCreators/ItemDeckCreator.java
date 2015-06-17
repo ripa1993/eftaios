@@ -57,7 +57,7 @@ public class ItemDeckCreator extends DeckCreator {
 			itemDeck.addCard(new SpotlightCard());
 		}
 		itemDeck.addCard(new DefenseCard()); // There is only one Defense Card
-												// in the ItemDeck
+		                                     // in the ItemDeck
 
 		return itemDeck;
 	}

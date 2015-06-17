@@ -50,7 +50,7 @@ public class ConnectionManagerSocket extends ConnectionManager {
 	 * Log4j logger
 	 */
 	private static final Logger LOGGER = LogManager
-			.getLogger(ConnectionManagerSocket.class);
+	        .getLogger(ConnectionManagerSocket.class);
 
 	/**
 	 * Constructor
@@ -79,11 +79,11 @@ public class ConnectionManagerSocket extends ConnectionManager {
 			 * server publishes something, this thread is notified.
 			 */
 			executor.submit(new ClientSocketViewSUB(SERVER_ADDRESS,
-					SOCKET_PORT_PUBSUB, this));
+			        SOCKET_PORT_PUBSUB, this));
 			LOGGER.debug("Subscriber back to main thread");
 		} catch (IOException e) {
 			LOGGER.error("Cannot connect to socket server (" + SERVER_ADDRESS
-					+ ":" + SOCKET_PORT_CLIENTSERVER + ")", e);
+			        + ":" + SOCKET_PORT_CLIENTSERVER + ")", e);
 		}
 
 	}
@@ -95,7 +95,7 @@ public class ConnectionManagerSocket extends ConnectionManager {
 	public void send(ClientAction inputLine) {
 		LOGGER.debug("Sending action...");
 		ClientSocketViewCS socketCS = new ClientSocketViewCS(SERVER_ADDRESS,
-				SOCKET_PORT_CLIENTSERVER, inputLine, clientID, clientData);
+		        SOCKET_PORT_CLIENTSERVER, inputLine, clientID, clientData);
 		executor.submit(socketCS);
 
 	}
@@ -109,10 +109,10 @@ public class ConnectionManagerSocket extends ConnectionManager {
 	public void initializeSocket() throws IOException {
 		Socket socket = new Socket(SERVER_ADDRESS, SOCKET_PORT_CLIENTSERVER);
 		LOGGER.debug("Connected to server " + SERVER_ADDRESS + " on port "
-				+ SOCKET_PORT_CLIENTSERVER);
+		        + SOCKET_PORT_CLIENTSERVER);
 
 		ObjectOutputStream output = new ObjectOutputStream(
-				socket.getOutputStream());
+		        socket.getOutputStream());
 		ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
 
 		do {
@@ -146,7 +146,7 @@ public class ConnectionManagerSocket extends ConnectionManager {
 				output.flush();
 				String serverMapAnswer = (String) input.readObject();
 				if (serverMapAnswer.equals("MAP CHOSEN: "
-						+ this.mapName.toString())) {
+				        + this.mapName.toString())) {
 					mapSet = true;
 					LOGGER.debug("Map accepted");
 				}

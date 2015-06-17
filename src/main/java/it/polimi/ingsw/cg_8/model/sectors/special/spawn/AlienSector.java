@@ -19,8 +19,8 @@ public class AlienSector extends SpawnSector {
 	private static final long serialVersionUID = 8065999857578160970L;
 
 	/**
-	 * Constructor for {@link AlienSector}, used to performs checks
-	 * and validations.
+	 * Constructor for {@link AlienSector}, used to performs checks and
+	 * validations.
 	 * 
 	 * @param x
 	 *            column number
@@ -30,7 +30,7 @@ public class AlienSector extends SpawnSector {
 	public AlienSector(int x, int y) {
 		super(x, y);
 	}
-	
+
 	/**
 	 * Default constructor used in the XML parsing.
 	 */

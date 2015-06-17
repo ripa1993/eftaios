@@ -14,7 +14,7 @@ public class HandTest {
 	@Before
 	public void init() {
 		hand = new Hand();
-			hand.addItemCard(new AdrenalineCard());
+		hand.addItemCard(new AdrenalineCard());
 	}
 
 	@Test
@@ -28,11 +28,11 @@ public class HandTest {
 	}
 
 	@Test
-	public void testAddItemCard(){
-			hand.addItemCard(new SpotlightCard());
-			hand.addItemCard(new SpotlightCard());
-			assertFalse(hand.addItemCard(new AdrenalineCard()));
-		
+	public void testAddItemCard() {
+		hand.addItemCard(new SpotlightCard());
+		hand.addItemCard(new SpotlightCard());
+		assertFalse(hand.addItemCard(new AdrenalineCard()));
+
 	}
 
 }

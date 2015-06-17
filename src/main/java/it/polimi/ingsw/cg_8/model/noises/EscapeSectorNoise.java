@@ -26,7 +26,7 @@ public class EscapeSectorNoise extends Noise {
 	 *            coordinate of the player
 	 */
 	public EscapeSectorNoise(int turnNumber, Player player,
-			Coordinate coordinate) {
+	        Coordinate coordinate) {
 		super(turnNumber, player, coordinate);
 	}
 

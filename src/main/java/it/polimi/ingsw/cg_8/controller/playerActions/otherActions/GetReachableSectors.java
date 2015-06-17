@@ -35,7 +35,7 @@ public class GetReachableSectors implements PlayerAction {
 		int maxDistance = player.getCharacter().getMaxAllowedMovement();
 
 		return model.getMap().getReachableCoordinates(player.getLastPosition(),
-				maxDistance);
+		        maxDistance);
 	}
 
 	/**
@@ -53,6 +53,6 @@ public class GetReachableSectors implements PlayerAction {
 		int maxDistance = player.getCharacter().getMaxAllowedMovement();
 
 		return (model.getMap().getReachableCoordinates(
-				player.getLastPosition(), maxDistance)).toString();
+		        player.getLastPosition(), maxDistance)).toString();
 	}
 }

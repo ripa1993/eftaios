@@ -31,10 +31,10 @@ public class AttackValidator {
 		Player attacker = model.getCurrentPlayerReference();
 		boolean validAttack = false;
 		Sector playerPosition = model.getMap().getSectors()
-				.get(attacker.getLastPosition());
+		        .get(attacker.getLastPosition());
 		if (attacker.getCharacter().isAttackAllowed()
-				&& !(playerPosition instanceof SpawnSector)
-				&& !(playerPosition instanceof EscapeHatchSector)) {
+		        && !(playerPosition instanceof SpawnSector)
+		        && !(playerPosition instanceof EscapeHatchSector)) {
 			validAttack = true;
 		}
 		return validAttack;

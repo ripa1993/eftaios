@@ -26,34 +26,34 @@ public class Resource {
 	 * XML Maps folder
 	 */
 	private static final String MAPS_FOLDER = RESOURCES_LITERAL
-			+ File.separatorChar + MAPS_LITERAL + File.separatorChar;
+	        + File.separatorChar + MAPS_LITERAL + File.separatorChar;
 	/**
 	 * Images folder
 	 */
 	private static final String IMAGES_FOLDER = RESOURCES_LITERAL
-			+ File.separatorChar + IMAGES_LITERAL + File.separatorChar;
+	        + File.separatorChar + IMAGES_LITERAL + File.separatorChar;
 	/**
 	 * Sound folder
 	 */
 	private static final String SOUND_FOLDER = RESOURCES_LITERAL
-			+ File.separatorChar + "sounds" + File.separatorChar;
+	        + File.separatorChar + "sounds" + File.separatorChar;
 	/**
 	 * Card folder
 	 */
 	private static final String CARD_FOLDER = RESOURCES_LITERAL
-			+ File.separatorChar + IMAGES_LITERAL + File.separatorChar + "card"
-			+ File.separatorChar;
+	        + File.separatorChar + IMAGES_LITERAL + File.separatorChar + "card"
+	        + File.separatorChar;
 	/**
 	 * Font folder
 	 */
 	private static final String FONT_FOLDER = RESOURCES_LITERAL
-			+ File.separatorChar + "fonts" + File.separatorChar;
+	        + File.separatorChar + "fonts" + File.separatorChar;
 	/**
 	 * Player folder
 	 */
 	private static final String PLAYER_FOLDER = RESOURCES_LITERAL
-			+ File.separatorChar + IMAGES_LITERAL + File.separatorChar
-			+ "player" + File.separatorChar;
+	        + File.separatorChar + IMAGES_LITERAL + File.separatorChar
+	        + "player" + File.separatorChar;
 	/**
 	 * Reference to Fermi map image
 	 */
@@ -74,27 +74,27 @@ public class Resource {
 	 * Reference to default background image
 	 */
 	public static final String IMG_BACKGROUND_PATTERN = IMAGES_FOLDER
-			+ "background_pattern.png";
+	        + "background_pattern.png";
 	/**
 	 * Reference to default background image
 	 */
 	public static final String IMG_DEFAULT_BACKGROUND = IMAGES_FOLDER
-			+ "default_background.png";
+	        + "default_background.png";
 	/**
 	 * Alien attack 1
 	 */
 	public static final String SOUND_ALIEN_ATTACK_1 = SOUND_FOLDER
-			+ "alien_attack_1.wav";
+	        + "alien_attack_1.wav";
 	/**
 	 * Alien attack 2
 	 */
 	public static final String SOUND_ALIEN_ATTACK_2 = SOUND_FOLDER
-			+ "alien_attack_2.wav";
+	        + "alien_attack_2.wav";
 	/**
 	 * Alien attack 3
 	 */
 	public static final String SOUND_ALIEN_ATTACK_3 = SOUND_FOLDER
-			+ "alien_attack_3.wav";
+	        + "alien_attack_3.wav";
 	/**
 	 * Death
 	 */
@@ -103,32 +103,32 @@ public class Resource {
 	 * Escape hatch
 	 */
 	public static final String SOUND_ESCAPE_HATCH = SOUND_FOLDER
-			+ "escape_hatch.wav";
+	        + "escape_hatch.wav";
 	/**
 	 * Human Attack 1
 	 */
 	public static final String SOUND_HUMAN_ATTACK_1 = SOUND_FOLDER
-			+ "human_attack_1.wav";
+	        + "human_attack_1.wav";
 	/**
 	 * Human attack 2
 	 */
 	public static final String SOUND_HUMAN_ATTACK_2 = SOUND_FOLDER
-			+ "human_attack_2.wav";
+	        + "human_attack_2.wav";
 	/**
 	 * Human attack 3
 	 */
 	public static final String SOUND_HUMAN_ATTACK_3 = SOUND_FOLDER
-			+ "human_attack_3.wav";
+	        + "human_attack_3.wav";
 	/**
 	 * Noise
 	 */
 	public static final String SOUND_MOVEMENT_NOISE = SOUND_FOLDER
-			+ "noise.wav";
+	        + "noise.wav";
 	/**
 	 * Notification
 	 */
 	public static final String SOUND_NOTIFICATION = SOUND_FOLDER
-			+ "notification.wav";
+	        + "notification.wav";
 	/**
 	 * Shield
 	 */
@@ -150,7 +150,7 @@ public class Resource {
 	 * background music
 	 */
 	public static final String SOUND_BACKGROUDN = SOUND_FOLDER
-			+ "Inside_an_Alien_Spaceship.mp3";
+	        + "Inside_an_Alien_Spaceship.mp3";
 	/**
 	 * Adrenaline card
 	 */
@@ -167,7 +167,7 @@ public class Resource {
 	 * escape green card
 	 */
 	public static final String IMG_ESCAPE_GREEN = CARD_FOLDER
-			+ "escape_green.png";
+	        + "escape_green.png";
 	/**
 	 * escape red card
 	 */
@@ -180,12 +180,12 @@ public class Resource {
 	 * noise in any sector card
 	 */
 	public static final String IMG_NOISE_IN_ANY_SECTOR = CARD_FOLDER
-			+ "noise_in_any_sector.png";
+	        + "noise_in_any_sector.png";
 	/**
 	 * noise in your sector card
 	 */
 	public static final String IMG_NOISE_IN_YOUR_SECTOR = CARD_FOLDER
-			+ "noise_in_your_sector.png";
+	        + "noise_in_your_sector.png";
 	/**
 	 * sedatives card
 	 */
@@ -206,12 +206,12 @@ public class Resource {
 	 * titillium bold upright
 	 */
 	public static final String FONT_TITILLIUM_BOLD_UPRIGHT = FONT_FOLDER
-			+ "Titillium-BoldUpright.otf";
+	        + "Titillium-BoldUpright.otf";
 	/**
 	 * titillium bold upright
 	 */
 	public static final String FONT_TITILLIUM_SEMIBOLD_UPRIGHT = FONT_FOLDER
-			+ "Titillium-SemiboldUpright.otf";
+	        + "Titillium-SemiboldUpright.otf";
 	/**
 	 * Mr jones font
 	 */
@@ -253,17 +253,17 @@ public class Resource {
 	 * human 4
 	 */
 	public static final String IMG_UNKNOWN_CHAR = PLAYER_FOLDER
-			+ "unknown_char.png";
+	        + "unknown_char.png";
 	/**
 	 * human blue overlay
 	 */
 	public static final String IMG_HUMAN_OVERLAY = IMAGES_FOLDER
-			+ "human_item_overlay.png";
+	        + "human_item_overlay.png";
 	/**
 	 * alien pink overlay
 	 */
 	public static final String IMG_ALIEN_OVERLAY = IMAGES_FOLDER
-			+ "alien_item_overlay.png";
+	        + "alien_item_overlay.png";
 	/**
 	 * turn background/border
 	 */
@@ -292,17 +292,17 @@ public class Resource {
 	 * Transparent yellow overlay
 	 */
 	public static final String IMG_YELLOW_OVER = IMAGES_FOLDER
-			+ "yellow_overlay.png";
+	        + "yellow_overlay.png";
 	/**
 	 * Transparent black overlay
 	 */
 	public static final String IMG_BLACK_OVER = IMAGES_FOLDER
-			+ "black_overlay.png";
+	        + "black_overlay.png";
 	/**
 	 * Transparent green overlay
 	 */
 	public static final String IMG_GREEN_OVER = IMAGES_FOLDER
-			+ "green_overlay.png";
+	        + "green_overlay.png";
 	/**
 	 * Logo
 	 */

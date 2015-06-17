@@ -34,11 +34,11 @@ public class GameMapSet {
 	 */
 	@XmlElementWrapper(name = "sectorList")
 	@XmlElements({
-			@XmlElement(name = "safeSector", type = SecureSector.class),
-			@XmlElement(name = "dangerousSector", type = DangerousSector.class),
-			@XmlElement(name = "escapeHatchSector", type = EscapeHatchSector.class),
-			@XmlElement(name = "humanSector", type = HumanSector.class),
-			@XmlElement(name = "alienSector", type = AlienSector.class), })
+	        @XmlElement(name = "safeSector", type = SecureSector.class),
+	        @XmlElement(name = "dangerousSector", type = DangerousSector.class),
+	        @XmlElement(name = "escapeHatchSector", type = EscapeHatchSector.class),
+	        @XmlElement(name = "humanSector", type = HumanSector.class),
+	        @XmlElement(name = "alienSector", type = AlienSector.class), })
 	private Set<Sector> sectorSet;
 
 	/**

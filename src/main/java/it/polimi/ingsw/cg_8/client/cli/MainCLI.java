@@ -136,7 +136,7 @@ public class MainCLI implements Runnable, Observer {
 			LOGGER.debug("RMI connection manager created");
 		} else {
 			connectionManager = new ConnectionManagerSocket(playerName,
-					chosenMap);
+			        chosenMap);
 			LOGGER.debug("Socket connection manager created");
 		}
 		clientData = connectionManager.getClientData();
@@ -173,7 +173,7 @@ public class MainCLI implements Runnable, Observer {
 			// new chat message
 			ResponseChat chat = clientData.getLastChat();
 			System.out.println("[CHAT] " + chat.getPlayerName() + ": "
-					+ chat.getMessage());
+			        + chat.getMessage());
 		} else if ("Noise".equals(arg)) {
 			LOGGER.debug("New Update: NOISE");
 			// new noise
@@ -189,17 +189,17 @@ public class MainCLI implements Runnable, Observer {
 			// new card update
 			ResponseCard cardMessage = clientData.getCards();
 			System.out.println("[HAND] Your cards: " + cardMessage.getCard1()
-					+ ", " + cardMessage.getCard2() + " and "
-					+ cardMessage.getCard3());
+			        + ", " + cardMessage.getCard2() + " and "
+			        + cardMessage.getCard3());
 		} else if ("State".equals(arg)) {
 			LOGGER.debug("New Update: STATE");
 			// new state update
 			ResponseState stateMessage = clientData.getState();
 			System.out.println("[STATE] Player: "
-					+ stateMessage.getPlayerName() + ", Character: "
-					+ stateMessage.getCharacter());
+			        + stateMessage.getPlayerName() + ", Character: "
+			        + stateMessage.getCharacter());
 			System.out.println(", State: " + stateMessage.getState()
-					+ ", Position: " + stateMessage.getPosition());
+			        + ", Position: " + stateMessage.getPosition());
 		} else if ("Map".equals(arg)) {
 			LOGGER.debug("New Update: MAP");
 			// new map update, happens only on game start.
@@ -207,7 +207,7 @@ public class MainCLI implements Runnable, Observer {
 			// printed
 			ResponseMap response = clientData.getMap();
 			System.out.println("[MAP] The game is started. You will play on "
-					+ response.getMapName());
+			        + response.getMapName());
 			matchStarted = true;
 		} else if ("Ack".equals(arg)) {
 			LOGGER.debug("New Update: ACK");

@@ -27,7 +27,7 @@ public class ResponseCardTest {
 	@Test
 	public void testGetHand() {
 		assertEquals("TeleportCard SpotlightCard AttackCard",
-				response.getHand());
+		        response.getHand());
 	}
 
 	@Test
@@ -46,7 +46,7 @@ public class ResponseCardTest {
 	}
 
 	@Test
-	public void testNullCard(){
+	public void testNullCard() {
 		ResponseCard response2 = new ResponseCard(new ArrayList<ItemCard>());
 		assertEquals("No Card", response2.getCard1());
 	}

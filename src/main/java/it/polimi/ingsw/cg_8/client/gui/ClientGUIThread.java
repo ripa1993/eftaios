@@ -105,16 +105,16 @@ public class ClientGUIThread implements Runnable, Observer {
 				if (coordinateSet.contains(coordinate)) {
 
 					if (coordinate.getX() >= 0 && coordinate.getY() >= 0
-							&& coordinate.getX() < MapPanel.NUM_COLUMN
-							&& coordinate.getY() < MapPanel.NUM_ROW) {
+					        && coordinate.getX() < MapPanel.NUM_COLUMN
+					        && coordinate.getY() < MapPanel.NUM_ROW) {
 						Object[] options = { "Movement", SPOTLIGHT_TEXT,
-								"Do Fake Noise" };
+						        "Do Fake Noise" };
 						int result = JOptionPane.showOptionDialog(null,
-								"This is sector " + coordinate,
-								"What would you like to do?",
-								JOptionPane.DEFAULT_OPTION,
-								JOptionPane.QUESTION_MESSAGE, null, options,
-								options[0]);
+						        "This is sector " + coordinate,
+						        "What would you like to do?",
+						        JOptionPane.DEFAULT_OPTION,
+						        JOptionPane.QUESTION_MESSAGE, null, options,
+						        options[0]);
 						LOGGER.debug("Result: " + result);
 						LOGGER.debug("Options: " + options);
 						if (result == 0) {
@@ -123,11 +123,11 @@ public class ClientGUIThread implements Runnable, Observer {
 						} else if (result == 1) {
 							LOGGER.debug("Choose: spotlight");
 							connectionManager.send(new ActionUseCard(
-									new SpotlightCard(), coordinate));
+							        new SpotlightCard(), coordinate));
 						} else if (result == 2) {
 							LOGGER.debug("Choose: fake noise");
 							connectionManager.send(new ActionFakeNoise(
-									coordinate));
+							        coordinate));
 						}
 
 					}
@@ -146,9 +146,9 @@ public class ClientGUIThread implements Runnable, Observer {
 		@Override
 		public void windowClosing(WindowEvent e) {
 			int confirm = JOptionPane.showOptionDialog(null,
-					"Do you really want to quit the game?",
-					"Exit Confirmation", JOptionPane.YES_NO_OPTION,
-					JOptionPane.QUESTION_MESSAGE, null, null, null);
+			        "Do you really want to quit the game?",
+			        "Exit Confirmation", JOptionPane.YES_NO_OPTION,
+			        JOptionPane.QUESTION_MESSAGE, null, null, null);
 			if (confirm == 0) {
 				try {
 					connectionManager.send(new ActionDisconnect());
@@ -218,36 +218,36 @@ public class ClientGUIThread implements Runnable, Observer {
 		public void actionPerformed(ActionEvent e) {
 			if (matchStarted) {
 				String[] cardList = { ATTACK_TEXT, ADRENALINE_TEXT,
-						SEDATIVES_TEXT, SPOTLIGHT_TEXT, TELEPORT_TEXT };
+				        SEDATIVES_TEXT, SPOTLIGHT_TEXT, TELEPORT_TEXT };
 				String output = (String) JOptionPane.showInputDialog(mainFrame,
-						"Pick a card", "Input", JOptionPane.QUESTION_MESSAGE,
-						null, cardList, ATTACK_TEXT);
+				        "Pick a card", "Input", JOptionPane.QUESTION_MESSAGE,
+				        null, cardList, ATTACK_TEXT);
 				if (ATTACK_TEXT.equals(output)) {
 					connectionManager.send(new ActionUseCard(new AttackCard()));
 				} else if (ADRENALINE_TEXT.equals(output)) {
 					connectionManager.send(new ActionUseCard(
-							new AdrenalineCard()));
+					        new AdrenalineCard()));
 
 				} else if (SEDATIVES_TEXT.equals(output)) {
 					connectionManager.send(new ActionUseCard(
-							new SedativesCard()));
+					        new SedativesCard()));
 
 				} else if (SPOTLIGHT_TEXT.equals(output)) {
 					String coordinateString = JOptionPane.showInputDialog(
-							"Insert target coordinate", COORDINATE_TEXT);
+					        "Insert target coordinate", COORDINATE_TEXT);
 					try {
 						Coordinate coordinate = ActionParser
-								.parseCoordinate(coordinateString);
+						        .parseCoordinate(coordinateString);
 						connectionManager.send(new ActionUseCard(
-								new SpotlightCard(), coordinate));
+						        new SpotlightCard(), coordinate));
 					} catch (NotAValidInput e1) {
 						LOGGER.error(e1.getMessage(), e1);
 						JOptionPane.showMessageDialog(mainFrame,
-								NOT_VALID_INPUT_TEXT);
+						        NOT_VALID_INPUT_TEXT);
 					}
 				} else if (TELEPORT_TEXT.equals(output)) {
 					connectionManager
-							.send(new ActionUseCard(new TeleportCard()));
+					        .send(new ActionUseCard(new TeleportCard()));
 
 				}
 
@@ -266,13 +266,13 @@ public class ClientGUIThread implements Runnable, Observer {
 		public void actionPerformed(ActionEvent e) {
 			if (matchStarted) {
 				JOptionPane optionPane = new JOptionPane(
-						"Do you want to end your turn?",
-						JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
+				        "Do you want to end your turn?",
+				        JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
 				JDialog dialog = optionPane.createDialog("End turn");
 				dialog.setVisible(true);
 				if (optionPane.getValue() != null) {
 					int selection = ((Integer) optionPane.getValue())
-							.intValue();
+					        .intValue();
 					if (selection == JOptionPane.YES_OPTION) {
 						connectionManager.send(new ActionEndTurn());
 					}
@@ -294,17 +294,17 @@ public class ClientGUIThread implements Runnable, Observer {
 		public void actionPerformed(ActionEvent e) {
 			if (matchStarted) {
 				String coordinateString = JOptionPane.showInputDialog(
-						"Insert target coordinate", COORDINATE_TEXT);
+				        "Insert target coordinate", COORDINATE_TEXT);
 				if (coordinateString != null) {
 					try {
 						Coordinate coordinate = ActionParser
-								.parseCoordinate(coordinateString);
+						        .parseCoordinate(coordinateString);
 						connectionManager.send(new ActionFakeNoise(coordinate));
 
 					} catch (NotAValidInput e1) {
 						LOGGER.error(e1.getMessage(), e1);
 						JOptionPane.showMessageDialog(mainFrame,
-								NOT_VALID_INPUT_TEXT);
+						        NOT_VALID_INPUT_TEXT);
 					}
 				}
 			}
@@ -321,14 +321,14 @@ public class ClientGUIThread implements Runnable, Observer {
 		public void actionPerformed(ActionEvent e) {
 			if (matchStarted) {
 				JOptionPane optionPane = new JOptionPane(
-						"Do you want to draw a dangerous sector card?",
-						JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
+				        "Do you want to draw a dangerous sector card?",
+				        JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
 				JDialog dialog = optionPane
-						.createDialog("Draw a dangerous sector card");
+				        .createDialog("Draw a dangerous sector card");
 				dialog.setVisible(true);
 				if (optionPane.getValue() != null) {
 					int selection = ((Integer) optionPane.getValue())
-							.intValue();
+					        .intValue();
 					if (selection == JOptionPane.YES_OPTION) {
 						connectionManager.send(new ActionDrawCard());
 					}
@@ -351,14 +351,14 @@ public class ClientGUIThread implements Runnable, Observer {
 		public void actionPerformed(ActionEvent e) {
 			if (matchStarted) {
 				JOptionPane optionPane = new JOptionPane(
-						"Do you want to attack?", JOptionPane.QUESTION_MESSAGE,
-						JOptionPane.YES_NO_OPTION);
+				        "Do you want to attack?", JOptionPane.QUESTION_MESSAGE,
+				        JOptionPane.YES_NO_OPTION);
 				JDialog dialog = optionPane.createDialog(ATTACK_TEXT);
 				dialog.setVisible(true);
 
 				if (optionPane.getValue() != null) {
 					int selection = ((Integer) optionPane.getValue())
-							.intValue();
+					        .intValue();
 					if (selection == JOptionPane.YES_OPTION) {
 						connectionManager.send(new ActionAttack());
 					}
@@ -381,18 +381,18 @@ public class ClientGUIThread implements Runnable, Observer {
 		public void actionPerformed(ActionEvent e) {
 			if (matchStarted) {
 				String coordinateString = JOptionPane.showInputDialog(
-						"Insert destination coordinate", COORDINATE_TEXT);
+				        "Insert destination coordinate", COORDINATE_TEXT);
 				if (coordinateString != null) {
 					try {
 
 						Coordinate coordinate = ActionParser
-								.parseCoordinate(coordinateString);
+						        .parseCoordinate(coordinateString);
 						connectionManager.send(new ActionMove(coordinate));
 
 					} catch (NotAValidInput e1) {
 						LOGGER.error(e1.getMessage(), e1);
 						JOptionPane.showMessageDialog(mainFrame,
-								NOT_VALID_INPUT_TEXT);
+						        NOT_VALID_INPUT_TEXT);
 					}
 				}
 			}
@@ -443,7 +443,7 @@ public class ClientGUIThread implements Runnable, Observer {
 	 * JPanels used in the gui
 	 */
 	private JPanel chatPanel, chatPanel2, rightPanel, infoPanel, commandsPanel,
-			chatInfoPanel, statePanel, panel1, panel2, panel3, cardPanel;
+	        chatInfoPanel, statePanel, panel1, panel2, panel3, cardPanel;
 	/**
 	 * JLayered pane used in the map panel
 	 */
@@ -452,7 +452,7 @@ public class ClientGUIThread implements Runnable, Observer {
 	 * JButton used in the gui
 	 */
 	private JButton moveButton, attackButton, drawButton, endTurnButton,
-			fakeNoiseButton, useItemCardButton, chatButton;
+	        fakeNoiseButton, useItemCardButton, chatButton;
 	/**
 	 * JTextPane used in the gui
 	 */
@@ -465,7 +465,7 @@ public class ClientGUIThread implements Runnable, Observer {
 	 * JLabel used in the gui
 	 */
 	private JLabel infoTextTitle, chatTextTitle, lblPlayerState, lblItemCards,
-			labelCurrentState, stateImage, turnNumberLabel;
+	        labelCurrentState, stateImage, turnNumberLabel;
 	/**
 	 * JScrollPane used to add a scroll to the chat and info text pane
 	 */
@@ -486,7 +486,7 @@ public class ClientGUIThread implements Runnable, Observer {
 	 * Log4j logger
 	 */
 	private static final Logger LOGGER = LogManager
-			.getLogger(ClientGUIThread.class);
+	        .getLogger(ClientGUIThread.class);
 	/**
 	 * Shows if the player image has been set or not.
 	 */
@@ -515,18 +515,18 @@ public class ClientGUIThread implements Runnable, Observer {
 		playerImageSet = false;
 		try {
 			fontTitilliumBoldUpright = Font.createFont(Font.TRUETYPE_FONT,
-					new FileInputStream(Resource.FONT_TITILLIUM_BOLD_UPRIGHT))
-					.deriveFont((float) 30);
+			        new FileInputStream(Resource.FONT_TITILLIUM_BOLD_UPRIGHT))
+			        .deriveFont((float) 30);
 		} catch (FontFormatException | IOException e) {
 			LOGGER.error(e.getMessage(), e);
 		}
 
 		try {
 			fontTitilliumSemiboldUpright = Font.createFont(
-					Font.TRUETYPE_FONT,
-					new FileInputStream(
-							Resource.FONT_TITILLIUM_SEMIBOLD_UPRIGHT))
-					.deriveFont((float) 20);
+			        Font.TRUETYPE_FONT,
+			        new FileInputStream(
+			                Resource.FONT_TITILLIUM_SEMIBOLD_UPRIGHT))
+			        .deriveFont((float) 20);
 		} catch (FontFormatException | IOException e) {
 			LOGGER.error(e.getMessage(), e);
 		}
@@ -549,7 +549,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		chatPanel.setBackground(Color.WHITE);
 		rightPanel = new JPanel();
 		rightPanel.setBorder(new MatteBorder(5, 5, 5, 5, (Color) new Color(64,
-				64, 64, 150)));
+		        64, 64, 150)));
 		rightPanel.setOpaque(false);
 		infoPanel = new JPanel();
 		infoPanel.setMaximumSize(new Dimension(600, 32767));
@@ -629,14 +629,14 @@ public class ClientGUIThread implements Runnable, Observer {
 		statePanel = new JPanel();
 		statePanel.setMaximumSize(new Dimension(600, 32767));
 		statePanel.setBorder(new MatteBorder(10, 0, 0, 0, new Color(100, 100,
-				100, 100)));
+		        100, 100)));
 		statePanel.setOpaque(false);
 		rightPanel.add(statePanel, BorderLayout.NORTH);
 		statePanel.setLayout(new BorderLayout(0, 0));
 
 		panel3 = new JPanel();
 		panel3.setBorder(new MatteBorder(0, 0, 5, 0, (Color) new Color(100,
-				100, 100, 100)));
+		        100, 100, 100)));
 		panel3.setBackground(new Color(100, 100, 100, 100));
 		panel3.setOpaque(true);
 		statePanel.add(panel3, BorderLayout.CENTER);
@@ -680,7 +680,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		try {
 			Image tempImage = ImageIO.read(new File(Resource.IMG_TURN_BG));
 			Image roundImage = tempImage.getScaledInstance(60, -1,
-					Image.SCALE_SMOOTH);
+			        Image.SCALE_SMOOTH);
 			turnNumberLabel.setIcon(new ImageIcon(roundImage));
 			rightPanel.repaint();
 		} catch (IOException ex) {
@@ -774,7 +774,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		infoTextPane.setFont(fontTitilliumSemiboldUpright);
 		chatTextPane.setText("Say hi to the other players!");
 		infoTextPane.setText("Welcome to a new EFTAIOS game!"
-				+ "\nThe map will appear when the game starts.");
+		        + "\nThe map will appear when the game starts.");
 
 		chatPanel2.setVisible(true);
 		chatPanel.setVisible(true);
@@ -797,7 +797,7 @@ public class ClientGUIThread implements Runnable, Observer {
 		try {
 			Image tempImage = ImageIO.read(new File(source));
 			Image cardImage = tempImage.getScaledInstance(60, -1,
-					Image.SCALE_SMOOTH);
+			        Image.SCALE_SMOOTH);
 			stateImage.setIcon(new ImageIcon(cardImage));
 			rightPanel.repaint();
 		} catch (IOException ex) {
@@ -944,7 +944,7 @@ public class ClientGUIThread implements Runnable, Observer {
 			this.appendInfo("NOISE", noise.toString());
 			try {
 				mapPanel.createArtifact(noise.getNoise().getCoordinate(),
-						Resource.IMG_YELLOW_OVER, 1000, 10);
+				        Resource.IMG_YELLOW_OVER, 1000, 10);
 			} catch (IOException e) {
 				LOGGER.error(e.getMessage(), e);
 			}
@@ -992,21 +992,21 @@ public class ClientGUIThread implements Runnable, Observer {
 			ResponseCard cardMessage = clientData.getCards();
 
 			cardButton1
-					.setCardType(this.analyzeCardType(cardMessage.getCard1()));
+			        .setCardType(this.analyzeCardType(cardMessage.getCard1()));
 			LOGGER.debug("Card1 Type"
-					+ this.analyzeCardType(cardMessage.getCard1()));
+			        + this.analyzeCardType(cardMessage.getCard1()));
 			cardButton1.repaint();
 
 			cardButton2
-					.setCardType(this.analyzeCardType(cardMessage.getCard2()));
+			        .setCardType(this.analyzeCardType(cardMessage.getCard2()));
 			LOGGER.debug("Card2 Type"
-					+ this.analyzeCardType(cardMessage.getCard2()));
+			        + this.analyzeCardType(cardMessage.getCard2()));
 			cardButton2.repaint();
 
 			cardButton3
-					.setCardType(this.analyzeCardType(cardMessage.getCard3()));
+			        .setCardType(this.analyzeCardType(cardMessage.getCard3()));
 			LOGGER.debug("Card3 Type"
-					+ this.analyzeCardType(cardMessage.getCard3()));
+			        + this.analyzeCardType(cardMessage.getCard3()));
 			cardButton3.repaint();
 
 			/**
@@ -1065,9 +1065,9 @@ public class ClientGUIThread implements Runnable, Observer {
 			}
 			turnNumberLabel.setText(stateMessage.getRoundNumber());
 			String state = stateMessage.getPlayerName() + ", "
-					+ stateMessage.getCharacter() + ", State:"
-					+ stateMessage.getState() + ", Position: "
-					+ stateMessage.getPosition();
+			        + stateMessage.getCharacter() + ", State:"
+			        + stateMessage.getState() + ", Position: "
+			        + stateMessage.getPosition();
 			labelCurrentState.setText(state);
 			rightPanel.repaint();
 
@@ -1083,12 +1083,12 @@ public class ClientGUIThread implements Runnable, Observer {
 			} else if (mapName.equals(GameMapName.GALILEI)) {
 				mapPanel.setMapImage(Resource.IMG_GALILEI_MAP);
 				coordinateSet.addAll(MapParserClient
-						.parse(Resource.GALILEI_XML));
+				        .parse(Resource.GALILEI_XML));
 				LOGGER.debug("Map changed to galilei");
 			} else if (mapName.equals(GameMapName.GALVANI)) {
 				mapPanel.setMapImage(Resource.IMG_GALVANI_MAP);
 				coordinateSet.addAll(MapParserClient
-						.parse(Resource.GALVANI_XML));
+				        .parse(Resource.GALVANI_XML));
 				LOGGER.debug("Map changed to galvani");
 			}
 			mainFrame.revalidate();
@@ -1109,7 +1109,7 @@ public class ClientGUIThread implements Runnable, Observer {
 	private void playSound(String filePath) {
 		try {
 			AudioInputStream audioInputStream = AudioSystem
-					.getAudioInputStream(new File(filePath).getAbsoluteFile());
+			        .getAudioInputStream(new File(filePath).getAbsoluteFile());
 			Clip clip = AudioSystem.getClip();
 			clip.open(audioInputStream);
 			clip.start();

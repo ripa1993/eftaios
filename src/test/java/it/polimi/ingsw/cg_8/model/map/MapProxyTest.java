@@ -15,14 +15,14 @@ public class MapProxyTest {
 	MapCreator mc;
 	GameMap map;
 	MapProxy mp;
-	
+
 	@Before
-	public void init(){
+	public void init() {
 		mc = new GalvaniCreator();
 		map = mc.createMap();
 		mp = map.getMapProxy();
 	}
-	
+
 	@Test
 	public void equals() {
 		MapCreator mc2 = new FermiCreator();
@@ -30,16 +30,16 @@ public class MapProxyTest {
 		MapProxy mp2 = map2.getMapProxy();
 		assertFalse(mp.equals(mp2));
 	}
-	
+
 	@Test
-	public void equals2(){
+	public void equals2() {
 		GameMap map2 = mp.getMap();
 		MapProxy mp2 = map2.getMapProxy();
 		assertTrue(mp.equals(mp2));
 	}
 
 	@Test
-	public void getMap(){
+	public void getMap() {
 		assertEquals(map, mp.getMap());
 	}
 }

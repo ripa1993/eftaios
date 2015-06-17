@@ -170,14 +170,14 @@ public class Server {
 
 		for (Map.Entry<GameMapName, Integer> entry : voteCount.entrySet()) {
 			if (maxEntry == null
-					|| entry.getValue().compareTo(maxEntry.getValue()) > 0) {
+			        || entry.getValue().compareTo(maxEntry.getValue()) > 0) {
 				maxEntry = entry;
 				chosenMap = maxEntry.getKey();
 			} else if (maxEntry.getValue() == voteCount.get(GameMapName.FERMI)) {
 				chosenMap = GameMapName.FERMI;
 			} else if (maxEntry.getValue() >= voteCount.get(GameMapName.FERMI)
-					&& maxEntry.getValue() == voteCount
-							.get(GameMapName.GALILEI)) {
+			        && maxEntry.getValue() == voteCount
+			                .get(GameMapName.GALILEI)) {
 				chosenMap = GameMapName.GALILEI;
 			}
 		}
@@ -238,10 +238,10 @@ public class Server {
 		ExecutorService executorSocket = Executors.newCachedThreadPool();
 		try {
 			executorSocket.submit(new ServerSocketRRThread(
-					SERVER_SOCKET_RR_PORT, SERVER_SOCKET_PS_PORT));
+			        SERVER_SOCKET_RR_PORT, SERVER_SOCKET_PS_PORT));
 		} catch (IOException e) {
 			LOGGER.error("Cannot start server socket CS on port: "
-					+ SERVER_SOCKET_RR_PORT, e);
+			        + SERVER_SOCKET_RR_PORT, e);
 		}
 	}
 
@@ -315,7 +315,7 @@ public class Server {
 	 * @throws AlreadyBoundException
 	 */
 	public static void main(String[] args) throws RemoteException,
-			AlreadyBoundException {
+	        AlreadyBoundException {
 		LOGGER.info("Starting server main");
 		Server server = new Server();
 		LOGGER.info("Starting Socket");

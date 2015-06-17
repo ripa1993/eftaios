@@ -9,7 +9,7 @@ import java.io.Serializable;
  *
  */
 public class ActionGetReachableCoordinates implements ClientAction,
-		Serializable {
+        Serializable {
 
 	/**
 	 * 
