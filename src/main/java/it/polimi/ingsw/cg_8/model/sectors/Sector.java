@@ -28,7 +28,11 @@ public abstract class Sector extends Coordinate {
 	public Sector(int x, int y) {
 		super(x, y);
 	}
-	
+
+	/**
+	 * Default constructor, which uses the same constructor of
+	 * {@link Coordinate}.
+	 */
 	public Sector() {
 		super();
 	}
