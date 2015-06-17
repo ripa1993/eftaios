@@ -13,8 +13,8 @@ import java.io.Serializable;
  */
 public abstract class Noise implements Serializable {
     /**
-	 * 
-	 */
+     * 
+     */
     private static final long serialVersionUID = 8200186418637096004L;
     /**
      * Turn in which noise happened

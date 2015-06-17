@@ -15,8 +15,8 @@ import java.io.Serializable;
  */
 public abstract class ConnectionManager implements Serializable {
     /**
-	 * 
-	 */
+     * 
+     */
     private static final long serialVersionUID = -1347635297531821083L;
     /**
      * The name used to identify the player.

@@ -13,8 +13,8 @@ import java.io.Serializable;
 public class ActionFakeNoise implements ClientAction, Serializable {
 
     /**
-	 * 
-	 */
+     * 
+     */
     private static final long serialVersionUID = -906260420042139525L;
     /**
      * Fake noise coordinate

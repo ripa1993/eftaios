@@ -1,9 +1,9 @@
 package it.polimi.ingsw.cg_8.model.sectors.special.escapehatch;
 
+import it.polimi.ingsw.cg_8.model.sectors.special.SpecialSector;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-
-import it.polimi.ingsw.cg_8.model.sectors.special.SpecialSector;
 
 /**
  * Escape hatch sector class. It's the sector where the player is allowed to try
@@ -19,8 +19,8 @@ import it.polimi.ingsw.cg_8.model.sectors.special.SpecialSector;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class EscapeHatchSector extends SpecialSector {
     /**
-	 * 
-	 */
+     * 
+     */
     private static final long serialVersionUID = 4782069866892094554L;
 
     /**

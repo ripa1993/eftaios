@@ -1,13 +1,13 @@
 package it.polimi.ingsw.cg_8.model.cards;
 
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import it.polimi.ingsw.cg_8.model.cards.dangeroussector.FakeNoise;
 import it.polimi.ingsw.cg_8.model.cards.dangeroussector.NoiseCard;
 import it.polimi.ingsw.cg_8.model.cards.dangeroussector.NoiseWithItem;
 import it.polimi.ingsw.cg_8.model.cards.dangeroussector.NormalNoise;
+
+import org.junit.Test;
 
 public class DangerousSectorTest {
 

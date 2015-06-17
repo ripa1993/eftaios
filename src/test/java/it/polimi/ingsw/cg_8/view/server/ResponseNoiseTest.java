@@ -1,9 +1,9 @@
 package it.polimi.ingsw.cg_8.view.server;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import it.polimi.ingsw.cg_8.model.noises.MovementNoise;
+import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
-import it.polimi.ingsw.cg_8.model.player.*;
 
 import org.junit.Before;
 import org.junit.Test;

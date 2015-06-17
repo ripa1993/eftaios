@@ -14,8 +14,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 public class AlienSector extends SpawnSector {
 
     /**
-	 * 
-	 */
+     * 
+     */
     private static final long serialVersionUID = 8065999857578160970L;
 
     /**

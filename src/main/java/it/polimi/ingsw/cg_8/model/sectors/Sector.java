@@ -13,8 +13,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 public abstract class Sector extends Coordinate {
 
     /**
-	 * 
-	 */
+     * 
+     */
     private static final long serialVersionUID = 38270096213388500L;
 
     /**

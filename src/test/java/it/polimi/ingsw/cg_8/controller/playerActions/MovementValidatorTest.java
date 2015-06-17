@@ -1,6 +1,7 @@
 package it.polimi.ingsw.cg_8.controller.playerActions;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import it.polimi.ingsw.cg_8.controller.playeraction.MovementValidator;
 import it.polimi.ingsw.cg_8.model.Model;
 import it.polimi.ingsw.cg_8.model.exceptions.EmptyDeckException;

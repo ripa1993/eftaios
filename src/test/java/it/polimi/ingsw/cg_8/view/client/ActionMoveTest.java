@@ -2,9 +2,9 @@ package it.polimi.ingsw.cg_8.view.client;
 
 import static org.junit.Assert.assertEquals;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
+import it.polimi.ingsw.cg_8.view.client.actions.ActionMove;
 import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
 import it.polimi.ingsw.cg_8.view.client.exceptions.NotAValidInput;
-import it.polimi.ingsw.cg_8.view.client.actions.ActionMove;
 
 import org.junit.Test;
 

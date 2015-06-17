@@ -14,8 +14,8 @@ import java.util.List;
  */
 public class ResponseCard implements ServerResponse, Serializable {
     /**
-	 * 
-	 */
+     * 
+     */
     private static final long serialVersionUID = -8941807144566952210L;
     /**
      * Max number of item cards

@@ -1,9 +1,9 @@
 package it.polimi.ingsw.cg_8.model.sectors.special;
 
+import it.polimi.ingsw.cg_8.model.sectors.Sector;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-
-import it.polimi.ingsw.cg_8.model.sectors.Sector;
 
 /**
  * Abstract special sector class, it is extended by
@@ -18,8 +18,8 @@ import it.polimi.ingsw.cg_8.model.sectors.Sector;
 @XmlAccessorType(XmlAccessType.FIELD)
 public abstract class SpecialSector extends Sector {
     /**
-	 * 
-	 */
+     * 
+     */
     private static final long serialVersionUID = 7154800729832222232L;
 
     /**

@@ -14,8 +14,8 @@ import java.io.Serializable;
 public class ActionUseCard implements ClientAction, Serializable {
 
     /**
-	 * 
-	 */
+     * 
+     */
     private static final long serialVersionUID = 225938059463444849L;
 
     /**

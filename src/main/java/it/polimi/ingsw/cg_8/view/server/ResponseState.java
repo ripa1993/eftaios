@@ -13,8 +13,8 @@ import java.io.Serializable;
  */
 public class ResponseState implements ServerResponse, Serializable {
     /**
-	 * 
-	 */
+     * 
+     */
     private static final long serialVersionUID = 6811457673145213295L;
     /**
      * Player name

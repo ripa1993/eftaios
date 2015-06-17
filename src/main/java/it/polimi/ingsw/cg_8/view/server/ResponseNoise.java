@@ -13,8 +13,8 @@ import java.io.Serializable;
 public class ResponseNoise implements Serializable, ServerResponse {
 
     /**
-	 * 
-	 */
+     * 
+     */
     private static final long serialVersionUID = -539924760536211551L;
     /**
      * Noise to be sent

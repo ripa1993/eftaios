@@ -1,6 +1,7 @@
 package it.polimi.ingsw.cg_8.controller.playerActions;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import it.polimi.ingsw.cg_8.controller.playeraction.DrawDangerousSectorCard;
 import it.polimi.ingsw.cg_8.model.Model;
 import it.polimi.ingsw.cg_8.model.cards.Card;

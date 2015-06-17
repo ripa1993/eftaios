@@ -1,7 +1,6 @@
 package it.polimi.ingsw.cg_8.view.client;
 
-import static org.junit.Assert.*;
-import it.polimi.ingsw.cg_8.view.client.ActionParser;
+import static org.junit.Assert.assertTrue;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionGetReachableCoordinates;
 import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
 import it.polimi.ingsw.cg_8.view.client.exceptions.NotAValidInput;

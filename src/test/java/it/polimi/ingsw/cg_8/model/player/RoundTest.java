@@ -1,6 +1,7 @@
 package it.polimi.ingsw.cg_8.model.player;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 
 import org.junit.Before;

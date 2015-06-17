@@ -11,8 +11,8 @@ import java.io.Serializable;
 public class ResponsePrivate implements Serializable, ServerResponse {
 
     /**
-	 * 
-	 */
+     * 
+     */
     private static final long serialVersionUID = 3728410205672503413L;
     /**
      * Message to be sent

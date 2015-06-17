@@ -1,9 +1,9 @@
 package it.polimi.ingsw.cg_8.model.sectors.special.spawn;
 
+import it.polimi.ingsw.cg_8.model.sectors.special.SpecialSector;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-
-import it.polimi.ingsw.cg_8.model.sectors.special.SpecialSector;
 
 /**
  * Spawn sector abstract class
@@ -15,8 +15,8 @@ import it.polimi.ingsw.cg_8.model.sectors.special.SpecialSector;
 public abstract class SpawnSector extends SpecialSector {
 
     /**
-	 * 
-	 */
+     * 
+     */
     private static final long serialVersionUID = -1851902876364291445L;
 
     /**

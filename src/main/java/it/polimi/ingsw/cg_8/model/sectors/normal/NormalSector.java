@@ -1,9 +1,9 @@
 package it.polimi.ingsw.cg_8.model.sectors.normal;
 
+import it.polimi.ingsw.cg_8.model.sectors.Sector;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-
-import it.polimi.ingsw.cg_8.model.sectors.Sector;
 
 /**
  * Abstract class for normal sector in the game. It is extended by
@@ -15,8 +15,8 @@ import it.polimi.ingsw.cg_8.model.sectors.Sector;
 @XmlAccessorType(XmlAccessType.FIELD)
 public abstract class NormalSector extends Sector {
     /**
-	 * 
-	 */
+     * 
+     */
     private static final long serialVersionUID = -3925058303611953264L;
 
     /**

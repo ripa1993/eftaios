@@ -11,8 +11,8 @@ import java.io.Serializable;
 public class ActionAttack implements ClientAction, Serializable {
 
     /**
-	 * 
-	 */
+     * 
+     */
     private static final long serialVersionUID = -7008333309146096141L;
 
     /**

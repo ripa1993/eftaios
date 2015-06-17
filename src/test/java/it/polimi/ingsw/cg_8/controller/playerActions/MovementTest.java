@@ -1,6 +1,6 @@
 package it.polimi.ingsw.cg_8.controller.playerActions;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import it.polimi.ingsw.cg_8.controller.playeraction.Movement;
 import it.polimi.ingsw.cg_8.model.Model;
 import it.polimi.ingsw.cg_8.model.exceptions.EmptyDeckException;

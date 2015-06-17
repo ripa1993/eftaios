@@ -1,6 +1,7 @@
 package it.polimi.ingsw.cg_8.model.noise;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import it.polimi.ingsw.cg_8.model.cards.character.AlienCard;
 import it.polimi.ingsw.cg_8.model.noises.AttackNoise;
 import it.polimi.ingsw.cg_8.model.player.Player;

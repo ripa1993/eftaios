@@ -98,8 +98,8 @@ public class CardButton extends JPanel {
     }
 
     /**
-	 * 
-	 */
+     * 
+     */
     private static final long serialVersionUID = -4771580323012024149L;
     /**
      * Button image

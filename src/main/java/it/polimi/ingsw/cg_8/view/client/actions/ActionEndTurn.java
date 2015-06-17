@@ -11,8 +11,8 @@ import java.io.Serializable;
 public class ActionEndTurn implements ClientAction, Serializable {
 
     /**
-	 * 
-	 */
+     * 
+     */
     private static final long serialVersionUID = -8940775774902250932L;
 
     /**

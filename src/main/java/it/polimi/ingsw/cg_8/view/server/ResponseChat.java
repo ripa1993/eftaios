@@ -12,8 +12,8 @@ import java.io.Serializable;
 public class ResponseChat implements ServerResponse, Serializable {
 
     /**
-	 * 
-	 */
+     * 
+     */
     private static final long serialVersionUID = 4477669407364086500L;
     /**
      * Sender's name

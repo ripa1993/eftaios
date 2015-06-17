@@ -14,8 +14,8 @@ import java.io.Serializable;
 public class SendChatMessage implements ClientAction, Serializable {
 
     /**
-	 * 
-	 */
+     * 
+     */
     private static final long serialVersionUID = -17380136986634452L;
     /**
      * Chat message

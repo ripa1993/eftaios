@@ -12,8 +12,8 @@ import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 public class TeleportNoise extends Noise {
 
     /**
-	 * 
-	 */
+     * 
+     */
     private static final long serialVersionUID = -3048154288023124880L;
 
     /**

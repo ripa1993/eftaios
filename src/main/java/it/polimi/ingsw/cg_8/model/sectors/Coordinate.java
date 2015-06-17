@@ -15,8 +15,8 @@ import javax.xml.bind.annotation.XmlElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Coordinate implements Serializable {
     /**
-	 * 
-	 */
+     * 
+     */
     private static final long serialVersionUID = -2956250090147335252L;
     /**
      * Column number

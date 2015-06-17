@@ -12,8 +12,8 @@ import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
  */
 public class AttackNoise extends Noise {
     /**
-	 * 
-	 */
+     * 
+     */
     private static final long serialVersionUID = -3887771292366833452L;
     /**
      * Character

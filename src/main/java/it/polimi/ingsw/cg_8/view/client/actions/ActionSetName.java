@@ -11,8 +11,8 @@ import java.io.Serializable;
 public class ActionSetName implements ClientAction, Serializable {
 
     /**
-	 * 
-	 */
+     * 
+     */
     private static final long serialVersionUID = -7006504494661387905L;
     /**
      * New player name

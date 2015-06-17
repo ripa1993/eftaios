@@ -1,12 +1,12 @@
 package it.polimi.ingsw.cg_8.controller.playerActions;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import it.polimi.ingsw.cg_8.controller.Controller;
 import it.polimi.ingsw.cg_8.controller.DefaultRules;
 import it.polimi.ingsw.cg_8.controller.Rules;
 import it.polimi.ingsw.cg_8.controller.StateMachine;
 import it.polimi.ingsw.cg_8.controller.playeraction.EndTurn;
-import it.polimi.ingsw.cg_8.controller.playeraction.other.GetAllowedActions;
 import it.polimi.ingsw.cg_8.model.TurnPhase;
 import it.polimi.ingsw.cg_8.model.cards.item.AdrenalineCard;
 import it.polimi.ingsw.cg_8.model.cards.item.AttackCard;
@@ -15,14 +15,12 @@ import it.polimi.ingsw.cg_8.model.cards.item.SpotlightCard;
 import it.polimi.ingsw.cg_8.model.cards.item.TeleportCard;
 import it.polimi.ingsw.cg_8.model.exceptions.GameAlreadyRunningException;
 import it.polimi.ingsw.cg_8.model.map.GameMapName;
-import it.polimi.ingsw.cg_8.model.noises.MovementNoise;
 import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.player.character.alien.Alien;
 import it.polimi.ingsw.cg_8.model.player.character.human.Human;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionAttack;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionChat;
-import it.polimi.ingsw.cg_8.view.client.actions.ActionDisconnect;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionDrawCard;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionEndTurn;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionFakeNoise;
@@ -30,10 +28,7 @@ import it.polimi.ingsw.cg_8.view.client.actions.ActionGetAvailableAction;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionGetReachableCoordinates;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionMove;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionUseCard;
-import it.polimi.ingsw.cg_8.view.server.ResponseNoise;
 import it.polimi.ingsw.cg_8.view.server.ServerResponse;
-
-import java.util.Observable;
 
 import org.junit.Before;
 import org.junit.Test;

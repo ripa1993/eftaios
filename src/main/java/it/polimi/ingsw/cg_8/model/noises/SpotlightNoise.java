@@ -11,8 +11,8 @@ import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
  */
 public class SpotlightNoise extends Noise {
     /**
-	 * 
-	 */
+     * 
+     */
     private static final long serialVersionUID = -603684997383153716L;
 
     /**

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.cg_8.model.decks;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 import it.polimi.ingsw.cg_8.model.cards.escapehatch.EscapeHatchCard;
 import it.polimi.ingsw.cg_8.model.decks.creators.EscapeHatchDeckCreator;
 import it.polimi.ingsw.cg_8.model.exceptions.EmptyDeckException;

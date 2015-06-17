@@ -1,6 +1,6 @@
 package it.polimi.ingsw.cg_8.view.client;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 import it.polimi.ingsw.cg_8.view.client.actions.ActionAttack;
 import it.polimi.ingsw.cg_8.view.client.actions.ClientAction;
 import it.polimi.ingsw.cg_8.view.client.exceptions.NotAValidInput;

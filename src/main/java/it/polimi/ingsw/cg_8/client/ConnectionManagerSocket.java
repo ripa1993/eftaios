@@ -23,8 +23,8 @@ import org.apache.logging.log4j.Logger;
  */
 public class ConnectionManagerSocket extends ConnectionManager {
     /**
-	 * 
-	 */
+     * 
+     */
     private static final long serialVersionUID = -3402004204836762667L;
     /**
      * The server IP address.

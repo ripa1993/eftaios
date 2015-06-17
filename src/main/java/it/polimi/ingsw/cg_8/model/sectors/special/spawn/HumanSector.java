@@ -14,8 +14,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 public class HumanSector extends SpawnSector {
 
     /**
-	 * 
-	 */
+     * 
+     */
     private static final long serialVersionUID = 3422910957939391661L;
 
     /**

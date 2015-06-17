@@ -12,8 +12,8 @@ public class ActionGetReachableCoordinates implements ClientAction,
         Serializable {
 
     /**
-	 * 
-	 */
+     * 
+     */
     private static final long serialVersionUID = 4115170137313357008L;
 
     /**

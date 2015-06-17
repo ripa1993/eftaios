@@ -13,8 +13,8 @@ import java.io.Serializable;
 public class ActionMove implements Serializable, ClientAction {
 
     /**
-	 * 
-	 */
+     * 
+     */
     private static final long serialVersionUID = -2224360105510637030L;
     /**
      * Destination coordinate

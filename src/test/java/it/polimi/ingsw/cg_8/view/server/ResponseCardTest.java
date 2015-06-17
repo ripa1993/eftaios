@@ -1,6 +1,6 @@
 package it.polimi.ingsw.cg_8.view.server;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import it.polimi.ingsw.cg_8.model.cards.item.AttackCard;
 import it.polimi.ingsw.cg_8.model.cards.item.ItemCard;
 import it.polimi.ingsw.cg_8.model.cards.item.SpotlightCard;

@@ -106,8 +106,8 @@ public class MapPanel extends JLayeredPane {
     private class PlayerJLabel extends JLabel {
 
         /**
-		 * 
-		 */
+         * 
+         */
         private static final long serialVersionUID = 606642999525414965L;
         /**
          * Coordinate
@@ -146,8 +146,8 @@ public class MapPanel extends JLayeredPane {
     private class ArtifactJLabel extends JLabel {
 
         /**
-		 * 
-		 */
+         * 
+         */
         private static final long serialVersionUID = 606642999525414965L;
         /**
          * Coordinates
@@ -185,8 +185,8 @@ public class MapPanel extends JLayeredPane {
     }
 
     /**
-	 * 
-	 */
+     * 
+     */
     private static final long serialVersionUID = -6773174313895718360L;
     /**
      * Number of column in a map

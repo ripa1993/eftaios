@@ -12,8 +12,8 @@ import java.io.Serializable;
  */
 public class ResponseMap implements ServerResponse, Serializable {
     /**
-	 * 
-	 */
+     * 
+     */
     private static final long serialVersionUID = 4248736548266721310L;
     /**
      * The map that will be used in the game.

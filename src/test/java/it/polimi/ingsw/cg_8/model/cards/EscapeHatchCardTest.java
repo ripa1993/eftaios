@@ -1,13 +1,12 @@
 package it.polimi.ingsw.cg_8.model.cards;
 
-import static org.junit.Assert.*;
-
-import org.junit.Before;
-import org.junit.Test;
-
+import static org.junit.Assert.assertTrue;
 import it.polimi.ingsw.cg_8.model.cards.escapehatch.EscapeHatchCard;
 import it.polimi.ingsw.cg_8.model.cards.escapehatch.GreenEhCard;
 import it.polimi.ingsw.cg_8.model.cards.escapehatch.RedEhCard;
+
+import org.junit.Before;
+import org.junit.Test;
 
 public class EscapeHatchCardTest {
 

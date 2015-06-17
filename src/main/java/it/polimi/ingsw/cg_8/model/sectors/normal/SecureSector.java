@@ -13,8 +13,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class SecureSector extends NormalSector {
     /**
-	 * 
-	 */
+     * 
+     */
     private static final long serialVersionUID = -8710341825606799472L;
 
     /**

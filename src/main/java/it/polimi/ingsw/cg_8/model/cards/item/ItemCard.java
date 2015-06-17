@@ -1,6 +1,7 @@
 package it.polimi.ingsw.cg_8.model.cards.item;
 
 import it.polimi.ingsw.cg_8.model.cards.Card;
+
 import java.io.Serializable;
 
 /**
