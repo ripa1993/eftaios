@@ -102,35 +102,32 @@ public class ClientGUIThread implements Runnable, Observer {
             if (matchStarted) {
                 Coordinate coordinate = mapPanel.getCoordinate(e);
 
-                if (coordinateSet.contains(coordinate)) {
-
-                    if (coordinate.getX() >= 0 && coordinate.getY() >= 0
-                            && coordinate.getX() < MapPanel.NUM_COLUMN
-                            && coordinate.getY() < MapPanel.NUM_ROW) {
-                        Object[] options = { "Movement", SPOTLIGHT_TEXT,
-                                "Do Fake Noise" };
-                        int result = JOptionPane.showOptionDialog(null,
-                                "This is sector " + coordinate,
-                                "What would you like to do?",
-                                JOptionPane.DEFAULT_OPTION,
-                                JOptionPane.QUESTION_MESSAGE, null, options,
-                                options[0]);
-                        LOGGER.debug("Result: " + result);
-                        LOGGER.debug("Options: " + options);
-                        if (result == 0) {
-                            LOGGER.debug("Choose: move");
-                            connectionManager.send(new ActionMove(coordinate));
-                        } else if (result == 1) {
-                            LOGGER.debug("Choose: spotlight");
-                            connectionManager.send(new ActionUseCard(
-                                    new SpotlightCard(), coordinate));
-                        } else if (result == 2) {
-                            LOGGER.debug("Choose: fake noise");
-                            connectionManager.send(new ActionFakeNoise(
-                                    coordinate));
-                        }
-
+                if (coordinateSet.contains(coordinate)
+                        && coordinate.getX() >= 0 && coordinate.getY() >= 0
+                        && coordinate.getX() < MapPanel.NUM_COLUMN
+                        && coordinate.getY() < MapPanel.NUM_ROW) {
+                    Object[] options = { "Movement", SPOTLIGHT_TEXT,
+                            "Do Fake Noise" };
+                    int result = JOptionPane.showOptionDialog(null,
+                            "This is sector " + coordinate,
+                            "What would you like to do?",
+                            JOptionPane.DEFAULT_OPTION,
+                            JOptionPane.QUESTION_MESSAGE, null, options,
+                            options[0]);
+                    LOGGER.debug("Result: " + result);
+                    LOGGER.debug("Options: " + options);
+                    if (result == 0) {
+                        LOGGER.debug("Choose: move");
+                        connectionManager.send(new ActionMove(coordinate));
+                    } else if (result == 1) {
+                        LOGGER.debug("Choose: spotlight");
+                        connectionManager.send(new ActionUseCard(
+                                new SpotlightCard(), coordinate));
+                    } else if (result == 2) {
+                        LOGGER.debug("Choose: fake noise");
+                        connectionManager.send(new ActionFakeNoise(coordinate));
                     }
+
                 }
             }
         }
