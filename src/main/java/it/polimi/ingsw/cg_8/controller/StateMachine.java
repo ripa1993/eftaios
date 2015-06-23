@@ -23,6 +23,8 @@ import it.polimi.ingsw.cg_8.model.cards.item.SpotlightCard;
 import it.polimi.ingsw.cg_8.model.cards.item.TeleportCard;
 import it.polimi.ingsw.cg_8.model.player.Player;
 import it.polimi.ingsw.cg_8.model.player.PlayerState;
+import it.polimi.ingsw.cg_8.model.player.character.human.Human;
+import it.polimi.ingsw.cg_8.model.player.character.human.NormalHuman;
 import it.polimi.ingsw.cg_8.model.sectors.Coordinate;
 import it.polimi.ingsw.cg_8.model.sectors.Sector;
 import it.polimi.ingsw.cg_8.model.sectors.normal.DangerousSector;

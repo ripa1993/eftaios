@@ -939,7 +939,7 @@ public class ClientGUIThread implements Runnable, Observer {
             this.appendInfo("NOISE", noise.toString());
             try {
                 mapPanel.createArtifact(noise.getNoise().getCoordinate(),
-                        Resource.IMG_YELLOW_OVER, 1000, 10);
+                        Resource.IMG_YELLOW_OVER, 500, 6);
             } catch (IOException e) {
                 LOGGER.error(e.getMessage(), e);
             }
