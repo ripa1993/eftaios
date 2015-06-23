@@ -141,10 +141,6 @@ public class Resource {
      * Teleport
      */
     public static final String SOUND_TELEPORT = SOUND_FOLDER + "teleport.wav";
-    /**
-     * Bonus track
-     */
-    public static final String SOUND_BONUS = SOUND_FOLDER + "bonus.wav";
 
     /**
      * background music
